@@ -1,31 +1,6 @@
-import React from "react";
-import { View, StyleSheet, ImageBackground, Text } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-
-function PictureHeadline({ headline, category, time, imageUrl }) {
-  return (
-    <View style={styles.view}>
-      <ImageBackground
-        style={styles.imageBackground}
-        source={{ uri: imageUrl }}
-      >
-        <LinearGradient
-          colors={["transparent", "rgba(0,0,0,0.8)"]}
-          style={styles.gradient}
-        />
-        <View style={styles.spacer} />
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.category}>{category}</Text>
-          <View style={styles.spacer} />
-          <Text style={styles.time}>{time}</Text>
-        </View>
-        <Text style={styles.headline} numberOfLines={4}>
-          {headline}
-        </Text>
-      </ImageBackground>
-    </View>
-  );
-}
+import React from 'react'
+import { View, StyleSheet, ImageBackground, Text } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const styles = StyleSheet.create({
   imageBackground: {
@@ -76,4 +51,27 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PictureHeadline;
+const PictureHeadline = ({ headline, category, time, imageUrl }) => (
+  <View style={styles.view}>
+    <ImageBackground
+      style={styles.imageBackground}
+      source={{ uri: imageUrl }}
+    >
+      <LinearGradient
+        colors={["transparent", "rgba(0,0,0,0.8)"]}
+        style={styles.gradient}
+      />
+      <View style={styles.spacer} />
+      <View style={{ flexDirection: "row" }}>
+        <Text style={styles.category}>{category}</Text>
+        <View style={styles.spacer} />
+        <Text style={styles.time}>{time}</Text>
+      </View>
+      <Text style={styles.headline} numberOfLines={4}>
+        {headline}
+      </Text>
+    </ImageBackground>
+  </View>
+)
+
+export default PictureHeadline

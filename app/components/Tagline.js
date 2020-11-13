@@ -1,14 +1,12 @@
-import React from "react";
-import { View, StyleSheet, ImageBackground, Text } from "react-native";
+import React from "react"
+import { View, StyleSheet, ImageBackground, Text } from "react-native"
 
-function Tagline({ tagline }) {
-  return (
-    <View style={styles.view}>
-      <View style={styles.circle} />
-      <Text style={styles.tagline}>{tagline}</Text>
-    </View>
-  );
-}
+const Tagline = ({ tagline }) => (
+  <View style={styles.view}>
+    <View style={styles.circle} />
+    <Text style={styles.tagline}>{tagline}</Text>
+  </View>
+)
 
 const styles = StyleSheet.create({
   tagline: {
@@ -30,6 +28,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 20,
   },
-});
+})
 
-export default Tagline;
+export default Tagline
