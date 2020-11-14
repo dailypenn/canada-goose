@@ -1,8 +1,8 @@
 import { StatusBar } from "expo-status-bar"
 import React from "react"
 import { StyleSheet, SafeAreaView } from "react-native"
-import PictureHeadline from "./app/components/PictureHeadline"
-import Tagline from "./app/components/Tagline"
+import PictureHeadline from "./src/components/shared/PictureHeadline"
+import Tagline from "./src/components/shared/Tagline"
 
 const App = () => (
   <SafeAreaView style={styles.container}>
