@@ -4,9 +4,9 @@
     "slug": "goose-from-canada",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./src/static/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./src/static/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,7 +21,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./src/static/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
