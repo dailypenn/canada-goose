@@ -49,9 +49,9 @@ const styles = StyleSheet.create({
     width: "100%",
     aspectRatio: 1,
   },
-});
+})
 
-const PictureHeadline = ({ headline, category, time, imageUrl }) => (
+export const PictureHeadline = ({ headline, category, time, imageUrl }) => (
   <View style={styles.view}>
     <ImageBackground
       style={styles.imageBackground}
@@ -73,5 +73,3 @@ const PictureHeadline = ({ headline, category, time, imageUrl }) => (
     </ImageBackground>
   </View>
 )
-
-export default PictureHeadline

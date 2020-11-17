@@ -1,13 +1,6 @@
 import React from "react"
 import { View, StyleSheet, ImageBackground, Text } from "react-native"
 
-const Tagline = ({ tagline }) => (
-  <View style={styles.view}>
-    <View style={styles.circle} />
-    <Text style={styles.tagline}>{tagline}</Text>
-  </View>
-)
-
 const styles = StyleSheet.create({
   tagline: {
     color: "#000",
@@ -30,4 +23,9 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Tagline
+export const Tagline = ({ tagline }) => (
+  <View style={styles.view}>
+    <View style={styles.circle} />
+    <Text style={styles.tagline}>{tagline}</Text>
+  </View>
+)

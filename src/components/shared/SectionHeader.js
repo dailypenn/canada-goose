@@ -1,12 +1,6 @@
 import React from "react"
 import { View, StyleSheet, Text } from "react-native"
 
-const SectionHeader = ({ title }) => (
-  <View style={styles.view}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-)
-
 const styles = StyleSheet.create({
   title: {
     color: "#A61E21",
@@ -25,4 +19,8 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SectionHeader
+export const SectionHeader = ({ title }) => (
+  <View style={styles.view}>
+    <Text style={styles.title}>{title}</Text>
+  </View>
+)

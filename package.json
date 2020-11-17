@@ -8,12 +8,14 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@apollo/client": "^3.2.7",
     "@react-native-community/masked-view": "0.1.10",
     "expo": "^39.0.4",
     "expo-cli": "^3.28.5",
     "expo-linear-gradient": "~8.3.0",
     "expo-optimize": "^0.1.62",
     "expo-status-bar": "~1.0.2",
+    "graphql": "^15.4.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",

@@ -1,21 +1,6 @@
 import React from "react"
 import { View, StyleSheet, Image, Text } from "react-native"
 
-const HorizontalArticleCell = ({ imageURL, category, title }) => (
-  <View style={styles.hView}>
-    <View style={styles.imageView}>
-      <Image
-        style={styles.image}
-        source={{uri: imageURL}}
-      />
-    </View>
-    <View style={styles.vView}>
-      <Text style={styles.category}>{category}</Text>
-      <Text style={styles.title} numberOfLines={4}>{title}</Text>
-    </View>
-  </View>
-)
-
 const styles = StyleSheet.create({
   title: {
     color: "#000",
@@ -72,4 +57,17 @@ const styles = StyleSheet.create({
   },
 })
 
-export default HorizontalArticleCell
+export const HorizontalArticleCell = ({ imageURL, category, title }) => (
+  <View style={styles.hView}>
+    <View style={styles.imageView}>
+      <Image
+        style={styles.image}
+        source={{uri: imageURL}}
+      />
+    </View>
+    <View style={styles.vView}>
+      <Text style={styles.category}>{category}</Text>
+      <Text style={styles.title} numberOfLines={4}>{title}</Text>
+    </View>
+  </View>
+)

@@ -4,7 +4,7 @@ Install [Expo App](https://docs.expo.io/get-started/installation/#2-expo-client-
 
 ```
 npm install
-npm run start
+expo start
 ```
 
 Once the QR code is generated, open you camera to scan the code. You should be prompted to open Expo.
