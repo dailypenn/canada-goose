@@ -57,7 +57,7 @@ const App = () => {
         <ScrollView>
           <HeadlineArticle data={topArticles[0]} />
           <SectionHeader title="Top Stories" />
-          <TopStoriesHorizontalCarousel topStories={topArticles} />
+          <TopStoriesHorizontalCarousel topStories={topArticles.slice(1)} />
           <SectionHeader title="Most Recent" />
           {mostRecentArticles.map((el) => {
             const {
