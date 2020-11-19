@@ -58,8 +58,10 @@ export const CustomHeader = () => {
           shadowOffset: {
             height: 2,
           },
-          shadowOpacity: '50%',
-          shadowRadius: 2,
+          shadowColor: '#505050',
+          shadowOpacity: '30%',
+          shadowRadius: 4,
+          elevation: 5,
         }}
       >
         <Image source={DP_LOGO} style={styles.image} />
