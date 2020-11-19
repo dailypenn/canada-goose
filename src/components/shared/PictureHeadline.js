@@ -9,36 +9,37 @@ const styles = StyleSheet.create({
   },
 
   headline: {
-    color: "#fff",
-    fontFamily: "HelveticaNeue-CondensedBold",
+    color: '#fff',
+    fontFamily: 'HelveticaNeue-CondensedBold',
     fontSize: 30,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 20,
     marginTop: 10,
+    flexShrink: 1,
     lineHeight: 35,
   },
 
   category: {
-    color: "#fff",
-    textTransform: "uppercase",
+    color: '#fff',
+    textTransform: 'uppercase',
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     opacity: 0.75,
   },
 
   time: {
-    color: "#fff",
-    textTransform: "uppercase",
+    color: '#fff',
+    textTransform: 'uppercase',
     fontSize: 14,
     opacity: 0.75,
   },
 
   gradient: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    height: "75%",
+    height: '75%',
   },
 
   spacer: {
@@ -46,23 +47,20 @@ const styles = StyleSheet.create({
   },
 
   view: {
-    width: "100%",
+    width: '100%',
     aspectRatio: 1,
   },
 })
 
 export const PictureHeadline = ({ headline, category, time, imageUrl }) => (
   <View style={styles.view}>
-    <ImageBackground
-      style={styles.imageBackground}
-      source={{ uri: imageUrl }}
-    >
+    <ImageBackground style={styles.imageBackground} source={{ uri: imageUrl }}>
       <LinearGradient
-        colors={["transparent", "rgba(0,0,0,0.8)"]}
+        colors={['transparent', 'rgba(0,0,0,0.8)']}
         style={styles.gradient}
       />
       <View style={styles.spacer} />
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: 'row' }}>
         <Text style={styles.category}>{category}</Text>
         <View style={styles.spacer} />
         <Text style={styles.time}>{time}</Text>

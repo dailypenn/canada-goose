@@ -19,7 +19,7 @@ export const HOME_PAGE_QUERY = gql`
         cursor
       }
     }
-    
+
     top: articles(first: 5, section: "top") {
       hasNextPage
       edges {
@@ -37,7 +37,7 @@ export const HOME_PAGE_QUERY = gql`
         cursor
       }
     }
-    
+
     most_recent: articles(first: 5, section: "news") {
       hasNextPage
       edges {
