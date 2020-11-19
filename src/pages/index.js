@@ -46,6 +46,7 @@ const App = () => {
   const {
     most_recent: { edges: mostRecentArticles },
     top: { edges: topArticles },
+    centerpiece: { edges: centerArticles }
   } = data
 
   const updateOffset = (x) => {}
@@ -55,9 +56,9 @@ const App = () => {
     <View style={styles.container}>
       <View style={styles.container}>
         <ScrollView>
-          <HeadlineArticle data={topArticles[0]} />
+          <HeadlineArticle data={centerArticles[0]} />
           <SectionHeader title="Top Stories" />
-          <TopStoriesHorizontalCarousel topStories={topArticles.slice(1)} />
+          <TopStoriesHorizontalCarousel topStories={topArticles} />
           <SectionHeader title="Most Recent" />
           {mostRecentArticles.map((el) => {
             const {
