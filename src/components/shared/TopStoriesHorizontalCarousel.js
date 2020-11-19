@@ -8,7 +8,7 @@ const TopStoriesHorizontalCarousel = ({ topStories }) => (
     style={{ flex: 1 }}
     horizontal={true}
     contentContainerStyle={{
-      width: `${60 * 5}%`,
+      width: `${60 * topStories.length}%`,
       alignItems: 'center',
       justifyContent: 'center',
       paddingLeft: 20,
