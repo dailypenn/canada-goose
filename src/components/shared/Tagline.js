@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   tagline: {
     color: '#000',
     fontSize: 14,
-    fontFamily: 'HelveticaNeue-Semibold',
+    fontFamily: 'HelveticaNeue-CondensedBold',
     flexShrink: 1,
     opacity: 0.5,
   },
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: 'darkred',
+    backgroundColor: '#A61E21',
     marginTop: 4,
     marginRight: 10,
   },

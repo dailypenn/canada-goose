@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 
   view: {
     width: '100%',
-    aspectRatio: 1,
+    aspectRatio: 0.9,
   },
 })
 

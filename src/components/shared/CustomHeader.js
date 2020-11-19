@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import {
   View,
@@ -20,29 +21,49 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
-    backgroundColor: 'yellow',
     position: 'absolute',
+  },
+  gradient: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: '100%',
   },
 
   image: {
-    width: '100%',
+    height: 30,
     resizeMode: 'contain',
-    backgroundColor: '#A61E21',
     alignSelf: 'center',
   },
   view: {
     width: '100%',
-    backgroundColor: '#A61E21',
-    alignContent: 'center',
     justifyContent: 'center',
+    position: 'absolute',
+    paddingTop: Platform.OS == 'ios' ? 50 : StatusBar.height,
+    top: 0,
   },
 })
 
 export const CustomHeader = () => {
   return (
-    <Header backgroundColor={'#A61E21'} barStyle="light-content">
-      <View />
-      <Image source={DP_LOGO} style={styles.image} />
-    </Header>
+    <View style={styles.view}>
+      <StatusBar barStyle="light-content" />
+      <SafeAreaView
+        style={{
+          flex: 1,
+          alignContent: 'center',
+          justifyContent: 'center',
+          height: 50,
+          shadowOffset: {
+            height: 2,
+          },
+          shadowOpacity: '50%',
+          shadowRadius: 2,
+        }}
+      >
+        <Image source={DP_LOGO} style={styles.image} />
+      </SafeAreaView>
+    </View>
   )
 }

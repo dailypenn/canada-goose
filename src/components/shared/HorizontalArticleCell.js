@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   imageView: {
     shadowColor: '#000',
     shadowOffset: {
-      width: 0,
+      width: 4,
       height: 4,
     },
     shadowOpacity: 0.32,
