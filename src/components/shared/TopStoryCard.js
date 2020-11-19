@@ -14,7 +14,9 @@ const TopStoryCard = ({ category, time, title, imageUrl }) => (
           <View style={styles.spacer} />
           <Text style={styles.time}>{time}</Text>
         </View>
-        <Text style={styles.title}>{title}</Text>
+        <Text numberOfLines={3} style={styles.title}>
+          {title}
+        </Text>
       </View>
     </View>
   </View>
