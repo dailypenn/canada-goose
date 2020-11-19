@@ -17,8 +17,6 @@ const DP_LOGO = require('../../static/logos/thedp.png')
 
 const styles = StyleSheet.create({
   barContent: {
-    height: SCREEN_HEIGHT * 0.1,
-    width: '100%',
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
@@ -26,15 +24,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 
-  header: {
-    backgroundColor: '#A61E21',
-  },
-
   image: {
-    width: '60%',
-    height: SCREEN_HEIGHT * 0.1,
-
+    width: '100%',
     resizeMode: 'contain',
+    backgroundColor: '#A61E21',
+    alignSelf: 'center',
   },
   view: {
     width: '100%',
@@ -46,8 +40,9 @@ const styles = StyleSheet.create({
 
 export const CustomHeader = () => {
   return (
-    <View style={styles.view}>
-      <Image source={'../static/logos/thedp.png'} />
-    </View>
+    <Header backgroundColor={'#A61E21'} barStyle="light-content">
+      <View />
+      <Image source={DP_LOGO} style={styles.image} />
+    </Header>
   )
 }
