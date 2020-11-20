@@ -78,7 +78,7 @@ export const CustomHeader = ({ contentOffset }) => {
           shadowOffset: {},
           shadowColor: '#000',
           shadowOpacity: contentOffset < 150 ? 1 : 0,
-          shadowRadius: 0,
+          shadowRadius: 3,
           elevation: 2,
         }}
       >
