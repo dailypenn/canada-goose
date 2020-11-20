@@ -40,14 +40,34 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     position: 'absolute',
+    backgroundColor: '#A61E21',
     paddingTop: Platform.OS == 'ios' ? 50 : StatusBar.height,
     top: 0,
   },
 })
 
-export const CustomHeader = () => {
+export const CustomHeader = ({ contentOffset }) => {
   return (
-    <View style={styles.view}>
+    <View
+      style={{
+        width: '100%',
+        justifyContent: 'center',
+        position: 'absolute',
+        backgroundColor: contentOffset < 150 ? 'transparent' : '#A61E21',
+        paddingTop: Platform.OS == 'ios' ? 50 : StatusBar.height,
+        top: 0,
+        shadowColor: contentOffset < 150 ? null : '#000',
+        shadowOffset:
+          contentOffset < 150
+            ? null
+            : {
+                height: 5,
+              },
+        shadowOpacity: contentOffset < 150 ? null : 0.5,
+        shadowRadius: contentOffset < 150 ? null : 8,
+        elevation: contentOffset < 150 ? null : 4,
+      }}
+    >
       <StatusBar barStyle="light-content" />
       <SafeAreaView
         style={{
@@ -59,7 +79,7 @@ export const CustomHeader = () => {
             height: 2,
           },
           shadowColor: '#505050',
-          shadowOpacity: '30%',
+          shadowOpacity: contentOffset < 150 ? '30%' : 0,
           shadowRadius: 4,
           elevation: 5,
         }}

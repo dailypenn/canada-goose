@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, SafeAreaView, ScrollView, View } from 'react-native'
 import { useQuery, gql } from '@apollo/client'
 import { Text } from 'react-native'
@@ -38,6 +38,7 @@ const CHAPTERS_QUERY = gql`
 
 const App = () => {
   const { loading, error, data } = useQuery(HOME_PAGE_QUERY)
+  const [contentOffset, updateOffset] = useState(true)
 
   if (loading) {
     return <Text> Loading... </Text>
@@ -46,16 +47,21 @@ const App = () => {
   const {
     most_recent: { edges: mostRecentArticles },
     top: { edges: topArticles },
-    centerpiece: { edges: centerArticles }
+    centerpiece: { edges: centerArticles },
   } = data
 
-  const updateOffset = (x) => {}
-  console.log(topArticles)
+  const handleScroll = (scrollData) => {
+    var offset = scrollData.nativeEvent.contentOffset.y
+    updateOffset(offset)
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView
+          onScroll={(event) => handleScroll(event)}
+          scrollEventThrottle={16}
+        >
           <HeadlineArticle data={centerArticles[0]} />
           <SectionHeader title="Top Stories" />
           <TopStoriesHorizontalCarousel topStories={topArticles} />
@@ -77,7 +83,7 @@ const App = () => {
           })}
         </ScrollView>
       </View>
-      <CustomHeader />
+      <CustomHeader contentOffset={contentOffset} />
     </View>
   )
 }
