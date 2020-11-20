@@ -8,13 +8,13 @@ const TopStoryCard = ({ category, time, title, imageUrl }) => (
         style={styles.imageBackground}
         source={{ uri: imageUrl }}
       ></ImageBackground>
-      <View style={{ padding: 15 }}>
+      <View style={{ padding: 15, height: 130 }}>
         <View style={styles.textRow}>
           <Text style={styles.category}>{category}</Text>
           <View style={styles.spacer} />
           <Text style={styles.time}>{time}</Text>
         </View>
-        <Text numberOfLines={3} style={styles.title}>
+        <Text numberOfLines={5} style={styles.title}>
           {title}
         </Text>
       </View>
@@ -25,7 +25,6 @@ const TopStoryCard = ({ category, time, title, imageUrl }) => (
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 280,
     backgroundColor: '#fff',
     borderRadius: 7,
     overflow: 'hidden',
@@ -33,6 +32,7 @@ const styles = StyleSheet.create({
 
   imageBackground: {
     flex: 1,
+    height: 180,
     paddingHorizontal: 15,
   },
 
