@@ -75,13 +75,11 @@ export const CustomHeader = ({ contentOffset }) => {
           alignContent: 'center',
           justifyContent: 'center',
           height: 50,
-          shadowOffset: {
-            height: 2,
-          },
-          shadowColor: '#505050',
-          shadowOpacity: contentOffset < 150 ? '30%' : 0,
-          shadowRadius: 4,
-          elevation: 5,
+          shadowOffset: {},
+          shadowColor: '#000',
+          shadowOpacity: contentOffset < 150 ? 1 : 0,
+          shadowRadius: 0,
+          elevation: 2,
         }}
       >
         <Image source={DP_LOGO} style={styles.image} />

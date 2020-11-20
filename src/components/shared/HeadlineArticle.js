@@ -6,7 +6,6 @@ import { PictureHeadline } from './PictureHeadline'
 import { IMAGE_URL } from '../../utils/helperFunctions'
 
 export const HeadlineArticle = (data) => {
-  console.log(data)
   const {
     data: {
       article: {
@@ -20,7 +19,7 @@ export const HeadlineArticle = (data) => {
 
   // TODO: CLEAN UP -- A LOT
   var splitAbstract = abstract.split('<p>')[1].split('</p>')[0]
-  console.log(splitAbstract)
+
   return (
     <View>
       <PictureHeadline
