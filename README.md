@@ -1,3 +1,37 @@
+# Content Guide
+
+### Home Page
+
+**Centerpiece**
+- 1 story from `centerpiece`
+
+**Top Carousel**
+- 2 stories from `app-top-news`
+- 1 story from `app-top-opinion`
+- 1 story from `app-top-sports`
+- 1 story from `app-top-multimedia`
+- ordering: news, opinion, sports, multimedia
+
+*IMPORTANT*: If the most recent story from `app-top-opinion` or `app-top-sports` or `app-top-multimedia` is published more than 4 days ago, it will be automatically replaced by an article from `app-top-news`
+
+**In Other xx**
+- `app-front-news`
+- `app-front-opinion`
+- `app-front-sports`
+- `app-front-multimedia`
+
+Number of stories in this section is undecided yet
+
+**UTB Carousel**
+- 5 stories from `utb-app`(??)
+
+### Discover Page
+- A card for each category that links to their most recent stories
+
+![discover page](README-img/discover_page.jpg)
+
+---
+
 # Installation Guide
 
 Install [Expo App](https://docs.expo.io/get-started/installation/#2-expo-client-app-for-ios-and) on your mobile.

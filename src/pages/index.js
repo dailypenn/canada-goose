@@ -65,7 +65,55 @@ const App = () => {
           <HeadlineArticle data={centerArticles[0]} />
           <SectionHeader title="Top Stories" />
           <TopStoriesHorizontalCarousel topStories={topArticles} />
-          <SectionHeader title="Most Recent" />
+          <SectionHeader title="In Other News" />
+          {mostRecentArticles.map((el) => {
+            const {
+              article: {
+                headline,
+                dominantMedia: { attachment_uuid, extension },
+              },
+            } = el
+            return (
+              <HorizontalArticleCell
+                title={headline}
+                category="Politics"
+                imageURL={IMAGE_URL(attachment_uuid, extension)}
+              />
+            )
+          })}
+          <SectionHeader title="In Other Opinion" />
+          {mostRecentArticles.map((el) => {
+            const {
+              article: {
+                headline,
+                dominantMedia: { attachment_uuid, extension },
+              },
+            } = el
+            return (
+              <HorizontalArticleCell
+                title={headline}
+                category="Politics"
+                imageURL={IMAGE_URL(attachment_uuid, extension)}
+              />
+            )
+          })}
+          <SectionHeader title="In Other Sports" />
+          {mostRecentArticles.map((el) => {
+            const {
+              article: {
+                headline,
+                dominantMedia: { attachment_uuid, extension },
+              },
+            } = el
+            return (
+              <HorizontalArticleCell
+                title={headline}
+                category="Politics"
+                imageURL={IMAGE_URL(attachment_uuid, extension)}
+              />
+            )
+          })}
+          <SectionHeader title="In Other Multimedia" />
           {mostRecentArticles.map((el) => {
             const {
               article: {
