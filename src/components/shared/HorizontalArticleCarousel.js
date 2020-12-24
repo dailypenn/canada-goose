@@ -1,17 +1,17 @@
-import React from "react";
-import { StyleSheet, ScrollView, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { IMAGE_URL } from "../../utils/helperFunctions";
-import VerticalArticleCard from "./VerticalArticleCard";
+import React from 'react'
+import { StyleSheet, ScrollView, View } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { IMAGE_URL } from '../../utils/helperFunctions'
+import VerticalArticleCard from './VerticalArticleCard'
 
 const styles = StyleSheet.create({
   cardContainerView: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingLeft: 20,
   },
-});
+})
 
 export const HorizontalArticleCarousel = ({
   articles,
@@ -22,9 +22,9 @@ export const HorizontalArticleCarousel = ({
     horizontal={true}
     contentContainerStyle={{
       width: `${60 * articles.length}%`,
-      alignItems: "center",
-      justifyContent: "center",
-      paddingLeft: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingLeft: 10,
       paddingTop: 10,
       paddingBottom: 20,
     }}
@@ -38,7 +38,7 @@ export const HorizontalArticleCarousel = ({
           headline,
           dominantMedia: { attachment_uuid, extension },
         },
-      } = el;
+      } = el
       return (
         <View style={styles.cardContainerView}>
           <TouchableOpacity activeOpacity={1} onPress={navigateToArticleScreen}>
@@ -50,9 +50,9 @@ export const HorizontalArticleCarousel = ({
             />
           </TouchableOpacity>
         </View>
-      );
+      )
     })}
   </ScrollView>
-);
+)
 
 // export default HorizontalArticleCarousel;
