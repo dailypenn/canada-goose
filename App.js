@@ -1,18 +1,17 @@
-import React from 'react'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-
-import Home from './src/pages/index'
+import React from "react";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { TabNavigationController } from "./NavigationController";
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  uri: 'http://localhost:5000/graphql',
+  uri: "http://localhost:5000/graphql",
   cache: new InMemoryCache(),
-})
+});
 
 const App = () => (
   <ApolloProvider client={client}>
-    <Home />
+    <TabNavigationController />
   </ApolloProvider>
-)
+);
 
-export default App
+export default App;

@@ -1,9 +1,8 @@
-import { View } from 'react-native'
-import { Tagline } from './Tagline'
-import React from 'react'
-import { split } from '@apollo/client'
-import { PictureHeadline } from './PictureHeadline'
-import { IMAGE_URL } from '../../utils/helperFunctions'
+import { View } from "react-native";
+import { Tagline } from "./Tagline";
+import React from "react";
+import { PictureHeadline } from "./PictureHeadline";
+import { IMAGE_URL } from "../../utils/helperFunctions";
 
 export const HeadlineArticle = (data) => {
   const {
@@ -15,10 +14,10 @@ export const HeadlineArticle = (data) => {
         dominantMedia: { attachment_uuid, extension },
       },
     },
-  } = data
+  } = data;
 
   // TODO: CLEAN UP -- A LOT
-  var splitAbstract = abstract.split('<p>')[1].split('</p>')[0]
+  var splitAbstract = abstract.split("<p>")[1].split("</p>")[0];
 
   return (
     <View>
@@ -30,5 +29,5 @@ export const HeadlineArticle = (data) => {
       />
       <Tagline tagline={splitAbstract} />
     </View>
-  )
-}
+  );
+};
