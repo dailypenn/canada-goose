@@ -1,42 +1,42 @@
-import React, { Component } from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import React, { Component } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import {
   HomeScreen,
   ArticleScreen,
   DiscoveryScreen,
   SettingsScreen,
-} from './src/screens'
+} from "./src/screens";
 
-const Stack = createStackNavigator()
-const Tab = createBottomTabNavigator()
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 // Enum for the 3 publications included in this app
 const PublicationEnum = Object.freeze({
-  dp: 'The Daily Pennsylvanian',
-  street: '34th Street',
-  utb: 'Under the Button',
-})
+  dp: "The Daily Pennsylvanian",
+  street: "34th Street",
+  utb: "Under the Button",
+});
 
 function ScreenWithDefaultParams(Comp, defaultParams) {
   return class extends Component {
     render() {
-      return <Comp {...this.props} screenProps={defaultParams} />
+      return <Comp {...this.props} screenProps={defaultParams} />;
     }
-  }
+  };
 }
 
 // Navigation controller for all tabs
 class TabNavigationController extends Component {
   constructor(props) {
-    super(props)
-    this.switchPublication = this.switchPublication.bind(this)
+    super(props);
+    this.switchPublication = this.switchPublication.bind(this);
     this.state = {
       currPublication: PublicationEnum.dp,
       switchPublication: this.switchPublication,
-    }
+    };
   }
 
   // Updates state to match for new publication
@@ -45,7 +45,7 @@ class TabNavigationController extends Component {
       this.setState((prevState) => ({
         ...prevState.switchPublication,
         currPublication: newPublication,
-      }))
+      }));
     }
   }
 
@@ -56,45 +56,45 @@ class TabNavigationController extends Component {
         <Stack.Navigator
           initialRouteName="Home"
           screenOptions={{
-            headerStyle: { backgroundColor: '#42f44b' },
-            headerTintColor: '#fff',
-            headerTitleStyle: { fontWeight: 'bold' },
+            headerStyle: { backgroundColor: "#42f44b" },
+            headerTintColor: "#fff",
+            headerTitleStyle: { fontWeight: "bold" },
           }}
         >
           <Stack.Screen
             name="Home"
             component={ScreenWithDefaultParams(HomeScreen, screenProps)}
             options={{
-              title: 'Home',
+              title: "Home",
               headerShown: false,
             }}
           />
           <Stack.Screen
             name="Article"
             component={ArticleScreen}
-            options={{ title: 'Article', animationEnabled: false }}
+            options={{ title: "Article", animationEnabled: false }}
           />
         </Stack.Navigator>
-      )
-    }
+      );
+    };
     // Navigation stack within the discovery tab
     const DiscoveryStack = () => (
       <Stack.Navigator
         initialRouteName="Discovery"
         screenOptions={{
-          headerStyle: { backgroundColor: '#42f44b' },
-          headerTintColor: '#fff',
-          headerTitleStyle: { fontWeight: 'bold' },
+          headerStyle: { backgroundColor: "#42f44b" },
+          headerTintColor: "#fff",
+          headerTitleStyle: { fontWeight: "bold" },
         }}
       >
         <Stack.Screen
           name="Discovery"
           component={DiscoveryScreen}
-          options={{ title: 'Discovery', headerShown: false }}
+          options={{ title: "Discovery", headerShown: false }}
         />
         {/* TO DO: add more screens involved in discovery stack */}
       </Stack.Navigator>
-    )
+    );
 
     // Navigation stack within the Article tab
     // TO DO: navigate to here when an article is clicked instead of the ArticleScreen
@@ -102,36 +102,36 @@ class TabNavigationController extends Component {
       <Stack.Navigator
         initialRouteName="Article"
         screenOptions={{
-          headerStyle: { backgroundColor: '#42f44b' },
-          headerTintColor: '#fff',
-          headerTitleStyle: { fontWeight: 'bold' },
+          headerStyle: { backgroundColor: "#42f44b" },
+          headerTintColor: "#fff",
+          headerTitleStyle: { fontWeight: "bold" },
         }}
       >
         <Stack.Screen
           name="Article"
           component={ArticleScreen}
-          options={{ title: 'Article', headerShown: false }}
+          options={{ title: "Article", headerShown: false }}
         />
       </Stack.Navigator>
-    )
+    );
 
     return (
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ color, size }) => {
-              let iconName
+              let iconName;
 
-              if (route.name === 'HomeStack') iconName = 'ios-home'
-              else if (route.name == 'DiscoveryStack') iconName = 'ios-search'
-              else if (route.name === 'Settings') iconName = 'ios-settings'
+              if (route.name === "HomeStack") iconName = "ios-home";
+              else if (route.name == "DiscoveryStack") iconName = "ios-search";
+              else if (route.name === "Settings") iconName = "ios-settings";
 
-              return <Ionicons name={iconName} size={size} color={color} />
+              return <Ionicons name={iconName} size={size} color={color} />;
             },
           })}
           tabBarOptions={{
-            activeTintColor: '#A61E21',
-            inactiveTintColor: 'gray',
+            activeTintColor: "#A61E21",
+            inactiveTintColor: "gray",
             showLabel: false,
           }}
         >
@@ -145,8 +145,8 @@ class TabNavigationController extends Component {
           <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>
       </NavigationContainer>
-    )
+    );
   }
 }
 
-export { PublicationEnum, TabNavigationController }
+export { PublicationEnum, TabNavigationController };

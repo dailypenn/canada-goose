@@ -1,9 +1,9 @@
-import React from "react"
-import { View, StyleSheet, Text } from "react-native"
+import React from "react";
+import { View, StyleSheet, Text } from "react-native";
+import { PublicationPrimaryColor } from "../../utils/branding";
 
 const styles = StyleSheet.create({
   title: {
-    color: "#A61E21",
     fontFamily: "HelveticaNeue-CondensedBold",
     fontSize: 28,
     fontWeight: "bold",
@@ -17,10 +17,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
-})
+});
 
-export const SectionHeader = ({ title }) => (
+const titleStyle = (publication) => {
+  return {
+    ...{ color: PublicationPrimaryColor(publication) },
+    ...styles.title,
+  };
+};
+
+export const SectionHeader = ({ title, publication }) => (
   <View style={styles.view}>
-    <Text style={styles.title}>{title}</Text>
+    <Text style={titleStyle(publication)}>{title}</Text>
   </View>
-)
+);

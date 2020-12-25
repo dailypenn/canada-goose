@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, ImageBackground } from "react-native";
+import { PublicationPrimaryColor } from "../../utils/branding";
 
 const styles = StyleSheet.create({
   container: {
@@ -27,7 +28,6 @@ const styles = StyleSheet.create({
   },
 
   category: {
-    color: "darkred",
     fontFamily: "HelveticaNeue-CondensedBold",
     textTransform: "uppercase",
     fontSize: 14,
@@ -55,25 +55,40 @@ const styles = StyleSheet.create({
   },
 });
 
-const VerticalArticleCard = ({ category, time, title, imageUrl }) => (
-  <View style={styles.shadow}>
-    <View style={styles.container}>
-      <ImageBackground
-        style={styles.imageBackground}
-        source={{ uri: imageUrl }}
-      ></ImageBackground>
-      <View style={{ padding: 15, height: 130 }}>
-        <View style={styles.textRow}>
-          <Text style={styles.category}>{category}</Text>
-          <View style={styles.spacer} />
-          <Text style={styles.time}>{time}</Text>
+const categoryStyle = (publication) => {
+  return {
+    ...{ color: PublicationPrimaryColor(publication) },
+    ...styles.category,
+  };
+};
+
+const VerticalArticleCard = ({
+  category,
+  time,
+  title,
+  imageUrl,
+  publication,
+}) => {
+  return (
+    <View style={styles.shadow}>
+      <View style={styles.container}>
+        <ImageBackground
+          style={styles.imageBackground}
+          source={{ uri: imageUrl }}
+        ></ImageBackground>
+        <View style={{ padding: 15, height: 130 }}>
+          <View style={styles.textRow}>
+            <Text style={categoryStyle(publication)}>{category}</Text>
+            <View style={styles.spacer} />
+            <Text style={styles.time}>{time}</Text>
+          </View>
+          <Text numberOfLines={5} style={styles.title}>
+            {title}
+          </Text>
         </View>
-        <Text numberOfLines={5} style={styles.title}>
-          {title}
-        </Text>
       </View>
     </View>
-  </View>
-);
+  );
+};
 
 export default VerticalArticleCard;

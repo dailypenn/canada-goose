@@ -35,6 +35,7 @@ class HomeView extends Component {
       { name: "In Other Multimedia", articles: props.mostRecentArticles },
     ];
     this.navigateToArticleScreen = this.navigateToArticleScreen.bind(this);
+    console.log(this.props.publicationState);
   }
 
   navigateToArticleScreen(article) {
@@ -53,22 +54,33 @@ class HomeView extends Component {
           onScroll={(event) => handleScroll(event)}
           scrollEventThrottle={16}
         >
-          <HeadlineArticle data={this.props.centerArticles[0]} />
+          <HeadlineArticle
+            data={this.props.centerArticles[0]}
+            publication={this.props.publicationState.currPublication}
+          />
 
-          <SectionHeader title="Top Stories" />
+          <SectionHeader
+            title="Top Stories"
+            publication={this.props.publicationState.currPublication}
+          />
           <HorizontalArticleCarousel
             articles={this.props.topArticles}
             navigateToArticleScreen={this.navigateToArticleScreen}
+            publication={this.props.publicationState.currPublication}
           />
 
           {this.sections.map((el) => {
             const { name, articles } = el;
             return (
               <View>
-                <SectionHeader title={name} />
+                <SectionHeader
+                  title={name}
+                  publication={this.props.publicationState.currPublication}
+                />
                 <ArticleList
                   articles={articles}
                   navigateToArticleScreen={this.navigateToArticleScreen}
+                  publication={this.props.publicationState.currPublication}
                 />
               </View>
             );
