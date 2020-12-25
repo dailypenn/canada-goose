@@ -1,14 +1,14 @@
-import React from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
-import { PublicationPrimaryColor } from "../../utils/branding";
+import React from 'react'
+import { View, StyleSheet, Image, Text } from 'react-native'
+import { PublicationPrimaryColor } from '../../utils/branding'
 
 const styles = StyleSheet.create({
   title: {
-    color: "#000",
-    fontFamily: "HelveticaNeue-CondensedBold",
+    color: '#000',
+    fontFamily: 'HelveticaNeue-CondensedBold',
     flex: 1,
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     lineHeight: 20,
   },
   image: {
@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
     height: 100,
     paddingHorizontal: 15,
     borderRadius: 5,
-    backgroundColor: "#000",
+    backgroundColor: '#000',
   },
   imageView: {
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 2,
       height: 4,
@@ -29,16 +29,16 @@ const styles = StyleSheet.create({
     elevation: 9,
   },
   category: {
-    fontFamily: "HelveticaNeue-CondensedBold",
-    textTransform: "uppercase",
+    fontFamily: 'HelveticaNeue-CondensedBold',
+    textTransform: 'uppercase',
     fontSize: 13,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     lineHeight: 13,
     paddingBottom: 4,
   },
   hView: {
-    backgroundColor: "rgba(100, 0, 0, 0.0)",
-    flexDirection: "row",
+    backgroundColor: 'rgba(100, 0, 0, 0.0)',
+    flexDirection: 'row',
     paddingHorizontal: 20,
     marginVertical: 10,
   },
@@ -46,14 +46,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     flexShrink: 1,
   },
-});
+})
 
 const categoryStyle = (publication) => {
   return {
     ...{ color: PublicationPrimaryColor(publication) },
     ...styles.category,
-  };
-};
+  }
+}
 
 export const HorizontalArticleCell = ({
   imageURL,
@@ -73,5 +73,5 @@ export const HorizontalArticleCell = ({
         </Text>
       </View>
     </View>
-  );
-};
+  )
+}

@@ -1,7 +1,7 @@
-import React from "react";
-import { View, TouchableOpacity } from "react-native";
-import { IMAGE_URL } from "../../utils/helperFunctions";
-import { HorizontalArticleCell } from "./HorizontalArticleCell";
+import React from 'react'
+import { View, TouchableOpacity } from 'react-native'
+import { IMAGE_URL } from '../../utils/helperFunctions'
+import { HorizontalArticleCell } from './HorizontalArticleCell'
 
 export const ArticleList = ({
   articles,
@@ -16,7 +16,7 @@ export const ArticleList = ({
             headline,
             dominantMedia: { attachment_uuid, extension },
           },
-        } = el;
+        } = el
         return (
           <TouchableOpacity activeOpacity={1} onPress={navigateToArticleScreen}>
             <HorizontalArticleCell
@@ -26,10 +26,10 @@ export const ArticleList = ({
               publication={publication}
             />
           </TouchableOpacity>
-        );
+        )
       })}
     </View>
-  );
-};
+  )
+}
 
 // export default ArticleList;

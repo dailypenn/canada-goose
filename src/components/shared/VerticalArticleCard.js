@@ -1,13 +1,13 @@
-import React from "react";
-import { Text, View, StyleSheet, ImageBackground } from "react-native";
-import { PublicationPrimaryColor } from "../../utils/branding";
+import React from 'react'
+import { Text, View, StyleSheet, ImageBackground } from 'react-native'
+import { PublicationPrimaryColor } from '../../utils/branding'
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    backgroundColor: "#fff",
+    width: '100%',
+    backgroundColor: '#fff',
     borderRadius: 7,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
 
   imageBackground: {
@@ -17,31 +17,31 @@ const styles = StyleSheet.create({
   },
 
   textRow: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
 
   title: {
-    fontFamily: "HelveticaNeue-CondensedBold",
+    fontFamily: 'HelveticaNeue-CondensedBold',
     fontSize: 16,
     flexShrink: 1,
     paddingTop: 5,
   },
 
   category: {
-    fontFamily: "HelveticaNeue-CondensedBold",
-    textTransform: "uppercase",
+    fontFamily: 'HelveticaNeue-CondensedBold',
+    textTransform: 'uppercase',
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     opacity: 0.75,
   },
 
   time: {
-    fontFamily: "AvenirNextCondensed-Regular",
-    textTransform: "uppercase",
+    fontFamily: 'AvenirNextCondensed-Regular',
+    textTransform: 'uppercase',
     fontSize: 14,
   },
   shadow: {
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 2,
       height: 4,
@@ -53,14 +53,14 @@ const styles = StyleSheet.create({
   spacer: {
     flex: 1,
   },
-});
+})
 
 const categoryStyle = (publication) => {
   return {
     ...{ color: PublicationPrimaryColor(publication) },
     ...styles.category,
-  };
-};
+  }
+}
 
 const VerticalArticleCard = ({
   category,
@@ -88,7 +88,7 @@ const VerticalArticleCard = ({
         </View>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default VerticalArticleCard;
+export default VerticalArticleCard
