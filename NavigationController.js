@@ -20,7 +20,7 @@ const PublicationEnum = Object.freeze({
   utb: 'Under the Button',
 })
 
-function ScreenWithDefaultParams(Comp, defaultParams) {
+const ScreenWithDefaultParams = (Comp, defaultParams) => {
   return class extends Component {
     render() {
       return <Comp {...this.props} screenProps={defaultParams} />
