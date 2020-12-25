@@ -17,7 +17,7 @@ const Tab = createBottomTabNavigator()
 const PublicationEnum = Object.freeze({
   dp: 'The Daily Pennsylvanian',
   street: '34th Street',
-  utp: 'Under the Button',
+  utb: 'Under the Button',
 })
 
 function ScreenWithDefaultParams(Comp, defaultParams) {
