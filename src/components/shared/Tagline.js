@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginTop: 4,
     marginRight: 10,
+    color: 'white',
   },
   view: {
     flexDirection: 'row',
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
 
 const circleStyle = (publication) => {
   return {
-    ...{ color: PublicationPrimaryColor(publication) },
+    ...{ backgroundColor: PublicationPrimaryColor(publication) },
     ...styles.circle,
   }
 }

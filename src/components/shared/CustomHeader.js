@@ -12,9 +12,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { PublicationEnum } from '../../../NavigationController'
 import { PublicationPrimaryColorRgba } from '../../utils/branding'
 const DP_LOGO = require('../../static/logos/dp-logo-large.png')
-// const STREET_LOGO = require("../../static/logos/street-logo-large.png");
-// const UTB_LOGO = require("../../static/logos/utb-logo-large.png");
-
 // half the height of the header
 const HEADER_HALF = Math.round(Dimensions.get('window').height) * 0.06
 
