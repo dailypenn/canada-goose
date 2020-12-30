@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: 'HelveticaNeue-CondensedBold',
     flex: 1,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     lineHeight: 20,
   },
