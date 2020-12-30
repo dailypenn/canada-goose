@@ -5,6 +5,7 @@ import {
   Image,
   StatusBar,
   SafeAreaView,
+  Text,
   Platform,
   Dimensions,
 } from 'react-native'
@@ -14,16 +15,9 @@ import { PublicationPrimaryColorRgba } from '../../utils/branding'
 const DP_LOGO_WHITE = require('../../static/logos/dp-logo-small-white.png')
 const DP_LOGO_RED = require('../../static/logos/dp-logo-small-red.png')
 // half the height of the header
-const HEADER_HALF = Math.round(Dimensions.get('window').height) * 0.09
+const HEADER_HALF = Math.round(Dimensions.get('window').height) * 0.1
 
 const styles = StyleSheet.create({
-  barContent: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-  },
-
   gradient: {
     position: 'absolute',
     left: 0,
@@ -34,9 +28,8 @@ const styles = StyleSheet.create({
 
   image: {
     height: '50%',
+    width: 80,
     resizeMode: 'contain',
-    alignSelf: 'center',
-    justifyContent: 'center',
   },
 
   view: {
@@ -47,9 +40,9 @@ const styles = StyleSheet.create({
   },
 
   safeAreaView: {
-    flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     height: HEADER_HALF,
     shadowOffset: {},
     shadowColor: '#000',
@@ -59,19 +52,18 @@ const styles = StyleSheet.create({
 })
 
 export const CustomHeader = ({ publicationState, contentOffset }) => {
-  const fadeStart = 100
-  const fadeEnd = 175
-  const fadeDist = fadeEnd - fadeStart
-  const dpRed = 'rgba(166, 30, 33)'
-  const utbBlue = 'rgba(33, 60, 220)'
+  const FADE_START = 100
+  const FADE_END = 175
+  const FADE_DIST = FADE_END - FADE_START
 
   const addOpacity = (rgbString, opacity) => {
-    return rgbString.split(')')[0] + ',' + opacity * 0.8 + ')'
+    return rgbString.split(')')[0] + ',' + String(opacity * 0.8) + ')'
   }
 
-  const getLogo = (publication) => {
+  const getLogo = (publication, contentOffset) => {
     // TODO: Implement when we get all logos
-    return DP_LOGO_WHITE
+    // Currently replacing red logo with white when fade is completed
+    return contentOffset < FADE_END ? DP_LOGO_WHITE : DP_LOGO_RED
   }
 
   const animateMenu = () => {
@@ -104,28 +96,32 @@ export const CustomHeader = ({ publicationState, contentOffset }) => {
         ...styles.view,
         ...{
           backgroundColor: addOpacity(
-            PublicationPrimaryColorRgba(publicationState.currPublication),
-            (contentOffset - fadeStart) / fadeDist
+            'rgba(255, 255, 255)',
+            (contentOffset - FADE_START) / FADE_DIST
           ),
           paddingTop: calculateTopPadding(),
-          shadowColor: contentOffset < fadeEnd ? null : '#000',
-          shadowOffset: contentOffset < fadeEnd ? null : { height: 5 },
-          shadowOpacity: contentOffset < fadeEnd ? null : 0.5,
-          shadowRadius: contentOffset < fadeEnd ? null : 8,
-          elevation: contentOffset < fadeEnd ? null : 4,
+          shadowColor: contentOffset < FADE_END ? null : '#000',
+          shadowOffset: contentOffset < FADE_END ? null : { height: 5 },
+          shadowOpacity: contentOffset < FADE_END ? null : 0.5,
+          shadowRadius: contentOffset < FADE_END ? null : 8,
+          elevation: contentOffset < FADE_END ? null : 4,
         },
       }}
     >
       <TouchableOpacity onPress={animateMenu} opacity={1}>
-        <StatusBar barStyle="light-content" />
+        <StatusBar
+          barStyle={
+            contentOffset >= FADE_END ? 'dark-content' : 'light-content'
+          }
+        />
         <SafeAreaView
           style={{
             ...styles.safeAreaView,
-            ...{ shadowOpacity: 1 - (contentOffset - fadeStart) / fadeDist },
+            ...{ shadowOpacity: 1 - (contentOffset - FADE_START) / FADE_DIST },
           }}
         >
           <Image
-            source={getLogo(publicationState.currPublication)}
+            source={getLogo(publicationState.currPublication, contentOffset)}
             style={styles.image}
           />
         </SafeAreaView>
