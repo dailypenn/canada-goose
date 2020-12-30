@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     paddingHorizontal: 15,
     borderRadius: 5,
     backgroundColor: '#000',

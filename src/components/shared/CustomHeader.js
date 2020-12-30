@@ -15,7 +15,8 @@ import { PublicationPrimaryColorRgba } from '../../utils/branding'
 const DP_LOGO_WHITE = require('../../static/logos/dp-logo-small-white.png')
 const DP_LOGO_RED = require('../../static/logos/dp-logo-small-red.png')
 // half the height of the header
-const HEADER_HALF = Math.round(Dimensions.get('window').height) * 0.1
+const IOS_NOTCH_OFFSET = 44
+const IOS_STATUS_BAR_OFFSET = 20
 
 const styles = StyleSheet.create({
   gradient: {
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    height: HEADER_HALF,
+    height: 60,
     shadowOffset: {},
     shadowColor: '#000',
     shadowRadius: 3,
@@ -87,7 +88,7 @@ export const CustomHeader = ({ publicationState, contentOffset }) => {
 
     const { width, height } = Dimensions.get('window')
     // If the iPhone has a notch,
-    return height / width < 1.8 ? 10 : HEADER_HALF
+    return height / width < 1.8 ? IOS_STATUS_BAR_OFFSET : IOS_NOTCH_OFFSET
   }
 
   return (
