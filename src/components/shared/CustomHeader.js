@@ -58,7 +58,9 @@ export const CustomHeader = ({ publicationState, contentOffset }) => {
   const FADE_DIST = FADE_END - FADE_START
 
   const addOpacity = (rgbString, opacity) => {
-    return rgbString.split(')')[0] + ',' + String(opacity * 0.8) + ')'
+    return (
+      rgbString.split(')')[0] + ',' + String(Math.min(opacity, 1) * 0.9) + ')'
+    )
   }
 
   const getLogo = (publication, contentOffset) => {
