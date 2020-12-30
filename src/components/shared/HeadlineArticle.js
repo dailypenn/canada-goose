@@ -1,11 +1,10 @@
 import { View } from 'react-native'
 import { Tagline } from './Tagline'
 import React from 'react'
-import { split } from '@apollo/client'
 import { PictureHeadline } from './PictureHeadline'
 import { IMAGE_URL } from '../../utils/helperFunctions'
 
-export const HeadlineArticle = (data) => {
+export const HeadlineArticle = (data, publication) => {
   const {
     data: {
       article: {
@@ -28,7 +27,7 @@ export const HeadlineArticle = (data) => {
         imageUrl={IMAGE_URL(attachment_uuid, extension)}
         category="NEWS"
       />
-      <Tagline tagline={splitAbstract} />
+      <Tagline tagline={splitAbstract} publication={publication} />
     </View>
   )
 }

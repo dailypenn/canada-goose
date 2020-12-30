@@ -1,28 +1,23 @@
-import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import {
   View,
   StyleSheet,
   Image,
-  Text,
-  Dimensions,
   StatusBar,
   SafeAreaView,
+  Text,
   Platform,
-  Button,
+  Dimensions,
 } from 'react-native'
-import { Header } from 'react-native-elements'
-
-const SCREEN_HEIGHT = Math.round(Dimensions.get('window').height)
-const DP_LOGO = require('../../static/logos/thedp.png')
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { PublicationEnum } from '../../../NavigationController'
+import { PublicationPrimaryColorRgba } from '../../utils/branding'
+const DP_LOGO_WHITE = require('../../static/logos/dp-logo-small-white.png')
+const DP_LOGO_RED = require('../../static/logos/dp-logo-small-red.png')
+// half the height of the header
+const HEADER_HALF = Math.round(Dimensions.get('window').height) * 0.1
 
 const styles = StyleSheet.create({
-  barContent: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-  },
   gradient: {
     position: 'absolute',
     left: 0,
@@ -32,58 +27,105 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    height: 30,
+    height: '50%',
+    width: 80,
     resizeMode: 'contain',
-    alignSelf: 'center',
   },
+
   view: {
     width: '100%',
     justifyContent: 'center',
     position: 'absolute',
-    backgroundColor: '#A61E21',
-    paddingTop: Platform.OS == 'ios' ? 50 : StatusBar.height,
     top: 0,
+  },
+
+  safeAreaView: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    height: HEADER_HALF,
+    shadowOffset: {},
+    shadowColor: '#000',
+    shadowRadius: 3,
+    elevation: 2,
   },
 })
 
-export const CustomHeader = ({ contentOffset }) => {
+export const CustomHeader = ({ publicationState, contentOffset }) => {
+  const FADE_START = 100
+  const FADE_END = 175
+  const FADE_DIST = FADE_END - FADE_START
+
+  const addOpacity = (rgbString, opacity) => {
+    return rgbString.split(')')[0] + ',' + String(opacity * 0.8) + ')'
+  }
+
+  const getLogo = (publication, contentOffset) => {
+    // TODO: Implement when we get all logos
+    // Currently replacing red logo with white when fade is completed
+    return contentOffset < FADE_END ? DP_LOGO_WHITE : DP_LOGO_RED
+  }
+
+  const animateMenu = () => {
+    // TO DO: create animation here
+
+    // TO DO: move this to where a publication is selected
+    const newPub =
+      publicationState.currPublication == PublicationEnum.utb
+        ? PublicationEnum.dp
+        : PublicationEnum.utb
+    publicationState.switchPublication(newPub)
+  }
+
+  /** Function that determins top padding of header depending
+   * on operating system and aspect ratio (if the iPhone has a
+   * notch)
+   */
+  const calculateTopPadding = () => {
+    // If Android, then make room for the status bar
+    if (Platform.OS == 'android') return StatusBar.height
+
+    const { width, height } = Dimensions.get('window')
+    // If the iPhone has a notch,
+    return height / width < 1.8 ? 10 : HEADER_HALF
+  }
+
   return (
     <View
       style={{
-        width: '100%',
-        justifyContent: 'center',
-        position: 'absolute',
-        backgroundColor: contentOffset < 150 ? 'transparent' : '#A61E21',
-        paddingTop: Platform.OS == 'ios' ? 50 : StatusBar.height,
-        top: 0,
-        shadowColor: contentOffset < 150 ? null : '#000',
-        shadowOffset:
-          contentOffset < 150
-            ? null
-            : {
-                height: 5,
-              },
-        shadowOpacity: contentOffset < 150 ? null : 0.5,
-        shadowRadius: contentOffset < 150 ? null : 8,
-        elevation: contentOffset < 150 ? null : 4,
+        ...styles.view,
+        ...{
+          backgroundColor: addOpacity(
+            'rgba(255, 255, 255)',
+            (contentOffset - FADE_START) / FADE_DIST
+          ),
+          paddingTop: calculateTopPadding(),
+          shadowColor: contentOffset < FADE_END ? null : '#000',
+          shadowOffset: contentOffset < FADE_END ? null : { height: 5 },
+          shadowOpacity: contentOffset < FADE_END ? null : 0.5,
+          shadowRadius: contentOffset < FADE_END ? null : 8,
+          elevation: contentOffset < FADE_END ? null : 4,
+        },
       }}
     >
-      <StatusBar barStyle="light-content" />
-      <SafeAreaView
-        style={{
-          flex: 1,
-          alignContent: 'center',
-          justifyContent: 'center',
-          height: 50,
-          shadowOffset: {},
-          shadowColor: '#000',
-          shadowOpacity: contentOffset < 150 ? 1 : 0,
-          shadowRadius: 3,
-          elevation: 2,
-        }}
-      >
-        <Image source={DP_LOGO} style={styles.image} />
-      </SafeAreaView>
+      <TouchableOpacity onPress={animateMenu} opacity={1}>
+        <StatusBar
+          barStyle={
+            contentOffset >= FADE_END ? 'dark-content' : 'light-content'
+          }
+        />
+        <SafeAreaView
+          style={{
+            ...styles.safeAreaView,
+            ...{ shadowOpacity: 1 - (contentOffset - FADE_START) / FADE_DIST },
+          }}
+        >
+          <Image
+            source={getLogo(publicationState.currPublication, contentOffset)}
+            style={styles.image}
+          />
+        </SafeAreaView>
+      </TouchableOpacity>
     </View>
   )
 }

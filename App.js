@@ -1,7 +1,6 @@
 import React from 'react'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-
-import Home from './src/pages/index'
+import { TabNavigationController } from './NavigationController'
 
 // Initialize Apollo Client
 const client = new ApolloClient({
@@ -11,7 +10,7 @@ const client = new ApolloClient({
 
 const App = () => (
   <ApolloProvider client={client}>
-    <Home />
+    <TabNavigationController />
   </ApolloProvider>
 )
 

@@ -1,12 +1,13 @@
 import React from 'react'
 import { View, StyleSheet, Image, Text } from 'react-native'
+import { PublicationPrimaryColor } from '../../utils/branding'
 
 const styles = StyleSheet.create({
   title: {
     color: '#000',
     fontFamily: 'HelveticaNeue-CondensedBold',
     flex: 1,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     lineHeight: 20,
   },
@@ -28,7 +29,6 @@ const styles = StyleSheet.create({
     elevation: 9,
   },
   category: {
-    color: '#A61E21',
     fontFamily: 'HelveticaNeue-CondensedBold',
     textTransform: 'uppercase',
     fontSize: 13,
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(100, 0, 0, 0.0)',
     flexDirection: 'row',
     paddingHorizontal: 20,
-    //paddingVertical: 10,
     marginVertical: 10,
   },
   vView: {
@@ -49,16 +48,30 @@ const styles = StyleSheet.create({
   },
 })
 
-export const HorizontalArticleCell = ({ imageURL, category, title }) => (
-  <View style={styles.hView}>
-    <View style={styles.imageView}>
-      <Image style={styles.image} source={{ uri: imageURL }} />
+const categoryStyle = (publication) => {
+  return {
+    ...{ color: PublicationPrimaryColor(publication) },
+    ...styles.category,
+  }
+}
+
+export const HorizontalArticleCell = ({
+  imageURL,
+  category,
+  title,
+  publication,
+}) => {
+  return (
+    <View style={styles.hView}>
+      <View style={styles.imageView}>
+        <Image style={styles.image} source={{ uri: imageURL }} />
+      </View>
+      <View style={styles.vView}>
+        <Text style={categoryStyle(publication)}>{category}</Text>
+        <Text style={styles.title} numberOfLines={4}>
+          {title}
+        </Text>
+      </View>
     </View>
-    <View style={styles.vView}>
-      <Text style={styles.category}>{category}</Text>
-      <Text style={styles.title} numberOfLines={4}>
-        {title}
-      </Text>
-    </View>
-  </View>
-)
+  )
+}

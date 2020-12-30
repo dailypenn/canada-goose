@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, StyleSheet, ImageBackground, Text } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
+import { PublicationPrimaryColor } from '../../utils/branding'
 
 const styles = StyleSheet.create({
   tagline: {
@@ -13,9 +14,9 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#A61E21',
     marginTop: 4,
     marginRight: 10,
+    color: 'white',
   },
   view: {
     flexDirection: 'row',
@@ -23,9 +24,16 @@ const styles = StyleSheet.create({
   },
 })
 
-export const Tagline = ({ tagline }) => (
+const circleStyle = (publication) => {
+  return {
+    ...{ backgroundColor: PublicationPrimaryColor(publication) },
+    ...styles.circle,
+  }
+}
+
+export const Tagline = ({ tagline, publication }) => (
   <View style={styles.view}>
-    <View style={styles.circle} />
+    <View style={circleStyle(publication)} />
     <Text style={styles.tagline}>{tagline}</Text>
   </View>
 )
