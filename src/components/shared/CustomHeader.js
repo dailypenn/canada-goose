@@ -11,9 +11,10 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { PublicationEnum } from '../../../NavigationController'
 import { PublicationPrimaryColorRgba } from '../../utils/branding'
-const DP_LOGO = require('../../static/logos/dp-logo-large.png')
+const DP_LOGO_WHITE = require('../../static/logos/dp-logo-small-white.png')
+const DP_LOGO_RED = require('../../static/logos/dp-logo-small-red.png')
 // half the height of the header
-const HEADER_HALF = Math.round(Dimensions.get('window').height) * 0.06
+const HEADER_HALF = Math.round(Dimensions.get('window').height) * 0.09
 
 const styles = StyleSheet.create({
   barContent: {
@@ -65,12 +66,12 @@ export const CustomHeader = ({ publicationState, contentOffset }) => {
   const utbBlue = 'rgba(33, 60, 220)'
 
   const addOpacity = (rgbString, opacity) => {
-    return rgbString.split(')')[0] + ',' + opacity + ')'
+    return rgbString.split(')')[0] + ',' + opacity * 0.8 + ')'
   }
 
   const getLogo = (publication) => {
     // TODO: Implement when we get all logos
-    return DP_LOGO
+    return DP_LOGO_WHITE
   }
 
   const animateMenu = () => {
@@ -84,6 +85,19 @@ export const CustomHeader = ({ publicationState, contentOffset }) => {
     publicationState.switchPublication(newPub)
   }
 
+  /** Function that determins top padding of header depending
+   * on operating system and aspect ratio (if the iPhone has a
+   * notch)
+   */
+  const calculateTopPadding = () => {
+    // If Android, then make room for the status bar
+    if (Platform.OS == 'android') return StatusBar.height
+
+    const { width, height } = Dimensions.get('window')
+    // If the iPhone has a notch,
+    return height / width < 1.8 ? 10 : HEADER_HALF
+  }
+
   return (
     <View
       style={{
@@ -93,7 +107,7 @@ export const CustomHeader = ({ publicationState, contentOffset }) => {
             PublicationPrimaryColorRgba(publicationState.currPublication),
             (contentOffset - fadeStart) / fadeDist
           ),
-          paddingTop: Platform.OS == 'ios' ? HEADER_HALF : StatusBar.height,
+          paddingTop: calculateTopPadding(),
           shadowColor: contentOffset < fadeEnd ? null : '#000',
           shadowOffset: contentOffset < fadeEnd ? null : { height: 5 },
           shadowOpacity: contentOffset < fadeEnd ? null : 0.5,
