@@ -49,3 +49,9 @@ expo start
 Once the QR code is generated, open you camera to scan the code. You should be prompted to open Expo.
 
 If you are prompted to install _Expo CLI_ globally, enter Y.
+
+---
+
+# Wireframe
+
+[Link](https://www.figma.com/file/sExr6OlPwSMzWTCVhUXCt3/The-Daily-Pennsylvanian-App?node-id=0%3A1)
