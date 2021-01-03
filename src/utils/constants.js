@@ -57,3 +57,22 @@ export const HOME_PAGE_QUERY = gql`
     }
   }
 `
+
+export const QUERY_ARTICLES = filter => gpl`
+  query {
+    searchArticles(filter: ${filter}) {
+      headline
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+    }
+  }
+`
+
+export const DISCOVER_SECTIONS = [
+  {
+    "name": "Weekly Spotlight",
+    "img": ""
+  }
+]
