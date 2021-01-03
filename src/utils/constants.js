@@ -58,9 +58,9 @@ export const HOME_PAGE_QUERY = gql`
   }
 `
 
-export const QUERY_ARTICLES = filter => gpl`
-  query {
-    searchArticles(filter: ${filter}) {
+export const ARTICLES_SEARCH = gql`
+  query ($filter: String!) {
+    searchArticles(filter: $filter) {
       headline
       dominantMedia {
         attachment_uuid
@@ -72,7 +72,35 @@ export const QUERY_ARTICLES = filter => gpl`
 
 export const DISCOVER_SECTIONS = [
   {
-    "name": "Weekly Spotlight",
+    "name": "academics",
+    "img": ""
+  },
+  {
+    "name": "administration",
+    "img": ""
+  },
+  {
+    "name": "identities",
+    "img": ""
+  },
+  {
+    "name": "politics",
+    "img": ""
+  },
+  {
+    "name": "student life",
+    "img": ""
+  },
+  {
+    "name": "sports",
+    "img": ""
+  },
+  {
+    "name": "staff editorials",
+    "img": ""
+  },
+  {
+    "name": "opinion columns",
     "img": ""
   }
 ]
