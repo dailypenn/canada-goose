@@ -9,6 +9,7 @@ import {
   HorizontalArticleCarousel,
   ArticleList,
 } from '../components/shared'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const styles = StyleSheet.create({
   container: {
@@ -54,10 +55,20 @@ class HomeView extends Component {
           onScroll={(event) => handleScroll(event)}
           scrollEventThrottle={16}
         >
-          <HeadlineArticle
-            data={this.props.centerArticles[0]}
-            publication={this.props.publicationState.currPublication}
-          />
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() =>
+              this.navigateToArticleScreen(this.props.centerArticles[0])
+            }
+          >
+            <HeadlineArticle
+              data={this.props.centerArticles[0]}
+              publication={this.props.publicationState.currPublication}
+              onPress={() => {
+                this.props.centerArticles[0]
+              }}
+            />
+          </TouchableOpacity>
 
           <SectionHeader
             title="Top Stories"

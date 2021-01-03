@@ -18,7 +18,10 @@ export const ArticleList = ({
           },
         } = el
         return (
-          <TouchableOpacity activeOpacity={1} onPress={navigateToArticleScreen}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigateToArticleScreen(el)}
+          >
             <HorizontalArticleCell
               title={headline}
               category="Politics"

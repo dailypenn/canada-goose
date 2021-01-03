@@ -72,7 +72,7 @@ class TabNavigationController extends Component {
           <Stack.Screen
             name="Article"
             component={ArticleScreen}
-            options={{ title: 'Article', animationEnabled: false }}
+            options={{ title: 'Article', animationEnabled: true }}
           />
         </Stack.Navigator>
       )
