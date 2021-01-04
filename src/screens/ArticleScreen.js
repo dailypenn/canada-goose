@@ -67,7 +67,7 @@ export const ArticleScreen = ({ navigation, route }) => {
           tagsStyles={{
             p: {
               fontSize: 16,
-              lineHeight: 22,
+              lineHeight: 24,
               paddingBottom: 30,
               fontFamily: 'HelveticaNeue',
             },
