@@ -74,6 +74,7 @@ export const ArticleScreen = ({ navigation, route }) => {
             a: { fontSize: 16 },
             img: { paddingBottom: 10 },
           }}
+          ignoredTags={['div']}
         />
       </View>
     </ScrollView>
