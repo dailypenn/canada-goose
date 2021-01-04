@@ -11,6 +11,9 @@ export const HOME_PAGE_QUERY = gql`
           abstract
           content
           published_at
+          authors {
+            name
+          }
           dominantMedia {
             attachment_uuid
             extension
@@ -29,6 +32,9 @@ export const HOME_PAGE_QUERY = gql`
           abstract
           content
           published_at
+          authors {
+            name
+          }
           dominantMedia {
             attachment_uuid
             extension
@@ -47,6 +53,9 @@ export const HOME_PAGE_QUERY = gql`
           abstract
           content
           published_at
+          authors {
+            name
+          }
           dominantMedia {
             attachment_uuid
             extension
