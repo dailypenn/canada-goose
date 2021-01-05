@@ -1,12 +1,15 @@
 import React from 'react'
 import { Text, View, useWindowDimensions } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { PictureHeadline } from '../components/shared'
-import { IMAGE_URL } from '../utils/helperFunctions'
 import HTML from 'react-native-render-html'
 
+import { PictureHeadline } from '../components/shared'
+import { IMAGE_URL } from '../utils/helperFunctions'
+import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
+import { useQuery } from '@apollo/client'
+
 // Converts array of authors to displayable format
-const authorsString = (authorArr) => {
+const authorsString = authorArr => {
   if (authorArr.length == 0) return 'N/A'
   const lastAuth = authorArr[authorArr.length - 1]
   if (authorArr.length == 1) return lastAuth
@@ -18,9 +21,13 @@ const authorsString = (authorArr) => {
 }
 
 export const ArticleScreen = ({ navigation, route }) => {
-  const article = route.params.article
+  const { article } = route.params.article
+
   if (!article) {
     // TODO: Check that article is already fetched
+    const { loading, error, data } = useQuery(QUERY_ARTICLE_BY_SLUG, {
+      variables: { slug: article.slug }
+    })
   }
 
   /* Currently author and image credits are not supported by
@@ -31,30 +38,30 @@ export const ArticleScreen = ({ navigation, route }) => {
   return (
     <ScrollView>
       <PictureHeadline
-        headline={article.article.headline}
-        time={article.article.published_at}
+        headline={article.headline}
+        time={article.published_at}
         imageUrl={IMAGE_URL(
-          article.article.dominantMedia.attachment_uuid,
-          article.article.dominantMedia.extension
+          article.dominantMedia.attachment_uuid,
+          article.dominantMedia.extension
         )}
         category="NEWS"
       />
       <View
         style={{
           paddingHorizontal: 20,
-          paddingVertical: 10,
+          paddingVertical: 10
         }}
       >
         <Text
           style={{
             fontFamily: 'HelveticaNeue-CondensedBold',
-            fontSize: 16,
+            fontSize: 16
           }}
         >{`By: ${authorsString(authors)}`}</Text>
         <Text
           style={{
             fontFamily: 'HelveticaNeue-CondensedBold',
-            fontSize: 16,
+            fontSize: 16
           }}
         >
           {'Photo Credit: ' + photographer}
@@ -62,17 +69,17 @@ export const ArticleScreen = ({ navigation, route }) => {
       </View>
       <View style={{ padding: 20 }}>
         <HTML
-          source={{ html: article.article.content }}
+          source={{ html: article.content }}
           contentWidth={useWindowDimensions().width}
           tagsStyles={{
             p: {
               fontSize: 16,
               lineHeight: 24,
               paddingBottom: 30,
-              fontFamily: 'HelveticaNeue',
+              fontFamily: 'HelveticaNeue'
             },
             a: { fontSize: 16 },
-            img: { paddingBottom: 10 },
+            img: { paddingBottom: 10 }
           }}
           ignoredTags={['div']}
         />
