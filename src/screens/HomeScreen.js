@@ -71,7 +71,7 @@ class HomeView extends Component {
           {this.sections.map((el) => {
             const { name, articles } = el
             return (
-              <View>
+              <View key={name}>
                 <SectionHeader
                   title={name}
                   publication={this.props.publicationState.currPublication}

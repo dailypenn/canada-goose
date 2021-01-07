@@ -42,7 +42,7 @@ export const HorizontalArticleCarousel = ({
           },
         } = el
         return (
-          <View style={styles.cardContainerView}>
+          <View style={styles.cardContainerView} key={headline}>
             <TouchableOpacity
               activeOpacity={1}
               onPress={navigateToArticleScreen}

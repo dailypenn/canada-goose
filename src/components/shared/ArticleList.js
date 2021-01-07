@@ -18,7 +18,7 @@ export const ArticleList = ({
           }
         } = el
         return (
-          <TouchableOpacity activeOpacity={1} onPress={navigateToArticleScreen}>
+          <TouchableOpacity activeOpacity={1} onPress={navigateToArticleScreen} key={headline}>
             <HorizontalArticleCell
               title={headline}
               category="Politics"
@@ -55,7 +55,7 @@ export const SearchArticleList = ({
           dominantMedia: { attachment_uuid, extension }
         } = el
         return (
-          <TouchableOpacity activeOpacity={1} onPress={navigateToArticleScreen}>
+          <TouchableOpacity activeOpacity={1} onPress={navigateToArticleScreen} key={headline}>
             <HorizontalArticleCell
               title={headline}
               category="Politics"
