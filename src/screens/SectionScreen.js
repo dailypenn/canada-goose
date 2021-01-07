@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { useQuery } from '@apollo/client'
 import { StyleSheet, ScrollView, View, Text } from 'react-native'
 
-import { ArticleList } from '../components/shared'
+import { ArticleList, HeadlineArticle } from '../components/shared'
 import { SECTIONS_QUERY } from '../utils/constants'
 
 const styles = StyleSheet.create({
@@ -39,8 +39,12 @@ class SectionView extends Component {
           onScroll={event => handleScroll(event)}
           scrollEventThrottle={16}
         >
+          <HeadlineArticle
+            data={this.props.articles[0]}
+            publication={this.props.publicationState.currPublication}
+          />
           <ArticleList
-            articles={this.props.articles}
+            articles={this.props.articles.slice(1)}
             navigateToArticleScreen={this.navigateToArticleScreen}
             publication={this.props.publicationState.currPublication}
           />

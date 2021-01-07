@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    paddingVertical: 5
   }
 })
 
@@ -51,6 +52,7 @@ export const DiscoveryGrid = ({ navigateToSectionScreen }) => {
         renderPlaceholder={_renderPlaceholder}
         data={SECTIONS}
         numColumns={2}
+        keyExtractor={(item, index) => index}
       />
     </View>
   )

@@ -57,7 +57,7 @@ class DiscoveryView extends Component {
           //style={{minHeight: "110%"}}
         >
           <SectionHeader
-            title={'Discover ' + this.props.publicationState.currPublication}
+            title={'Top Sections'}
             publication={this.props.publicationState.currPublication}
           />
           <DiscoveryGrid
