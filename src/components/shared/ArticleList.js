@@ -9,7 +9,7 @@ export const ArticleList = ({
   publication
 }) => {
   return (
-    <View style={{ paddingLeft: 10 }}>
+    <View>
       {articles.map(el => {
         const {
           article: {
