@@ -155,7 +155,6 @@ export const DiscoveryScreen = ({ navigation, screenProps }) => {
   const [filter, setFilter] = useState('')
 
   const publicationState = screenProps.state
-  const { loading, error, data } = useQuery(HOME_PAGE_QUERY)
 
   if (loading) return <DiscoveryLoading />
 
@@ -163,12 +162,6 @@ export const DiscoveryScreen = ({ navigation, screenProps }) => {
     console.log(error)
     return <Text> Error </Text>
   }
-
-  const {
-    most_recent: { edges: mostRecentArticles },
-    top: { edges: topArticles },
-    centerpiece: { edges: centerArticles }
-  } = data
 
   return (
     <SafeAreaView style={styles.container}>
@@ -182,9 +175,6 @@ export const DiscoveryScreen = ({ navigation, screenProps }) => {
       )}
       {!filter && (
         <DiscoveryView
-          mostRecentArticles={mostRecentArticles}
-          topArticles={topArticles}
-          centerArticles={centerArticles}
           navigation={navigation}
           publicationState={publicationState}
         />
