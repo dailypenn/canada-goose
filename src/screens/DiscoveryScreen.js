@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import { HOME_PAGE_QUERY, ARTICLES_SEARCH } from '../utils/constants'
+import { ARTICLES_SEARCH } from '../utils/constants'
 import {
   SectionHeader,
   DiscoveryGrid,
@@ -155,13 +155,6 @@ export const DiscoveryScreen = ({ navigation, screenProps }) => {
   const [filter, setFilter] = useState('')
 
   const publicationState = screenProps.state
-
-  if (loading) return <DiscoveryLoading />
-
-  if (error) {
-    console.log(error)
-    return <Text> Error </Text>
-  }
 
   return (
     <SafeAreaView style={styles.container}>
