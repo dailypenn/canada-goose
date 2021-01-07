@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 
 let navigate = () => {}
 
-export const DiscoveryGrid = ({ navigateToSectionScreen }) => {
+export const DiscoveryGrid = ({ sections, navigateToSectionScreen }) => {
   navigate = navigateToSectionScreen
   return (
     <View style={{ padding: 0 }}>
@@ -50,9 +50,9 @@ export const DiscoveryGrid = ({ navigateToSectionScreen }) => {
         style={styles.list}
         renderItem={_renderItem}
         renderPlaceholder={_renderPlaceholder}
-        data={SECTIONS}
-        numColumns={2}
         keyExtractor={(item, index) => index}
+        data={sections}
+        numColumns={2}
       />
     </View>
   )

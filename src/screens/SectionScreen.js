@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { useQuery } from '@apollo/client'
+
 import { StyleSheet, ScrollView, View, Text } from 'react-native'
 
 import { ArticleList, HeadlineArticle } from '../components/shared'
@@ -8,8 +9,8 @@ import { SECTIONS_QUERY } from '../utils/constants'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
-  }
+    backgroundColor: '#fff',
+  },
 })
 
 const SectionLoading = () => {
@@ -29,14 +30,14 @@ class SectionView extends Component {
   }
 
   render() {
-    const handleScroll = scrollData => {
+    const handleScroll = (scrollData) => {
       var newOffset = scrollData.nativeEvent.contentOffset.y
       this.setState({ offset: newOffset })
     }
     return (
       <View style={styles.container}>
         <ScrollView
-          onScroll={event => handleScroll(event)}
+          onScroll={(event) => handleScroll(event)}
           scrollEventThrottle={16}
         >
           <HeadlineArticle
@@ -62,7 +63,7 @@ export const SectionScreen = ({ route, navigation, screenProps }) => {
   })
 
   if (loading) return <SectionLoading />
-
+    
   if (error) {
     console.log(error)
     return <Text> Error </Text>
