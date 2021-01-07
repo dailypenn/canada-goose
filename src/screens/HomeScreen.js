@@ -35,7 +35,6 @@ class HomeView extends Component {
       { name: 'In Other Multimedia', articles: props.mostRecentArticles },
     ]
     this.navigateToArticleScreen = this.navigateToArticleScreen.bind(this)
-    console.log(this.props.publicationState)
   }
 
   navigateToArticleScreen(article) {
