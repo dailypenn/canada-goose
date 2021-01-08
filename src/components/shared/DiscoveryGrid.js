@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import Grid from 'react-native-grid-component'
 import { IMAGE_URL } from '../../utils/helperFunctions'
 import { DiscoveryCell } from './DiscoveryCell'
+import { SECTIONS } from '../../utils/constants'
 
 const _renderItem = (data, i) => (
   <TouchableOpacity
@@ -26,21 +27,22 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 2,
-      height: 4
+      height: 4,
     },
     shadowOpacity: 0.32,
     shadowRadius: 5.46,
-    elevation: 9
+    elevation: 9,
   },
   list: {
     flex: 1,
-    paddingHorizontal: 10
-  }
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
 })
 
 let navigate = () => {}
 
-export const DiscoveryGrid = ({ sections, navigateToSectionScreen }) => {
+export const DiscoveryGrid = ({ navigateToSectionScreen }) => {
   navigate = navigateToSectionScreen
   return (
     <View style={{ padding: 0 }}>
@@ -48,7 +50,8 @@ export const DiscoveryGrid = ({ sections, navigateToSectionScreen }) => {
         style={styles.list}
         renderItem={_renderItem}
         renderPlaceholder={_renderPlaceholder}
-        data={sections}
+        keyExtractor={(item, index) => index}
+        data={SECTIONS}
         numColumns={2}
       />
     </View>
