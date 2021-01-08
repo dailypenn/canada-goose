@@ -17,10 +17,11 @@ export const ArticleList = ({
             dominantMedia: { attachment_uuid, extension },
           },
         } = el
+
         return (
           <TouchableOpacity
             activeOpacity={1}
-            onPress={() => navigateToArticleScreen(el)}
+            onPress={() => navigateToArticleScreen(el.article)}
           >
             <HorizontalArticleCell
               title={headline}
@@ -34,16 +35,6 @@ export const ArticleList = ({
     </View>
   )
 }
-
-const Divider = () => (
-  <View
-    style={{
-      borderBottomColor: '#D3D3D3',
-      borderBottomWidth: 1,
-      paddingVertical: 3,
-    }}
-  />
-)
 
 export const SearchArticleList = ({
   articles,
@@ -60,7 +51,7 @@ export const SearchArticleList = ({
         return (
           <TouchableOpacity
             activeOpacity={1}
-            onPress={navigateToArticleScreen}
+            onPress={() => navigateToArticleScreen(el)}
             key={headline}
           >
             <HorizontalArticleCell

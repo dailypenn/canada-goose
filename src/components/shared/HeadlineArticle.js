@@ -4,14 +4,14 @@ import React from 'react'
 import { PictureHeadline } from './PictureHeadline'
 import { IMAGE_URL } from '../../utils/helperFunctions'
 
-export const HeadlineArticle = ({data, publication}) => {
+export const HeadlineArticle = ({ data, publication }) => {
   const {
     article: {
       headline,
       published_at,
       abstract,
-      dominantMedia: { attachment_uuid, extension },
-    },
+      dominantMedia: { attachment_uuid, extension }
+    }
   } = data
 
   // TODO: CLEAN UP -- A LOT
@@ -24,7 +24,7 @@ export const HeadlineArticle = ({data, publication}) => {
         time={published_at}
         imageUrl={IMAGE_URL(attachment_uuid, extension)}
         category="NEWS"
-        publication = {publication}
+        publication={publication}
       />
       <Tagline tagline={splitAbstract} publication={publication} />
     </View>

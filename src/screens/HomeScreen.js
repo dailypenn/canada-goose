@@ -62,7 +62,7 @@ const HomeView = ({
       >
         <TouchableOpacity
           activeOpacity={1}
-          onPress={() => navigateToArticleScreen(centerArticles[0])}
+          onPress={() => navigateToArticleScreen(centerArticles[0].article)}
         >
           <HeadlineArticle
             data={centerArticles[0]}

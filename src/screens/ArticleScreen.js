@@ -25,7 +25,7 @@ const authorsString = authorArr => {
 }
 
 export const ArticleScreen = ({ navigation, route }) => {
-  const { article } = route.params.article
+  const { article } = route.params
 
   if (!article) {
     // TODO: Check that article is already fetched
