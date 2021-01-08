@@ -10,6 +10,8 @@ import {
 import { FlatGrid } from 'react-native-super-grid'
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 
+const people = require('../json/members.json')
+
 const { width, height } = Dimensions.get('window')
 
 const profilePicSize = width / 5
@@ -75,30 +77,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const people = [
-  {
-    name: 'Peter Baile Chen',
-    pic: '../static/logos/default_profile_pic.png',
-  },
-  {
-    name: 'Elizabeth Powell',
-    pic: '../static/logos/default_profile_pic.png',
-  },
-  {
-    name: 'Justin Lieb',
-    pic: '../static/logos/default_profile_pic.png',
-  },
-  {
-    name: 'Raunaq Singh',
-    pic: '../static/logos/default_profile_pic.png',
-  },
-  {
-    name: 'Daniel Tao',
-    pic: '../static/logos/default_profile_pic.png',
-  },
-]
-
-const ProfileCell = ({ name, image }) => {
+const ProfileCell = ({ name, pic }) => {
   return (
     <View style={styles.profilePicCell}>
       <Image
@@ -126,7 +105,7 @@ export const AboutScreen = () => {
         renderItem={({ item }) => (
           <ProfileCell name={item.name} image={item.pic} />
         )}
-      ></FlatGrid>
+      />
     </ScrollView>
   )
 }
