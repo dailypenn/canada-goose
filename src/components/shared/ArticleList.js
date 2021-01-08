@@ -48,7 +48,7 @@ export const SearchArticleList = ({
   publication
 }) => {
   return (
-    <View style={{ paddingLeft: 10 }}>
+    <View style={{ paddingLeft: 0 }}>
       {articles.map(el => {
         const {
           headline,
@@ -56,13 +56,12 @@ export const SearchArticleList = ({
         } = el
         return (
           <TouchableOpacity activeOpacity={1} onPress={navigateToArticleScreen} key={headline}>
-            <HorizontalArticleCell
+            <HorizontalArticleCell style = {{borderWidth: 4, borderColor: '#0F0', marginVertical: 10}}
               title={headline}
               category="Politics"
               imageURL={IMAGE_URL(attachment_uuid, extension)}
               publication={publication}
             />
-            <Divider />
           </TouchableOpacity>
         )
       })}

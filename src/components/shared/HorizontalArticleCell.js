@@ -7,15 +7,15 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: 'HelveticaNeue-CondensedBold',
     flex: 1,
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
-    lineHeight: 24,
+    lineHeight: 22,
   },
   byline: {
     color: '#888',
     fontFamily: 'HelveticaNeue',
-    flex: 1,
-    fontSize: 11,
+    flex: 100,
+    fontSize: 12,
     paddingTop: 10,
   },
   image: {
@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 0,
     backgroundColor: '#000',
+    alignSelf: 'flex-end',
   },
   imageView: {
     shadowColor: '#000',
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0,
     shadowRadius: 5.46,
-    elevation: 9,
+    //elevation: 9,
   },
   category: {
     fontFamily: 'HelveticaNeue-CondensedBold',
@@ -47,12 +48,11 @@ const styles = StyleSheet.create({
     //backgroundColor: 'rgba(220, 220, 220, 1.0)',
     flexDirection: 'row',
     padding: 20,
-    //marginVertical: 10,
   },
   vView: {
-    //paddingHorizontal: 15,
-    paddingRight: 20,
+    paddingRight: 15,
     flexShrink: 1,
+    width: '80%',
   },
 })
 
@@ -97,3 +97,4 @@ export const HorizontalArticleCell = ({
 
 
 //<Text style={categoryStyle(publication)}>{category}</Text>
+// style = {{borderWidth: 1, borderColor: '#333', marginVertical: 10}}

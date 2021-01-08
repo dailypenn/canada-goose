@@ -113,19 +113,18 @@ const SearchBar = ({ setFilter }) => {
   return (
     <>
       <View style={SearchBarStyles.container}>
-        <Ionicons name="search" size={20} style={SearchBarStyles.icon} />
+        <Ionicons name="search" size={20} style={SearchBarStyles.icon} color = '#AAA'/>
         <TextInput
           onChangeText={text => setFilter(text)}
-          placeholder="search articles"
+          placeholder="Search"
           autoCorrect={false}
           autoCapitalize="none"
           style={SearchBarStyles.textInput}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
         />
-        {/* <Button title="Cancel" style={SearchBarStyles.button} /> */}
+        <Ionicons name="close-circle" size={20} style={SearchBarStyles.icon} color = '#AAA'/>
       </View>
-      {/* {focused &&  } */}
     </>
   )
 }
@@ -135,19 +134,26 @@ const SearchBarStyles = StyleSheet.create({
     backgroundColor: '#f8f4f4',
     borderRadius: 13,
     flexDirection: 'row',
-    padding: 10,
-    marginVertical: 10,
-    marginLeft: 10
+    //paddingBottom: 10,
+    marginHorizontal: 20,
   },
   icon: {
-    marginRight: 10
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    //backgroundColor: '#f8f4f4',
   },
   textInput: {
-    fontSize: 18
+    fontSize: 18,
+    //backgroundColor: '#f8f4f4',
+    //borderRadius: 13,
+    //flexDirection: 'row',
+    flex: 1,
   },
   button: {
-    backgroundColor: 'white',
-    marginLeft: 'auto'
+    paddingHorizontal: 10,
+    margin: 10,
+    //backgroundColor: 'white',
+    //marginLeft: 'auto'
   }
 })
 
@@ -192,3 +198,21 @@ export const DiscoveryScreen = ({ navigation, screenProps }) => {
     </SafeAreaView>
   )
 }
+
+
+/*
+      <View style={SearchBarStyles.container}>
+        <Ionicons name="search" size={20} style={SearchBarStyles.icon} />
+        <TextInput
+          onChangeText={text => setFilter(text)}
+          placeholder="Search"
+          autoCorrect={false}
+          autoCapitalize="none"
+          style={SearchBarStyles.textInput}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+        />
+        {/* <Button title="Cancel" style={SearchBarStyles.button} />}
+        </View>
+        {/* {focused &&  } }
+*/

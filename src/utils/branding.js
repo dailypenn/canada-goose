@@ -5,11 +5,11 @@ import { PublicationEnum } from '../../NavigationController'
 // const UTB_LOGO_LARGE = "/src/static/logos/utb-logo-large.png";
 // const STREET_LOGO_LARGE = "/src/static/logos/street-logo-large.png";
 
-const DP_RED = '#A61E21'//'#D72E25'
+const DP_RED = '#D72E25'//'#A61E21'
 const UTB_BLUE = '#3964A6'
 const STREET_TURQ = '#25B7B6'
 
-const DP_RED_RGBA = 'rgba(166, 30, 33)'//'rgba(215, 46, 37)'
+const DP_RED_RGBA = 'rgba(215, 46, 37)'//'rgba(166, 30, 33)'
 const UTB_BLUE_RGBA = 'rgba(57, 100, 166)'
 const STREET_TURQ_RGBA = 'rgba(37, 183, 182)'
 
