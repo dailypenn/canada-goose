@@ -7,16 +7,24 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: 'HelveticaNeue-CondensedBold',
     flex: 1,
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: 'bold',
-    lineHeight: 20,
+    lineHeight: 22,
+  },
+  byline: {
+    color: '#888',
+    fontFamily: 'HelveticaNeue',
+    flex: 100,
+    fontSize: 12,
+    paddingTop: 10,
   },
   image: {
-    width: 80,
-    height: 80,
-    paddingHorizontal: 15,
-    borderRadius: 5,
+    width: 100,
+    height: 75,
+    padding: 15,
+    borderRadius: 0,
     backgroundColor: '#000',
+    alignSelf: 'flex-end',
   },
   imageView: {
     shadowColor: '#000',
@@ -24,9 +32,9 @@ const styles = StyleSheet.create({
       width: 2,
       height: 4,
     },
-    shadowOpacity: 0.32,
+    shadowOpacity: 0,
     shadowRadius: 5.46,
-    elevation: 9,
+    //elevation: 9,
   },
   category: {
     fontFamily: 'HelveticaNeue-CondensedBold',
@@ -37,14 +45,14 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
   },
   hView: {
-    backgroundColor: 'rgba(100, 0, 0, 0.0)',
+    //backgroundColor: 'rgba(220, 220, 220, 1.0)',
     flexDirection: 'row',
-    paddingHorizontal: 20,
-    marginVertical: 10,
+    padding: 20,
   },
   vView: {
-    paddingHorizontal: 15,
+    paddingRight: 15,
     flexShrink: 1,
+    width: '80%',
   },
 })
 
@@ -62,16 +70,31 @@ export const HorizontalArticleCell = ({
   publication,
 }) => {
   return (
-    <View style={styles.hView}>
-      <View style={styles.imageView}>
-        <Image style={styles.image} source={{ uri: imageURL }} />
+    <View>
+      <View style={styles.hView}>
+        <View style={styles.vView}>
+          <Text style={styles.title} numberOfLines={5}>
+            {title}
+          </Text>
+          <Text style={styles.byline}>
+            By Jonah Charlton • 1 hour ago
+          </Text>
+        </View>
+        <View style={styles.imageView}>
+          <Image style={styles.image} source={{ uri: imageURL }} />
+        </View>
       </View>
-      <View style={styles.vView}>
-        <Text style={categoryStyle(publication)}>{category}</Text>
-        <Text style={styles.title} numberOfLines={4}>
-          {title}
-        </Text>
-      </View>
+      <View
+        style={{
+          borderBottomColor: '#CCC',
+          borderBottomWidth: 1,
+          marginHorizontal: 20,
+        }}
+      />
     </View>
   )
 }
+
+
+//<Text style={categoryStyle(publication)}>{category}</Text>
+// style = {{borderWidth: 1, borderColor: '#333', marginVertical: 10}}

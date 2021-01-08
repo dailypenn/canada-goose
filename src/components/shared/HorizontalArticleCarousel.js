@@ -1,15 +1,17 @@
 import React from 'react'
-import { StyleSheet, ScrollView, View } from 'react-native'
+import { StyleSheet, ScrollView, View, Dimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { IMAGE_URL } from '../../utils/helperFunctions'
 import VerticalArticleCard from './VerticalArticleCard'
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   cardContainerView: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 20,
+    paddingHorizontal: 10,
   },
 })
 
@@ -22,13 +24,14 @@ export const HorizontalArticleCarousel = ({
     <ScrollView
       style={{ flex: 1 }}
       horizontal={true}
+      decelerationRate={0}
+      snapToInterval={0.9*width}
+      snapToAlignment={"center"}
       contentContainerStyle={{
-        width: `${60 * articles.length}%`,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingLeft: 10,
-        paddingTop: 10,
-        paddingBottom: 20,
+        width: `${90 * articles.length}%`,
+        paddingHorizontal: 10,
+        paddingTop: 5,
+        paddingBottom: 15,
       }}
       showsHorizontalScrollIndicator={false}
       scrollEventThrottle={100}
@@ -49,7 +52,7 @@ export const HorizontalArticleCarousel = ({
             >
               <VerticalArticleCard
                 category="Politics"
-                time="2 hrs ago"
+                time="12 hrs ago"
                 title={headline}
                 imageUrl={IMAGE_URL(attachment_uuid, extension)}
                 publication={publication}

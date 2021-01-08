@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, ImageBackground, Text } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
+import { CategoryTag } from './CategoryTag'
 
 import {
   DISPLAY_SERIF_BOLD,
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const PictureHeadline = ({ headline, category, time, imageUrl }) => (
+export const PictureHeadline = ({ headline, category, time, imageUrl, publication }) => (
   <View style={styles.view}>
     <ImageBackground style={styles.imageBackground} source={{ uri: imageUrl }}>
       <LinearGradient
@@ -69,7 +70,10 @@ export const PictureHeadline = ({ headline, category, time, imageUrl }) => (
       />
       <View style={styles.spacer} />
       <View style={{ flexDirection: 'row' }}>
-        <Text style={styles.category}>{category}</Text>
+        <CategoryTag
+            name={category}
+            publication={publication}
+        />
         <View style={styles.spacer} />
         <Text style={styles.time}>{time}</Text>
       </View>
