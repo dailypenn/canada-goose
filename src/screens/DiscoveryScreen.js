@@ -7,9 +7,12 @@ import {
   Text,
   TextInput,
   SafeAreaView,
-  Button
+  Button,
+  Keyboard
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+
 
 import { HOME_PAGE_QUERY, ARTICLES_SEARCH } from '../utils/constants'
 import {
@@ -106,6 +109,12 @@ const SearchView = ({ filter, publicationState, navigation }) => {
   )
 }
 
+const hideKeyboard = (text) => {
+  if (text == "") {
+    Keyboard.dismiss()
+  }
+}
+
 const SearchBar = ({ setFilter }) => {
   // TODO: add the cancel button
   const [focused, setFocused] = useState(false)
@@ -115,15 +124,17 @@ const SearchBar = ({ setFilter }) => {
       <View style={SearchBarStyles.container}>
         <Ionicons name="search" size={20} style={SearchBarStyles.icon} color = '#AAA'/>
         <TextInput
-          onChangeText={text => setFilter(text)}
+          onChangeText={text => { setFilter(text); hideKeyboard(text);}}
           placeholder="Search"
           autoCorrect={false}
           autoCapitalize="none"
           style={SearchBarStyles.textInput}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
+          clearButtonMode='always'
+          returnKeyType='search'
         />
-        <Ionicons name="close-circle" size={20} style={SearchBarStyles.icon} color = '#AAA'/>
+        
       </View>
     </>
   )
@@ -201,6 +212,16 @@ export const DiscoveryScreen = ({ navigation, screenProps }) => {
 
 
 /*
+
+<TouchableOpacity
+          activeOpacity={1}
+          onPress={clearSearchBar}
+        >
+          <Ionicons name="close-circle" size={20} style={SearchBarStyles.icon} color = '#AAA'/>
+        </TouchableOpacity>
+
+
+
       <View style={SearchBarStyles.container}>
         <Ionicons name="search" size={20} style={SearchBarStyles.icon} />
         <TextInput
