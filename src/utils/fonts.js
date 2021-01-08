@@ -17,8 +17,8 @@ export async function loadFonts() {
   Font.loadAsync({
     Libertinus: require(`${FONT_FOLDER}/Libertinus/LibertinusSerif-Regular.otf`),
     LibertinusItalic: require(`${FONT_FOLDER}/Libertinus/LibertinusSerif-Italic.otf`),
-    PlayfairDisplayBold: require(`${FONT_FOLDER}/Butler/Butler_Bold.otf`),
-    PlayfairDisplayBlack: require(`${FONT_FOLDER}/Butler/Butler_Black.otf`),
+    PlayfairDisplayBold: require(`${FONT_FOLDER}/Butler/GT-Sectra-Fine-Bold-Trial.otf`),
+    PlayfairDisplayBlack: require(`${FONT_FOLDER}/Butler/GT-Sectra-Fine-Black-Trial.otf`),
     PoppinsBold: require(`${FONT_FOLDER}/Poppins/Poppins-Bold.ttf`),
     PoppinsRegular: require(`${FONT_FOLDER}/Poppins/Poppins-Regular.ttf`),
   })

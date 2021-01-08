@@ -8,18 +8,18 @@ import {
   SectionHeader,
   HeadlineArticle,
   HorizontalArticleCarousel,
-  ArticleList
+  ArticleList,
 } from '../components/shared'
 import { HOME_PAGE_QUERY } from '../utils/constants'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   text1: {
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 })
 
 const HomeLoading = () => {
@@ -34,7 +34,7 @@ const HomeView = ({
   inOtherSportsArticles,
   inOtherMultimediaArticles,
   navigation,
-  publicationState
+  publicationState,
 }) => {
   const [offset, setOffset] = useState(0)
 
@@ -42,12 +42,12 @@ const HomeView = ({
     { name: 'In Other News', articles: inOtherNewsArticles },
     { name: 'In Other Opinion', articles: inOtherOpinionArticles },
     { name: 'In Other Sports', articles: inOtherSportsArticles },
-    { name: 'In Other Multimedia', articles: inOtherMultimediaArticles }
+    { name: 'In Other Multimedia', articles: inOtherMultimediaArticles },
   ]
 
   // TODO: this function sld be put in helperFunctions.js
   navigateToArticleScreen = article => {
-    navigation.navigate('Article', { article })
+    navigation.navigate('Article', { article, publicationState })
   }
 
   const handleScroll = scrollData => {
@@ -122,7 +122,7 @@ export const HomeScreen = ({ navigation, screenProps }) => {
     inOtherNews: { edges: inOtherNewsArticles },
     inOtherOpinion: { edges: inOtherOpinionArticles },
     inOtherSports: { edges: inOtherSportsArticles },
-    inOtherMultimedia: { edges: inOtherMultimediaArticles }
+    inOtherMultimedia: { edges: inOtherMultimediaArticles },
   } = data
 
   return (

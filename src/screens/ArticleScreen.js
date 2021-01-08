@@ -8,16 +8,16 @@ import { PictureHeadline } from '../components/shared'
 import { IMAGE_URL, TIME_AGO, AUTHORS } from '../utils/helperFunctions'
 import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
-import { DP_RED } from '../utils/branding'
+import { DP_RED, PublicationPrimaryColor } from '../utils/branding'
 import { PublicationEnum } from '../../NavigationController'
 
-export const ArticleScreen = ({ navigation, route }) => {
+export const ArticleScreen = ({ publicatonState, navigation, route }) => {
   const { article } = route.params
 
   if (!article) {
     // TODO: Check that article is already fetched
     const { loading, error, data } = useQuery(QUERY_ARTICLE_BY_SLUG, {
-      variables: { slug: article.slug }
+      variables: { slug: article.slug },
     })
   }
 
@@ -41,19 +41,19 @@ export const ArticleScreen = ({ navigation, route }) => {
       <View
         style={{
           paddingHorizontal: 20,
-          paddingVertical: 10
+          paddingVertical: 10,
         }}
       >
         <Text
           style={{
             fontFamily: GEOMETRIC_BOLD,
-            fontSize: 16
+            fontSize: 16,
           }}
         >{`By: ${AUTHORS(article.authors)}`}</Text>
         <Text
           style={{
             fontFamily: GEOMETRIC_BOLD,
-            fontSize: 16
+            fontSize: 16,
           }}
         >
           {'Photo Credit: ' + photographer}
@@ -66,13 +66,15 @@ export const ArticleScreen = ({ navigation, route }) => {
           tagsStyles={{
             p: {
               fontSize: 18,
-
               lineHeight: 28,
               paddingBottom: 30,
-              fontFamily: BODY_SERIF
+              fontFamily: BODY_SERIF,
             },
-            a: { fontSize: 18, color: DP_RED },
-            img: { paddingBottom: 10 }
+            a: {
+              fontSize: 18,
+              color: PublicationPrimaryColor(publicatonState),
+            },
+            img: { paddingBottom: 10 },
           }}
           ignoredTags={['div']}
         />
