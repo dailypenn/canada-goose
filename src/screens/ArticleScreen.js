@@ -75,9 +75,9 @@ export const ArticleScreen = ({ navigation, route }) => {
           contentWidth={useWindowDimensions().width}
           tagsStyles={{
             p: {
-              fontSize: 16,
+              fontSize: 18,
 
-              lineHeight: 24,
+              lineHeight: 28,
               paddingBottom: 30,
               fontFamily: Fonts.BODY_SERIF,
             },
