@@ -65,6 +65,7 @@ export default class ManageFeedScreen extends Component {
             style={styles.list}
             data={data}
             renderRow={this._renderRow}
+            // manuallyActivateRows
           />
         </View>
       </View>
