@@ -12,7 +12,7 @@ import {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    aspectRatio: 1.2,
+    aspectRatio: 1,
   },
 
   imageBackground: {
