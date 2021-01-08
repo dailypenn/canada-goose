@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { useQuery } from '@apollo/client'
-
+import { HOME_PAGE_QUERY } from '../utils/constants'
 import { StyleSheet, ScrollView, View, Text } from 'react-native'
-
-import { ArticleList, HeadlineArticle } from '../components/shared'
-import { SECTIONS_QUERY } from '../utils/constants'
+import {
+  ArticleList,
+} from '../components/shared'
 
 const styles = StyleSheet.create({
   container: {
@@ -17,7 +17,6 @@ const SectionLoading = () => {
   return <Text> Loading... </Text>
 }
 
-// TODO: @raunaq turn this into a shared component
 class SectionView extends Component {
   constructor(props) {
     super(props)
@@ -40,15 +39,11 @@ class SectionView extends Component {
           onScroll={(event) => handleScroll(event)}
           scrollEventThrottle={16}
         >
-          <HeadlineArticle
-            data={this.props.articles[0]}
-            publication={this.props.publicationState.currPublication}
-          />
-          <ArticleList
-            articles={this.props.articles.slice(1)}
+         <ArticleList
+            articles={this.props.mostRecentArticles}
             navigateToArticleScreen={this.navigateToArticleScreen}
             publication={this.props.publicationState.currPublication}
-          />
+          />   
         </ScrollView>
       </View>
     )
@@ -57,23 +52,27 @@ class SectionView extends Component {
 
 export const SectionScreen = ({ route, navigation, screenProps }) => {
   const publicationState = screenProps.state
-  const { sectionName: section } = route.params
-  const { loading, error, data } = useQuery(SECTIONS_QUERY, {
-    variables: { section }
-  })
+  const { sectionName } = route.params
+  const { loading, error, data } = useQuery(HOME_PAGE_QUERY)
 
-  if (loading) return <SectionLoading />
-    
+  if (loading) return <SectionLoading/>
+
   if (error) {
     console.log(error)
     return <Text> Error </Text>
   }
 
-  const { edges: articles } = data.articles
+  const {
+    most_recent: { edges: mostRecentArticles },
+    top: { edges: topArticles },
+    centerpiece: { edges: centerArticles },
+  } = data
 
   return (
     <SectionView
-      articles={articles}
+      mostRecentArticles={mostRecentArticles}
+      topArticles={topArticles}
+      centerArticles={centerArticles}
       navigation={navigation}
       publicationState={publicationState}
     />

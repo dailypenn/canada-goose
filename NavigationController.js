@@ -8,7 +8,6 @@ import {
   ArticleScreen,
   DiscoveryScreen,
   SettingsScreen,
-  SectionScreen,
 } from './src/screens'
 
 const Stack = createStackNavigator()
@@ -79,26 +78,21 @@ class TabNavigationController extends Component {
       )
     }
     // Navigation stack within the discovery tab
-    const DiscoveryStack = ({ screenProps }) => (
+    const DiscoveryStack = () => (
       <Stack.Navigator
         initialRouteName="Discovery"
         screenOptions={{
-          headerStyle: { backgroundColor: '#fff'},
-          headerTintColor: '#000',
-          headerTitleStyle: { fontWeight: 'bold'},
-          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: '#42f44b' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { fontWeight: 'bold' },
         }}
       >
         <Stack.Screen
           name="Discovery"
-          component={ScreenWithDefaultParams(DiscoveryScreen, screenProps)}
-          options={{ title: 'Discover', headerShown: false }}
+          component={DiscoveryScreen}
+          options={{ title: 'Discovery', headerShown: false }}
         />
-        <Stack.Screen
-            name="Section"
-            component={ScreenWithDefaultParams(SectionScreen, screenProps)}
-            options={({ route }) => ({ title: route.params.sectionName, animationEnabled: true})}
-        />
+        {/* TO DO: add more screens involved in discovery stack */}
       </Stack.Navigator>
     )
 
@@ -147,10 +141,7 @@ class TabNavigationController extends Component {
               state: this.state,
             })}
           />
-          <Tab.Screen name="DiscoveryStack" component={ScreenWithDefaultParams(DiscoveryStack, {
-              state: this.state,
-            })}
-          />
+          <Tab.Screen name="DiscoveryStack" component={DiscoveryStack} />
           <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>
       </NavigationContainer>

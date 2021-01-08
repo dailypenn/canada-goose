@@ -5,15 +5,15 @@ import { PublicationEnum } from '../../NavigationController'
 // const UTB_LOGO_LARGE = "/src/static/logos/utb-logo-large.png";
 // const STREET_LOGO_LARGE = "/src/static/logos/street-logo-large.png";
 
-const DP_RED = '#A61E21'//'#D72E25'
+const DP_RED = '#A61E21'
 const UTB_BLUE = '#3964A6'
 const STREET_TURQ = '#25B7B6'
 
-const DP_RED_RGBA = 'rgba(166, 30, 33)'//'rgba(215, 46, 37)'
+const DP_RED_RGBA = 'rgba(166, 30, 33)'
 const UTB_BLUE_RGBA = 'rgba(57, 100, 166)'
 const STREET_TURQ_RGBA = 'rgba(37, 183, 182)'
 
-const PublicationPrimaryColor = (pub) => {
+const PublicationPrimaryColor = pub => {
   switch (pub) {
     case PublicationEnum.dp:
       return DP_RED
@@ -26,7 +26,7 @@ const PublicationPrimaryColor = (pub) => {
   }
 }
 
-const PublicationPrimaryColorRgba = (pub) => {
+const PublicationPrimaryColorRgba = pub => {
   switch (pub) {
     case PublicationEnum.dp:
       return DP_RED_RGBA
@@ -37,7 +37,7 @@ const PublicationPrimaryColorRgba = (pub) => {
   }
 }
 
-const PublicationLargeLogo = (pub) => {
+const PublicationLargeLogo = pub => {
   // TODO: Get all logos
   switch (pub) {
     case PublicationEnum.dp:

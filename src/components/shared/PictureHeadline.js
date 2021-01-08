@@ -2,6 +2,12 @@ import React from 'react'
 import { View, StyleSheet, ImageBackground, Text } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 
+import {
+  DISPLAY_SERIF_BOLD,
+  GEOMETRIC_BOLD,
+  GEOMETRIC_REGULAR,
+} from '../../utils/fonts'
+
 const styles = StyleSheet.create({
   imageBackground: {
     flex: 1,
@@ -10,7 +16,7 @@ const styles = StyleSheet.create({
 
   headline: {
     color: '#fff',
-    fontFamily: 'HelveticaNeue-CondensedBold',
+    fontFamily: DISPLAY_SERIF_BOLD,
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 20,
@@ -21,6 +27,7 @@ const styles = StyleSheet.create({
 
   category: {
     color: '#fff',
+    fontFamily: GEOMETRIC_REGULAR,
     textTransform: 'uppercase',
     fontSize: 14,
     fontWeight: 'bold',
@@ -29,6 +36,7 @@ const styles = StyleSheet.create({
 
   time: {
     color: '#fff',
+    fontFamily: GEOMETRIC_BOLD,
     textTransform: 'uppercase',
     fontSize: 14,
     opacity: 0.75,

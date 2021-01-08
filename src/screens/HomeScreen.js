@@ -9,6 +9,7 @@ import {
   HorizontalArticleCarousel,
   ArticleList,
 } from '../components/shared'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const styles = StyleSheet.create({
   container: {
@@ -35,6 +36,7 @@ class HomeView extends Component {
       { name: 'In Other Multimedia', articles: props.mostRecentArticles },
     ]
     this.navigateToArticleScreen = this.navigateToArticleScreen.bind(this)
+    console.log(this.props.publicationState)
   }
 
   navigateToArticleScreen(article) {
@@ -53,10 +55,20 @@ class HomeView extends Component {
           onScroll={(event) => handleScroll(event)}
           scrollEventThrottle={16}
         >
-          <HeadlineArticle
-            data={this.props.centerArticles[0]}
-            publication={this.props.publicationState.currPublication}
-          />
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() =>
+              this.navigateToArticleScreen(this.props.centerArticles[0])
+            }
+          >
+            <HeadlineArticle
+              data={this.props.centerArticles[0]}
+              publication={this.props.publicationState.currPublication}
+              onPress={() => {
+                this.props.centerArticles[0]
+              }}
+            />
+          </TouchableOpacity>
 
           <SectionHeader
             title="Top Stories"
@@ -71,7 +83,7 @@ class HomeView extends Component {
           {this.sections.map((el) => {
             const { name, articles } = el
             return (
-              <View key={name}>
+              <View>
                 <SectionHeader
                   title={name}
                   publication={this.props.publicationState.currPublication}

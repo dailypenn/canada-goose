@@ -42,10 +42,10 @@ export const HorizontalArticleCarousel = ({
           },
         } = el
         return (
-          <View style={styles.cardContainerView} key={headline}>
+          <View style={styles.cardContainerView}>
             <TouchableOpacity
               activeOpacity={1}
-              onPress={navigateToArticleScreen}
+              onPress={() => navigateToArticleScreen(el)}
             >
               <VerticalArticleCard
                 category="Politics"

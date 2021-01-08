@@ -6,7 +6,7 @@ import { HorizontalArticleCell } from './HorizontalArticleCell'
 export const ArticleList = ({
   articles,
   navigateToArticleScreen,
-  publication
+  publication,
 }) => {
   return (
     <View style={{ paddingLeft: 10 }}>
@@ -14,11 +14,14 @@ export const ArticleList = ({
         const {
           article: {
             headline,
-            dominantMedia: { attachment_uuid, extension }
-          }
+            dominantMedia: { attachment_uuid, extension },
+          },
         } = el
         return (
-          <TouchableOpacity activeOpacity={1} onPress={navigateToArticleScreen} key={headline}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigateToArticleScreen(el)}
+          >
             <HorizontalArticleCell
               title={headline}
               category="Politics"
@@ -37,7 +40,7 @@ const Divider = () => (
     style={{
       borderBottomColor: '#D3D3D3',
       borderBottomWidth: 1,
-      paddingVertical: 3
+      paddingVertical: 3,
     }}
   />
 )
@@ -45,17 +48,21 @@ const Divider = () => (
 export const SearchArticleList = ({
   articles,
   navigateToArticleScreen,
-  publication
+  publication,
 }) => {
   return (
     <View style={{ paddingLeft: 10 }}>
       {articles.map(el => {
         const {
           headline,
-          dominantMedia: { attachment_uuid, extension }
+          dominantMedia: { attachment_uuid, extension },
         } = el
         return (
-          <TouchableOpacity activeOpacity={1} onPress={navigateToArticleScreen} key={headline}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={navigateToArticleScreen}
+            key={headline}
+          >
             <HorizontalArticleCell
               title={headline}
               category="Politics"
