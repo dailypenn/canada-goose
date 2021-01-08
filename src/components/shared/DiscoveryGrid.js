@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import Grid from 'react-native-grid-component'
+
 import { IMAGE_URL } from '../../utils/helperFunctions'
 import { DiscoveryCell } from './DiscoveryCell'
 import { SECTIONS } from '../../utils/constants'
@@ -8,7 +9,7 @@ import { SECTIONS } from '../../utils/constants'
 const _renderItem = (data, i) => (
   <TouchableOpacity
     activeOpacity={1}
-    onPress={() => navigate(data.name)}
+    onPress={() => navigate(data.name, data.slug)}
     style={styles.item}
     key={i}
   >
