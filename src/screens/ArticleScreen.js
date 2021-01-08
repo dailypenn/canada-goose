@@ -72,7 +72,6 @@ export const ArticleScreen = ({ publicatonState, navigation, route }) => {
             },
             a: {
               fontSize: 18,
-              color: PublicationPrimaryColor(publicatonState),
             },
             img: { paddingBottom: 10 },
           }}
