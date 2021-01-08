@@ -6,7 +6,10 @@ import {
   Easing,
   StyleSheet,
   Platform,
+  Button,
 } from 'react-native'
+import { HOME_FEED_ORDER_KEY } from '../utils/storageKeys'
+import AsyncStorage from '@react-native-community/async-storage'
 import SortableList from 'react-native-sortable-list'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { SettingsSectionHeader } from './SettingsScreen'
@@ -48,14 +51,65 @@ const styles = StyleSheet.create({
   },
 })
 
-const data = {
-  0: { text: 'News' },
-  1: { text: 'Opinion' },
-  2: { text: 'Sports' },
-  3: { text: 'Multimedia' },
-}
+const data = ['News', 'Opinion', 'Sports', 'Multimedia']
+
+const defaultOrder = [0, 1, 2, 3]
 
 export default class ManageFeedScreen extends Component {
+  constructor(props) {
+    super(props)
+    this.props = props
+    this.state = {
+      currData: data,
+    }
+  }
+
+  static navigationOptions = ({ route }) => {
+    return {
+      title: 'Manage Feed',
+      headerRight: () => (
+        <Button title={'Save'} onPress={() => route.params.handleSave()} />
+      ),
+    }
+  }
+
+  componentDidMount() {
+    this.props.navigation.setParams({ handleSave: this._handleSave.bind(this) })
+  }
+
+  _handleSave = async () => {
+    console.log('SAVE')
+    console.log(HOME_FEED_ORDER_KEY)
+    console.log('current order - ', this.state.currData)
+
+    try {
+      await AsyncStorage.setItem(
+        HOME_FEED_ORDER_KEY,
+        JSON.stringify(this.state.currData)
+      )
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  getDataForOrder = order => {
+    const sorted = []
+    order.forEach(i => {
+      data.forEach((d, j) => {
+        if (i == j) {
+          sorted.push(d)
+        }
+      })
+    })
+    console.log(sorted)
+    return sorted
+  }
+
+  onReleaseRow = (key, currentOrder) => {
+    // console.log('current order - ', currentOrder)
+    this.setState({ currData: this.getDataForOrder(currentOrder) })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -65,7 +119,7 @@ export default class ManageFeedScreen extends Component {
             style={styles.list}
             data={data}
             renderRow={this._renderRow}
-            // manuallyActivateRows
+            onReleaseRow={this.onReleaseRow}
           />
         </View>
       </View>
@@ -141,7 +195,7 @@ class Row extends Component {
           color="#b1b1b1"
           style={styles.icon}
         />
-        <Text style={styles.regText}>{data.text}</Text>
+        <Text style={styles.regText}>{data}</Text>
       </Animated.View>
     )
   }
