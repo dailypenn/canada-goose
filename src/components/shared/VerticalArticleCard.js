@@ -3,6 +3,11 @@ import { Text, View, StyleSheet, ImageBackground } from 'react-native'
 import { PublicationPrimaryColor } from '../../utils/branding'
 import { LinearGradient } from 'expo-linear-gradient'
 import { CategoryTag } from './CategoryTag'
+import {
+  DISPLAY_SERIF_BOLD,
+  GEOMETRIC_BOLD,
+  GEOMETRIC_REGULAR,
+} from '../../utils/fonts'
 
 const styles = StyleSheet.create({
   container: {
@@ -29,24 +34,24 @@ const styles = StyleSheet.create({
 
   title: {
     color: '#fff',
-    fontFamily: 'HelveticaNeue-CondensedBold',
-    fontSize: 22,
+    fontFamily: DISPLAY_SERIF_BOLD,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
     marginTop: 12,
     flexShrink: 1,
-    lineHeight: 22,
+    lineHeight: 24,
   },
 
   category: {
-    fontFamily: 'HelveticaNeue-CondensedBold',
+    fontFamily: GEOMETRIC_BOLD,
     textTransform: 'uppercase',
     fontSize: 14,
     fontWeight: 'bold',
   },
 
   time: {
-    fontFamily: 'AvenirNextCondensed-Regular',
+    fontFamily: GEOMETRIC_REGULAR,
     textTransform: 'uppercase',
     fontSize: 14,
     color: '#fff',
@@ -66,7 +71,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const categoryStyle = (publication) => {
+const categoryStyle = publication => {
   return {
     ...{ color: PublicationPrimaryColor(publication) },
     ...styles.category,
@@ -82,26 +87,26 @@ const VerticalArticleCard = ({
 }) => {
   return (
     <View style={styles.shadow}>
-    <View style={styles.container}>
-      <ImageBackground style={styles.imageBackground} source={{ uri: imageUrl }}>
-        <LinearGradient
-          colors={['transparent', 'rgba(0,0,0,0.8)']}
-          style={styles.gradient}
-        />
-        <View style={styles.spacer} />
-        <View style={{ flexDirection: 'row' }}>
-          <CategoryTag
-            name={category}
-            publication={publication}
+      <View style={styles.container}>
+        <ImageBackground
+          style={styles.imageBackground}
+          source={{ uri: imageUrl }}
+        >
+          <LinearGradient
+            colors={['transparent', 'rgba(0,0,0,0.8)']}
+            style={styles.gradient}
           />
           <View style={styles.spacer} />
-          <Text style={styles.time}>{time}</Text>
-        </View>
-        <Text style={styles.title} numberOfLines={5}>
-          {title}
-        </Text>
-      </ImageBackground>
-    </View>
+          <View style={{ flexDirection: 'row' }}>
+            <CategoryTag name={category} publication={publication} />
+            <View style={styles.spacer} />
+            <Text style={styles.time}>{time}</Text>
+          </View>
+          <Text style={styles.title} numberOfLines={5}>
+            {title}
+          </Text>
+        </ImageBackground>
+      </View>
     </View>
   )
 }
@@ -128,8 +133,6 @@ export default VerticalArticleCard
       </Text>
     </ImageBackground>
 */
-
-
 
 /*
 

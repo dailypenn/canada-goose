@@ -6,6 +6,7 @@ const FONT_FOLDER = '../static/fonts'
 
 export const DISPLAY_SERIF_BOLD = 'PlayfairDisplayBold'
 export const DISPLAY_SERIF_MEDIUM = 'PlayfairDisplayMedium'
+export const DISPLAY_SERIF_BLACK = 'PlayfairDisplayBlack'
 
 export const GEOMETRIC_BOLD = 'PoppinsBold'
 export const GEOMETRIC_REGULAR = 'PoppinsRegular'
@@ -19,6 +20,7 @@ export async function loadFonts() {
     LibertinusItalic: require(`${FONT_FOLDER}/Libertinus/LibertinusSerif-Italic.otf`),
     PlayfairDisplayBold: require(`${FONT_FOLDER}/PlayfairDisplay/PlayfairDisplay-Bold.ttf`),
     PlayfairDisplayMedium: require(`${FONT_FOLDER}/PlayfairDisplay/PlayfairDisplay-Medium.ttf`),
+    PlayfairDisplayBlack: require(`${FONT_FOLDER}/PlayfairDisplay/PlayfairDisplay-Black.ttf`),
     PoppinsBold: require(`${FONT_FOLDER}/Poppins/Poppins-Bold.ttf`),
     PoppinsRegular: require(`${FONT_FOLDER}/Poppins/Poppins-Regular.ttf`),
   })

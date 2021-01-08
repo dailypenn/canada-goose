@@ -1,19 +1,20 @@
 import React from 'react'
 import { View, StyleSheet, Image, Text } from 'react-native'
 import { PublicationPrimaryColor } from '../../utils/branding'
+import { DISPLAY_SERIF_BOLD, GEOMETRIC_REGULAR } from '../../utils/fonts'
 
 const styles = StyleSheet.create({
   title: {
     color: '#000',
-    fontFamily: 'HelveticaNeue-CondensedBold',
+    fontFamily: DISPLAY_SERIF_BOLD,
     flex: 1,
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
     lineHeight: 22,
   },
   byline: {
     color: '#888',
-    fontFamily: 'HelveticaNeue',
+    fontFamily: GEOMETRIC_REGULAR,
     flex: 100,
     fontSize: 12,
     paddingTop: 10,
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 75,
     padding: 15,
-    borderRadius: 0,
+    borderRadius: 2,
     backgroundColor: '#000',
     alignSelf: 'flex-end',
   },
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const categoryStyle = (publication) => {
+const categoryStyle = publication => {
   return {
     ...{ color: PublicationPrimaryColor(publication) },
     ...styles.category,
@@ -76,9 +77,7 @@ export const HorizontalArticleCell = ({
           <Text style={styles.title} numberOfLines={5}>
             {title}
           </Text>
-          <Text style={styles.byline}>
-            By Jonah Charlton • 1 hour ago
-          </Text>
+          <Text style={styles.byline}>By Jonah Charlton • 1 hour ago</Text>
         </View>
         <View style={styles.imageView}>
           <Image style={styles.image} source={{ uri: imageURL }} />
@@ -94,7 +93,6 @@ export const HorizontalArticleCell = ({
     </View>
   )
 }
-
 
 //<Text style={categoryStyle(publication)}>{category}</Text>
 // style = {{borderWidth: 1, borderColor: '#333', marginVertical: 10}}
