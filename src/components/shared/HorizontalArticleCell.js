@@ -70,6 +70,7 @@ export const HorizontalArticleCell = ({
   category,
   title,
   timeAgo,
+  authors,
   publication,
 }) => {
   return (
@@ -79,7 +80,7 @@ export const HorizontalArticleCell = ({
           <Text style={styles.title} numberOfLines={5}>
             {title}
           </Text>
-          <Text style={styles.byline}>By Jonah Charlton • {timeAgo}</Text>
+          <Text style={styles.byline}>By {authors} • {timeAgo}</Text>
         </View>
         <View style={styles.imageView}>
           <Image style={styles.image} source={{ uri: imageURL }} />

@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, TouchableOpacity } from 'react-native'
-import { IMAGE_URL, TIME_AGO } from '../../utils/helperFunctions'
+import { IMAGE_URL, TIME_AGO, AUTHORS } from '../../utils/helperFunctions'
 import { HorizontalArticleCell } from './HorizontalArticleCell'
 
 export const ArticleList = ({
@@ -16,6 +16,7 @@ export const ArticleList = ({
             headline,
             published_at,
             dominantMedia: { attachment_uuid, extension },
+            authors
           },
         } = el
 
@@ -29,6 +30,7 @@ export const ArticleList = ({
               category="Politics"
               imageURL={IMAGE_URL(attachment_uuid, extension)}
               timeAgo={TIME_AGO(published_at)}
+              authors={AUTHORS(authors)}
               publication={publication}
             />
           </TouchableOpacity>
@@ -48,7 +50,9 @@ export const SearchArticleList = ({
       {articles.map(el => {
         const {
           headline,
+          published_at,
           dominantMedia: { attachment_uuid, extension },
+          authors
         } = el
         return (
           <TouchableOpacity
@@ -65,6 +69,8 @@ export const SearchArticleList = ({
               title={headline}
               category="Politics"
               imageURL={IMAGE_URL(attachment_uuid, extension)}
+              timeAgo={TIME_AGO(published_at)}
+              authors={AUTHORS(authors)}
               publication={publication}
             />
           </TouchableOpacity>

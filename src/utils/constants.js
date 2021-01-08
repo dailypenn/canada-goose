@@ -160,6 +160,9 @@ export const SECTIONS_QUERY = gql`
           abstract
           content
           published_at
+          authors {
+            name
+          }
           dominantMedia {
             attachment_uuid
             extension
