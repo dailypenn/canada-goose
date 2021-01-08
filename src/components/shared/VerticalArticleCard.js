@@ -12,12 +12,13 @@ import {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    aspectRatio: 1,
+    aspectRatio: 0.8,
   },
 
   imageBackground: {
     flex: 1,
     paddingHorizontal: 15,
+    resizeMode: 'contain',
   },
 
   gradient: {
