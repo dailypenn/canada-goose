@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, ScrollView, View, Dimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { IMAGE_URL } from '../../utils/helperFunctions'
+import { IMAGE_URL, TIME_AGO } from '../../utils/helperFunctions'
 import VerticalArticleCard from './VerticalArticleCard'
 
 const { width } = Dimensions.get('window')
@@ -42,6 +42,7 @@ export const HorizontalArticleCarousel = ({
         const {
           article: {
             headline,
+            published_at,
             dominantMedia: { attachment_uuid, extension }
           }
         } = el
@@ -53,7 +54,7 @@ export const HorizontalArticleCarousel = ({
             >
               <VerticalArticleCard
                 category="Politics"
-                time="12 hrs ago"
+                time={TIME_AGO(published_at)}
                 title={headline}
                 imageUrl={IMAGE_URL(attachment_uuid, extension)}
                 publication={publication}
@@ -65,5 +66,3 @@ export const HorizontalArticleCarousel = ({
     </ScrollView>
   )
 }
-
-// export default HorizontalArticleCarousel;

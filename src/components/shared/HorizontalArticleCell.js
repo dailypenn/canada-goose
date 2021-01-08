@@ -2,6 +2,7 @@ import React from 'react'
 import { View, StyleSheet, Image, Text } from 'react-native'
 import { PublicationPrimaryColor } from '../../utils/branding'
 import { DISPLAY_SERIF_BOLD, GEOMETRIC_REGULAR } from '../../utils/fonts'
+import { TIME_AGO } from '../../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   title: {
@@ -68,6 +69,7 @@ export const HorizontalArticleCell = ({
   imageURL,
   category,
   title,
+  timeAgo,
   publication,
 }) => {
   return (
@@ -77,7 +79,7 @@ export const HorizontalArticleCell = ({
           <Text style={styles.title} numberOfLines={5}>
             {title}
           </Text>
-          <Text style={styles.byline}>By Jonah Charlton • 1 hour ago</Text>
+          <Text style={styles.byline}>By Jonah Charlton • {timeAgo}</Text>
         </View>
         <View style={styles.imageView}>
           <Image style={styles.image} source={{ uri: imageURL }} />

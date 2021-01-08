@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import HTML from 'react-native-render-html'
 
 import { PictureHeadline } from '../components/shared'
-import { IMAGE_URL } from '../utils/helperFunctions'
+import { IMAGE_URL, TIME_AGO } from '../utils/helperFunctions'
 import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { useQuery } from '@apollo/client'
 
@@ -14,14 +14,11 @@ import { PublicationEnum } from '../../NavigationController'
 
 // Converts array of authors to displayable format
 const authorsString = authorArr => {
-  if (authorArr.length == 0) return 'N/A'
-  const lastAuth = authorArr[authorArr.length - 1]
-  if (authorArr.length == 1) return lastAuth
+  const authorNames = authorArr.map(({ name }) => (name))
 
-  return (
-    authorArr.slice(0, -1).join(', ') +
-    `${authorArr.length == 2 ? '' : ','} and ${lastAuth}`
-  )
+  if (authorNames.length == 0) return 'N/A'
+  
+  return authorNames.join(', ')
 }
 
 export const ArticleScreen = ({ navigation, route }) => {
@@ -37,13 +34,13 @@ export const ArticleScreen = ({ navigation, route }) => {
   /* Currently author and image credits are not supported by
   GraphQL queries, so hard coding right now */
   // TODO: Fetch from CEO
-  const authors = ['Ima Ryder', 'Nutha Ryder']
+
   const photographer = 'Pitt Shure'
   return (
     <ScrollView>
       <PictureHeadline
         headline={article.headline}
-        time={article.published_at}
+        time={TIME_AGO(article.published_at)}
         imageUrl={IMAGE_URL(
           article.dominantMedia.attachment_uuid,
           article.dominantMedia.extension
@@ -62,7 +59,7 @@ export const ArticleScreen = ({ navigation, route }) => {
             fontFamily: GEOMETRIC_BOLD,
             fontSize: 16,
           }}
-        >{`By: ${authorsString(authors)}`}</Text>
+        >{`By: ${authorsString(article.authors)}`}</Text>
         <Text
           style={{
             fontFamily: GEOMETRIC_BOLD,

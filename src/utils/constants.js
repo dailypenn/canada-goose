@@ -133,7 +133,14 @@ export const HOME_PAGE_QUERY = gql`
 export const ARTICLES_SEARCH = gql`
   query($filter: String!) {
     searchArticles(filter: $filter) {
+      slug
       headline
+      abstract
+      content
+      published_at
+      authors {
+        name
+      }
       dominantMedia {
         attachment_uuid
         extension
