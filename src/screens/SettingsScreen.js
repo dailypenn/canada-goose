@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Text, View, StyleSheet } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
+import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 
 const styles = StyleSheet.create({
   container: {
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
   },
 
   sectionHeaderTitle: {
+    fontFamily: GEOMETRIC_BOLD,
     color: '#a1a1a1',
     fontSize: 14,
     fontWeight: 'bold',
@@ -43,6 +45,10 @@ const styles = StyleSheet.create({
   sectionHeaderView: {
     flexDirection: 'row',
     paddingHorizontal: 15,
+  },
+
+  regText: {
+    fontFamily: GEOMETRIC_REGULAR,
   },
 })
 
@@ -103,11 +109,10 @@ const SettingsCell = ({ item }) => {
   return (
     <View style={styles.cell}>
       <View style={styles.textView}>
-        <Text>{item.name}</Text>
+        <Text style={styles.regText}>{item.name}</Text>
         <View style={styles.spacer} />
         <Entypo name="chevron-right" size={16} color="#c4c4c4" />
       </View>
-      {/* <Ionicons name="right" size={20} color="black" /> */}
     </View>
   )
 }

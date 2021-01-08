@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   Dimensions,
   Image,
@@ -6,25 +6,26 @@ import {
   StyleSheet,
   Text,
   View,
-} from "react-native";
-import { FlatGrid } from "react-native-super-grid";
+} from 'react-native'
+import { FlatGrid } from 'react-native-super-grid'
+import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get('window')
 
-const profilePicSize = width / 5;
-const profilePicCellSize = width / 4;
+const profilePicSize = width / 5
+const profilePicCellSize = width / 4
 
 const teamIntro =
-  "Hi, we're the tech department at the DP: a team of student software engineers!";
+  "Hi, we're the tech department at the DP: a team of student software engineers!"
 const mission =
-  "Our mission statement is xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx \n \nOur ultimate goal is xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx";
+  'Our mission statement is xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx \n \nOur ultimate goal is xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx'
 
-const GOOSE_LOGO = require("../static/logos/goose_from_canada_logo.png");
+const GOOSE_LOGO = require('../static/logos/goose_from_canada_logo.png')
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    backgroundColor: "#eee",
+    alignItems: 'center',
+    backgroundColor: '#eee',
   },
 
   logo: {
@@ -34,23 +35,24 @@ const styles = StyleSheet.create({
 
   sectionContainer: {
     flexGrow: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
 
   intro: {
     paddingHorizontal: 45,
     paddingBottom: 30,
-    fontWeight: "bold",
+    fontFamily: GEOMETRIC_BOLD,
   },
 
   mission: {
     paddingHorizontal: 60,
     fontSize: 12,
+    fontFamily: GEOMETRIC_REGULAR,
   },
 
   meetTeam: {
     fontSize: 22,
-    fontWeight: "bold",
+    fontFamily: GEOMETRIC_BOLD,
     marginTop: 20,
     paddingVertical: 20,
   },
@@ -63,49 +65,50 @@ const styles = StyleSheet.create({
   },
 
   profilePicCell: {
-    alignItems: "center",
+    alignItems: 'center',
   },
 
   profileName: {
     fontSize: 12,
-    color: "#808080",
+    color: '#808080',
+    fontFamily: GEOMETRIC_REGULAR,
   },
-});
+})
 
 const people = [
   {
-    name: "Peter Baile Chen",
-    pic: "../static/logos/default_profile_pic.png",
+    name: 'Peter Baile Chen',
+    pic: '../static/logos/default_profile_pic.png',
   },
   {
-    name: "Elizabeth Powell",
-    pic: "../static/logos/default_profile_pic.png",
+    name: 'Elizabeth Powell',
+    pic: '../static/logos/default_profile_pic.png',
   },
   {
-    name: "Justin Lieb",
-    pic: "../static/logos/default_profile_pic.png",
+    name: 'Justin Lieb',
+    pic: '../static/logos/default_profile_pic.png',
   },
   {
-    name: "Raunaq Singh",
-    pic: "../static/logos/default_profile_pic.png",
+    name: 'Raunaq Singh',
+    pic: '../static/logos/default_profile_pic.png',
   },
   {
-    name: "Daniel Tao",
-    pic: "../static/logos/default_profile_pic.png",
+    name: 'Daniel Tao',
+    pic: '../static/logos/default_profile_pic.png',
   },
-];
+]
 
 const ProfileCell = ({ name, image }) => {
   return (
     <View style={styles.profilePicCell}>
       <Image
-        source={require("../static/logos/default_profile_pic.png")}
+        source={require('../static/logos/default_profile_pic.png')}
         style={styles.profilePicImage}
       />
       <Text style={styles.profileName}>{name}</Text>
     </View>
-  );
-};
+  )
+}
 
 export const AboutScreen = () => {
   return (
@@ -125,5 +128,5 @@ export const AboutScreen = () => {
         )}
       ></FlatGrid>
     </ScrollView>
-  );
-};
+  )
+}
