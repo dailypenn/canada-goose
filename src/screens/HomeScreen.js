@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { useQuery } from '@apollo/client'
-import { HOME_PAGE_QUERY } from '../utils/constants'
-import { StyleSheet, ScrollView, View, Text } from 'react-native'
+import React, { Component } from "react";
+import { useQuery } from "@apollo/client";
+import { HOME_PAGE_QUERY } from "../utils/constants";
+import { StyleSheet, ScrollView, View, Text } from "react-native";
 import {
   CustomHeader,
   SectionHeader,
@@ -14,40 +14,39 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   text1: {
-    color: '#fff',
+    color: "#fff",
   },
-})
+});
 
 const HomeLoading = () => {
-  return <Text> Loading... </Text>
-}
+  return <Text> Loading... </Text>;
+};
 
 class HomeView extends Component {
   constructor(props) {
-    super(props)
-    this.state = { offset: 0 }
+    super(props);
+    this.state = { offset: 0 };
     this.sections = [
-      { name: 'In Other News', articles: props.mostRecentArticles },
-      { name: 'In Other Opinion', articles: props.mostRecentArticles },
-      { name: 'In Other Sports', articles: props.mostRecentArticles },
-      { name: 'In Other Multimedia', articles: props.mostRecentArticles },
-    ]
-    this.navigateToArticleScreen = this.navigateToArticleScreen.bind(this)
-    console.log(this.props.publicationState)
+      { name: "In Other News", articles: props.mostRecentArticles },
+      { name: "In Other Opinion", articles: props.mostRecentArticles },
+      { name: "In Other Sports", articles: props.mostRecentArticles },
+      { name: "In Other Multimedia", articles: props.mostRecentArticles },
+    ];
+    this.navigateToArticleScreen = this.navigateToArticleScreen.bind(this);
   }
 
   navigateToArticleScreen(article) {
-    this.props.navigation.navigate('Article', { article })
+    this.props.navigation.navigate("Article", { article });
   }
 
   render() {
     const handleScroll = (scrollData) => {
-      var newOffset = scrollData.nativeEvent.contentOffset.y
-      this.setState({ offset: newOffset })
-    }
+      var newOffset = scrollData.nativeEvent.contentOffset.y;
+      this.setState({ offset: newOffset });
+    };
 
     return (
       <View style={styles.container}>
@@ -81,7 +80,7 @@ class HomeView extends Component {
           />
 
           {this.sections.map((el) => {
-            const { name, articles } = el
+            const { name, articles } = el;
             return (
               <View>
                 <SectionHeader
@@ -94,7 +93,7 @@ class HomeView extends Component {
                   publication={this.props.publicationState.currPublication}
                 />
               </View>
-            )
+            );
           })}
         </ScrollView>
         <CustomHeader
@@ -102,26 +101,26 @@ class HomeView extends Component {
           contentOffset={this.state.offset}
         />
       </View>
-    )
+    );
   }
 }
 
 export const HomeScreen = ({ navigation, screenProps }) => {
-  const publicationState = screenProps.state
-  const { loading, error, data } = useQuery(HOME_PAGE_QUERY)
+  const publicationState = screenProps.state;
+  const { loading, error, data } = useQuery(HOME_PAGE_QUERY);
 
-  if (loading) return <HomeLoading />
+  if (loading) return <HomeLoading />;
 
   if (error) {
-    console.log(error)
-    return <Text> Error </Text>
+    console.log(error);
+    return <Text> Error </Text>;
   }
 
   const {
     most_recent: { edges: mostRecentArticles },
     top: { edges: topArticles },
     centerpiece: { edges: centerArticles },
-  } = data
+  } = data;
 
   return (
     <HomeView
@@ -131,5 +130,5 @@ export const HomeScreen = ({ navigation, screenProps }) => {
       navigation={navigation}
       publicationState={publicationState}
     />
-  )
-}
+  );
+};
