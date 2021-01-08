@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Linking } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { Text, View, StyleSheet } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Entypo } from "@expo/vector-icons";
+import { WebViewModalProvider } from "react-native-webview-modal/dist/providers";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomColor: "#d4d4d4",
     borderBottomWidth: 0.6,
+    flexDirection: "row",
   },
 
   divider: {
@@ -27,13 +28,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
 
+  spacer: {
+    flex: 1,
+    flexDirection: "row",
+  },
+
   sectionHeaderTitle: {
-    fontFamily: "HelveticaNeue-CondensedBold",
     color: "#a1a1a1",
+    fontSize: 14,
     fontWeight: "bold",
-    marginBottom: 0,
-    marginTop: 0,
-    lineHeight: 35,
+    paddingVertical: 5,
     textTransform: "uppercase",
   },
 
@@ -43,11 +47,66 @@ const styles = StyleSheet.create({
   },
 });
 
+const sections = [
+  {
+    name: "Account",
+    items: [
+      {
+        name: "Notifications",
+        screenName: "Notification",
+        props: {},
+      },
+      {
+        name: "Privacy",
+        screenName: "Privacy",
+        props: {},
+      },
+      {
+        name: "Manage Feed",
+        screenName: "ManageFeedScreen",
+        props: {},
+      },
+    ],
+  },
+  {
+    name: "Features",
+    items: [
+      {
+        name: "About",
+        screenName: "About",
+        props: {},
+      },
+    ],
+  },
+  {
+    name: "Links",
+    items: [
+      {
+        name: "The Daily Pennsylvanian",
+        screenName: "WebView",
+        props: { link: "https://thedp.com" },
+      },
+      {
+        name: "34th Street",
+        screenName: "WebView",
+        props: { link: "https://34st.com" },
+      },
+      {
+        name: "Under the Button",
+        screenName: "WebView",
+        props: { link: "https://underthebutton.com" },
+      },
+    ],
+  },
+];
+
 const SettingsCell = ({ item }) => {
   return (
     <View style={styles.cell}>
       <View style={styles.textView}>
         <Text>{item.name}</Text>
+        <View style={styles.spacer} />
+        <Entypo name="chevron-right" size={16} color="#c4c4c4" />
       </View>
       {/* <Ionicons name="right" size={20} color="black" /> */}
     </View>
@@ -60,12 +119,17 @@ const SettingsSectionHeader = ({ title }) => (
   </View>
 );
 
-const SettingsSection = ({ name, items }) => {
+const SettingsSection = ({ navigateToScreen, name, items }) => {
   return (
     <View>
       <SettingsSectionHeader title={name} />
       {items.map((l, i) => (
-        <TouchableOpacity activeOpacity={1} onPress={l.onPress}>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => {
+            navigateToScreen(l.screenName, l.props);
+          }}
+        >
           <SettingsCell key={i} item={l} />
         </TouchableOpacity>
       ))}
@@ -78,76 +142,22 @@ class SettingsView extends Component {
     super(props);
     this.navigateToScreen = this.navigateToScreen.bind(this);
     this.publicationState = this.props.publicationState;
-    this.sections = [
-      {
-        name: "Account",
-        items: [
-          {
-            name: "Notifications",
-            onPress: () => {
-              this.navigateToScreen("Notification");
-            },
-          },
-          {
-            name: "Privacy",
-            onPress: () => {
-              this.navigateToScreen("Privacy");
-            },
-          },
-          {
-            name: "Manage Feed",
-            onPress: () => {
-              this.navigateToScreen("ManageFeedScreen");
-            },
-          },
-        ],
-      },
-      {
-        name: "Features",
-        items: [
-          {
-            name: "About",
-            onPress: () => {
-              this.navigateToScreen("About");
-            },
-          },
-        ],
-      },
-      {
-        name: "Links",
-        items: [
-          {
-            name: "The Daily Pennsylvanian",
-            onPress: () => {
-              Linking.openURL("https://thedp.com");
-            },
-          },
-          {
-            name: "34th Street",
-            onPress: () => {
-              Linking.openURL("https://t34st.com");
-            },
-          },
-          {
-            name: "Under the Button",
-            onPress: () => {
-              Linking.openURL("https://underthebutton.com");
-            },
-          },
-        ],
-      },
-    ];
   }
 
-  navigateToScreen(screenName) {
-    this.props.navigation.navigate(screenName);
+  navigateToScreen(screenName, props) {
+    this.props.navigation.navigate(screenName, props);
   }
 
   render() {
     return (
       <View style={styles.container}>
-        {this.sections.map((l, i) => (
-          <SettingsSection key={i} name={l.name} items={l.items} />
+        {sections.map((l, i) => (
+          <SettingsSection
+            key={i}
+            name={l.name}
+            items={l.items}
+            navigateToScreen={this.navigateToScreen}
+          />
         ))}
       </View>
     );
@@ -156,8 +166,14 @@ class SettingsView extends Component {
 
 const SettingsScreen = ({ navigation, screenProps }) => {
   const publicationState = screenProps.state;
+
   return (
-    <SettingsView navigation={navigation} publicationState={publicationState} />
+    <WebViewModalProvider>
+      <SettingsView
+        navigation={navigation}
+        publicationState={publicationState}
+      />
+    </WebViewModalProvider>
   );
 };
 

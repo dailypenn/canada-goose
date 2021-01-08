@@ -11,6 +11,38 @@ import SortableList from "react-native-sortable-list";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SettingsSectionHeader } from "./SettingsScreen";
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "#eee",
+  },
+
+  sectionContainer: {
+    flex: 1,
+    flexDirection: "row",
+  },
+
+  icon: {
+    paddingEnd: 10,
+  },
+
+  list: {
+    flex: 1,
+  },
+
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    padding: 15,
+    flex: 1,
+    borderBottomColor: "#eee",
+    borderBottomWidth: 1,
+  },
+});
+
 const data = {
   0: { text: "News" },
   1: { text: "Opinion" },
@@ -22,7 +54,7 @@ export default class ManageFeedScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <SettingsSectionHeader title="Home Feed Section Ordering" />
+        <SettingsSectionHeader title="Home Section Ordering" />
         <View style={styles.sectionContainer}>
           <SortableList
             style={styles.list}
@@ -108,37 +140,3 @@ class Row extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#eee",
-  },
-
-  sectionContainer: {
-    flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // backgroundColor: "#eee",
-    flexDirection: "row",
-  },
-
-  icon: {
-    paddingEnd: 10,
-  },
-
-  list: {
-    flex: 1,
-  },
-
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: 15,
-    flex: 1,
-    borderBottomColor: "#eee",
-    borderBottomWidth: 1,
-  },
-});

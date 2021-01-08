@@ -11,6 +11,7 @@ import {
   AboutScreen,
   NotificationScreen,
   PrivacyScreen,
+  WebViewScreen,
 } from "./src/screens";
 import ManageFeedScreen from "./src/screens/ManageFeedScreen";
 
@@ -125,7 +126,7 @@ class TabNavigationController extends Component {
         <Stack.Navigator
           initialRouteName="Settings"
           screenOptions={{
-            headerStyle: { backgroundColor: "#ffffff" },
+            // headerStyle: { backgroundColor: "#ffffff" },
             // headerTintColor: "#fff",
             headerTitleStyle: { fontWeight: "bold" },
           }}
@@ -141,22 +142,27 @@ class TabNavigationController extends Component {
           <Stack.Screen
             name="About"
             component={AboutScreen}
-            options={{ title: "About", animationEnabled: false }}
+            options={{ title: "About" }}
           />
           <Stack.Screen
             name="Notification"
             component={NotificationScreen}
-            options={{ title: "Notification", animationEnabled: false }}
+            options={{ title: "Notification" }}
           />
           <Stack.Screen
             name="Privacy"
             component={PrivacyScreen}
-            options={{ title: "Privacy", animationEnabled: false }}
+            options={{ title: "Privacy" }}
           />
           <Stack.Screen
             name="ManageFeedScreen"
             component={ManageFeedScreen}
-            options={{ title: "Manage Feed", animationEnabled: false }}
+            options={{ title: "Manage Feed" }}
+          />
+          <Stack.Screen
+            name="WebView"
+            component={WebViewScreen}
+            options={{ title: "" }}
           />
         </Stack.Navigator>
       );
