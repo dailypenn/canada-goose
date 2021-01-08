@@ -7,3 +7,4 @@ export * from "./PrivacyScreen";
 export * from "./NotificationScreen";
 export * from "./ManageFeedScreen";
 export * from "./WebViewScreen";
+export * from './SectionScreen'

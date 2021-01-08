@@ -1,104 +1,103 @@
-import React, { Component } from "react";
-import { TouchableOpacity } from "react-native";
-import { Text, View, StyleSheet } from "react-native";
-import { Entypo } from "@expo/vector-icons";
-import { WebViewModalProvider } from "react-native-webview-modal/dist/providers";
+import React, { Component } from 'react'
+import { TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
+import { Entypo } from '@expo/vector-icons'
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
+    flexDirection: 'column',
   },
 
   cell: {
     paddingHorizontal: 15,
-    justifyContent: "center",
-    backgroundColor: "#fff",
+    justifyContent: 'center',
+    backgroundColor: '#fff',
   },
 
   textView: {
     paddingVertical: 10,
-    borderBottomColor: "#d4d4d4",
+    borderBottomColor: '#d4d4d4',
     borderBottomWidth: 0.6,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
 
   divider: {
     paddingHorizontal: 15,
-    borderColor: "#fff",
+    borderColor: '#fff',
     borderWidth: 1,
   },
 
   spacer: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
 
   sectionHeaderTitle: {
-    color: "#a1a1a1",
+    color: '#a1a1a1',
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingVertical: 5,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
   },
 
   sectionHeaderView: {
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingHorizontal: 15,
   },
-});
+})
 
 const sections = [
   {
-    name: "Account",
+    name: 'Account',
     items: [
       {
-        name: "Notifications",
-        screenName: "Notification",
+        name: 'Notifications',
+        screenName: 'Notification',
         props: {},
       },
       {
-        name: "Privacy",
-        screenName: "Privacy",
+        name: 'Privacy',
+        screenName: 'Privacy',
         props: {},
       },
       {
-        name: "Manage Feed",
-        screenName: "ManageFeedScreen",
+        name: 'Manage Feed',
+        screenName: 'ManageFeedScreen',
         props: {},
       },
     ],
   },
   {
-    name: "Features",
+    name: 'Features',
     items: [
       {
-        name: "About",
-        screenName: "About",
+        name: 'About',
+        screenName: 'About',
         props: {},
       },
     ],
   },
   {
-    name: "Links",
+    name: 'Links',
     items: [
       {
-        name: "The Daily Pennsylvanian",
-        screenName: "WebView",
-        props: { link: "https://thedp.com" },
+        name: 'The Daily Pennsylvanian',
+        screenName: 'WebView',
+        props: { link: 'https://thedp.com' },
       },
       {
-        name: "34th Street",
-        screenName: "WebView",
-        props: { link: "https://34st.com" },
+        name: '34th Street',
+        screenName: 'WebView',
+        props: { link: 'https://34st.com' },
       },
       {
-        name: "Under the Button",
-        screenName: "WebView",
-        props: { link: "https://underthebutton.com" },
+        name: 'Under the Button',
+        screenName: 'WebView',
+        props: { link: 'https://underthebutton.com' },
       },
     ],
   },
-];
+]
 
 const SettingsCell = ({ item }) => {
   return (
@@ -110,14 +109,14 @@ const SettingsCell = ({ item }) => {
       </View>
       {/* <Ionicons name="right" size={20} color="black" /> */}
     </View>
-  );
-};
+  )
+}
 
 const SettingsSectionHeader = ({ title }) => (
   <View style={styles.sectionHeaderView}>
     <Text style={styles.sectionHeaderTitle}>{title}</Text>
   </View>
-);
+)
 
 const SettingsSection = ({ navigateToScreen, name, items }) => {
   return (
@@ -127,25 +126,25 @@ const SettingsSection = ({ navigateToScreen, name, items }) => {
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => {
-            navigateToScreen(l.screenName, l.props);
+            navigateToScreen(l.screenName, l.props)
           }}
         >
           <SettingsCell key={i} item={l} />
         </TouchableOpacity>
       ))}
     </View>
-  );
-};
+  )
+}
 
 class SettingsView extends Component {
   constructor(props) {
-    super(props);
-    this.navigateToScreen = this.navigateToScreen.bind(this);
-    this.publicationState = this.props.publicationState;
+    super(props)
+    this.navigateToScreen = this.navigateToScreen.bind(this)
+    this.publicationState = this.props.publicationState
   }
 
   navigateToScreen(screenName, props) {
-    this.props.navigation.navigate(screenName, props);
+    this.props.navigation.navigate(screenName, props)
   }
 
   render() {
@@ -160,21 +159,21 @@ class SettingsView extends Component {
           />
         ))}
       </View>
-    );
+    )
   }
 }
 
 const SettingsScreen = ({ navigation, screenProps }) => {
-  const publicationState = screenProps.state;
+  const publicationState = screenProps.state
 
   return (
-    <WebViewModalProvider>
+    <View>
       <SettingsView
         navigation={navigation}
         publicationState={publicationState}
       />
-    </WebViewModalProvider>
-  );
-};
+    </View>
+  )
+}
 
-export { SettingsScreen, SettingsSectionHeader };
+export { SettingsScreen, SettingsSectionHeader }

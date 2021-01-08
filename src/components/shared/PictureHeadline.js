@@ -1,6 +1,13 @@
 import React from 'react'
 import { View, StyleSheet, ImageBackground, Text } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
+import { CategoryTag } from './CategoryTag'
+
+import {
+  DISPLAY_SERIF_BOLD,
+  GEOMETRIC_BOLD,
+  GEOMETRIC_REGULAR,
+} from '../../utils/fonts'
 
 const styles = StyleSheet.create({
   imageBackground: {
@@ -10,7 +17,7 @@ const styles = StyleSheet.create({
 
   headline: {
     color: '#fff',
-    fontFamily: 'HelveticaNeue-CondensedBold',
+    fontFamily: DISPLAY_SERIF_BOLD,
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 20,
@@ -21,6 +28,7 @@ const styles = StyleSheet.create({
 
   category: {
     color: '#fff',
+    fontFamily: GEOMETRIC_REGULAR,
     textTransform: 'uppercase',
     fontSize: 14,
     fontWeight: 'bold',
@@ -29,6 +37,7 @@ const styles = StyleSheet.create({
 
   time: {
     color: '#fff',
+    fontFamily: GEOMETRIC_BOLD,
     textTransform: 'uppercase',
     fontSize: 14,
     opacity: 0.75,
@@ -52,7 +61,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const PictureHeadline = ({ headline, category, time, imageUrl }) => (
+export const PictureHeadline = ({ headline, category, time, imageUrl, publication }) => (
   <View style={styles.view}>
     <ImageBackground style={styles.imageBackground} source={{ uri: imageUrl }}>
       <LinearGradient
@@ -61,7 +70,10 @@ export const PictureHeadline = ({ headline, category, time, imageUrl }) => (
       />
       <View style={styles.spacer} />
       <View style={{ flexDirection: 'row' }}>
-        <Text style={styles.category}>{category}</Text>
+        <CategoryTag
+            name={category}
+            publication={publication}
+        />
         <View style={styles.spacer} />
         <Text style={styles.time}>{time}</Text>
       </View>

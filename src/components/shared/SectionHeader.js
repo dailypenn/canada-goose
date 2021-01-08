@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { PublicationPrimaryColor } from '../../utils/branding'
+import { DISPLAY_SERIF_BLACK } from '../../utils/fonts'
 
 const styles = StyleSheet.create({
   title: {
-    fontFamily: 'HelveticaNeue-CondensedBold',
+    fontFamily: DISPLAY_SERIF_BLACK,
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 0,
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const titleStyle = (publication) => {
+const titleStyle = publication => {
   return {
     ...{ color: PublicationPrimaryColor(publication) },
     ...styles.title,

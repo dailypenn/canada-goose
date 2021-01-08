@@ -9,8 +9,8 @@ export const ArticleList = ({
   publication,
 }) => {
   return (
-    <View style={{ paddingLeft: 10 }}>
-      {articles.map((el) => {
+    <View>
+      {articles.map(el => {
         const {
           article: {
             headline,
@@ -18,7 +18,10 @@ export const ArticleList = ({
           },
         } = el
         return (
-          <TouchableOpacity activeOpacity={1} onPress={navigateToArticleScreen}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigateToArticleScreen(el)}
+          >
             <HorizontalArticleCell
               title={headline}
               category="Politics"
@@ -32,4 +35,48 @@ export const ArticleList = ({
   )
 }
 
-// export default ArticleList;
+const Divider = () => (
+  <View
+    style={{
+      borderBottomColor: '#D3D3D3',
+      borderBottomWidth: 1,
+      paddingVertical: 3,
+    }}
+  />
+)
+
+export const SearchArticleList = ({
+  articles,
+  navigateToArticleScreen,
+  publication,
+}) => {
+  return (
+    <View style={{ paddingLeft: 0 }}>
+      {articles.map(el => {
+        const {
+          headline,
+          dominantMedia: { attachment_uuid, extension },
+        } = el
+        return (
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={navigateToArticleScreen}
+            key={headline}
+          >
+            <HorizontalArticleCell
+              style={{
+                borderWidth: 4,
+                borderColor: '#0F0',
+                marginVertical: 10,
+              }}
+              title={headline}
+              category="Politics"
+              imageURL={IMAGE_URL(attachment_uuid, extension)}
+              publication={publication}
+            />
+          </TouchableOpacity>
+        )
+      })}
+    </View>
+  )
+}
