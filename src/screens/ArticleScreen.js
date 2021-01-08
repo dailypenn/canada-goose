@@ -7,7 +7,9 @@ import { PictureHeadline } from '../components/shared'
 import { IMAGE_URL } from '../utils/helperFunctions'
 import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { useQuery } from '@apollo/client'
+
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
+import { DP_RED } from '../utils/branding'
 import { PublicationEnum } from '../../NavigationController'
 
 // Converts array of authors to displayable format
@@ -82,7 +84,7 @@ export const ArticleScreen = ({ navigation, route }) => {
               paddingBottom: 30,
               fontFamily: BODY_SERIF,
             },
-            a: { fontSize: 16 },
+            a: { fontSize: 18, color: DP_RED },
             img: { paddingBottom: 10 },
           }}
           ignoredTags={['div']}

@@ -1,19 +1,19 @@
 /* Publication Specific Colors */
 import { PublicationEnum } from '../../NavigationController'
 
-// const DP_LOGO_LARGE = "/src/static/logos/dp-logo-large.png";
-// const UTB_LOGO_LARGE = "/src/static/logos/utb-logo-large.png";
-// const STREET_LOGO_LARGE = "/src/static/logos/street-logo-large.png";
+// export constDP_LOGO_LARGE = "/src/static/logos/dp-logo-large.png";
+// export constUTB_LOGO_LARGE = "/src/static/logos/utb-logo-large.png";
+// export constSTREET_LOGO_LARGE = "/src/static/logos/street-logo-large.png";
 
-const DP_RED = '#D72E25' //'#A61E21'
-const UTB_BLUE = '#3964A6'
-const STREET_TURQ = '#25B7B6'
+export const DP_RED = '#D72E25' //'#A61E21'
+export const UTB_BLUE = '#3964A6'
+export const STREET_TURQ = '#25B7B6'
 
-const DP_RED_RGBA = 'rgba(215, 46, 37)' //'rgba(166, 30, 33)'
-const UTB_BLUE_RGBA = 'rgba(57, 100, 166)'
-const STREET_TURQ_RGBA = 'rgba(37, 183, 182)'
+export const DP_RED_RGBA = 'rgba(215, 46, 37)' //'rgba(166, 30, 33)'
+export const UTB_BLUE_RGBA = 'rgba(57, 100, 166)'
+export const STREET_TURQ_RGBA = 'rgba(37, 183, 182)'
 
-const PublicationPrimaryColor = pub => {
+export const PublicationPrimaryColor = pub => {
   switch (pub) {
     case PublicationEnum.dp:
       return DP_RED
@@ -26,7 +26,7 @@ const PublicationPrimaryColor = pub => {
   }
 }
 
-const PublicationPrimaryColorRgba = pub => {
+export const PublicationPrimaryColorRgba = pub => {
   switch (pub) {
     case PublicationEnum.dp:
       return DP_RED_RGBA
@@ -37,7 +37,7 @@ const PublicationPrimaryColorRgba = pub => {
   }
 }
 
-const PublicationLargeLogo = pub => {
+export const PublicationLargeLogo = pub => {
   // TODO: Get all logos
   switch (pub) {
     case PublicationEnum.dp:
@@ -47,10 +47,4 @@ const PublicationLargeLogo = pub => {
     default:
       return UTB_LOGO_LARGE
   }
-}
-
-export {
-  PublicationPrimaryColor,
-  PublicationPrimaryColorRgba,
-  PublicationLargeLogo,
 }
