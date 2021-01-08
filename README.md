@@ -33,8 +33,6 @@ Number of stories in this section is undecided yet
 
 - A card for each category that links to their most recent stories
 
-![discover page](README-img/discover_page.jpg)
-
 ---
 
 # Installation Guide

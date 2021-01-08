@@ -366,7 +366,3 @@ Temporary Items
 
 # macOS
 .DS_Store
-
-
-# Prettier File
-.prettierrc
