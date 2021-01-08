@@ -1,48 +1,49 @@
 import React from 'react'
 import { StyleSheet, ScrollView, View, Dimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+
 import { IMAGE_URL } from '../../utils/helperFunctions'
 import VerticalArticleCard from './VerticalArticleCard'
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   cardContainerView: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
+    paddingHorizontal: 10
+  }
 })
 
 export const HorizontalArticleCarousel = ({
   articles,
   navigateToArticleScreen,
-  publication,
+  publication
 }) => {
   return (
     <ScrollView
       style={{ flex: 1 }}
       horizontal={true}
       decelerationRate={0}
-      snapToInterval={0.9*width}
-      snapToAlignment={"center"}
+      snapToInterval={0.9 * width}
+      snapToAlignment={'center'}
       contentContainerStyle={{
         width: `${90 * articles.length}%`,
         paddingHorizontal: 10,
         paddingTop: 5,
-        paddingBottom: 15,
+        paddingBottom: 15
       }}
       showsHorizontalScrollIndicator={false}
       scrollEventThrottle={100}
       decelerationRate="fast"
     >
-      {articles.map((el) => {
+      {articles.map(el => {
         const {
           article: {
             headline,
-            dominantMedia: { attachment_uuid, extension },
-          },
+            dominantMedia: { attachment_uuid, extension }
+          }
         } = el
         return (
           <View style={styles.cardContainerView}>

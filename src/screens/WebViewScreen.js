@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import { ActivityIndicator, Dimensions, Text, View } from "react-native";
-import WebView from "react-native-webview";
+import React, { Component } from 'react'
+import { ActivityIndicator, Dimensions, Text, View } from 'react-native'
+import WebView from 'react-native-webview'
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get('window')
 
 class WebViewContainer extends Component {
   constructor(props) {
-    super(props);
-    this.state = { visible: true };
-    this.link = this.props.link;
+    super(props)
+    this.state = { visible: true }
+    this.link = this.props.link
   }
 
   hideSpinner() {
-    this.setState({ visible: false });
+    this.setState({ visible: false })
   }
 
   render() {
@@ -20,7 +20,7 @@ class WebViewContainer extends Component {
       <View style={{ flex: 1 }}>
         <WebView
           onLoad={() => this.hideSpinner()}
-          style={{ flex: 1, backgroundColor: "#333333" }}
+          style={{ flex: 1, backgroundColor: '#333333' }}
           source={{ uri: this.link }}
         />
         {this.state.visible && (
@@ -28,18 +28,18 @@ class WebViewContainer extends Component {
             style={{
               height: 10,
               width: 10,
-              position: "absolute",
+              position: 'absolute',
               top: height / 2 - 60,
-              left: width / 2 - 5,
+              left: width / 2 - 5
             }}
             size="large"
           />
         )}
       </View>
-    );
+    )
   }
 }
 
 export const WebViewScreen = ({ route }) => {
-  return <WebViewContainer link={route.params.link} />;
-};
+  return <WebViewContainer link={route.params.link} />
+}

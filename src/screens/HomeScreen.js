@@ -1,134 +1,140 @@
-import React, { Component } from "react";
-import { useQuery } from "@apollo/client";
-import { HOME_PAGE_QUERY } from "../utils/constants";
-import { StyleSheet, ScrollView, View, Text } from "react-native";
+import React, { useState } from 'react'
+import { useQuery } from '@apollo/client'
+import { StyleSheet, ScrollView, View, Text } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+
 import {
   CustomHeader,
   SectionHeader,
   HeadlineArticle,
   HorizontalArticleCarousel,
-  ArticleList,
+  ArticleList
 } from '../components/shared'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { HOME_PAGE_QUERY } from '../utils/constants'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff'
   },
   text1: {
-    color: "#fff",
-  },
-});
+    color: '#fff'
+  }
+})
 
 const HomeLoading = () => {
-  return <Text> Loading... </Text>;
-};
+  return <Text> Loading... </Text>
+}
 
-class HomeView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { offset: 0 };
-    this.sections = [
-      { name: "In Other News", articles: props.mostRecentArticles },
-      { name: "In Other Opinion", articles: props.mostRecentArticles },
-      { name: "In Other Sports", articles: props.mostRecentArticles },
-      { name: "In Other Multimedia", articles: props.mostRecentArticles },
-    ];
-    this.navigateToArticleScreen = this.navigateToArticleScreen.bind(this);
+const HomeView = ({
+  centerArticles,
+  topArticles,
+  inOtherNewsArticles,
+  inOtherOpinionArticles,
+  inOtherSportsArticles,
+  inOtherMultimediaArticles,
+  navigation,
+  publicationState
+}) => {
+  const [offset, setOffset] = useState(0)
+
+  sections = [
+    { name: 'In Other News', articles: inOtherNewsArticles },
+    { name: 'In Other Opinion', articles: inOtherOpinionArticles },
+    { name: 'In Other Sports', articles: inOtherSportsArticles },
+    { name: 'In Other Multimedia', articles: inOtherMultimediaArticles }
+  ]
+
+  // TODO: this function sld be put in helperFunctions.js
+  navigateToArticleScreen = article => {
+    navigation.navigate('Article', { article })
   }
 
-  navigateToArticleScreen(article) {
-    this.props.navigation.navigate("Article", { article });
+  const handleScroll = scrollData => {
+    setOffset(scrollData.nativeEvent.contentOffset.y)
   }
 
-  render() {
-    const handleScroll = (scrollData) => {
-      var newOffset = scrollData.nativeEvent.contentOffset.y;
-      this.setState({ offset: newOffset });
-    };
-
-    return (
-      <View style={styles.container}>
-        <ScrollView
-          onScroll={(event) => handleScroll(event)}
-          scrollEventThrottle={16}
+  return (
+    <View style={styles.container}>
+      <ScrollView
+        onScroll={event => handleScroll(event)}
+        scrollEventThrottle={16}
+      >
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => navigateToArticleScreen(centerArticles[0])}
         >
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() =>
-              this.navigateToArticleScreen(this.props.centerArticles[0])
-            }
-          >
-            <HeadlineArticle
-              data={this.props.centerArticles[0]}
-              publication={this.props.publicationState.currPublication}
-              onPress={() => {
-                this.props.centerArticles[0]
-              }}
-            />
-          </TouchableOpacity>
-
-          <SectionHeader
-            title="Top Stories"
-            publication={this.props.publicationState.currPublication}
+          <HeadlineArticle
+            data={centerArticles[0]}
+            publication={publicationState.currPublication}
           />
-          <HorizontalArticleCarousel
-            articles={this.props.topArticles}
-            navigateToArticleScreen={this.navigateToArticleScreen}
-            publication={this.props.publicationState.currPublication}
-          />
+        </TouchableOpacity>
 
-          {this.sections.map((el) => {
-            const { name, articles } = el;
-            return (
-              <View>
-                <SectionHeader
-                  title={name}
-                  publication={this.props.publicationState.currPublication}
-                />
-                <ArticleList
-                  articles={articles}
-                  navigateToArticleScreen={this.navigateToArticleScreen}
-                  publication={this.props.publicationState.currPublication}
-                />
-              </View>
-            );
-          })}
-        </ScrollView>
-        <CustomHeader
-          publicationState={this.props.publicationState}
-          contentOffset={this.state.offset}
+        <SectionHeader
+          title="Top Stories"
+          publication={publicationState.currPublication}
         />
-      </View>
-    );
-  }
+        <HorizontalArticleCarousel
+          articles={topArticles}
+          navigateToArticleScreen={navigateToArticleScreen}
+          publication={publicationState.currPublication}
+        />
+
+        {sections.map(el => {
+          const { name, articles } = el
+          return (
+            <View>
+              <SectionHeader
+                title={name}
+                publication={publicationState.currPublication}
+              />
+              <ArticleList
+                articles={articles}
+                navigateToArticleScreen={navigateToArticleScreen}
+                publication={publicationState.currPublication}
+              />
+            </View>
+          )
+        })}
+      </ScrollView>
+      <CustomHeader
+        publicationState={publicationState}
+        contentOffset={offset}
+      />
+    </View>
+  )
 }
 
 export const HomeScreen = ({ navigation, screenProps }) => {
-  const publicationState = screenProps.state;
-  const { loading, error, data } = useQuery(HOME_PAGE_QUERY);
+  const publicationState = screenProps.state
+  const { loading, error, data } = useQuery(HOME_PAGE_QUERY)
 
-  if (loading) return <HomeLoading />;
+  if (loading) return <HomeLoading />
 
   if (error) {
-    console.log(error);
-    return <Text> Error </Text>;
+    console.log(error)
+    return <Text> Error </Text>
   }
 
   const {
-    most_recent: { edges: mostRecentArticles },
-    top: { edges: topArticles },
     centerpiece: { edges: centerArticles },
-  } = data;
+    top: { edges: topArticles },
+    inOtherNews: { edges: inOtherNewsArticles },
+    inOtherOpinion: { edges: inOtherOpinionArticles },
+    inOtherSports: { edges: inOtherSportsArticles },
+    inOtherMultimedia: { edges: inOtherMultimediaArticles }
+  } = data
 
   return (
     <HomeView
-      mostRecentArticles={mostRecentArticles}
-      topArticles={topArticles}
       centerArticles={centerArticles}
+      topArticles={topArticles}
+      inOtherNewsArticles={inOtherNewsArticles}
+      inOtherOpinionArticles={inOtherOpinionArticles}
+      inOtherSportsArticles={inOtherSportsArticles}
+      inOtherMultimediaArticles={inOtherMultimediaArticles}
       navigation={navigation}
       publicationState={publicationState}
     />
-  );
-};
+  )
+}
