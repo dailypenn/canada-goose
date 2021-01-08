@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { PublicationPrimaryColor } from '../../utils/branding'
+import { GEOMETRIC_BOLD } from '../../utils/fonts'
 
 const styles = StyleSheet.create({
   title: {
-    fontFamily: 'HelveticaNeue-CondensedBold',
+    fontFamily: GEOMETRIC_BOLD,
     textTransform: 'uppercase',
     fontSize: 14,
     fontWeight: 'bold',
@@ -13,11 +14,11 @@ const styles = StyleSheet.create({
   view: {
     paddingHorizontal: 8,
     paddingVertical: 5,
-    borderRadius: 30,
+    borderRadius: 5,
   },
 })
 
-const viewStyle = (publication) => {
+const viewStyle = publication => {
   return {
     ...{ backgroundColor: PublicationPrimaryColor(publication) },
     ...styles.view,

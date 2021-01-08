@@ -19,7 +19,7 @@ export async function loadFonts() {
     LibertinusItalic: require(`${FONT_FOLDER}/Libertinus/LibertinusSerif-Italic.otf`),
     PlayfairDisplayBold: require(`${FONT_FOLDER}/PlayfairDisplay/PlayfairDisplay-Bold.ttf`),
     PlayfairDisplayMedium: require(`${FONT_FOLDER}/PlayfairDisplay/PlayfairDisplay-Medium.ttf`),
-    PoppinsRegular: require(`${FONT_FOLDER}/Poppins/Poppins-Bold.ttf`),
-    PoppinsBold: require(`${FONT_FOLDER}/Poppins/Poppins-Regular.ttf`),
+    PoppinsBold: require(`${FONT_FOLDER}/Poppins/Poppins-Bold.ttf`),
+    PoppinsRegular: require(`${FONT_FOLDER}/Poppins/Poppins-Regular.ttf`),
   })
 }
