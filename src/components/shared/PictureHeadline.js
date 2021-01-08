@@ -18,12 +18,12 @@ const styles = StyleSheet.create({
   headline: {
     color: '#fff',
     fontFamily: DISPLAY_SERIF_BOLD,
-    fontSize: 30,
+    fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 20,
     marginTop: 10,
     flexShrink: 1,
-    lineHeight: 35,
+    lineHeight: 30,
   },
 
   category: {
@@ -61,7 +61,13 @@ const styles = StyleSheet.create({
   },
 })
 
-export const PictureHeadline = ({ headline, category, time, imageUrl, publication }) => (
+export const PictureHeadline = ({
+  headline,
+  category,
+  time,
+  imageUrl,
+  publication,
+}) => (
   <View style={styles.view}>
     <ImageBackground style={styles.imageBackground} source={{ uri: imageUrl }}>
       <LinearGradient
@@ -70,10 +76,7 @@ export const PictureHeadline = ({ headline, category, time, imageUrl, publicatio
       />
       <View style={styles.spacer} />
       <View style={{ flexDirection: 'row' }}>
-        <CategoryTag
-            name={category}
-            publication={publication}
-        />
+        <CategoryTag name={category} publication={publication} />
         <View style={styles.spacer} />
         <Text style={styles.time}>{time}</Text>
       </View>

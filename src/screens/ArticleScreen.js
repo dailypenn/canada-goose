@@ -8,7 +8,9 @@ import { IMAGE_URL } from '../utils/helperFunctions'
 import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { useQuery } from '@apollo/client'
 
-import * as Fonts from '../utils/fonts'
+import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
+import { DP_RED } from '../utils/branding'
+import { PublicationEnum } from '../../NavigationController'
 
 // Converts array of authors to displayable format
 const authorsString = authorArr => {
@@ -47,6 +49,7 @@ export const ArticleScreen = ({ navigation, route }) => {
           article.dominantMedia.extension
         )}
         category="NEWS"
+        publication={PublicationEnum.dp}
       />
       <View
         style={{
@@ -56,13 +59,13 @@ export const ArticleScreen = ({ navigation, route }) => {
       >
         <Text
           style={{
-            fontFamily: Fonts.GEOMETRIC_BOLD,
+            fontFamily: GEOMETRIC_BOLD,
             fontSize: 16,
           }}
         >{`By: ${authorsString(authors)}`}</Text>
         <Text
           style={{
-            fontFamily: Fonts.GEOMETRIC_BOLD,
+            fontFamily: GEOMETRIC_BOLD,
             fontSize: 16,
           }}
         >
@@ -79,9 +82,9 @@ export const ArticleScreen = ({ navigation, route }) => {
 
               lineHeight: 28,
               paddingBottom: 30,
-              fontFamily: Fonts.BODY_SERIF,
+              fontFamily: BODY_SERIF,
             },
-            a: { fontSize: 16 },
+            a: { fontSize: 18, color: DP_RED },
             img: { paddingBottom: 10 },
           }}
           ignoredTags={['div']}

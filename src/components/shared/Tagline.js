@@ -1,12 +1,13 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { PublicationPrimaryColor } from '../../utils/branding'
+import { BODY_SERIF } from '../../utils/fonts'
 
 const styles = StyleSheet.create({
   tagline: {
     color: '#000',
     fontSize: 14,
-    fontFamily: 'HelveticaNeue-CondensedBold',
+    fontFamily: BODY_SERIF,
     flexShrink: 1,
     opacity: 0.5,
   },
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const circleStyle = (publication) => {
+const circleStyle = publication => {
   return {
     ...{ backgroundColor: PublicationPrimaryColor(publication) },
     ...styles.circle,
