@@ -14,8 +14,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import { SettingsSectionHeader } from './SettingsScreen'
 import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
-import { HOME_SECTIONS } from '../utils/constants'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
+import { HOME_SECTIONS } from '../utils/constants'
 
 const styles = StyleSheet.create({
   container: {
@@ -78,12 +78,7 @@ export class ManageFeedScreen extends Component {
   }
 
   _handleSave = async () => {
-    console.log('handle save')
-
     if (this.newOrder == null) return
-
-    console.log('new order not null')
-
     var sorted = []
     this.newOrder.forEach(i => {
       this.state.currData.forEach((d, j) => {
@@ -93,9 +88,6 @@ export class ManageFeedScreen extends Component {
       })
     })
     this.newData = sorted
-
-    console.log('sorted', sorted)
-
     if (this.newData == this.state.currData) return
 
     await Storage.setItem(HOME_FEED_ORDER_KEY, this.newData)
@@ -103,8 +95,9 @@ export class ManageFeedScreen extends Component {
 
   orderItems = async () => {
     let storedOrder = await Storage.getItem(HOME_FEED_ORDER_KEY)
-    console.log(storedOrder)
-    this.setState({ currData: storedOrder })
+    if (storedOrder != null) {
+      this.setState({ currData: storedOrder })
+    }
   }
 
   onReleaseRow = (key, currentOrder) => {
