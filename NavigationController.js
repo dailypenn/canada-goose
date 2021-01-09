@@ -16,7 +16,6 @@ import {
 } from './src/screens'
 
 import ManageFeedScreen from './src/screens/ManageFeedScreen'
-import { Button } from 'react-native'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -64,8 +63,8 @@ class TabNavigationController extends Component {
         <Stack.Navigator
           initialRouteName="Home"
           screenOptions={{
-            headerStyle: { backgroundColor: '#42f44b' },
-            headerTintColor: '#fff',
+            headerStyle: { backgroundColor: '#fff' },
+            headerTintColor: '#000',
             headerTitleStyle: { fontWeight: 'bold' },
           }}
         >
@@ -80,7 +79,11 @@ class TabNavigationController extends Component {
           <Stack.Screen
             name="Article"
             component={ArticleScreen}
-            options={{ title: 'Article', animationEnabled: true }}
+            options={({ route }) => ({
+              title: route.params.article.headline,
+              animationEnabled: true,
+              headerBackTitleVisible: false,
+            })}
           />
         </Stack.Navigator>
       )
@@ -118,15 +121,16 @@ class TabNavigationController extends Component {
       <Stack.Navigator
         initialRouteName="Article"
         screenOptions={{
-          headerStyle: { backgroundColor: '#42f44b' },
-          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: '#fff' },
+          headerTintColor: '#000',
           headerTitleStyle: { fontWeight: 'bold' },
+          headerBackTitleVisible: false,
         }}
       >
         <Stack.Screen
           name="Article"
           component={ArticleScreen}
-          options={{ title: 'Article', headerShown: false }}
+          options={{ title: '', headerShown: false }}
         />
       </Stack.Navigator>
     )
@@ -168,15 +172,7 @@ class TabNavigationController extends Component {
           <Stack.Screen
             name="ManageFeedScreen"
             component={ManageFeedScreen}
-            options={
-              ManageFeedScreen.navigationOptions
-              //   {
-              //   title: 'Manage Feed',
-              //   headerRight: () => (
-              //     <Button title={'Save'} onPress={() => params.handleSave()} />
-              //   ),
-              // }
-            }
+            options={ManageFeedScreen.navigationOptions}
           />
           <Stack.Screen
             name="WebView"

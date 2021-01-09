@@ -2,16 +2,16 @@ import { View } from 'react-native'
 import { Tagline } from './Tagline'
 import React from 'react'
 import { PictureHeadline } from './PictureHeadline'
-import { IMAGE_URL } from '../../utils/helperFunctions'
+import { IMAGE_URL, TIME_AGO } from '../../utils/helperFunctions'
 
-export const HeadlineArticle = ({data, publication}) => {
+export const HeadlineArticle = ({ data, publication }) => {
   const {
     article: {
       headline,
       published_at,
       abstract,
-      dominantMedia: { attachment_uuid, extension },
-    },
+      dominantMedia: { attachment_uuid, extension }
+    }
   } = data
 
   // TODO: CLEAN UP -- A LOT
@@ -21,10 +21,10 @@ export const HeadlineArticle = ({data, publication}) => {
     <View>
       <PictureHeadline
         headline={headline}
-        time={published_at}
+        time={TIME_AGO(published_at)}
         imageUrl={IMAGE_URL(attachment_uuid, extension)}
         category="NEWS"
-        publication = {publication}
+        publication={publication}
       />
       <Tagline tagline={splitAbstract} publication={publication} />
     </View>

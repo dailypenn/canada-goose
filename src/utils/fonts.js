@@ -5,7 +5,6 @@ import * as Font from 'expo-font'
 const FONT_FOLDER = '../static/fonts'
 
 export const DISPLAY_SERIF_BOLD = 'PlayfairDisplayBold'
-export const DISPLAY_SERIF_MEDIUM = 'PlayfairDisplayMedium'
 export const DISPLAY_SERIF_BLACK = 'PlayfairDisplayBlack'
 
 export const GEOMETRIC_BOLD = 'PoppinsBold'
@@ -18,9 +17,8 @@ export async function loadFonts() {
   Font.loadAsync({
     Libertinus: require(`${FONT_FOLDER}/Libertinus/LibertinusSerif-Regular.otf`),
     LibertinusItalic: require(`${FONT_FOLDER}/Libertinus/LibertinusSerif-Italic.otf`),
-    PlayfairDisplayBold: require(`${FONT_FOLDER}/PlayfairDisplay/PlayfairDisplay-Bold.ttf`),
-    PlayfairDisplayMedium: require(`${FONT_FOLDER}/PlayfairDisplay/PlayfairDisplay-Medium.ttf`),
-    PlayfairDisplayBlack: require(`${FONT_FOLDER}/PlayfairDisplay/PlayfairDisplay-Black.ttf`),
+    PlayfairDisplayBold: require(`${FONT_FOLDER}/Butler/GT-Sectra-Fine-Bold-Trial.otf`),
+    PlayfairDisplayBlack: require(`${FONT_FOLDER}/Butler/GT-Sectra-Fine-Black-Trial.otf`),
     PoppinsBold: require(`${FONT_FOLDER}/Poppins/Poppins-Bold.ttf`),
     PoppinsRegular: require(`${FONT_FOLDER}/Poppins/Poppins-Regular.ttf`),
   })

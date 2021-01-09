@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, TouchableOpacity } from 'react-native'
-import { IMAGE_URL } from '../../utils/helperFunctions'
+import { IMAGE_URL, TIME_AGO, AUTHORS } from '../../utils/helperFunctions'
 import { HorizontalArticleCell } from './HorizontalArticleCell'
 
 export const ArticleList = ({
@@ -14,18 +14,23 @@ export const ArticleList = ({
         const {
           article: {
             headline,
+            published_at,
             dominantMedia: { attachment_uuid, extension },
+            authors
           },
         } = el
+
         return (
           <TouchableOpacity
             activeOpacity={1}
-            onPress={() => navigateToArticleScreen(el)}
+            onPress={() => navigateToArticleScreen(el.article)}
           >
             <HorizontalArticleCell
               title={headline}
               category="Politics"
               imageURL={IMAGE_URL(attachment_uuid, extension)}
+              timeAgo={TIME_AGO(published_at)}
+              authors={AUTHORS(authors)}
               publication={publication}
             />
           </TouchableOpacity>
@@ -34,16 +39,6 @@ export const ArticleList = ({
     </View>
   )
 }
-
-const Divider = () => (
-  <View
-    style={{
-      borderBottomColor: '#D3D3D3',
-      borderBottomWidth: 1,
-      paddingVertical: 3,
-    }}
-  />
-)
 
 export const SearchArticleList = ({
   articles,
@@ -55,12 +50,14 @@ export const SearchArticleList = ({
       {articles.map(el => {
         const {
           headline,
+          published_at,
           dominantMedia: { attachment_uuid, extension },
+          authors
         } = el
         return (
           <TouchableOpacity
             activeOpacity={1}
-            onPress={navigateToArticleScreen}
+            onPress={() => navigateToArticleScreen(el)}
             key={headline}
           >
             <HorizontalArticleCell
@@ -72,6 +69,8 @@ export const SearchArticleList = ({
               title={headline}
               category="Politics"
               imageURL={IMAGE_URL(attachment_uuid, extension)}
+              timeAgo={TIME_AGO(published_at)}
+              authors={AUTHORS(authors)}
               publication={publication}
             />
           </TouchableOpacity>

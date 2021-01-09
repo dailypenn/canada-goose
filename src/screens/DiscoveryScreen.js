@@ -7,25 +7,23 @@ import {
   Text,
   TextInput,
   SafeAreaView,
-  Button,
-  Keyboard,
+  Keyboard
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { HOME_PAGE_QUERY, ARTICLES_SEARCH } from '../utils/constants'
+import { ARTICLES_SEARCH } from '../utils/constants'
 import {
   SectionHeader,
   DiscoveryGrid,
-  SearchArticleList,
+  SearchArticleList
 } from '../components/shared'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingVertical: 20,
-  },
+    paddingVertical: 20
+  }
 })
 
 const DiscoveryLoading = () => {
@@ -39,9 +37,10 @@ class DiscoveryView extends Component {
     this.navigateToSectionScreen = this.navigateToSectionScreen.bind(this)
   }
 
-  navigateToSectionScreen(section) {
+  navigateToSectionScreen(section, slug) {
     this.props.navigation.navigate('Section', {
       sectionName: section,
+      slug
     })
   }
 
@@ -76,7 +75,7 @@ const SearchView = ({ filter, publicationState, navigation }) => {
 
   const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
     variables: { filter },
-    pollInterval: 2000,
+    pollInterval: 2000
   })
   if (loading) return <DiscoveryLoading />
 
@@ -114,37 +113,28 @@ const hideKeyboard = text => {
   }
 }
 
-const SearchBar = ({ setFilter }) => {
-  // TODO: add the cancel button
-  const [focused, setFocused] = useState(false)
-
-  return (
-    <>
-      <View style={SearchBarStyles.container}>
-        <Ionicons
-          name="search"
-          size={20}
-          style={SearchBarStyles.icon}
-          color="#AAA"
-        />
-        <TextInput
-          onChangeText={text => {
-            setFilter(text)
-            hideKeyboard(text)
-          }}
-          placeholder="Search"
-          autoCorrect={false}
-          autoCapitalize="none"
-          style={SearchBarStyles.textInput}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          clearButtonMode="always"
-          returnKeyType="search"
-        />
-      </View>
-    </>
-  )
-}
+const SearchBar = ({ setFilter }) => (
+  <View style={SearchBarStyles.container}>
+    <Ionicons
+      name="search"
+      size={20}
+      style={SearchBarStyles.icon}
+      color="#AAA"
+    />
+    <TextInput
+      onChangeText={text => {
+        setFilter(text)
+        hideKeyboard(text)
+      }}
+      placeholder="Search"
+      autoCorrect={false}
+      autoCapitalize="none"
+      style={SearchBarStyles.textInput}
+      clearButtonMode="always"
+      returnKeyType="search"
+    />
+  </View>
+)
 
 const SearchBarStyles = StyleSheet.create({
   container: {
@@ -152,11 +142,11 @@ const SearchBarStyles = StyleSheet.create({
     borderRadius: 13,
     flexDirection: 'row',
     //paddingBottom: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 20
   },
   icon: {
     paddingVertical: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: 10
     //backgroundColor: '#f8f4f4',
   },
   textInput: {
@@ -164,34 +154,20 @@ const SearchBarStyles = StyleSheet.create({
     //backgroundColor: '#f8f4f4',
     //borderRadius: 13,
     //flexDirection: 'row',
-    flex: 1,
+    flex: 1
   },
   button: {
     paddingHorizontal: 10,
-    margin: 10,
+    margin: 10
     //backgroundColor: 'white',
     //marginLeft: 'auto'
-  },
+  }
 })
 
 export const DiscoveryScreen = ({ navigation, screenProps }) => {
   const [filter, setFilter] = useState('')
 
   const publicationState = screenProps.state
-  const { loading, error, data } = useQuery(HOME_PAGE_QUERY)
-
-  if (loading) return <DiscoveryLoading />
-
-  if (error) {
-    console.log(error)
-    return <Text> Error </Text>
-  }
-
-  const {
-    most_recent: { edges: mostRecentArticles },
-    top: { edges: topArticles },
-    centerpiece: { edges: centerArticles },
-  } = data
 
   return (
     <SafeAreaView style={styles.container}>
@@ -205,9 +181,6 @@ export const DiscoveryScreen = ({ navigation, screenProps }) => {
       )}
       {!filter && (
         <DiscoveryView
-          mostRecentArticles={mostRecentArticles}
-          topArticles={topArticles}
-          centerArticles={centerArticles}
           navigation={navigation}
           publicationState={publicationState}
         />

@@ -2,30 +2,17 @@ import React from 'react'
 import { Text, View, useWindowDimensions } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import HTML from 'react-native-render-html'
-
-import { PictureHeadline } from '../components/shared'
-import { IMAGE_URL } from '../utils/helperFunctions'
-import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { useQuery } from '@apollo/client'
 
+import { PictureHeadline } from '../components/shared'
+import { IMAGE_URL, TIME_AGO, AUTHORS } from '../utils/helperFunctions'
+import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
-import { DP_RED } from '../utils/branding'
+import { DP_RED, PublicationPrimaryColor } from '../utils/branding'
 import { PublicationEnum } from '../../NavigationController'
 
-// Converts array of authors to displayable format
-const authorsString = authorArr => {
-  if (authorArr.length == 0) return 'N/A'
-  const lastAuth = authorArr[authorArr.length - 1]
-  if (authorArr.length == 1) return lastAuth
-
-  return (
-    authorArr.slice(0, -1).join(', ') +
-    `${authorArr.length == 2 ? '' : ','} and ${lastAuth}`
-  )
-}
-
-export const ArticleScreen = ({ navigation, route }) => {
-  const { article } = route.params.article
+export const ArticleScreen = ({ publicatonState, navigation, route }) => {
+  const { article } = route.params
 
   if (!article) {
     // TODO: Check that article is already fetched
@@ -37,13 +24,13 @@ export const ArticleScreen = ({ navigation, route }) => {
   /* Currently author and image credits are not supported by
   GraphQL queries, so hard coding right now */
   // TODO: Fetch from CEO
-  const authors = ['Ima Ryder', 'Nutha Ryder']
+
   const photographer = 'Pitt Shure'
   return (
     <ScrollView>
       <PictureHeadline
         headline={article.headline}
-        time={article.published_at}
+        time={TIME_AGO(article.published_at)}
         imageUrl={IMAGE_URL(
           article.dominantMedia.attachment_uuid,
           article.dominantMedia.extension
@@ -62,7 +49,7 @@ export const ArticleScreen = ({ navigation, route }) => {
             fontFamily: GEOMETRIC_BOLD,
             fontSize: 16,
           }}
-        >{`By: ${authorsString(authors)}`}</Text>
+        >{`By: ${AUTHORS(article.authors)}`}</Text>
         <Text
           style={{
             fontFamily: GEOMETRIC_BOLD,
@@ -79,12 +66,13 @@ export const ArticleScreen = ({ navigation, route }) => {
           tagsStyles={{
             p: {
               fontSize: 18,
-
               lineHeight: 28,
               paddingBottom: 30,
               fontFamily: BODY_SERIF,
             },
-            a: { fontSize: 18, color: DP_RED },
+            a: {
+              fontSize: 18,
+            },
             img: { paddingBottom: 10 },
           }}
           ignoredTags={['div']}

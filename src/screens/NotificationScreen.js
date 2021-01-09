@@ -3,9 +3,11 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Switch } from 'react-native-gesture-handler'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
 
+const notifications = require('../json/notifications.json')
+
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
 
   cell: {
@@ -16,12 +18,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 10,
     borderBottomColor: '#d4d4d4',
-    borderBottomWidth: 0.6,
+    borderBottomWidth: 0.6
   },
 
   spacer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
 
   description: {
@@ -29,26 +31,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 8,
     fontSize: 12,
-    color: '#808080',
+    color: '#808080'
   },
 
   regText: {
-    fontFamily: GEOMETRIC_REGULAR,
-  },
+    fontFamily: GEOMETRIC_REGULAR
+  }
 })
-
-const notifications = [
-  {
-    title: 'Breaking news notifications',
-    description:
-      'Receive push notifications when breaking news articles are published. Includes the headline and first couple sentences of the article.',
-  },
-  {
-    title: 'Newsletter notifications',
-    description:
-      'Receive a push notification every day upon the release of the newsletter',
-  },
-]
 
 const NotificationCell = ({ info }) => {
   const [isEnabled, setIsEnabled] = useState(true)

@@ -1,0 +1,10 @@
+[
+  {
+    "title": "Breaking news notifications",
+    "description": "Receive push notifications when breaking news articles are published. Includes the headline and first couple sentences of the article."
+  },
+  {
+    "title": "Newsletter notifications",
+    "description": "Receive a push notification every day upon the release of the newsletter"
+  }
+]
