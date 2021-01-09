@@ -5,7 +5,7 @@ import { HorizontalArticleCell } from './HorizontalArticleCell'
 
 export const ArticleList = ({ articles, navigateToArticleScreen }) => (
   <View>
-    {articles.map(el => {
+    {articles.map((el, i) => {
       const {
         article: {
           headline,
@@ -17,6 +17,7 @@ export const ArticleList = ({ articles, navigateToArticleScreen }) => (
 
       return (
         <TouchableOpacity
+          key={i}
           activeOpacity={1}
           onPress={() => navigateToArticleScreen(el.article)}
         >

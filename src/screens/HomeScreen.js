@@ -86,10 +86,10 @@ const HomeView = ({
           publication={publicationState.currPublication}
         />
 
-        {sections.map(el => {
+        {sections.map((el, i) => {
           const { name, articles } = el
           return (
-            <View>
+            <View key={i}>
               <SectionHeader
                 title={name}
                 publication={publicationState.currPublication}
