@@ -3,7 +3,6 @@ import { StyleSheet, ScrollView, View, Text } from 'react-native'
 
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-
 import {
   CustomHeader,
   SectionHeader,
