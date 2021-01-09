@@ -1,6 +1,8 @@
 # Content Guide
 
-### Home Page
+### Daily Pennsylvanian
+
+#### Home Page
 
 **Centerpiece**
 
@@ -16,22 +18,32 @@
 
 _IMPORTANT_: If the most recent story from `app-top-opinion` or `app-top-sports` or `app-top-multimedia` is published more than 4 days ago, it will be automatically replaced by an article from `app-top-news`
 
-**In Other xx**
+**Sections**
 
 - `app-front-news`
 - `app-front-opinion`
 - `app-front-sports`
 - `app-front-multimedia`
 
-Number of stories in this section is undecided yet
+3 Stories for each section (user can reorder these sections and show/ hide each section)
 
-**UTB Carousel**
-
-- 5 stories from `utb-app`(??)
-
-### Discover Page
+#### Discover Page
 
 - A card for each category that links to their most recent stories
+
+### 34th Street
+
+#### Home Page
+
+**Centerpiece**
+
+**Top Carousel**
+
+**Sections**
+
+#### Discover
+
+### Under the Button
 
 ---
 
@@ -44,9 +56,11 @@ npm install
 expo start
 ```
 
-Once the QR code is generated, open you camera to scan the code. You should be prompted to open Expo.
+Once the QR code is generated, open the camera on your phone to scan the code. You should be prompted to open Expo.
 
 If you are prompted to install _Expo CLI_ globally, enter Y.
+
+If there is globalDeprecated errors, run `expo r -c` to start the app instead of `expo start`. This clears the expo cache.
 
 ---
 
