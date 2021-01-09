@@ -3,42 +3,34 @@ import { View, TouchableOpacity } from 'react-native'
 import { IMAGE_URL, TIME_AGO, AUTHORS } from '../../utils/helperFunctions'
 import { HorizontalArticleCell } from './HorizontalArticleCell'
 
-export const ArticleList = ({
-  articles,
-  navigateToArticleScreen,
-  publication,
-}) => {
-  return (
-    <View>
-      {articles.map(el => {
-        const {
-          article: {
-            headline,
-            published_at,
-            dominantMedia: { attachment_uuid, extension },
-            authors
-          },
-        } = el
+export const ArticleList = ({ articles, navigateToArticleScreen }) => (
+  <View>
+    {articles.map(el => {
+      const {
+        article: {
+          headline,
+          published_at,
+          dominantMedia: { attachment_uuid, extension },
+          authors,
+        },
+      } = el
 
-        return (
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => navigateToArticleScreen(el.article)}
-          >
-            <HorizontalArticleCell
-              title={headline}
-              category="Politics"
-              imageURL={IMAGE_URL(attachment_uuid, extension)}
-              timeAgo={TIME_AGO(published_at)}
-              authors={AUTHORS(authors)}
-              publication={publication}
-            />
-          </TouchableOpacity>
-        )
-      })}
-    </View>
-  )
-}
+      return (
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => navigateToArticleScreen(el.article)}
+        >
+          <HorizontalArticleCell
+            title={headline}
+            imageURL={IMAGE_URL(attachment_uuid, extension)}
+            timeAgo={TIME_AGO(published_at)}
+            authors={AUTHORS(authors)}
+          />
+        </TouchableOpacity>
+      )
+    })}
+  </View>
+)
 
 export const SearchArticleList = ({
   articles,
@@ -52,7 +44,7 @@ export const SearchArticleList = ({
           headline,
           published_at,
           dominantMedia: { attachment_uuid, extension },
-          authors
+          authors,
         } = el
         return (
           <TouchableOpacity

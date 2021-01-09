@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ActivityIndicator, Dimensions, Text, View } from 'react-native'
-import WebView from 'react-native-webview'
 
+import WebView from 'react-native-webview'
 const { width, height } = Dimensions.get('window')
 
 class WebViewContainer extends Component {
@@ -30,7 +30,7 @@ class WebViewContainer extends Component {
               width: 10,
               position: 'absolute',
               top: height / 2 - 60,
-              left: width / 2 - 5
+              left: width / 2 - 5,
             }}
             size="large"
           />

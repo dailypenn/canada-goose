@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { useQuery } from '@apollo/client'
 import { StyleSheet, ScrollView, View, Text } from 'react-native'
+
+import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import {
@@ -11,6 +12,10 @@ import {
   ArticleList,
 } from '../components/shared'
 import { HOME_PAGE_QUERY } from '../utils/constants'
+import {
+  PARTIAL_NAVIGATE,
+  NAVIGATE_TO_ARTICLE_SCREEN,
+} from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   container: {
@@ -46,6 +51,7 @@ const HomeView = ({
   ]
 
   // TODO: this function sld be put in helperFunctions.js
+
   navigateToArticleScreen = article => {
     navigation.navigate('Article', { article, publicationState })
   }
@@ -88,10 +94,18 @@ const HomeView = ({
                 title={name}
                 publication={publicationState.currPublication}
               />
-              <ArticleList
+              {/* <ArticleList
                 articles={articles}
                 navigateToArticleScreen={navigateToArticleScreen}
                 publication={publicationState.currPublication}
+              /> */}
+              <ArticleList
+                articles={articles}
+                navigateToArticleScreen={PARTIAL_NAVIGATE(
+                  navigation,
+                  publicationState.currPublication,
+                  NAVIGATE_TO_ARTICLE_SCREEN
+                )}
               />
             </View>
           )

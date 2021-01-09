@@ -1,37 +1,37 @@
 import React, { Component } from 'react'
-import { TouchableOpacity } from 'react-native'
-import { Text, View, StyleSheet } from 'react-native'
+import { TouchableOpacity, Text, View, StyleSheet } from 'react-native'
+
 import { Entypo } from '@expo/vector-icons'
 
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
 
   cell: {
     paddingHorizontal: 15,
     justifyContent: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
 
   textView: {
     paddingVertical: 10,
     borderBottomColor: '#d4d4d4',
     borderBottomWidth: 0.6,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   divider: {
     paddingHorizontal: 15,
     borderColor: '#fff',
-    borderWidth: 1
+    borderWidth: 1,
   },
 
   spacer: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   sectionHeaderTitle: {
@@ -40,17 +40,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     paddingVertical: 5,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
 
   sectionHeaderView: {
     flexDirection: 'row',
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
   },
 
   regText: {
-    fontFamily: GEOMETRIC_REGULAR
-  }
+    fontFamily: GEOMETRIC_REGULAR,
+  },
 })
 
 const SettingsCell = ({ item }) => {

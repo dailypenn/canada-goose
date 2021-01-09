@@ -8,32 +8,33 @@ import {
   Platform,
   Button,
 } from 'react-native'
-import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
-import { HOME_SECTIONS } from '../utils/constants'
+
 import SortableList from 'react-native-sortable-list'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import { SettingsSectionHeader } from './SettingsScreen'
+import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
+import { HOME_SECTIONS } from '../utils/constants'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#eee'
+    backgroundColor: '#eee',
   },
 
   sectionContainer: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   icon: {
-    paddingEnd: 10
+    paddingEnd: 10,
   },
 
   list: {
-    flex: 1
+    flex: 1,
   },
 
   row: {
@@ -44,12 +45,12 @@ const styles = StyleSheet.create({
     padding: 15,
     flex: 1,
     borderBottomColor: '#eee',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
 
   regText: {
-    fontFamily: GEOMETRIC_REGULAR
-  }
+    fontFamily: GEOMETRIC_REGULAR,
+  },
 })
 
 export default class ManageFeedScreen extends Component {
@@ -138,9 +139,9 @@ class Row extends Component {
             {
               scale: this._active.interpolate({
                 inputRange: [0, 1],
-                outputRange: [1, 1.1]
-              })
-            }
+                outputRange: [1, 1.1],
+              }),
+            },
           ],
         },
 
@@ -149,9 +150,9 @@ class Row extends Component {
             {
               scale: this._active.interpolate({
                 inputRange: [0, 1],
-                outputRange: [1, 1.07]
-              })
-            }
+                outputRange: [1, 1.07],
+              }),
+            },
           ],
         },
       }),
@@ -164,7 +165,7 @@ class Row extends Component {
         duration: 300,
         easing: Easing.bounce,
         toValue: Number(nextProps.active),
-        useNativeDriver: false
+        useNativeDriver: false,
       }).start()
     }
   }

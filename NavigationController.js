@@ -17,6 +17,13 @@ import {
 
 import ManageFeedScreen from './src/screens/ManageFeedScreen'
 
+// import {
+//   HomeStack,
+//   DiscoveryStack,
+//   SettingsStack,
+//   // ArticleStack,
+// } from './src/stacks'
+
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
@@ -88,6 +95,7 @@ class TabNavigationController extends Component {
         </Stack.Navigator>
       )
     }
+
     // Navigation stack within the discovery tab
     const DiscoveryStack = ({ screenProps }) => (
       <Stack.Navigator
@@ -227,4 +235,9 @@ class TabNavigationController extends Component {
   }
 }
 
-export { PublicationEnum, TabNavigationController }
+export {
+  Stack,
+  PublicationEnum,
+  TabNavigationController,
+  ScreenWithDefaultParams,
+}

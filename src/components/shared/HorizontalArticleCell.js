@@ -58,20 +58,11 @@ const styles = StyleSheet.create({
   },
 })
 
-const categoryStyle = publication => {
-  return {
-    ...{ color: PublicationPrimaryColor(publication) },
-    ...styles.category,
-  }
-}
-
 export const HorizontalArticleCell = ({
   imageURL,
-  category,
   title,
   timeAgo,
   authors,
-  publication,
 }) => {
   return (
     <View>
@@ -80,7 +71,9 @@ export const HorizontalArticleCell = ({
           <Text style={styles.title} numberOfLines={5}>
             {title}
           </Text>
-          <Text style={styles.byline}>By {authors} • {timeAgo}</Text>
+          <Text style={styles.byline}>
+            By {authors} • {timeAgo}
+          </Text>
         </View>
         <View style={styles.imageView}>
           <Image style={styles.image} source={{ uri: imageURL }} />
