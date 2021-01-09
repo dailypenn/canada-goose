@@ -91,21 +91,21 @@ const ProfileCell = ({ name, pic }) => {
 
 export const AboutScreen = () => {
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={styles.container}
-    >
-      <Image source={GOOSE_LOGO} style={styles.logo} />
-      <Text style={styles.intro}>{teamIntro}</Text>
-      <Text style={styles.mission}>{mission}</Text>
-      <Text style={styles.meetTeam}>Meet the Team</Text>
-      <FlatGrid
-        itemDimension={profilePicCellSize}
-        data={people}
-        renderItem={({ item }) => (
-          <ProfileCell name={item.name} image={item.pic} />
-        )}
-      />
-    </ScrollView>
+    <FlatGrid
+      ListHeaderComponent={
+        <>
+          <Image source={GOOSE_LOGO} style={styles.logo} />
+          <Text style={styles.intro}>{teamIntro}</Text>
+          <Text style={styles.mission}>{mission}</Text>
+          <Text style={styles.meetTeam}>Meet the Team</Text>
+        </>
+      }
+      ListHeaderComponentStyle={styles.container}
+      itemDimension={profilePicCellSize}
+      data={people}
+      renderItem={({ item }) => (
+        <ProfileCell name={item.name} image={item.pic} />
+      )}
+    />
   )
 }

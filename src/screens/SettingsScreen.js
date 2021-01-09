@@ -53,59 +53,6 @@ const styles = StyleSheet.create({
   }
 })
 
-const sections = [
-  {
-    name: 'Account',
-    items: [
-      {
-        name: 'Notifications',
-        screenName: 'Notification',
-        props: {}
-      },
-      {
-        name: 'Privacy',
-        screenName: 'Privacy',
-        props: {}
-      },
-      {
-        name: 'Manage Feed',
-        screenName: 'ManageFeedScreen',
-        props: {}
-      }
-    ]
-  },
-  {
-    name: 'Features',
-    items: [
-      {
-        name: 'About',
-        screenName: 'About',
-        props: {}
-      }
-    ]
-  },
-  {
-    name: 'Links',
-    items: [
-      {
-        name: 'The Daily Pennsylvanian',
-        screenName: 'WebView',
-        props: { link: 'https://thedp.com' }
-      },
-      {
-        name: '34th Street',
-        screenName: 'WebView',
-        props: { link: 'https://34st.com' }
-      },
-      {
-        name: 'Under the Button',
-        screenName: 'WebView',
-        props: { link: 'https://underthebutton.com' }
-      }
-    ]
-  }
-]
-
 const SettingsCell = ({ item }) => {
   return (
     <View style={styles.cell}>
@@ -130,23 +77,86 @@ const SettingsSection = ({ navigateToScreen, name, items }) => {
       <SettingsSectionHeader title={name} />
       {items.map((l, i) => (
         <TouchableOpacity
+          key={l.id}
           activeOpacity={1}
           onPress={() => {
             navigateToScreen(l.screenName, l.props)
           }}
         >
-          <SettingsCell key={i} item={l} />
+          <SettingsCell item={l} />
         </TouchableOpacity>
       ))}
     </View>
   )
 }
 
-class SettingsView extends Component {
+class SettingsScreen extends Component {
   constructor(props) {
     super(props)
     this.navigateToScreen = this.navigateToScreen.bind(this)
-    this.publicationState = this.props.publicationState
+    this.publicationState = this.props.screenProps.state
+    this.sections = [
+      {
+        id: 'account section',
+        name: 'Account',
+        items: [
+          {
+            id: 'noti cell',
+            name: 'Notifications',
+            screenName: 'Notification',
+            props: {},
+          },
+          {
+            id: 'privacy cell',
+            name: 'Privacy',
+            screenName: 'Privacy',
+            props: {},
+          },
+          {
+            id: 'manage feed cell',
+            name: 'Manage Feed',
+            screenName: 'ManageFeedScreen',
+            props: {},
+          },
+        ],
+      },
+      {
+        id: 'features section',
+        name: 'Features',
+        items: [
+          {
+            id: 'about cell',
+            name: 'About',
+            screenName: 'About',
+            props: {},
+          },
+        ],
+      },
+      {
+        id: 'links section',
+        name: 'Links',
+        items: [
+          {
+            id: 'dp cell',
+            name: 'The Daily Pennsylvanian',
+            screenName: 'WebView',
+            props: { link: 'https://thedp.com' },
+          },
+          {
+            id: 'street cell',
+            name: '34th Street',
+            screenName: 'WebView',
+            props: { link: 'https://34st.com' },
+          },
+          {
+            id: 'utb cell',
+            name: 'Under the Button',
+            screenName: 'WebView',
+            props: { link: 'https://underthebutton.com' },
+          },
+        ],
+      },
+    ]
   }
 
   navigateToScreen(screenName, props) {
@@ -156,30 +166,18 @@ class SettingsView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {sections.map((l, i) => (
+        {this.sections.map((l, i) => (
           <SettingsSection
-            key={i}
+            key={l.id}
             name={l.name}
             items={l.items}
             navigateToScreen={this.navigateToScreen}
+            navigation={this.props.navigation}
           />
         ))}
       </View>
     )
   }
-}
-
-const SettingsScreen = ({ navigation, screenProps }) => {
-  const publicationState = screenProps.state
-
-  return (
-    <View>
-      <SettingsView
-        navigation={navigation}
-        publicationState={publicationState}
-      />
-    </View>
-  )
 }
 
 export { SettingsScreen, SettingsSectionHeader }

@@ -12,7 +12,7 @@ import {
   NotificationScreen,
   PrivacyScreen,
   WebViewScreen,
-  SectionScreen
+  SectionScreen,
 } from './src/screens'
 
 import ManageFeedScreen from './src/screens/ManageFeedScreen'
@@ -24,7 +24,7 @@ const Tab = createBottomTabNavigator()
 const PublicationEnum = Object.freeze({
   dp: 'The Daily Pennsylvanian',
   street: '34th Street',
-  utb: 'Under the Button'
+  utb: 'Under the Button',
 })
 
 const ScreenWithDefaultParams = (Comp, defaultParams) => {
@@ -42,7 +42,7 @@ class TabNavigationController extends Component {
     this.switchPublication = this.switchPublication.bind(this)
     this.state = {
       currPublication: PublicationEnum.dp,
-      switchPublication: this.switchPublication
+      switchPublication: this.switchPublication,
     }
   }
 
@@ -51,7 +51,7 @@ class TabNavigationController extends Component {
     if (newPublication != this.state.currPublication) {
       this.setState(prevState => ({
         ...prevState.switchPublication,
-        currPublication: newPublication
+        currPublication: newPublication,
       }))
     }
   }
@@ -65,7 +65,7 @@ class TabNavigationController extends Component {
           screenOptions={{
             headerStyle: { backgroundColor: '#fff' },
             headerTintColor: '#000',
-            headerTitleStyle: { fontWeight: 'bold' }
+            headerTitleStyle: { fontWeight: 'bold' },
           }}
         >
           <Stack.Screen
@@ -73,7 +73,7 @@ class TabNavigationController extends Component {
             component={ScreenWithDefaultParams(HomeScreen, screenProps)}
             options={{
               title: 'Home',
-              headerShown: false
+              headerShown: false,
             }}
           />
           <Stack.Screen
@@ -82,7 +82,7 @@ class TabNavigationController extends Component {
             options={({ route }) => ({
               title: route.params.article.headline,
               animationEnabled: true,
-              headerBackTitleVisible: false
+              headerBackTitleVisible: false,
             })}
           />
         </Stack.Navigator>
@@ -96,7 +96,7 @@ class TabNavigationController extends Component {
           headerStyle: { backgroundColor: '#fff' },
           headerTintColor: '#000',
           headerTitleStyle: { fontWeight: 'bold' },
-          headerBackTitleVisible: false
+          headerBackTitleVisible: false,
         }}
       >
         <Stack.Screen
@@ -109,7 +109,7 @@ class TabNavigationController extends Component {
           component={ScreenWithDefaultParams(SectionScreen, screenProps)}
           options={({ route }) => ({
             title: route.params.sectionName,
-            animationEnabled: true
+            animationEnabled: true,
           })}
         />
       </Stack.Navigator>
@@ -124,7 +124,7 @@ class TabNavigationController extends Component {
           headerStyle: { backgroundColor: '#fff' },
           headerTintColor: '#000',
           headerTitleStyle: { fontWeight: 'bold' },
-          headerBackTitleVisible: false
+          headerBackTitleVisible: false,
         }}
       >
         <Stack.Screen
@@ -143,7 +143,7 @@ class TabNavigationController extends Component {
           screenOptions={{
             // headerStyle: { backgroundColor: "#ffffff" },
             // headerTintColor: "#fff",
-            headerTitleStyle: { fontWeight: 'bold' }
+            headerTitleStyle: { fontWeight: 'bold' },
           }}
         >
           <Stack.Screen
@@ -151,7 +151,7 @@ class TabNavigationController extends Component {
             component={ScreenWithDefaultParams(SettingsScreen, screenProps)}
             options={{
               title: 'Settings',
-              headerShown: true
+              headerShown: true,
             }}
           />
           <Stack.Screen
@@ -172,7 +172,7 @@ class TabNavigationController extends Component {
           <Stack.Screen
             name="ManageFeedScreen"
             component={ManageFeedScreen}
-            options={{ title: 'Manage Feed' }}
+            options={ManageFeedScreen.navigationOptions}
           />
           <Stack.Screen
             name="WebView"
@@ -195,30 +195,30 @@ class TabNavigationController extends Component {
               else if (route.name === 'SettingsStack') iconName = 'ios-settings'
 
               return <Ionicons name={iconName} size={size} color={color} />
-            }
+            },
           })}
           tabBarOptions={{
             activeTintColor: '#A61E21',
             inactiveTintColor: 'gray',
-            showLabel: false
+            showLabel: false,
           }}
         >
           <Tab.Screen
             name="HomeStack"
             component={ScreenWithDefaultParams(HomeStack, {
-              state: this.state
+              state: this.state,
             })}
           />
           <Tab.Screen
             name="DiscoveryStack"
             component={ScreenWithDefaultParams(DiscoveryStack, {
-              state: this.state
+              state: this.state,
             })}
           />
           <Tab.Screen
             name="SettingsStack"
             component={ScreenWithDefaultParams(SettingsStack, {
-              state: this.state
+              state: this.state,
             })}
           />
         </Tab.Navigator>

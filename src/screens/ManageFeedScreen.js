@@ -5,8 +5,11 @@ import {
   Animated,
   Easing,
   StyleSheet,
-  Platform
+  Platform,
+  Button,
 } from 'react-native'
+import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
+import { HOME_SECTIONS } from '../utils/constants'
 import SortableList from 'react-native-sortable-list'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
@@ -49,14 +52,57 @@ const styles = StyleSheet.create({
   }
 })
 
-const data = {
-  0: { text: 'News' },
-  1: { text: 'Opinion' },
-  2: { text: 'Sports' },
-  3: { text: 'Multimedia' }
-}
-
 export default class ManageFeedScreen extends Component {
+  constructor(props) {
+    super(props)
+    this.props = props
+    this.state = {
+      currData: HOME_SECTIONS,
+    }
+    this.newOrder = null
+  }
+
+  static navigationOptions = ({ route }) => {
+    return {
+      title: 'Manage Feed',
+      headerRight: () => (
+        <Button title={'Save'} onPress={() => route.params.handleSave()} />
+      ),
+    }
+  }
+
+  componentDidMount() {
+    this.orderItems()
+    this.props.navigation.setParams({ handleSave: this._handleSave.bind(this) })
+  }
+
+  _handleSave = async () => {
+    if (this.newOrder == null) return
+
+    var sorted = []
+    this.newOrder.forEach(i => {
+      this.state.currData.forEach((d, j) => {
+        if (i == j) {
+          sorted.push(d)
+        }
+      })
+    })
+    this.newData = sorted
+
+    if (this.newData == this.state.currData) return
+
+    await Storage.setItem(HOME_FEED_ORDER_KEY, this.newData)
+  }
+
+  orderItems = async () => {
+    let storedOrder = await Storage.getItem(HOME_FEED_ORDER_KEY)
+    this.setState({ currData: storedOrder })
+  }
+
+  onReleaseRow = (key, currentOrder) => {
+    this.newOrder = currentOrder
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -64,8 +110,9 @@ export default class ManageFeedScreen extends Component {
         <View style={styles.sectionContainer}>
           <SortableList
             style={styles.list}
-            data={data}
+            data={this.state.currData}
             renderRow={this._renderRow}
+            onReleaseRow={this.onReleaseRow}
           />
         </View>
       </View>
@@ -95,10 +142,6 @@ class Row extends Component {
               })
             }
           ],
-          shadowRadius: this._active.interpolate({
-            inputRange: [0, 1],
-            outputRange: [2, 10]
-          })
         },
 
         android: {
@@ -110,12 +153,8 @@ class Row extends Component {
               })
             }
           ],
-          elevation: this._active.interpolate({
-            inputRange: [0, 1],
-            outputRange: [2, 6]
-          })
-        }
-      })
+        },
+      }),
     }
   }
 
@@ -141,7 +180,7 @@ class Row extends Component {
           color="#b1b1b1"
           style={styles.icon}
         />
-        <Text style={styles.regText}>{data.text}</Text>
+        <Text style={styles.regText}>{data}</Text>
       </Animated.View>
     )
   }

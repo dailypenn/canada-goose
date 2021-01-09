@@ -224,3 +224,5 @@ export const SECTIONS = [
       'https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=%5B800%2C500%5D&w=1600&h=838&url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F28%2F2017%2F05%2Fblue0517.jpg'
   }
 ]
+
+export const HOME_SECTIONS = ['News', 'Opinion', 'Sports', 'Multimedia']
