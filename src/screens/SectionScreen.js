@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 import { useQuery } from '@apollo/client'
 
-import { SectionView } from '../components/shared'
+import { SectionView, ActivityIndicator } from '../components/shared'
 import { SECTIONS_QUERY } from '../utils/constants'
 
 const styles = StyleSheet.create({
@@ -12,10 +12,6 @@ const styles = StyleSheet.create({
   },
 })
 
-const SectionLoading = () => {
-  return <Text> Loading... </Text>
-}
-
 export const SectionScreen = ({ route, navigation, screenProps }) => {
   const publicationState = screenProps.state
   const { slug } = route.params
@@ -23,7 +19,7 @@ export const SectionScreen = ({ route, navigation, screenProps }) => {
     variables: { section: slug },
   })
 
-  if (loading) return <SectionLoading />
+  if (loading) return <ActivityIndicator />
 
   if (error) {
     console.log(error)

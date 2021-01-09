@@ -10,6 +10,7 @@ import {
   HeadlineArticle,
   HorizontalArticleCarousel,
   ArticleList,
+  ActivityIndicator,
 } from '../components/shared'
 import { HOME_PAGE_QUERY } from '../utils/constants'
 import {
@@ -26,10 +27,6 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
 })
-
-const HomeLoading = () => {
-  return <Text> Loading... </Text>
-}
 
 const HomeView = ({
   centerArticles,
@@ -118,7 +115,7 @@ export const HomeScreen = ({ navigation, screenProps }) => {
   const publicationState = screenProps.state
   const { loading, error, data } = useQuery(HOME_PAGE_QUERY)
 
-  if (loading) return <HomeLoading />
+  if (loading) return <ActivityIndicator />
 
   if (error) {
     console.log(error)

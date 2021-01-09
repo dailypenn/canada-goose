@@ -4,6 +4,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { TabNavigationController } from './NavigationController'
 
 import { loadFonts } from './src/utils/fonts'
+import { ActivityIndicator } from './src/components/shared'
 
 // Initialize Apollo Client
 const client = new ApolloClient({
@@ -31,7 +32,7 @@ export default class App extends React.Component {
         </ApolloProvider>
       )
     } else {
-      return <Text>Loading Assets!</Text>
+      return <ActivityIndicator />
     }
   }
 }
