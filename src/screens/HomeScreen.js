@@ -9,11 +9,7 @@ import {
   HorizontalArticleCarousel,
   ArticleList,
 } from '../components/shared'
-import AsyncStorage from '@react-native-community/async-storage'
-
 import { TouchableOpacity } from 'react-native-gesture-handler'
-// import { Storage } from '../../Storage'
-import { HOME_FEED_ORDER_KEY } from '../utils/storageKeys'
 
 const styles = StyleSheet.create({
   container: {
@@ -119,20 +115,6 @@ export const HomeScreen = ({ navigation, screenProps }) => {
     console.log(error)
     return <Text> Error </Text>
   }
-
-  const getData = async () => {
-    console.log('==========getting local data=========')
-    try {
-      console.log(HOME_FEED_ORDER_KEY)
-      const jsonValue = await AsyncStorage.getItem(HOME_FEED_ORDER_KEY)
-      const val = jsonValue != null ? JSON.parse(jsonValue) : null
-      console.log(val)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  getData()
 
   const {
     most_recent: { edges: mostRecentArticles },

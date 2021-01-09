@@ -8,8 +8,8 @@ import {
   Platform,
   Button,
 } from 'react-native'
-import { HOME_FEED_ORDER_KEY } from '../utils/storageKeys'
-import AsyncStorage from '@react-native-community/async-storage'
+import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
+import { HOME_SECTIONS } from '../utils/constants'
 import SortableList from 'react-native-sortable-list'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { SettingsSectionHeader } from './SettingsScreen'
@@ -51,17 +51,14 @@ const styles = StyleSheet.create({
   },
 })
 
-const data = ['News', 'Opinion', 'Sports', 'Multimedia']
-
-const defaultOrder = [0, 1, 2, 3]
-
 export default class ManageFeedScreen extends Component {
   constructor(props) {
     super(props)
     this.props = props
     this.state = {
-      currData: data,
+      currData: HOME_SECTIONS,
     }
+    this.newOrder = null
   }
 
   static navigationOptions = ({ route }) => {
@@ -74,40 +71,35 @@ export default class ManageFeedScreen extends Component {
   }
 
   componentDidMount() {
+    this.orderItems()
     this.props.navigation.setParams({ handleSave: this._handleSave.bind(this) })
   }
 
   _handleSave = async () => {
-    console.log('SAVE')
-    console.log(HOME_FEED_ORDER_KEY)
-    console.log('current order - ', this.state.currData)
+    if (this.newOrder == null) return
 
-    try {
-      await AsyncStorage.setItem(
-        HOME_FEED_ORDER_KEY,
-        JSON.stringify(this.state.currData)
-      )
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  getDataForOrder = order => {
-    const sorted = []
-    order.forEach(i => {
-      data.forEach((d, j) => {
+    var sorted = []
+    this.newOrder.forEach(i => {
+      this.state.currData.forEach((d, j) => {
         if (i == j) {
           sorted.push(d)
         }
       })
     })
-    console.log(sorted)
-    return sorted
+    this.newData = sorted
+
+    if (this.newData == this.state.currData) return
+
+    await Storage.setItem(HOME_FEED_ORDER_KEY, this.newData)
+  }
+
+  orderItems = async () => {
+    let storedOrder = await Storage.getItem(HOME_FEED_ORDER_KEY)
+    this.setState({ currData: storedOrder })
   }
 
   onReleaseRow = (key, currentOrder) => {
-    // console.log('current order - ', currentOrder)
-    this.setState({ currData: this.getDataForOrder(currentOrder) })
+    this.newOrder = currentOrder
   }
 
   render() {
@@ -117,7 +109,7 @@ export default class ManageFeedScreen extends Component {
         <View style={styles.sectionContainer}>
           <SortableList
             style={styles.list}
-            data={data}
+            data={this.state.currData}
             renderRow={this._renderRow}
             onReleaseRow={this.onReleaseRow}
           />
@@ -149,10 +141,6 @@ class Row extends Component {
               }),
             },
           ],
-          shadowRadius: this._active.interpolate({
-            inputRange: [0, 1],
-            outputRange: [2, 10],
-          }),
         },
 
         android: {
@@ -164,10 +152,6 @@ class Row extends Component {
               }),
             },
           ],
-          elevation: this._active.interpolate({
-            inputRange: [0, 1],
-            outputRange: [2, 6],
-          }),
         },
       }),
     }
