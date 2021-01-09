@@ -6,7 +6,6 @@ import HTML from 'react-native-render-html'
 import { useQuery } from '@apollo/client'
 
 import { PictureHeadline } from '../components/shared'
-import { PublicationEnum } from '../../NavigationController'
 import { IMAGE_URL, TIME_AGO, AUTHORS } from '../utils/helperFunctions'
 import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'

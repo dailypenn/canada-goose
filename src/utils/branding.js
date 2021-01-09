@@ -1,9 +1,6 @@
 /* Publication Specific Colors */
-import { PublicationEnum } from '../../NavigationController'
 
-// export constDP_LOGO_LARGE = "/src/static/logos/dp-logo-large.png";
-// export constUTB_LOGO_LARGE = "/src/static/logos/utb-logo-large.png";
-// export constSTREET_LOGO_LARGE = "/src/static/logos/street-logo-large.png";
+import { PublicationEnum } from './constants'
 
 export const DP_RED = '#D72E25' //'#A61E21'
 export const UTB_BLUE = '#3964A6'

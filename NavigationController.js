@@ -1,30 +1,15 @@
 import React, { Component } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { HomeStack, DiscoveryStack, SettingsStack } from './src/stacks'
 
-const Stack = createStackNavigator()
+import { HomeStack, DiscoveryStack, SettingsStack } from './src/stacks'
+import { PublicationEnum } from './src/utils/constants'
+import { ScreenWithDefaultParams } from './src/screens'
+
 const Tab = createBottomTabNavigator()
 
-// Enum for the 3 publications included in this app
-const PublicationEnum = Object.freeze({
-  dp: 'The Daily Pennsylvanian',
-  street: '34th Street',
-  utb: 'Under the Button',
-})
-
-const ScreenWithDefaultParams = (Comp, defaultParams) => {
-  return class extends Component {
-    render() {
-      return <Comp {...this.props} screenProps={defaultParams} />
-    }
-  }
-}
-
-// Navigation controller for all tabs
-class TabNavigationController extends Component {
+export class TabNavigationController extends Component {
   constructor(props) {
     super(props)
     this.switchPublication = this.switchPublication.bind(this)
@@ -87,11 +72,4 @@ class TabNavigationController extends Component {
       </NavigationContainer>
     )
   }
-}
-
-export {
-  Stack,
-  PublicationEnum,
-  TabNavigationController,
-  ScreenWithDefaultParams,
 }

@@ -2,9 +2,15 @@
 // Includes routes to the discovery and section screens
 
 import React from 'react'
+import { createStackNavigator } from '@react-navigation/stack'
 
-import { DiscoveryScreen, SectionScreen } from '../screens'
-import { ScreenWithDefaultParams, Stack } from '../../NavigationController'
+import {
+  DiscoveryScreen,
+  ScreenWithDefaultParams,
+  SectionScreen,
+} from '../screens'
+
+const Stack = createStackNavigator()
 
 export const DiscoveryStack = ({ screenProps }) => (
   <Stack.Navigator
