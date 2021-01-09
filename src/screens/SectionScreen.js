@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { StyleSheet, ScrollView, View, Text } from 'react-native'
+import React from 'react'
+import { StyleSheet, Text } from 'react-native'
 import { useQuery } from '@apollo/client'
 
 import { SectionView } from '../components/shared'

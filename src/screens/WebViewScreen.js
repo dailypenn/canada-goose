@@ -30,7 +30,7 @@ class WebViewContainer extends Component {
               width: 10,
               position: 'absolute',
               top: height / 2 - 60,
-              left: width / 2 - 5,
+              left: width / 2 - 5
             }}
             size="large"
           />
@@ -40,6 +40,6 @@ class WebViewContainer extends Component {
   }
 }
 
-export const WebViewScreen = ({ route }) => {
-  return <WebViewContainer link={route.params.link} />
-}
+export const WebViewScreen = ({ route }) => (
+  <WebViewContainer link={route.params.link} />
+)
