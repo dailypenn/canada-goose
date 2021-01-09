@@ -35,7 +35,7 @@ export const ArticleScreen = ({ navigation, route }) => {
           article.dominantMedia.extension
         )}
         category="NEWS"
-        publication={publicationState}
+        publication={publicationState.currPublication}
       />
       <View
         style={{

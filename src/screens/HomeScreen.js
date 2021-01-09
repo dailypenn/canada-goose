@@ -94,11 +94,6 @@ const HomeView = ({
                 title={name}
                 publication={publicationState.currPublication}
               />
-              {/* <ArticleList
-                articles={articles}
-                navigateToArticleScreen={navigateToArticleScreen}
-                publication={publicationState.currPublication}
-              /> */}
               <ArticleList
                 articles={articles}
                 navigateToArticleScreen={PARTIAL_NAVIGATE(

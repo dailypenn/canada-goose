@@ -17,12 +17,12 @@ import {
 
 import ManageFeedScreen from './src/screens/ManageFeedScreen'
 
-// import {
-//   HomeStack,
-//   DiscoveryStack,
-//   SettingsStack,
-//   // ArticleStack,
-// } from './src/stacks'
+import {
+  HomeStack,
+  DiscoveryStack,
+  SettingsStack,
+  ArticleStack,
+} from './src/stacks'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -65,131 +65,131 @@ class TabNavigationController extends Component {
 
   render() {
     // Navigation stack within the home tab
-    const HomeStack = ({ screenProps }) => {
-      return (
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            headerStyle: { backgroundColor: '#fff' },
-            headerTintColor: '#000',
-            headerTitleStyle: { fontWeight: 'bold' },
-          }}
-        >
-          <Stack.Screen
-            name="Home"
-            component={ScreenWithDefaultParams(HomeScreen, screenProps)}
-            options={{
-              title: 'Home',
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Article"
-            component={ArticleScreen}
-            options={({ route }) => ({
-              title: route.params.article.headline,
-              animationEnabled: true,
-              headerBackTitleVisible: false,
-            })}
-          />
-        </Stack.Navigator>
-      )
-    }
+    // const HomeStack = ({ screenProps }) => {
+    //   return (
+    //     <Stack.Navigator
+    //       initialRouteName="Home"
+    //       screenOptions={{
+    //         headerStyle: { backgroundColor: '#fff' },
+    //         headerTintColor: '#000',
+    //         headerTitleStyle: { fontWeight: 'bold' },
+    //       }}
+    //     >
+    //       <Stack.Screen
+    //         name="Home"
+    //         component={ScreenWithDefaultParams(HomeScreen, screenProps)}
+    //         options={{
+    //           title: 'Home',
+    //           headerShown: false,
+    //         }}
+    //       />
+    //       <Stack.Screen
+    //         name="Article"
+    //         component={ArticleScreen}
+    //         options={({ route }) => ({
+    //           title: route.params.article.headline,
+    //           animationEnabled: true,
+    //           headerBackTitleVisible: false,
+    //         })}
+    //       />
+    //     </Stack.Navigator>
+    //   )
+    // }
 
     // Navigation stack within the discovery tab
-    const DiscoveryStack = ({ screenProps }) => (
-      <Stack.Navigator
-        initialRouteName="Discovery"
-        screenOptions={{
-          headerStyle: { backgroundColor: '#fff' },
-          headerTintColor: '#000',
-          headerTitleStyle: { fontWeight: 'bold' },
-          headerBackTitleVisible: false,
-        }}
-      >
-        <Stack.Screen
-          name="Discovery"
-          component={ScreenWithDefaultParams(DiscoveryScreen, screenProps)}
-          options={{ title: 'Discover', headerShown: false }}
-        />
-        <Stack.Screen
-          name="Section"
-          component={ScreenWithDefaultParams(SectionScreen, screenProps)}
-          options={({ route }) => ({
-            title: route.params.sectionName,
-            animationEnabled: true,
-          })}
-        />
-      </Stack.Navigator>
-    )
+    // const DiscoveryStack = ({ screenProps }) => (
+    //   <Stack.Navigator
+    //     initialRouteName="Discovery"
+    //     screenOptions={{
+    //       headerStyle: { backgroundColor: '#fff' },
+    //       headerTintColor: '#000',
+    //       headerTitleStyle: { fontWeight: 'bold' },
+    //       headerBackTitleVisible: false,
+    //     }}
+    //   >
+    //     <Stack.Screen
+    //       name="Discovery"
+    //       component={ScreenWithDefaultParams(DiscoveryScreen, screenProps)}
+    //       options={{ title: 'Discover', headerShown: false }}
+    //     />
+    //     <Stack.Screen
+    //       name="Section"
+    //       component={ScreenWithDefaultParams(SectionScreen, screenProps)}
+    //       options={({ route }) => ({
+    //         title: route.params.sectionName,
+    //         animationEnabled: true,
+    //       })}
+    //     />
+    //   </Stack.Navigator>
+    // )
 
     // Navigation stack within the Article tab
     // TO DO: navigate to here when an article is clicked instead of the ArticleScreen
-    const ArticleStack = () => (
-      <Stack.Navigator
-        initialRouteName="Article"
-        screenOptions={{
-          headerStyle: { backgroundColor: '#fff' },
-          headerTintColor: '#000',
-          headerTitleStyle: { fontWeight: 'bold' },
-          headerBackTitleVisible: false,
-        }}
-      >
-        <Stack.Screen
-          name="Article"
-          component={ArticleScreen}
-          options={{ title: '', headerShown: false }}
-        />
-      </Stack.Navigator>
-    )
+    // const ArticleStack = () => (
+    //   <Stack.Navigator
+    //     initialRouteName="Article"
+    //     screenOptions={{
+    //       headerStyle: { backgroundColor: '#fff' },
+    //       headerTintColor: '#000',
+    //       headerTitleStyle: { fontWeight: 'bold' },
+    //       headerBackTitleVisible: false,
+    //     }}
+    //   >
+    //     <Stack.Screen
+    //       name="Article"
+    //       component={ArticleScreen}
+    //       options={{ title: '', headerShown: false }}
+    //     />
+    //   </Stack.Navigator>
+    // )
 
     // Settings stack within the home tab
-    const SettingsStack = ({ screenProps }) => {
-      return (
-        <Stack.Navigator
-          initialRouteName="Settings"
-          screenOptions={{
-            // headerStyle: { backgroundColor: "#ffffff" },
-            // headerTintColor: "#fff",
-            headerTitleStyle: { fontWeight: 'bold' },
-          }}
-        >
-          <Stack.Screen
-            name="Settings"
-            component={ScreenWithDefaultParams(SettingsScreen, screenProps)}
-            options={{
-              title: 'Settings',
-              headerShown: true,
-            }}
-          />
-          <Stack.Screen
-            name="About"
-            component={AboutScreen}
-            options={{ title: 'About' }}
-          />
-          <Stack.Screen
-            name="Notification"
-            component={NotificationScreen}
-            options={{ title: 'Notification' }}
-          />
-          <Stack.Screen
-            name="Privacy"
-            component={PrivacyScreen}
-            options={{ title: 'Privacy' }}
-          />
-          <Stack.Screen
-            name="ManageFeedScreen"
-            component={ManageFeedScreen}
-            options={ManageFeedScreen.navigationOptions}
-          />
-          <Stack.Screen
-            name="WebView"
-            component={WebViewScreen}
-            options={{ title: '' }}
-          />
-        </Stack.Navigator>
-      )
-    }
+    // const SettingsStack = ({ screenProps }) => {
+    //   return (
+    //     <Stack.Navigator
+    //       initialRouteName="Settings"
+    //       screenOptions={{
+    //         // headerStyle: { backgroundColor: "#ffffff" },
+    //         // headerTintColor: "#fff",
+    //         headerTitleStyle: { fontWeight: 'bold' },
+    //       }}
+    //     >
+    //       <Stack.Screen
+    //         name="Settings"
+    //         component={ScreenWithDefaultParams(SettingsScreen, screenProps)}
+    //         options={{
+    //           title: 'Settings',
+    //           headerShown: true,
+    //         }}
+    //       />
+    //       <Stack.Screen
+    //         name="About"
+    //         component={AboutScreen}
+    //         options={{ title: 'About' }}
+    //       />
+    //       <Stack.Screen
+    //         name="Notification"
+    //         component={NotificationScreen}
+    //         options={{ title: 'Notification' }}
+    //       />
+    //       <Stack.Screen
+    //         name="Privacy"
+    //         component={PrivacyScreen}
+    //         options={{ title: 'Privacy' }}
+    //       />
+    //       <Stack.Screen
+    //         name="ManageFeedScreen"
+    //         component={ManageFeedScreen}
+    //         options={ManageFeedScreen.navigationOptions}
+    //       />
+    //       <Stack.Screen
+    //         name="WebView"
+    //         component={WebViewScreen}
+    //         options={{ title: '' }}
+    //       />
+    //     </Stack.Navigator>
+    //   )
+    // }
 
     return (
       <NavigationContainer>

@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default class ManageFeedScreen extends Component {
+export class ManageFeedScreen extends Component {
   constructor(props) {
     super(props)
     this.props = props
@@ -78,7 +78,11 @@ export default class ManageFeedScreen extends Component {
   }
 
   _handleSave = async () => {
+    console.log('handle save')
+
     if (this.newOrder == null) return
+
+    console.log('new order not null')
 
     var sorted = []
     this.newOrder.forEach(i => {
@@ -90,6 +94,8 @@ export default class ManageFeedScreen extends Component {
     })
     this.newData = sorted
 
+    console.log('sorted', sorted)
+
     if (this.newData == this.state.currData) return
 
     await Storage.setItem(HOME_FEED_ORDER_KEY, this.newData)
@@ -97,11 +103,13 @@ export default class ManageFeedScreen extends Component {
 
   orderItems = async () => {
     let storedOrder = await Storage.getItem(HOME_FEED_ORDER_KEY)
+    console.log(storedOrder)
     this.setState({ currData: storedOrder })
   }
 
   onReleaseRow = (key, currentOrder) => {
     this.newOrder = currentOrder
+    console.log(currentOrder)
   }
 
   render() {

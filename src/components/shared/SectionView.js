@@ -18,7 +18,10 @@ const styles = StyleSheet.create({
 export const SectionView = ({ articles, publication, navigation }) => (
   <View style={styles.container}>
     <ScrollView scrollEventThrottle={16}>
-      <HeadlineArticle data={articles[0]} publication={publication} />
+      <HeadlineArticle
+        data={articles[0]}
+        publication={publication.currPublication}
+      />
       <ArticleList
         articles={articles.slice(1)}
         navigateToArticleScreen={PARTIAL_NAVIGATE(
