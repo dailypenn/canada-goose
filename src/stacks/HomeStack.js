@@ -4,7 +4,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import { HomeScreen, ArticleScreen, ScreenWithDefaultParams } from '../screens'
+import { HomeScreen, ArticleScreen, ScreenWithDefaultParams, WebViewScreen } from '../screens'
 
 const Stack = createStackNavigator()
 
@@ -32,6 +32,13 @@ export const HomeStack = ({ screenProps }) => (
         title: route.params.article.headline,
         animationEnabled: false,
         headerBackTitleVisible: false,
+      })}
+    />
+    <Stack.Screen
+      name="ArticleBrowser"
+      component={WebViewScreen}
+      options={({ route }) => ({
+        link: route.params.link
       })}
     />
   </Stack.Navigator>
