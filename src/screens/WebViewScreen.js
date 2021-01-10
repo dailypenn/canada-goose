@@ -23,7 +23,6 @@ const WebViewContainer = ({ link }) => {
             top: height / 2 - 60,
             left: width / 2 - 5
           }}
-          size="large"
         />
       )}
     </View>
