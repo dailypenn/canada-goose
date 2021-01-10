@@ -232,10 +232,22 @@ export const PublicationEnum = Object.freeze({
   utb: 'Under the Button',
 })
 
-export const HOME_SECTIONS = ['News', 'Opinion', 'Sports', 'Multimedia']
-export const HOME_SECTION_TITLES = {
+export const HOME_SECTIONS = {
   News: 'In Other News',
   Opinion: 'Opinion',
   Sports: 'Sports',
   Multimedia: 'Multimedia',
+}
+
+export const GET_SECTION_TITLE = section => {
+  switch (section) {
+    case 'News':
+      return 'In Other News'
+    case 'Opinion':
+      return 'Opinion'
+    case 'Sports':
+      return 'Sports'
+    case 'Multimedia':
+      return 'Multimedia'
+  }
 }

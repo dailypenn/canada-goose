@@ -57,7 +57,7 @@ export class ManageFeedScreen extends Component {
     super(props)
     this.props = props
     this.state = {
-      currData: HOME_SECTIONS,
+      currData: Object.keys(HOME_SECTIONS),
     }
     this.newOrder = null
   }
