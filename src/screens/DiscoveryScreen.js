@@ -6,27 +6,30 @@ import {
   View,
   TextInput,
   SafeAreaView,
-  Keyboard,
+  Keyboard
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { FlatGrid } from 'react-native-super-grid'
+import { TouchableOpacity } from 'react-native'
 
 import { ARTICLES_SEARCH, SECTIONS } from '../utils/constants'
 import {
   SectionHeader,
-  DiscoveryGrid,
   SearchArticleList,
   DiscoveryCell,
-  ActivityIndicator,
+  ActivityIndicator
 } from '../components/shared'
-import { FlatGrid } from 'react-native-super-grid'
-import { TouchableOpacity } from 'react-native'
+import {
+  PARTIAL_NAVIGATE,
+  NAVIGATE_TO_ARTICLE_SCREEN
+} from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingVertical: 20,
-  },
+    paddingVertical: 20
+  }
 })
 
 class DiscoveryView extends Component {
@@ -39,7 +42,7 @@ class DiscoveryView extends Component {
   navigateToSectionScreen(section, slug) {
     this.props.navigation.navigate('Section', {
       sectionName: section,
-      slug,
+      slug
     })
   }
 
@@ -94,18 +97,15 @@ class DiscoveryView extends Component {
   }
 }
 
-const SearchView = ({ filter, publicationState, navigation }) => {
+const SearchView = ({ filter, publication, navigation }) => {
   const [offset, setOffset] = useState(0)
 
   const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
     variables: { filter },
-    pollInterval: 2000,
+    pollInterval: 2000
   })
-  if (loading) return <ActivityIndicator />
 
-  const navigateToArticleScreen = article => {
-    navigation.navigate('Article', { article })
-  }
+  if (loading) return <ActivityIndicator />
 
   const handleScroll = scrollData => {
     let newOffset = scrollData.nativeEvent.contentOffset.y
@@ -118,14 +118,20 @@ const SearchView = ({ filter, publicationState, navigation }) => {
     <ScrollView
       onScroll={event => handleScroll(event)}
       scrollEventThrottle={16}
+      keyboardShouldPersistTaps='handled'
+      keyboardDismissMode='on-drag'
       //style={{minHeight: "110%"}}
     >
       <SectionHeader title="Sections" />
       <SectionHeader title="Articles" />
       <SearchArticleList
         articles={results}
-        navigateToArticleScreen={navigateToArticleScreen}
-        publication={publicationState}
+        navigateToArticleScreen={PARTIAL_NAVIGATE(
+          navigation,
+          publication,
+          'SectionArticle',
+          NAVIGATE_TO_ARTICLE_SCREEN
+        )}
       />
     </ScrollView>
   )
@@ -166,11 +172,11 @@ const SearchBarStyles = StyleSheet.create({
     borderRadius: 13,
     flexDirection: 'row',
     //paddingBottom: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 20
   },
   icon: {
     paddingVertical: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: 10
     //backgroundColor: '#f8f4f4',
   },
   textInput: {
@@ -178,14 +184,14 @@ const SearchBarStyles = StyleSheet.create({
     //backgroundColor: '#f8f4f4',
     //borderRadius: 13,
     //flexDirection: 'row',
-    flex: 1,
+    flex: 1
   },
   button: {
     paddingHorizontal: 10,
-    margin: 10,
+    margin: 10
     //backgroundColor: 'white',
     //marginLeft: 'auto'
-  },
+  }
 })
 
 export const DiscoveryScreen = ({ navigation, screenProps }) => {
@@ -199,7 +205,7 @@ export const DiscoveryScreen = ({ navigation, screenProps }) => {
       {Boolean(filter) && (
         <SearchView
           filter={filter}
-          publicationState={publicationState}
+          publication={publicationState}
           navigation={navigation}
         />
       )}
