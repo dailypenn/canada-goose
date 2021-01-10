@@ -114,7 +114,7 @@ const HomeView = ({
                 articles={articles}
                 navigateToArticleScreen={PARTIAL_NAVIGATE(
                   navigation,
-                  publicationState.currPublication,
+                  publicationState,
                   'HomeArticle',
                   NAVIGATE_TO_ARTICLE_SCREEN
                 )}
