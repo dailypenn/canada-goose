@@ -100,7 +100,7 @@ export class ManageFeedScreen extends Component {
     })
     this.newData = sorted
     if (this.newData == this.state.currData) return
-
+    console.log('saving-', this.newData)
     await Storage.setItem(HOME_FEED_ORDER_KEY, this.newData)
   }
 

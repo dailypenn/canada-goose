@@ -238,16 +238,3 @@ export const HOME_SECTIONS = {
   Sports: 'Sports',
   Multimedia: 'Multimedia',
 }
-
-export const GET_SECTION_TITLE = section => {
-  switch (section) {
-    case 'News':
-      return 'In Other News'
-    case 'Opinion':
-      return 'Opinion'
-    case 'Sports':
-      return 'Sports'
-    case 'Multimedia':
-      return 'Multimedia'
-  }
-}

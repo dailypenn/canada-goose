@@ -32,3 +32,16 @@ export const NAVIGATE_TO_ARTICLE_SCREEN = (
 export const navigateToSectionScreen = section => {
   navigation.navigate('Article', { article, publicationState })
 }
+
+export const HOME_SECTION_FROM_TITLE = section => {
+  switch (section) {
+    case 'In Other News':
+      return 'News'
+    case 'Opinion':
+      return 'Opinion'
+    case 'Sports':
+      return 'Sports'
+    case 'Multimedia':
+      return 'Multimedia'
+  }
+}

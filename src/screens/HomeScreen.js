@@ -3,11 +3,7 @@ import { StyleSheet, ScrollView, View, Text } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import {
-  GET_SECTION_TITLE,
-  HOME_PAGE_QUERY,
-  HOME_SECTIONS,
-} from '../utils/constants'
+import { HOME_PAGE_QUERY, HOME_SECTIONS } from '../utils/constants'
 import {
   CustomHeader,
   SectionHeader,
@@ -19,6 +15,7 @@ import {
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
+  HOME_SECTION_FROM_TITLE,
 } from '../utils/helperFunctions'
 import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 
@@ -54,7 +51,7 @@ const HomeView = ({
     var newSections = []
     order.forEach(section => {
       defaultSections.forEach(item => {
-        if (section == GET_SECTION_TITLE(item.name)) {
+        if (section == HOME_SECTION_FROM_TITLE(item.name)) {
           newSections.push(item)
         }
       })
