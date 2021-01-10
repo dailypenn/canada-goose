@@ -12,12 +12,15 @@ import {
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import { ARTICLES_SEARCH } from '../utils/constants'
+import { ARTICLES_SEARCH, SECTIONS } from '../utils/constants'
 import {
   SectionHeader,
   DiscoveryGrid,
   SearchArticleList,
+  DiscoveryCell,
 } from '../components/shared'
+import { FlatGrid } from 'react-native-super-grid'
+import { TouchableOpacity } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
@@ -52,22 +55,47 @@ class DiscoveryView extends Component {
     }
 
     return (
-      <>
-        <ScrollView
-          onScroll={event => handleScroll(event)}
-          scrollEventThrottle={16}
-          //style={{minHeight: "110%"}}
-        >
-          <SectionHeader
-            title={'Top Sections'}
-            publication={this.props.publicationState.currPublication}
-          />
-          <DiscoveryGrid
-            navigateToSectionScreen={this.navigateToSectionScreen}
-          />
-        </ScrollView>
-      </>
+      <FlatGrid
+        ListHeaderComponent={
+          <>
+            <SectionHeader
+              title={'Top Sections'}
+              publication={this.props.publicationState.currPublication}
+            />
+          </>
+        }
+        ListHeaderComponentStyle={styles.container}
+        data={SECTIONS}
+        renderItem={({ item, i }) => (
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => this.navigateToSectionScreen(item.name, item.slug)}
+            style={styles.item}
+            key={i}
+          >
+            <DiscoveryCell category={item.name} imageURL={item.image} />
+          </TouchableOpacity>
+        )}
+      />
     )
+
+    // return (
+    //   <>
+    //     <ScrollView
+    //       onScroll={event => handleScroll(event)}
+    //       scrollEventThrottle={16}
+    //       //style={{minHeight: "110%"}}
+    //     >
+    //       <SectionHeader
+    //         title={'Top Sections'}
+    //         publication={this.props.publicationState.currPublication}
+    //       />
+    //       <DiscoveryGrid
+    //         navigateToSectionScreen={this.navigateToSectionScreen}
+    //       />
+    //     </ScrollView>
+    //   </>
+    // )
   }
 }
 

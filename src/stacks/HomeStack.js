@@ -25,7 +25,7 @@ export const HomeStack = ({ screenProps }) => (
       }}
     />
     <Stack.Screen
-      name="Article"
+      name="HomeArticle"
       component={ArticleScreen}
       options={({ route }) => ({
         title: route.params.article.headline,

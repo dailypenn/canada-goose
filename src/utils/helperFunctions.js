@@ -1,3 +1,4 @@
+import { NavigationHelpersContext } from '@react-navigation/native'
 import moment from 'moment'
 import React from 'react'
 
@@ -15,16 +16,17 @@ export const AUTHORS = authorArr => {
   return authorNames.join(', ')
 }
 
-export const PARTIAL_NAVIGATE = (navigation, publicationState, f) => {
-  return article => f(article, navigation, publicationState)
+export const PARTIAL_NAVIGATE = (navigation, publicationState, toScreen, f) => {
+  return article => f(navigation, toScreen, article, publicationState)
 }
 
 export const NAVIGATE_TO_ARTICLE_SCREEN = (
-  article,
   navigation,
+  toScreen,
+  article,
   publicationState
 ) => {
-  navigation.navigate('Article', { article, publicationState })
+  navigation.navigate(toScreen, { article, publicationState })
 }
 
 export const navigateToSectionScreen = section => {

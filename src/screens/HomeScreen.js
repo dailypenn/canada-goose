@@ -67,7 +67,15 @@ const HomeView = ({
       >
         <TouchableOpacity
           activeOpacity={1}
-          onPress={() => navigateToArticleScreen(centerArticles[0].article)}
+          onPress={() =>
+            NAVIGATE_TO_ARTICLE_SCREEN(
+              navigation,
+              'HomeArticle',
+              centerArticles[0].article,
+              publicationState
+            )
+          }
+          // onPress={() => navigateToArticleScreen(centerArticles[0].article)}
         >
           <HeadlineArticle
             data={centerArticles[0]}
@@ -81,7 +89,12 @@ const HomeView = ({
         />
         <HorizontalArticleCarousel
           articles={topArticles}
-          navigateToArticleScreen={navigateToArticleScreen}
+          navigateToArticleScreen={PARTIAL_NAVIGATE(
+            navigation,
+            publicationState,
+            'HomeArticle',
+            NAVIGATE_TO_ARTICLE_SCREEN
+          )}
           publication={publicationState.currPublication}
         />
 
@@ -98,6 +111,7 @@ const HomeView = ({
                 navigateToArticleScreen={PARTIAL_NAVIGATE(
                   navigation,
                   publicationState.currPublication,
+                  'HomeArticle',
                   NAVIGATE_TO_ARTICLE_SCREEN
                 )}
               />

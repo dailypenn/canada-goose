@@ -5,6 +5,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import {
+  ArticleScreen,
   DiscoveryScreen,
   ScreenWithDefaultParams,
   SectionScreen,
@@ -33,6 +34,15 @@ export const DiscoveryStack = ({ screenProps }) => (
       options={({ route }) => ({
         title: route.params.sectionName,
         animationEnabled: true,
+      })}
+    />
+    <Stack.Screen
+      name="SectionArticle"
+      component={ArticleScreen}
+      options={({ route }) => ({
+        title: route.params.article.headline,
+        animationEnabled: true,
+        headerBackTitleVisible: false,
       })}
     />
   </Stack.Navigator>

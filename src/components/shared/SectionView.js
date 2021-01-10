@@ -27,6 +27,7 @@ export const SectionView = ({ articles, publication, navigation }) => (
         navigateToArticleScreen={PARTIAL_NAVIGATE(
           navigation,
           publication,
+          'SectionArticle',
           NAVIGATE_TO_ARTICLE_SCREEN
         )}
       />

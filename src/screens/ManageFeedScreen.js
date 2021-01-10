@@ -102,7 +102,6 @@ export class ManageFeedScreen extends Component {
 
   onReleaseRow = (key, currentOrder) => {
     this.newOrder = currentOrder
-    console.log(currentOrder)
   }
 
   render() {
