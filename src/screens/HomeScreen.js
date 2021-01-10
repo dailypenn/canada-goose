@@ -3,6 +3,7 @@ import { StyleSheet, ScrollView, View, Text } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
+import { HOME_PAGE_QUERY, HOME_SECTION_TITLES } from '../utils/constants'
 import {
   CustomHeader,
   SectionHeader,
@@ -11,7 +12,6 @@ import {
   ArticleList,
   ActivityIndicator,
 } from '../components/shared'
-import { HOME_PAGE_QUERY } from '../utils/constants'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
@@ -30,20 +30,20 @@ const styles = StyleSheet.create({
 const HomeView = ({
   centerArticles,
   topArticles,
-  inOtherNewsArticles,
-  inOtherOpinionArticles,
-  inOtherSportsArticles,
-  inOtherMultimediaArticles,
+  newsArticles,
+  opinionArticles,
+  sportsArticles,
+  multimediaArticles,
   navigation,
   publicationState,
 }) => {
   const [offset, setOffset] = useState(0)
 
   sections = [
-    { name: 'In Other News', articles: inOtherNewsArticles },
-    { name: 'In Other Opinion', articles: inOtherOpinionArticles },
-    { name: 'In Other Sports', articles: inOtherSportsArticles },
-    { name: 'In Other Multimedia', articles: inOtherMultimediaArticles },
+    { name: HOME_SECTION_TITLES.News, articles: newsArticles },
+    { name: HOME_SECTION_TITLES.Opinion, articles: opinionArticles },
+    { name: HOME_SECTION_TITLES.Sports, articles: sportsArticles },
+    { name: HOME_SECTION_TITLES.Multimedia, articles: multimediaArticles },
   ]
 
   // TODO: this function sld be put in helperFunctions.js
@@ -138,20 +138,20 @@ export const HomeScreen = ({ navigation, screenProps }) => {
   const {
     centerpiece: { edges: centerArticles },
     top: { edges: topArticles },
-    inOtherNews: { edges: inOtherNewsArticles },
-    inOtherOpinion: { edges: inOtherOpinionArticles },
-    inOtherSports: { edges: inOtherSportsArticles },
-    inOtherMultimedia: { edges: inOtherMultimediaArticles },
+    inOtherNews: { edges: newsArticles },
+    inOtherOpinion: { edges: opinionArticles },
+    inOtherSports: { edges: sportsArticles },
+    inOtherMultimedia: { edges: multimediaArticles },
   } = data
 
   return (
     <HomeView
       centerArticles={centerArticles}
       topArticles={topArticles}
-      inOtherNewsArticles={inOtherNewsArticles}
-      inOtherOpinionArticles={inOtherOpinionArticles}
-      inOtherSportsArticles={inOtherSportsArticles}
-      inOtherMultimediaArticles={inOtherMultimediaArticles}
+      newsArticles={newsArticles}
+      opinionArticles={opinionArticles}
+      sportsArticles={sportsArticles}
+      multimediaArticles={multimediaArticles}
       navigation={navigation}
       publicationState={publicationState}
     />

@@ -233,3 +233,9 @@ export const PublicationEnum = Object.freeze({
 })
 
 export const HOME_SECTIONS = ['News', 'Opinion', 'Sports', 'Multimedia']
+export const HOME_SECTION_TITLES = {
+  News: 'In Other News',
+  Opinion: 'Opinion',
+  Sports: 'Sports',
+  Multimedia: 'Multimedia',
+}

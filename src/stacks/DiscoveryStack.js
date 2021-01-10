@@ -41,7 +41,7 @@ export const DiscoveryStack = ({ screenProps }) => (
       component={ArticleScreen}
       options={({ route }) => ({
         title: route.params.article.headline,
-        animationEnabled: true,
+        animationEnabled: false,
         headerBackTitleVisible: false,
       })}
     />
