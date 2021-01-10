@@ -1,14 +1,6 @@
 import React, { Component, useState } from 'react'
 import { useQuery } from '@apollo/client'
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  TextInput,
-  SafeAreaView,
-  Keyboard
-} from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import { StyleSheet, ScrollView, View, SafeAreaView } from 'react-native'
 import { FlatGrid } from 'react-native-super-grid'
 import { TouchableOpacity } from 'react-native'
 
@@ -17,8 +9,10 @@ import {
   SectionHeader,
   SearchArticleList,
   DiscoveryCell,
-  ActivityIndicator
-} from '../components/shared'
+  DiscoveryGrid,
+  ActivityIndicator,
+  SearchBar
+} from '../components'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN
@@ -28,7 +22,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingVertical: 20
+    paddingBottom: 10
   }
 })
 
@@ -55,12 +49,10 @@ class DiscoveryView extends Component {
     return (
       <FlatGrid
         ListHeaderComponent={
-          <>
-            <SectionHeader
-              title={'Top Sections'}
-              publication={this.props.publicationState.currPublication}
-            />
-          </>
+          <SectionHeader
+            title={'Top Sections'}
+            publication={this.props.publicationState.currPublication}
+          />
         }
         ListHeaderComponentStyle={styles.container}
         data={SECTIONS}
@@ -78,21 +70,19 @@ class DiscoveryView extends Component {
     )
 
     // return (
-    //   <>
-    //     <ScrollView
-    //       onScroll={event => handleScroll(event)}
-    //       scrollEventThrottle={16}
-    //       //style={{minHeight: "110%"}}
-    //     >
-    //       <SectionHeader
-    //         title={'Top Sections'}
-    //         publication={this.props.publicationState.currPublication}
-    //       />
-    //       <DiscoveryGrid
-    //         navigateToSectionScreen={this.navigateToSectionScreen}
-    //       />
-    //     </ScrollView>
-    //   </>
+    //   <ScrollView
+    //     onScroll={event => handleScroll(event)}
+    //     scrollEventThrottle={16}
+    //     //style={{minHeight: "110%"}}
+    //   >
+    //     <SectionHeader
+    //       title={'Top Sections'}
+    //       publication={this.props.publicationState.currPublication}
+    //     />
+    //     <DiscoveryGrid
+    //       navigateToSectionScreen={this.navigateToSectionScreen}
+    //     />
+    //   </ScrollView>
     // )
   }
 }
@@ -118,8 +108,8 @@ const SearchView = ({ filter, publication, navigation }) => {
     <ScrollView
       onScroll={event => handleScroll(event)}
       scrollEventThrottle={16}
-      keyboardShouldPersistTaps='handled'
-      keyboardDismissMode='on-drag'
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag"
       //style={{minHeight: "110%"}}
     >
       <SectionHeader title="Sections" />
@@ -136,63 +126,6 @@ const SearchView = ({ filter, publication, navigation }) => {
     </ScrollView>
   )
 }
-
-const hideKeyboard = text => {
-  if (text == '') {
-    Keyboard.dismiss()
-  }
-}
-
-const SearchBar = ({ setFilter }) => (
-  <View style={SearchBarStyles.container}>
-    <Ionicons
-      name="search"
-      size={20}
-      style={SearchBarStyles.icon}
-      color="#AAA"
-    />
-    <TextInput
-      onChangeText={text => {
-        setFilter(text)
-        hideKeyboard(text)
-      }}
-      placeholder="Search"
-      autoCorrect={false}
-      autoCapitalize="none"
-      style={SearchBarStyles.textInput}
-      clearButtonMode="always"
-      returnKeyType="search"
-    />
-  </View>
-)
-
-const SearchBarStyles = StyleSheet.create({
-  container: {
-    backgroundColor: '#f8f4f4',
-    borderRadius: 13,
-    flexDirection: 'row',
-    //paddingBottom: 10,
-    marginHorizontal: 20
-  },
-  icon: {
-    paddingVertical: 10,
-    paddingHorizontal: 10
-    //backgroundColor: '#f8f4f4',
-  },
-  textInput: {
-    fontSize: 18,
-    //backgroundColor: '#f8f4f4',
-    //borderRadius: 13,
-    //flexDirection: 'row',
-    flex: 1
-  },
-  button: {
-    paddingHorizontal: 10,
-    margin: 10
-    //backgroundColor: 'white',
-    //marginLeft: 'auto'
-  }
-})
 
 export const DiscoveryScreen = ({ navigation, screenProps }) => {
   const [filter, setFilter] = useState('')

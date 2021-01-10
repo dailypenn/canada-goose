@@ -2,7 +2,7 @@ import { View } from 'react-native'
 import { Tagline } from './Tagline'
 import React from 'react'
 import { PictureHeadline } from './PictureHeadline'
-import { IMAGE_URL, TIME_AGO } from '../../utils/helperFunctions'
+import { IMAGE_URL, TIME_AGO } from '../utils/helperFunctions'
 
 export const HeadlineArticle = ({ data, publication }) => {
   // console.log(publication)

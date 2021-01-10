@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, TouchableOpacity } from 'react-native'
-import { IMAGE_URL, TIME_AGO, AUTHORS } from '../../utils/helperFunctions'
+
+import { IMAGE_URL, TIME_AGO, AUTHORS } from '../utils/helperFunctions'
 import { HorizontalArticleCell } from './HorizontalArticleCell'
 import { PrimaryHorizontalArticleCell } from './PrimaryHorizontalArticleCell'
 

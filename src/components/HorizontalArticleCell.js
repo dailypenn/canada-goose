@@ -1,8 +1,9 @@
 import React from 'react'
 import { View, StyleSheet, Image, Text } from 'react-native'
-import { PublicationPrimaryColor } from '../../utils/branding'
-import { DISPLAY_SERIF_BOLD, GEOMETRIC_REGULAR } from '../../utils/fonts'
-import { TIME_AGO } from '../../utils/helperFunctions'
+
+import { PublicationPrimaryColor } from '../utils/branding'
+import { DISPLAY_SERIF_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
+import { TIME_AGO } from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   title: {

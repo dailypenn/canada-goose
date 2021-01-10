@@ -9,9 +9,12 @@ import {
   Dimensions,
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { PublicationEnum } from '../../utils/constants'
-const DP_LOGO_WHITE = require('../../static/logos/dp-logo-small-white.png')
-const DP_LOGO_RED = require('../../static/logos/dp-logo-small-red.png')
+
+import { PublicationEnum } from '../utils/constants'
+
+const DP_LOGO_WHITE = require('../static/logos/dp-logo-small-white.png')
+const DP_LOGO_RED = require('../static/logos/dp-logo-small-red.png')
+
 // half the height of the header
 const IOS_NOTCH_OFFSET = 44
 const IOS_STATUS_BAR_OFFSET = 20

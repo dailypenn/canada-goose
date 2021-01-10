@@ -1,13 +1,13 @@
 import React from 'react'
 import { View, StyleSheet, ImageBackground, Text } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { CategoryTag } from './CategoryTag'
 
+import { CategoryTag } from './CategoryTag'
 import {
   DISPLAY_SERIF_BOLD,
   GEOMETRIC_BOLD,
   GEOMETRIC_REGULAR,
-} from '../../utils/fonts'
+} from '../utils/fonts'
 
 const styles = StyleSheet.create({
   imageBackground: {

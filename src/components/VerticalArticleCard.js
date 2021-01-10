@@ -1,13 +1,14 @@
 import React from 'react'
 import { Text, View, StyleSheet, ImageBackground } from 'react-native'
-import { PublicationPrimaryColor } from '../../utils/branding'
 import { LinearGradient } from 'expo-linear-gradient'
+
 import { CategoryTag } from './CategoryTag'
+import { PublicationPrimaryColor } from '../utils/branding'
 import {
   DISPLAY_SERIF_BOLD,
   GEOMETRIC_BOLD,
   GEOMETRIC_REGULAR,
-} from '../../utils/fonts'
+} from '../utils/fonts'
 
 const styles = StyleSheet.create({
   container: {

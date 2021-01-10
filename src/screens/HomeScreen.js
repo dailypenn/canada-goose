@@ -11,7 +11,7 @@ import {
   HorizontalArticleCarousel,
   ArticleList,
   ActivityIndicator,
-} from '../components/shared'
+} from '../components'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,

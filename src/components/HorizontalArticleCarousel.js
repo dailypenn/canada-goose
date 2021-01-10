@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, ScrollView, View, Dimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { IMAGE_URL, TIME_AGO } from '../../utils/helperFunctions'
+import { IMAGE_URL, TIME_AGO } from '../utils/helperFunctions'
 import VerticalArticleCard from './VerticalArticleCard'
 
 const { width } = Dimensions.get('window')

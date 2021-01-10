@@ -3,7 +3,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
 import { TabNavigationController } from './NavigationController'
 import { loadFonts } from './src/utils/fonts'
-import { ActivityIndicator } from './src/components/shared'
+import { ActivityIndicator } from './src/components'
 
 // Initialize Apollo Client
 const client = new ApolloClient({

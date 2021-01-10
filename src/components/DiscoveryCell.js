@@ -1,7 +1,8 @@
 import React from 'react'
 import { View, StyleSheet, ImageBackground, Text } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { GEOMETRIC_BOLD } from '../../utils/fonts'
+
+import { GEOMETRIC_BOLD } from '../utils/fonts'
 
 const styles = StyleSheet.create({
   imageBackground: {
