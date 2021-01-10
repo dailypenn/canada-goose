@@ -1,6 +1,17 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useState, useRef } from 'react'
 import { useQuery } from '@apollo/client'
-import { StyleSheet, ScrollView, View, SafeAreaView } from 'react-native'
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  TextInput,
+  SafeAreaView,
+  Keyboard,
+  Button,
+  Animated,
+  Dimensions,
+} from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FlatGrid } from 'react-native-super-grid'
 import { TouchableOpacity } from 'react-native'
 
@@ -9,10 +20,8 @@ import {
   SectionHeader,
   SearchArticleList,
   DiscoveryCell,
-  DiscoveryGrid,
-  ActivityIndicator,
-  SearchBar
-} from '../components'
+  ActivityIndicator
+} from '../components/shared'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN
@@ -22,7 +31,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingBottom: 10
+    paddingVertical: 20,
   }
 })
 
@@ -49,10 +58,12 @@ class DiscoveryView extends Component {
     return (
       <FlatGrid
         ListHeaderComponent={
-          <SectionHeader
-            title={'Top Sections'}
-            publication={this.props.publicationState.currPublication}
-          />
+          <>
+            <SectionHeader
+              title={'Top Sections'}
+              publication={this.props.publicationState.currPublication}
+            />
+          </>
         }
         ListHeaderComponentStyle={styles.container}
         data={SECTIONS}
@@ -68,22 +79,6 @@ class DiscoveryView extends Component {
         )}
       />
     )
-
-    // return (
-    //   <ScrollView
-    //     onScroll={event => handleScroll(event)}
-    //     scrollEventThrottle={16}
-    //     //style={{minHeight: "110%"}}
-    //   >
-    //     <SectionHeader
-    //       title={'Top Sections'}
-    //       publication={this.props.publicationState.currPublication}
-    //     />
-    //     <DiscoveryGrid
-    //       navigateToSectionScreen={this.navigateToSectionScreen}
-    //     />
-    //   </ScrollView>
-    // )
   }
 }
 
@@ -108,9 +103,8 @@ const SearchView = ({ filter, publication, navigation }) => {
     <ScrollView
       onScroll={event => handleScroll(event)}
       scrollEventThrottle={16}
-      keyboardShouldPersistTaps="handled"
-      keyboardDismissMode="on-drag"
-      //style={{minHeight: "110%"}}
+      keyboardShouldPersistTaps='handled'
+      keyboardDismissMode='on-drag'
     >
       <SectionHeader title="Sections" />
       <SectionHeader title="Articles" />
@@ -126,6 +120,108 @@ const SearchView = ({ filter, publication, navigation }) => {
     </ScrollView>
   )
 }
+
+const { width } = Dimensions.get('window')
+
+const SearchBar = ({ setFilter }) => {
+
+  const textInput = useRef();
+  const searchWidth = new Animated.Value(width - 30)
+  const cancelOpacity = new Animated.Value(0)
+
+  const [currSearchText, setCurrSearchText] = useState('');
+
+  const startAnimation = () => {
+    Animated.timing(searchWidth, {
+      toValue: width - 30 - 80,
+      duration: 300,
+    }).start()
+    Animated.timing(cancelOpacity, {
+      toValue: 1,
+      duration: 700,
+    }).start()
+  }
+
+  const endAnimation = () => {
+    Animated.timing(cancelOpacity, {
+      toValue: 0,
+      duration: 450,
+    }).start()
+    Animated.timing(searchWidth, {
+      toValue: width - 30,
+      duration: 200,
+    }).start()
+  }
+
+  const inputAnimatedStyle = {
+    width: searchWidth,
+  }
+
+  const cancelAnimatedStyle = {
+    opacity: cancelOpacity,
+  }
+
+  return (
+    <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
+      <Animated.View style={[SearchBarStyles.container, inputAnimatedStyle]} >
+        <Ionicons
+          name="search"
+          size={20}
+          style={SearchBarStyles.icon}
+          color="#666"
+        />
+        <TextInput
+          onChangeText={text => {
+            setFilter(text)
+            //setCurrSearchText(text)
+          }}
+          ref={textInput}
+          placeholder="Search"
+          autoCorrect={false}
+          autoCapitalize="none"
+          style={SearchBarStyles.textInput}
+          clearButtonMode="always"
+          returnKeyType="search"
+          onFocus={startAnimation}
+          //onEndEditing={endAnimation}
+          placeholderTextColor="#666"
+        />
+      </Animated.View>
+      <Animated.View style={[SearchBarStyles.button, cancelAnimatedStyle]}>
+        <Button title="Cancel" onPress={() => {
+          endAnimation();
+          textInput.current.clear();
+          textInput.current.blur();
+          //setFilter('');
+        }}
+          color='#000' />
+      </Animated.View>
+    </View>
+  )
+}
+
+const SearchBarStyles = StyleSheet.create({
+  container: {
+    backgroundColor: '#f8f4f4',
+    borderRadius: 13,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  icon: {
+    paddingVertical: 10,
+    paddingHorizontal: 10
+  },
+  textInput: {
+    fontSize: 18,
+    color: '#000',
+    flex: 1
+  },
+  button: {
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    width: 80,
+  }
+})
 
 export const DiscoveryScreen = ({ navigation, screenProps }) => {
   const [filter, setFilter] = useState('')
@@ -151,30 +247,3 @@ export const DiscoveryScreen = ({ navigation, screenProps }) => {
     </SafeAreaView>
   )
 }
-
-/*
-
-<TouchableOpacity
-          activeOpacity={1}
-          onPress={clearSearchBar}
-        >
-          <Ionicons name="close-circle" size={20} style={SearchBarStyles.icon} color = '#AAA'/>
-        </TouchableOpacity>
-
-
-
-      <View style={SearchBarStyles.container}>
-        <Ionicons name="search" size={20} style={SearchBarStyles.icon} />
-        <TextInput
-          onChangeText={text => setFilter(text)}
-          placeholder="Search"
-          autoCorrect={false}
-          autoCapitalize="none"
-          style={SearchBarStyles.textInput}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-        />
-        {/* <Button title="Cancel" style={SearchBarStyles.button} />}
-        </View>
-        {/* {focused &&  } }
-*/
