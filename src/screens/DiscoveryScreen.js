@@ -4,12 +4,10 @@ import {
   StyleSheet,
   ScrollView,
   View,
-  Text,
   TextInput,
   SafeAreaView,
   Keyboard,
 } from 'react-native'
-
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { ARTICLES_SEARCH, SECTIONS } from '../utils/constants'
@@ -18,6 +16,7 @@ import {
   DiscoveryGrid,
   SearchArticleList,
   DiscoveryCell,
+  ActivityIndicator,
 } from '../components/shared'
 import { FlatGrid } from 'react-native-super-grid'
 import { TouchableOpacity } from 'react-native'
@@ -29,10 +28,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
 })
-
-const DiscoveryLoading = () => {
-  return <Text> Loading... </Text>
-}
 
 class DiscoveryView extends Component {
   constructor(props) {
@@ -106,7 +101,7 @@ const SearchView = ({ filter, publicationState, navigation }) => {
     variables: { filter },
     pollInterval: 2000,
   })
-  if (loading) return <DiscoveryLoading />
+  if (loading) return <ActivityIndicator />
 
   const navigateToArticleScreen = article => {
     navigation.navigate('Article', { article })

@@ -8,7 +8,6 @@ import {
   Platform,
   Button,
 } from 'react-native'
-
 import SortableList from 'react-native-sortable-list'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
