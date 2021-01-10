@@ -11,7 +11,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
 
+  cellContainer: {
+    paddingVertical: 15,
+  },
+
   cell: {
+    borderTopColor: '#d4d4d4',
+    borderTopWidth: 0.6,
     paddingHorizontal: 15,
     justifyContent: 'center',
     alignItems: 'center',
@@ -30,7 +36,7 @@ const styles = StyleSheet.create({
   description: {
     fontFamily: GEOMETRIC_REGULAR,
     paddingHorizontal: 15,
-    paddingVertical: 8,
+    paddingTop: 8,
     fontSize: 12,
     color: '#808080',
   },
@@ -45,7 +51,7 @@ const NotificationCell = ({ info }) => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState)
 
   return (
-    <View>
+    <View style={styles.cellContainer}>
       <View style={styles.cell}>
         <Text style={styles.regText}>{info.title}</Text>
         <View style={styles.spacer} />

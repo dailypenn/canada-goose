@@ -24,8 +24,10 @@ const styles = StyleSheet.create({
   },
 
   sectionContainer: {
-    flex: 1,
     flexDirection: 'row',
+    marginTop: 15,
+    borderTopColor: '#d4d4d4',
+    borderTopWidth: 0.6,
   },
 
   icon: {
@@ -41,14 +43,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     paddingVertical: 10,
-    padding: 15,
+    paddingHorizontal: 15,
     flex: 1,
-    borderBottomColor: '#eee',
-    borderBottomWidth: 1,
+    borderBottomColor: '#d4d4d4',
+    borderBottomWidth: 0.6,
   },
 
   regText: {
     fontFamily: GEOMETRIC_REGULAR,
+  },
+
+  description: {
+    fontFamily: GEOMETRIC_REGULAR,
+    paddingTop: 8,
+    paddingHorizontal: 15,
+    fontSize: 12,
+    color: '#808080',
   },
 })
 
@@ -60,6 +70,8 @@ export class ManageFeedScreen extends Component {
       currData: Object.keys(HOME_SECTIONS),
     }
     this.newOrder = null
+    this.instructions =
+      'Press down and drag the sections to the order you would like to see them appear on the home page, then save and restart the app'
   }
 
   static navigationOptions = ({ route }) => {
@@ -106,7 +118,7 @@ export class ManageFeedScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <SettingsSectionHeader title="Home Section Ordering" />
+        {/* <SettingsSectionHeader title="Home" /> */}
         <View style={styles.sectionContainer}>
           <SortableList
             style={styles.list}
@@ -115,6 +127,7 @@ export class ManageFeedScreen extends Component {
             onReleaseRow={this.onReleaseRow}
           />
         </View>
+        <Text style={styles.description}>{this.instructions}</Text>
       </View>
     )
   }
