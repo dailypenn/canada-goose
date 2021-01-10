@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { HomeScreen, ArticleScreen, ScreenWithDefaultParams } from '../screens'
 
 const Stack = createStackNavigator()
+
 export const HomeStack = ({ screenProps }) => (
   <Stack.Navigator
     initialRouteName="Home"

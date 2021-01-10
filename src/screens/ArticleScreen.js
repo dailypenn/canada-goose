@@ -1,6 +1,5 @@
 import React from 'react'
 import { Text, View, useWindowDimensions } from 'react-native'
-
 import { ScrollView } from 'react-native-gesture-handler'
 import HTML from 'react-native-render-html'
 import { useQuery } from '@apollo/client'

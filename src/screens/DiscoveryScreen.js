@@ -4,12 +4,10 @@ import {
   StyleSheet,
   ScrollView,
   View,
-  Text,
   TextInput,
   SafeAreaView,
   Keyboard,
 } from 'react-native'
-
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { ARTICLES_SEARCH } from '../utils/constants'

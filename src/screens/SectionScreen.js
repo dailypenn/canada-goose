@@ -5,13 +5,6 @@ import { useQuery } from '@apollo/client'
 import { SectionView, ActivityIndicator } from '../components/shared'
 import { SECTIONS_QUERY } from '../utils/constants'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-})
-
 export const SectionScreen = ({ route, navigation, screenProps }) => {
   const publicationState = screenProps.state
   const { slug } = route.params
