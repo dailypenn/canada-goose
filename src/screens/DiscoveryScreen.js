@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import {
   StyleSheet,
