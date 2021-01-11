@@ -1,58 +1,36 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { StyleSheet, Text, ScrollView, View } from 'react-native'
 import { useQuery } from '@apollo/client'
-import { StyleSheet, ScrollView, View, Text } from 'react-native'
 
-import { ArticleList, HeadlineArticle } from '../components/shared'
+import { ActivityIndicator, ArticleList } from '../components'
 import { SECTIONS_QUERY } from '../utils/constants'
+import {
+  PARTIAL_NAVIGATE,
+  NAVIGATE_TO_ARTICLE_SCREEN
+} from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
+    backgroundColor: '#fff'
+  }
 })
 
-const SectionLoading = () => {
-  return <Text> Loading... </Text>
-}
-
-// TODO: @raunaq turn this into a shared component
-class SectionView extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { offset: 0 }
-    this.navigateToArticleScreen = this.navigateToArticleScreen.bind(this)
-  }
-
-  navigateToArticleScreen(article) {
-    this.props.navigation.navigate('Article', { article })
-  }
-
-  render() {
-    const handleScroll = (scrollData) => {
-      var newOffset = scrollData.nativeEvent.contentOffset.y
-      this.setState({ offset: newOffset })
-    }
-    return (
-      <View style={styles.container}>
-        <ScrollView
-          onScroll={(event) => handleScroll(event)}
-          scrollEventThrottle={16}
-        >
-          <HeadlineArticle
-            data={this.props.articles[0]}
-            publication={this.props.publicationState.currPublication}
-          />
-          <ArticleList
-            articles={this.props.articles.slice(1)}
-            navigateToArticleScreen={this.navigateToArticleScreen}
-            publication={this.props.publicationState.currPublication}
-          />
-        </ScrollView>
-      </View>
-    )
-  }
-}
+const SectionView = ({ articles, publication, navigation }) => (
+  <View style={styles.container}>
+    <ScrollView scrollEventThrottle={16}>
+      <ArticleList
+        articles={articles}
+        navigateToArticleScreen={PARTIAL_NAVIGATE(
+          navigation,
+          publication,
+          'SectionArticle',
+          NAVIGATE_TO_ARTICLE_SCREEN
+        )}
+      />
+    </ScrollView>
+  </View>
+)
 
 export const SectionScreen = ({ route, navigation, screenProps }) => {
   const publicationState = screenProps.state
@@ -61,8 +39,8 @@ export const SectionScreen = ({ route, navigation, screenProps }) => {
     variables: { section: slug }
   })
 
-  if (loading) return <SectionLoading />
-    
+  if (loading) return <ActivityIndicator />
+
   if (error) {
     console.log(error)
     return <Text> Error </Text>
@@ -73,8 +51,8 @@ export const SectionScreen = ({ route, navigation, screenProps }) => {
   return (
     <SectionView
       articles={articles}
+      publication={publicationState}
       navigation={navigation}
-      publicationState={publicationState}
     />
   )
 }

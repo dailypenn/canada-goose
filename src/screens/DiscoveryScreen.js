@@ -1,22 +1,25 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import {
   StyleSheet,
   ScrollView,
-  View,
-  Text,
-  TextInput,
   SafeAreaView,
-  Keyboard
 } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import { FlatGrid } from 'react-native-super-grid'
+import { TouchableOpacity } from 'react-native'
 
-import { ARTICLES_SEARCH } from '../utils/constants'
+import { ARTICLES_SEARCH, SECTIONS } from '../utils/constants'
 import {
   SectionHeader,
-  DiscoveryGrid,
-  SearchArticleList
-} from '../components/shared'
+  SearchArticleList,
+  DiscoveryCell,
+  ActivityIndicator,
+  SearchBar
+} from '../components'
+import {
+  PARTIAL_NAVIGATE,
+  NAVIGATE_TO_ARTICLE_SCREEN
+} from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   container: {
@@ -26,62 +29,47 @@ const styles = StyleSheet.create({
   }
 })
 
-const DiscoveryLoading = () => {
-  return <Text> Loading... </Text>
-}
-
-class DiscoveryView extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { offset: 0 }
-    this.navigateToSectionScreen = this.navigateToSectionScreen.bind(this)
-  }
-
-  navigateToSectionScreen(section, slug) {
-    this.props.navigation.navigate('Section', {
+const DiscoveryView  = ({ navigation, publicationState }) => {
+  navigateToSectionScreen = (section, slug) => {
+    navigation.navigate('Section', {
       sectionName: section,
       slug
     })
   }
 
-  render() {
-    const handleScroll = scrollData => {
-      var newOffset = scrollData.nativeEvent.contentOffset.y
-      this.setState({ offset: newOffset })
-    }
-
-    return (
-      <>
-        <ScrollView
-          onScroll={event => handleScroll(event)}
-          scrollEventThrottle={16}
-          //style={{minHeight: "110%"}}
+  return (
+    <FlatGrid
+      ListHeaderComponent={
+        <SectionHeader
+          title="Top Sections"
+          publication={publicationState.currPublication}
+        />
+      }
+      ListHeaderComponentStyle={styles.container}
+      data={SECTIONS}
+      renderItem={({ item, i }) => (
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => navigateToSectionScreen(item.name, item.slug)}
+          style={styles.item}
+          key={i}
         >
-          <SectionHeader
-            title={'Top Sections'}
-            publication={this.props.publicationState.currPublication}
-          />
-          <DiscoveryGrid
-            navigateToSectionScreen={this.navigateToSectionScreen}
-          />
-        </ScrollView>
-      </>
-    )
-  }
+          <DiscoveryCell category={item.name} imageURL={item.image} />
+        </TouchableOpacity>
+      )}
+    />
+  )
 }
 
-const SearchView = ({ filter, publicationState, navigation }) => {
+const SearchView = ({ filter, publication, navigation }) => {
   const [offset, setOffset] = useState(0)
 
   const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
     variables: { filter },
     pollInterval: 2000
   })
-  if (loading) return <DiscoveryLoading />
 
-  const navigateToArticleScreen = article => {
-    navigation.navigate('Article', { article })
-  }
+  if (loading) return <ActivityIndicator />
 
   const handleScroll = scrollData => {
     let newOffset = scrollData.nativeEvent.contentOffset.y
@@ -94,75 +82,23 @@ const SearchView = ({ filter, publicationState, navigation }) => {
     <ScrollView
       onScroll={event => handleScroll(event)}
       scrollEventThrottle={16}
-      //style={{minHeight: "110%"}}
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag"
     >
       <SectionHeader title="Sections" />
       <SectionHeader title="Articles" />
       <SearchArticleList
         articles={results}
-        navigateToArticleScreen={navigateToArticleScreen}
-        publication={publicationState}
+        navigateToArticleScreen={PARTIAL_NAVIGATE(
+          navigation,
+          publication,
+          'SectionArticle',
+          NAVIGATE_TO_ARTICLE_SCREEN
+        )}
       />
     </ScrollView>
   )
 }
-
-const hideKeyboard = text => {
-  if (text == '') {
-    Keyboard.dismiss()
-  }
-}
-
-const SearchBar = ({ setFilter }) => (
-  <View style={SearchBarStyles.container}>
-    <Ionicons
-      name="search"
-      size={20}
-      style={SearchBarStyles.icon}
-      color="#AAA"
-    />
-    <TextInput
-      onChangeText={text => {
-        setFilter(text)
-        hideKeyboard(text)
-      }}
-      placeholder="Search"
-      autoCorrect={false}
-      autoCapitalize="none"
-      style={SearchBarStyles.textInput}
-      clearButtonMode="always"
-      returnKeyType="search"
-    />
-  </View>
-)
-
-const SearchBarStyles = StyleSheet.create({
-  container: {
-    backgroundColor: '#f8f4f4',
-    borderRadius: 13,
-    flexDirection: 'row',
-    //paddingBottom: 10,
-    marginHorizontal: 20
-  },
-  icon: {
-    paddingVertical: 10,
-    paddingHorizontal: 10
-    //backgroundColor: '#f8f4f4',
-  },
-  textInput: {
-    fontSize: 18,
-    //backgroundColor: '#f8f4f4',
-    //borderRadius: 13,
-    //flexDirection: 'row',
-    flex: 1
-  },
-  button: {
-    paddingHorizontal: 10,
-    margin: 10
-    //backgroundColor: 'white',
-    //marginLeft: 'auto'
-  }
-})
 
 export const DiscoveryScreen = ({ navigation, screenProps }) => {
   const [filter, setFilter] = useState('')
@@ -175,7 +111,7 @@ export const DiscoveryScreen = ({ navigation, screenProps }) => {
       {Boolean(filter) && (
         <SearchView
           filter={filter}
-          publicationState={publicationState}
+          publication={publicationState}
           navigation={navigation}
         />
       )}
@@ -188,30 +124,3 @@ export const DiscoveryScreen = ({ navigation, screenProps }) => {
     </SafeAreaView>
   )
 }
-
-/*
-
-<TouchableOpacity
-          activeOpacity={1}
-          onPress={clearSearchBar}
-        >
-          <Ionicons name="close-circle" size={20} style={SearchBarStyles.icon} color = '#AAA'/>
-        </TouchableOpacity>
-
-
-
-      <View style={SearchBarStyles.container}>
-        <Ionicons name="search" size={20} style={SearchBarStyles.icon} />
-        <TextInput
-          onChangeText={text => setFilter(text)}
-          placeholder="Search"
-          autoCorrect={false}
-          autoCapitalize="none"
-          style={SearchBarStyles.textInput}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-        />
-        {/* <Button title="Cancel" style={SearchBarStyles.button} />}
-        </View>
-        {/* {focused &&  } }
-*/

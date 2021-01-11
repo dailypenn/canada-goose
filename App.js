@@ -1,37 +1,38 @@
-import React from 'react'
-import { Text } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import { TabNavigationController } from './NavigationController'
 
+import { TabNavigationController } from './NavigationController'
 import { loadFonts } from './src/utils/fonts'
+import { ActivityIndicator } from './src/components'
 
 // Initialize Apollo Client
 const client = new ApolloClient({
   uri: 'https://graphql-295919.ue.r.appspot.com/graphql',
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache()
 })
 
-export default class App extends React.Component {
-  state = {
-    assetsLoaded: false,
-  }
+const App = () => {
+  const [assetsLoaded, setAssetsLoaded] = useState(false)
 
-  async componentDidMount() {
-    await loadFonts()
-    this.setState({ assetsLoaded: true })
-  }
-
-  render() {
-    const { assetsLoaded } = this.state
-
-    if (assetsLoaded) {
-      return (
-        <ApolloProvider client={client}>
-          <TabNavigationController />
-        </ApolloProvider>
-      )
-    } else {
-      return <Text>Loading Assets!</Text>
+  useEffect(() => {
+    const loadAssets = async () => {
+      await loadFonts()
     }
+
+    loadAssets()
+    
+    setAssetsLoaded(true)
+  }, [])
+
+  if (assetsLoaded) {
+    return (
+      <ApolloProvider client={client}>
+        <TabNavigationController />
+      </ApolloProvider>
+    )
+  } else {
+    return <ActivityIndicator />
   }
 }
+
+export default App

@@ -13,7 +13,7 @@ export const GEOMETRIC_REGULAR = 'PoppinsRegular'
 export const BODY_SERIF = 'Libertinus'
 export const BODY_SERIF_ITALIC = 'LibertinusItalic'
 
-export async function loadFonts() {
+export const loadFonts = async () => {
   Font.loadAsync({
     Libertinus: require(`${FONT_FOLDER}/Libertinus/LibertinusSerif-Regular.otf`),
     LibertinusItalic: require(`${FONT_FOLDER}/Libertinus/LibertinusSerif-Italic.otf`),

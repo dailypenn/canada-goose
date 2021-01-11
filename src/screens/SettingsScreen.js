@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { TouchableOpacity } from 'react-native'
-import { Text, View, StyleSheet } from 'react-native'
+import { TouchableOpacity, Text, View, StyleSheet } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
@@ -71,24 +70,22 @@ const SettingsSectionHeader = ({ title }) => (
   </View>
 )
 
-const SettingsSection = ({ navigateToScreen, name, items }) => {
-  return (
-    <View>
-      <SettingsSectionHeader title={name} />
-      {items.map((l, i) => (
-        <TouchableOpacity
-          key={l.id}
-          activeOpacity={1}
-          onPress={() => {
-            navigateToScreen(l.screenName, l.props)
-          }}
-        >
-          <SettingsCell item={l} />
-        </TouchableOpacity>
-      ))}
-    </View>
-  )
-}
+const SettingsSection = ({ navigateToScreen, name, items }) => (
+  <View>
+    <SettingsSectionHeader title={name} />
+    {items.map((l, i) => (
+      <TouchableOpacity
+        key={l.id}
+        activeOpacity={1}
+        onPress={() => {
+          navigateToScreen(l.screenName, l.props)
+        }}
+      >
+        <SettingsCell item={l} />
+      </TouchableOpacity>
+    ))}
+  </View>
+)
 
 class SettingsScreen extends Component {
   constructor(props) {
@@ -104,21 +101,21 @@ class SettingsScreen extends Component {
             id: 'noti cell',
             name: 'Notifications',
             screenName: 'Notification',
-            props: {},
+            props: {}
           },
           {
             id: 'privacy cell',
             name: 'Privacy',
             screenName: 'Privacy',
-            props: {},
+            props: {}
           },
           {
             id: 'manage feed cell',
             name: 'Manage Feed',
             screenName: 'ManageFeedScreen',
-            props: {},
-          },
-        ],
+            props: {}
+          }
+        ]
       },
       {
         id: 'features section',
@@ -128,9 +125,9 @@ class SettingsScreen extends Component {
             id: 'about cell',
             name: 'About',
             screenName: 'About',
-            props: {},
-          },
-        ],
+            props: {}
+          }
+        ]
       },
       {
         id: 'links section',
@@ -140,22 +137,22 @@ class SettingsScreen extends Component {
             id: 'dp cell',
             name: 'The Daily Pennsylvanian',
             screenName: 'WebView',
-            props: { link: 'https://thedp.com' },
+            props: { link: 'https://thedp.com' }
           },
           {
             id: 'street cell',
             name: '34th Street',
             screenName: 'WebView',
-            props: { link: 'https://34st.com' },
+            props: { link: 'https://34st.com' }
           },
           {
             id: 'utb cell',
             name: 'Under the Button',
             screenName: 'WebView',
-            props: { link: 'https://underthebutton.com' },
-          },
-        ],
-      },
+            props: { link: 'https://underthebutton.com' }
+          }
+        ]
+      }
     ]
   }
 

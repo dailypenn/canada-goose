@@ -4,15 +4,13 @@ import { ScrollView } from 'react-native-gesture-handler'
 import HTML from 'react-native-render-html'
 import { useQuery } from '@apollo/client'
 
-import { PictureHeadline } from '../components/shared'
+import { PictureHeadline } from '../components'
 import { IMAGE_URL, TIME_AGO, AUTHORS } from '../utils/helperFunctions'
 import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
-import { DP_RED, PublicationPrimaryColor } from '../utils/branding'
-import { PublicationEnum } from '../../NavigationController'
 
-export const ArticleScreen = ({ publicatonState, navigation, route }) => {
-  const { article } = route.params
+export const ArticleScreen = ({ navigation, route }) => {
+  const { article, publicationState } = route.params
 
   if (!article) {
     // TODO: Check that article is already fetched
@@ -24,7 +22,6 @@ export const ArticleScreen = ({ publicatonState, navigation, route }) => {
   /* Currently author and image credits are not supported by
   GraphQL queries, so hard coding right now */
   // TODO: Fetch from CEO
-
   const photographer = 'Pitt Shure'
   return (
     <ScrollView>
@@ -36,7 +33,7 @@ export const ArticleScreen = ({ publicatonState, navigation, route }) => {
           article.dominantMedia.extension
         )}
         category="NEWS"
-        publication={PublicationEnum.dp}
+        publication={publicationState.currPublication}
       />
       <View
         style={{
@@ -61,6 +58,7 @@ export const ArticleScreen = ({ publicatonState, navigation, route }) => {
       </View>
       <View style={{ padding: 20 }}>
         <HTML
+          onLinkPress={(e, href, _) => navigation.navigate('ArticleBrowser', { link: href })}
           source={{ html: article.content }}
           contentWidth={useWindowDimensions().width}
           tagsStyles={{

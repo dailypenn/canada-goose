@@ -8,32 +8,34 @@ import {
   Platform,
   Button,
 } from 'react-native'
-import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
-import { HOME_SECTIONS } from '../utils/constants'
 import SortableList from 'react-native-sortable-list'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import { SettingsSectionHeader } from './SettingsScreen'
+import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
+import { HOME_SECTIONS } from '../utils/constants'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#eee'
+    backgroundColor: '#eee',
   },
 
   sectionContainer: {
-    flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginTop: 15,
+    borderTopColor: '#d4d4d4',
+    borderTopWidth: 0.6,
   },
 
   icon: {
-    paddingEnd: 10
+    paddingEnd: 10,
   },
 
   list: {
-    flex: 1
+    flex: 1,
   },
 
   row: {
@@ -41,25 +43,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     paddingVertical: 10,
-    padding: 15,
+    paddingHorizontal: 15,
     flex: 1,
-    borderBottomColor: '#eee',
-    borderBottomWidth: 1
+    borderBottomColor: '#d4d4d4',
+    borderBottomWidth: 0.6,
   },
 
   regText: {
-    fontFamily: GEOMETRIC_REGULAR
-  }
+    fontFamily: GEOMETRIC_REGULAR,
+  },
+
+  description: {
+    fontFamily: GEOMETRIC_REGULAR,
+    paddingTop: 8,
+    paddingHorizontal: 15,
+    fontSize: 12,
+    color: '#808080',
+  },
 })
 
-export default class ManageFeedScreen extends Component {
+export class ManageFeedScreen extends Component {
   constructor(props) {
     super(props)
     this.props = props
     this.state = {
-      currData: HOME_SECTIONS,
+      currData: Object.keys(HOME_SECTIONS),
     }
     this.newOrder = null
+    this.instructions =
+      'Press down and drag the sections to the order you would like to see them appear on the home page, then save and restart the app'
   }
 
   static navigationOptions = ({ route }) => {
@@ -78,7 +90,6 @@ export default class ManageFeedScreen extends Component {
 
   _handleSave = async () => {
     if (this.newOrder == null) return
-
     var sorted = []
     this.newOrder.forEach(i => {
       this.state.currData.forEach((d, j) => {
@@ -88,15 +99,16 @@ export default class ManageFeedScreen extends Component {
       })
     })
     this.newData = sorted
-
     if (this.newData == this.state.currData) return
-
+    console.log('saving-', this.newData)
     await Storage.setItem(HOME_FEED_ORDER_KEY, this.newData)
   }
 
   orderItems = async () => {
     let storedOrder = await Storage.getItem(HOME_FEED_ORDER_KEY)
-    this.setState({ currData: storedOrder })
+    if (storedOrder != null) {
+      this.setState({ currData: storedOrder })
+    }
   }
 
   onReleaseRow = (key, currentOrder) => {
@@ -106,7 +118,7 @@ export default class ManageFeedScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <SettingsSectionHeader title="Home Section Ordering" />
+        {/* <SettingsSectionHeader title="Home" /> */}
         <View style={styles.sectionContainer}>
           <SortableList
             style={styles.list}
@@ -115,6 +127,7 @@ export default class ManageFeedScreen extends Component {
             onReleaseRow={this.onReleaseRow}
           />
         </View>
+        <Text style={styles.description}>{this.instructions}</Text>
       </View>
     )
   }
@@ -138,9 +151,9 @@ class Row extends Component {
             {
               scale: this._active.interpolate({
                 inputRange: [0, 1],
-                outputRange: [1, 1.1]
-              })
-            }
+                outputRange: [1, 1.1],
+              }),
+            },
           ],
         },
 
@@ -149,9 +162,9 @@ class Row extends Component {
             {
               scale: this._active.interpolate({
                 inputRange: [0, 1],
-                outputRange: [1, 1.07]
-              })
-            }
+                outputRange: [1, 1.07],
+              }),
+            },
           ],
         },
       }),
@@ -164,7 +177,7 @@ class Row extends Component {
         duration: 300,
         easing: Easing.bounce,
         toValue: Number(nextProps.active),
-        useNativeDriver: false
+        useNativeDriver: false,
       }).start()
     }
   }

@@ -1,28 +1,21 @@
+// About Screen: Bios of developers and information about the app
 import React from 'react'
-import {
-  Dimensions,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
 import { FlatGrid } from 'react-native-super-grid'
+
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 
-const people = require('../json/members.json')
+const PEOPLE = require('../json/members.json')
+const GOOSE_LOGO = require('../static/logos/goose_from_canada_logo.png')
 
 const { width, height } = Dimensions.get('window')
+const PROFILE_PIC_SIZE = width / 5
+const PROFILE_PIC_CELL_SIZE = width / 4
 
-const profilePicSize = width / 5
-const profilePicCellSize = width / 4
-
-const teamIntro =
+const TEAM_INTRO =
   "Hi, we're the tech department at the DP: a team of student software engineers!"
-const mission =
-  'Our mission statement is xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx \n \nOur ultimate goal is xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx'
-
-const GOOSE_LOGO = require('../static/logos/goose_from_canada_logo.png')
+const MISSION =
+  'Our MISSION statement is xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx \n\nOur ultimate goal is xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx'
 
 const styles = StyleSheet.create({
   container: {
@@ -61,9 +54,9 @@ const styles = StyleSheet.create({
 
   profilePicImage: {
     paddingHorizontal: 20,
-    width: profilePicSize,
-    height: profilePicSize,
-    borderRadius: profilePicSize / 2,
+    width: PROFILE_PIC_SIZE,
+    height: PROFILE_PIC_SIZE,
+    borderRadius: PROFILE_PIC_SIZE / 2,
   },
 
   profilePicCell: {
@@ -77,35 +70,29 @@ const styles = StyleSheet.create({
   },
 })
 
-const ProfileCell = ({ name, pic }) => {
-  return (
-    <View style={styles.profilePicCell}>
-      <Image
-        source={require('../static/logos/default_profile_pic.png')}
-        style={styles.profilePicImage}
-      />
-      <Text style={styles.profileName}>{name}</Text>
-    </View>
-  )
-}
-
-export const AboutScreen = () => {
-  return (
-    <FlatGrid
-      ListHeaderComponent={
-        <>
-          <Image source={GOOSE_LOGO} style={styles.logo} />
-          <Text style={styles.intro}>{teamIntro}</Text>
-          <Text style={styles.mission}>{mission}</Text>
-          <Text style={styles.meetTeam}>Meet the Team</Text>
-        </>
-      }
-      ListHeaderComponentStyle={styles.container}
-      itemDimension={profilePicCellSize}
-      data={people}
-      renderItem={({ item }) => (
-        <ProfileCell name={item.name} image={item.pic} />
-      )}
+const ProfileCell = ({ name, pic }) => (
+  <View style={styles.profilePicCell}>
+    <Image
+      source={require('../static/logos/default_profile_pic.png')}
+      style={styles.profilePicImage}
     />
-  )
-}
+    <Text style={styles.profileName}>{name}</Text>
+  </View>
+)
+
+export const AboutScreen = () => (
+  <FlatGrid
+    ListHeaderComponent={
+      <>
+        <Image source={GOOSE_LOGO} style={styles.logo} />
+        <Text style={styles.intro}>{TEAM_INTRO}</Text>
+        <Text style={styles.mission}>{MISSION}</Text>
+        <Text style={styles.meetTeam}>Meet the Team</Text>
+      </>
+    }
+    ListHeaderComponentStyle={styles.container}
+    itemDimension={PROFILE_PIC_CELL_SIZE}
+    data={PEOPLE}
+    renderItem={({ item }) => <ProfileCell name={item.name} image={item.pic} />}
+  />
+)

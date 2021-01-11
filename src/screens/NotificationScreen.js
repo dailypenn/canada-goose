@@ -1,16 +1,23 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Switch } from 'react-native-gesture-handler'
+
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
 
-const notifications = require('../json/notifications.json')
+const NOTIFICATIONS = require('../json/notifications.json')
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column'
+    flexDirection: 'column',
+  },
+
+  cellContainer: {
+    paddingVertical: 15,
   },
 
   cell: {
+    borderTopColor: '#d4d4d4',
+    borderTopWidth: 0.6,
     paddingHorizontal: 15,
     justifyContent: 'center',
     alignItems: 'center',
@@ -18,25 +25,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 10,
     borderBottomColor: '#d4d4d4',
-    borderBottomWidth: 0.6
+    borderBottomWidth: 0.6,
   },
 
   spacer: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   description: {
     fontFamily: GEOMETRIC_REGULAR,
     paddingHorizontal: 15,
-    paddingVertical: 8,
+    paddingTop: 8,
     fontSize: 12,
-    color: '#808080'
+    color: '#808080',
   },
 
   regText: {
-    fontFamily: GEOMETRIC_REGULAR
-  }
+    fontFamily: GEOMETRIC_REGULAR,
+  },
 })
 
 const NotificationCell = ({ info }) => {
@@ -44,7 +51,7 @@ const NotificationCell = ({ info }) => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState)
 
   return (
-    <View>
+    <View style={styles.cellContainer}>
       <View style={styles.cell}>
         <Text style={styles.regText}>{info.title}</Text>
         <View style={styles.spacer} />
@@ -62,7 +69,7 @@ const NotificationCell = ({ info }) => {
 export const NotificationScreen = () => {
   return (
     <View style={styles.container}>
-      {notifications.map((l, i) => (
+      {NOTIFICATIONS.map((l, i) => (
         <NotificationCell key={i} info={l} />
       ))}
     </View>

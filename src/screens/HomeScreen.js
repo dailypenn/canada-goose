@@ -1,16 +1,23 @@
-import React, { useState } from 'react'
-import { useQuery } from '@apollo/client'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, ScrollView, View, Text } from 'react-native'
+import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
+import { HOME_PAGE_QUERY, HOME_SECTIONS } from '../utils/constants'
 import {
   CustomHeader,
   SectionHeader,
   HeadlineArticle,
   HorizontalArticleCarousel,
   ArticleList,
-} from '../components/shared'
-import { HOME_PAGE_QUERY } from '../utils/constants'
+  ActivityIndicator,
+} from '../components'
+import {
+  PARTIAL_NAVIGATE,
+  NAVIGATE_TO_ARTICLE_SCREEN,
+  HOME_SECTION_FROM_TITLE,
+} from '../utils/helperFunctions'
+import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 
 const styles = StyleSheet.create({
   container: {
@@ -22,37 +29,40 @@ const styles = StyleSheet.create({
   },
 })
 
-const HomeLoading = () => {
-  return <Text> Loading... </Text>
-}
-
 const HomeView = ({
   centerArticles,
   topArticles,
-  inOtherNewsArticles,
-  inOtherOpinionArticles,
-  inOtherSportsArticles,
-  inOtherMultimediaArticles,
   navigation,
   publicationState,
+  defaultSections,
 }) => {
   const [offset, setOffset] = useState(0)
-
-  sections = [
-    { name: 'In Other News', articles: inOtherNewsArticles },
-    { name: 'In Other Opinion', articles: inOtherOpinionArticles },
-    { name: 'In Other Sports', articles: inOtherSportsArticles },
-    { name: 'In Other Multimedia', articles: inOtherMultimediaArticles },
-  ]
-
-  // TODO: this function sld be put in helperFunctions.js
-  navigateToArticleScreen = article => {
-    navigation.navigate('Article', { article, publicationState })
-  }
+  const [sections, setSections] = useState(defaultSections)
 
   const handleScroll = scrollData => {
     setOffset(scrollData.nativeEvent.contentOffset.y)
   }
+
+  const loadHomeSectionOrder = async () => {
+    let order = await Storage.getItem(HOME_FEED_ORDER_KEY)
+    if (order == null) return
+    if (order == Object.keys(sections)) return
+
+    var newSections = []
+    order.forEach(section => {
+      defaultSections.forEach(item => {
+        if (section == HOME_SECTION_FROM_TITLE(item.name)) {
+          newSections.push(item)
+        }
+      })
+    })
+
+    setSections(newSections)
+  }
+
+  useEffect(() => {
+    loadHomeSectionOrder()
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -62,7 +72,14 @@ const HomeView = ({
       >
         <TouchableOpacity
           activeOpacity={1}
-          onPress={() => navigateToArticleScreen(centerArticles[0].article)}
+          onPress={() =>
+            NAVIGATE_TO_ARTICLE_SCREEN(
+              navigation,
+              'HomeArticle',
+              centerArticles[0].article,
+              publicationState
+            )
+          }
         >
           <HeadlineArticle
             data={centerArticles[0]}
@@ -76,22 +93,31 @@ const HomeView = ({
         />
         <HorizontalArticleCarousel
           articles={topArticles}
-          navigateToArticleScreen={navigateToArticleScreen}
+          navigateToArticleScreen={PARTIAL_NAVIGATE(
+            navigation,
+            publicationState,
+            'HomeArticle',
+            NAVIGATE_TO_ARTICLE_SCREEN
+          )}
           publication={publicationState.currPublication}
         />
 
-        {sections.map(el => {
+        {sections.map((el, i) => {
           const { name, articles } = el
           return (
-            <View>
+            <View key={i}>
               <SectionHeader
                 title={name}
                 publication={publicationState.currPublication}
               />
               <ArticleList
                 articles={articles}
-                navigateToArticleScreen={navigateToArticleScreen}
-                publication={publicationState.currPublication}
+                navigateToArticleScreen={PARTIAL_NAVIGATE(
+                  navigation,
+                  publicationState,
+                  'HomeArticle',
+                  NAVIGATE_TO_ARTICLE_SCREEN
+                )}
               />
             </View>
           )
@@ -109,7 +135,7 @@ export const HomeScreen = ({ navigation, screenProps }) => {
   const publicationState = screenProps.state
   const { loading, error, data } = useQuery(HOME_PAGE_QUERY)
 
-  if (loading) return <HomeLoading />
+  if (loading) return <ActivityIndicator />
 
   if (error) {
     console.log(error)
@@ -119,22 +145,26 @@ export const HomeScreen = ({ navigation, screenProps }) => {
   const {
     centerpiece: { edges: centerArticles },
     top: { edges: topArticles },
-    inOtherNews: { edges: inOtherNewsArticles },
-    inOtherOpinion: { edges: inOtherOpinionArticles },
-    inOtherSports: { edges: inOtherSportsArticles },
-    inOtherMultimedia: { edges: inOtherMultimediaArticles },
+    inOtherNews: { edges: newsArticles },
+    inOtherOpinion: { edges: opinionArticles },
+    inOtherSports: { edges: sportsArticles },
+    inOtherMultimedia: { edges: multimediaArticles },
   } = data
+
+  const defaultSections = [
+    { name: HOME_SECTIONS.News, articles: newsArticles },
+    { name: HOME_SECTIONS.Opinion, articles: opinionArticles },
+    { name: HOME_SECTIONS.Sports, articles: sportsArticles },
+    { name: HOME_SECTIONS.Multimedia, articles: multimediaArticles },
+  ]
 
   return (
     <HomeView
       centerArticles={centerArticles}
       topArticles={topArticles}
-      inOtherNewsArticles={inOtherNewsArticles}
-      inOtherOpinionArticles={inOtherOpinionArticles}
-      inOtherSportsArticles={inOtherSportsArticles}
-      inOtherMultimediaArticles={inOtherMultimediaArticles}
       navigation={navigation}
       publicationState={publicationState}
+      defaultSections={defaultSections}
     />
   )
 }
