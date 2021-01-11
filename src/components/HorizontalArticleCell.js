@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   vView: {
     paddingRight: 15,
-    flexShrink: 1,
+    flex: 1,
     width: '80%',
   },
 })
@@ -63,30 +63,56 @@ export const HorizontalArticleCell = ({
   timeAgo,
   authors,
 }) => {
-  return (
-    <View>
-      <View style={styles.hView}>
-        <View style={styles.vView}>
-          <Text style={styles.title} numberOfLines={5}>
-            {title}
-          </Text>
-          <Text style={styles.byline}>
-            By {authors} • {timeAgo}
-          </Text>
+  console.log(title)
+  console.log(imageURL)
+  if (imageURL == "https://snworksceo.imgix.net/dpn/null.sized-1000x1000.null?w=1000" || imageURL == "https://snworksceo.imgix.net/dpn/.sized-1000x1000.?w=1000") {
+    return (
+      <View>
+        <View style={styles.hView}>
+          <View style={styles.vView}>
+            <Text style={styles.title} numberOfLines={5}>
+              {title}
+            </Text>
+            <Text style={styles.byline}>
+              By {authors} • {timeAgo}
+            </Text>
+          </View>
         </View>
-        <View style={styles.imageView}>
-          <Image style={styles.image} source={{ uri: imageURL }} />
-        </View>
+        <View
+          style={{
+            borderBottomColor: '#CCC',
+            borderBottomWidth: 1,
+            marginHorizontal: 20,
+          }}
+        />
       </View>
-      <View
-        style={{
-          borderBottomColor: '#CCC',
-          borderBottomWidth: 1,
-          marginHorizontal: 20,
-        }}
-      />
-    </View>
-  )
+    )
+  } else {
+    return (
+      <View>
+        <View style={styles.hView}>
+          <View style={styles.vView}>
+            <Text style={styles.title} numberOfLines={5}>
+              {title}
+            </Text>
+            <Text style={styles.byline}>
+              By {authors} • {timeAgo}
+            </Text>
+          </View>
+          <View style={styles.imageView}>
+            <Image style={styles.image} source={{ uri: imageURL }} />
+          </View>
+        </View>
+        <View
+          style={{
+            borderBottomColor: '#CCC',
+            borderBottomWidth: 1,
+            marginHorizontal: 20,
+          }}
+        />
+      </View>
+    )
+  }
 }
 
 //<Text style={categoryStyle(publication)}>{category}</Text>

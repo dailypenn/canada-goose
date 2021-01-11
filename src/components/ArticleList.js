@@ -58,7 +58,7 @@ export const SearchArticleList = ({ articles, navigateToArticleScreen }) => (
         headline,
         published_at,
         dominantMedia: { attachment_uuid, extension },
-        authors
+        authors,
       } = el
       return (
         <TouchableOpacity

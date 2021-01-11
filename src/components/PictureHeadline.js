@@ -26,6 +26,17 @@ const styles = StyleSheet.create({
     lineHeight: 30,
   },
 
+  blackHeadline: {
+    color: '#000',
+    fontFamily: DISPLAY_SERIF_BOLD,
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    marginTop: 10,
+    flexShrink: 1,
+    lineHeight: 30,
+  },
+
   category: {
     color: '#fff',
     fontFamily: GEOMETRIC_REGULAR,
@@ -37,6 +48,14 @@ const styles = StyleSheet.create({
 
   time: {
     color: '#fff',
+    fontFamily: GEOMETRIC_BOLD,
+    textTransform: 'uppercase',
+    fontSize: 14,
+    opacity: 0.75,
+  },
+
+  blackTime: {
+    color: '#000',
     fontFamily: GEOMETRIC_BOLD,
     textTransform: 'uppercase',
     fontSize: 14,
@@ -58,6 +77,7 @@ const styles = StyleSheet.create({
   view: {
     width: '100%',
     aspectRatio: 0.9,
+    backgroundColor: '#fff',
   },
 })
 
@@ -67,22 +87,48 @@ export const PictureHeadline = ({
   time,
   imageUrl,
   publication,
-}) => (
-  <View style={styles.view}>
-    <ImageBackground style={styles.imageBackground} source={{ uri: imageUrl }}>
-      <LinearGradient
-        colors={['transparent', 'rgba(0,0,0,0.8)']}
-        style={styles.gradient}
-      />
-      <View style={styles.spacer} />
-      <View style={{ flexDirection: 'row' }}>
-        <CategoryTag name={category} publication={publication} />
-        <View style={styles.spacer} />
-        <Text style={styles.time}>{time}</Text>
+}) => {
+  if (imageUrl == "https://snworksceo.imgix.net/dpn/null.sized-1000x1000.null?w=1000" || imageUrl == "https://snworksceo.imgix.net/dpn/.sized-1000x1000.?w=1000") {
+    return (
+      <View style={{ width: '100%' }}>
+        <View style={{ padding: 15 }}>
+          <View style={styles.spacer} />
+          <View style={{ flexDirection: 'row' }}>
+            <CategoryTag name={category} publication={publication} />
+            <View style={styles.spacer} />
+            <Text style={styles.blackTime}>{time}</Text>
+          </View>
+          <Text style={styles.blackHeadline} numberOfLines={4}>
+            {headline}
+          </Text>
+          <View
+            style={{
+              borderBottomColor: '#CCC',
+              borderBottomWidth: 1,
+            }}
+          />
+        </View>
       </View>
-      <Text style={styles.headline} numberOfLines={4}>
-        {headline}
-      </Text>
-    </ImageBackground>
-  </View>
-)
+    )
+  } else {
+    return (
+      <View style={styles.view}>
+        <ImageBackground style={styles.imageBackground} source={{ uri: imageUrl }}>
+          <LinearGradient
+            colors={['transparent', 'rgba(0,0,0,0.8)']}
+            style={styles.gradient}
+          />
+          <View style={styles.spacer} />
+          <View style={{ flexDirection: 'row' }}>
+            <CategoryTag name={category} publication={publication} />
+            <View style={styles.spacer} />
+            <Text style={styles.time}>{time}</Text>
+          </View>
+          <Text style={styles.headline} numberOfLines={4}>
+            {headline}
+          </Text>
+        </ImageBackground>
+      </View>
+    )
+  }
+}

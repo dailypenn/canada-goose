@@ -40,23 +40,42 @@ const styles = StyleSheet.create({
 
 export const PrimaryHorizontalArticleCell = ({ imageURL, title, abstract }) => {
   var splitAbstract = abstract.split('<p>')[1].split('</p>')[0]
-
-  return (
-    <View>
-      <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: imageURL }} />
-        <Text style={styles.title} numberOfLines={5}>
-          {title}
-        </Text>
-        <Text style={styles.abstract}>{splitAbstract}</Text>
+  if (imageURL == "https://snworksceo.imgix.net/dpn/null.sized-1000x1000.null?w=1000" || imageURL == "https://snworksceo.imgix.net/dpn/.sized-1000x1000.?w=1000") {
+    return (
+      <View>
+        <View style={styles.container}>
+          <Text style={styles.title} numberOfLines={5}>
+            {title}
+          </Text>
+          <Text style={styles.abstract}>{splitAbstract}</Text>
+        </View>
+        <View
+          style={{
+            borderBottomColor: '#CCC',
+            borderBottomWidth: 1,
+            marginHorizontal: 20
+          }}
+        />
       </View>
-      <View
-        style={{
-          borderBottomColor: '#CCC',
-          borderBottomWidth: 1,
-          marginHorizontal: 20
-        }}
-      />
-    </View>
-  )
+    )
+  } else {
+    return (
+      <View>
+        <View style={styles.container}>
+          <Image style={styles.image} source={{ uri: imageURL }} />
+          <Text style={styles.title} numberOfLines={5}>
+            {title}
+          </Text>
+          <Text style={styles.abstract}>{splitAbstract}</Text>
+        </View>
+        <View
+          style={{
+            borderBottomColor: '#CCC',
+            borderBottomWidth: 1,
+            marginHorizontal: 20
+          }}
+        />
+      </View>
+    )
+  }
 }
