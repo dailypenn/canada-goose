@@ -11,6 +11,7 @@ import {
   HorizontalArticleCarousel,
   ArticleList,
   ActivityIndicator,
+  HeaderLine,
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
@@ -87,6 +88,9 @@ const HomeView = ({
           />
         </TouchableOpacity>
 
+        <HeaderLine
+          publication={publicationState.currPublication}
+        />
         <SectionHeader
           title="Top Stories"
           publication={publicationState.currPublication}
@@ -106,6 +110,9 @@ const HomeView = ({
           const { name, articles } = el
           return (
             <View key={i}>
+              <HeaderLine
+                publication={publicationState.currPublication}
+              />
               <SectionHeader
                 title={name}
                 publication={publicationState.currPublication}
