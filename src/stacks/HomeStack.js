@@ -11,13 +11,23 @@ import {
   WebViewScreen,
 } from '../screens'
 import { NavigationContainer } from '@react-navigation/native'
-
+import * as Haptics from 'expo-haptics'
 const Stack = createStackNavigator()
 
 export const HomeStack = ({ screenProps, navigation }) => {
+  // Register long press to change screens
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabLongPress', e => {
       screenProps.onHomeIconLongPress()
+    })
+
+    return unsubscribe
+  }, [navigation])
+
+  // Haptic feedback when tab bar is pressed
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('tabPress', e => {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
     })
 
     return unsubscribe

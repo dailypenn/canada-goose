@@ -5,9 +5,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { HomeStack, DiscoveryStack, SettingsStack } from './src/stacks'
+import { Easing } from 'react-native'
+import * as Haptics from 'expo-haptics'
 import { PublicationEnum } from './src/utils/constants'
 import { ScreenWithDefaultParams } from './src/screens'
-import { Easing } from 'react-native'
 
 const Tab = createBottomTabNavigator()
 
@@ -34,6 +35,8 @@ export const TabNavigationController = ({ navigation }) => {
     var parentViewTopToValue = pubMenuVisible
       ? Dimensions.get('screen').height
       : 0
+
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
 
     const parallelAnims = Animated.parallel([
       Animated.timing(sheetParentTop, {
@@ -103,6 +106,9 @@ export const TabNavigationController = ({ navigation }) => {
               shadowOpacity: 0.1,
               shadowRadius: 3,
             },
+            onPress: () => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            },
           }}
         >
           <Tab.Screen
@@ -125,6 +131,8 @@ export const TabNavigationController = ({ navigation }) => {
             })}
           />
         </Tab.Navigator>
+      </NavigationContainer>
+      <NavigationContainer>
         <Animated.View
           style={{
             position: 'absolute',

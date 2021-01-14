@@ -37,7 +37,8 @@
     "react-native-sortable-list": "0.0.24",
     "react-native-super-grid": "^4.0.3",
     "react-native-web": "~0.13.12",
-    "react-native-webview": "11.0.0"
+    "react-native-webview": "11.0.0",
+    "expo-haptics": "~8.4.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
