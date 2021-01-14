@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { connect } from 'react-redux'
 
 import {
   HOME_PAGE_QUERY,
@@ -156,8 +157,10 @@ const HomeView = ({
   )
 }
 
-export const HomeScreen = ({ navigation, screenProps }) => {
+const HomeScreenComp = ({ navigation, publication }) => {
   // const publicationState = screenProps.state
+  console.log(`current publication is ${publication}`)
+
   const publicationState = {
     currPublication: 'The Daily Pennsylvanian'
   }
@@ -276,3 +279,7 @@ export const HomeScreen = ({ navigation, screenProps }) => {
     />
   )
 }
+
+const mapStateToProps = ({ publication }) => ({ publication })
+
+export const HomeScreen = connect(mapStateToProps)(HomeScreenComp)
