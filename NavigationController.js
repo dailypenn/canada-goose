@@ -14,7 +14,7 @@ export const TabNavigationController = ({ navigation }) => {
   const [pubMenuVisible, updatePubMenuVisibility] = useState(false)
 
   const switchPublication = newPublication => {
-    if (nwePublication != currPublication) {
+    if (newPublication != currPublication) {
       updateCurrPublication(currPublication)
     }
   }
