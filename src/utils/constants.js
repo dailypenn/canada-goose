@@ -239,4 +239,8 @@ export const DP_HOME_SECTIONS = {
   Multimedia: 'Multimedia',
 }
 
+export const UTB_HOME_SECTIONS = ['interactive', 'news', 'opinion']
+
+export const STREET_HOME_SECTIONS = ['focus', 'features', 'ego', 'style']
+
 export const FIVE_MUNITES = 5 * 60 * 1000
