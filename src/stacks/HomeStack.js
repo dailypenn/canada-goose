@@ -17,7 +17,7 @@ const Stack = createStackNavigator()
 export const HomeStack = ({ screenProps, navigation }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabLongPress', e => {
-      screenProps.state.homeIconPressed()
+      screenProps.onHomeIconLongPress()
     })
 
     return unsubscribe
