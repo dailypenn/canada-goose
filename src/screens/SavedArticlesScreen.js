@@ -5,7 +5,7 @@ import { RightSwipeDeleteRow } from '../components/RightSwipeDeleteRow'
 
 import { DISPLAY_SERIF_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
-import { TIME_AGO } from '../utils/helperFunctions'
+import { NAVIGATE_TO_ARTICLE_SCREEN, TIME_AGO } from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   cell: {
@@ -54,9 +54,8 @@ const SwipeableRow = ({ item, navigationHandler, deleteHandler }) => (
   </RightSwipeDeleteRow>
 )
 
-export const SavedArticlesScreen = ({ route }) => {
+export const SavedArticlesScreen = ({ navigation }) => {
   const [savedArticles, setSavedArticles] = useState([])
-  const { navigateToArticle } = route.params
 
   const loadSavedArticles = async () => {
     let data = await Storage.getItem(SAVED_ARTICLES_KEY)
@@ -69,7 +68,12 @@ export const SavedArticlesScreen = ({ route }) => {
 
   const navigationHandler = async item => {
     let article = await Storage.getItem(item.slug)
-    navigateToArticle(article)
+    NAVIGATE_TO_ARTICLE_SCREEN(
+      navigation,
+      'SettingsArticle',
+      article,
+      item.publicationState
+    )
   }
 
   const deleteHandler = async item => {

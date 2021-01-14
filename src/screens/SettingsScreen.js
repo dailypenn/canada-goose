@@ -1,12 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { TouchableOpacity, Text, View, StyleSheet } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
-import {
-  NAVIGATE_TO_ARTICLE_SCREEN,
-  PARTIAL_NAVIGATE,
-} from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   container: {
@@ -56,6 +52,75 @@ const styles = StyleSheet.create({
   },
 })
 
+const settings_sections = [
+  {
+    id: 'account section',
+    name: 'Account',
+    items: [
+      {
+        id: 'noti cell',
+        name: 'Notifications',
+        screenName: 'Notification',
+        props: {},
+      },
+      {
+        id: 'privacy cell',
+        name: 'Privacy',
+        screenName: 'Privacy',
+        props: {},
+      },
+      {
+        id: 'manage feed cell',
+        name: 'Manage Feed',
+        screenName: 'ManageFeedScreen',
+        props: {},
+      },
+      {
+        id: 'saved article cell',
+        name: 'Saved Article',
+        screenName: 'SavedArticles',
+        props: {},
+      },
+    ],
+  },
+  {
+    id: 'features section',
+    name: 'Features',
+    items: [
+      {
+        id: 'about cell',
+        name: 'About',
+        screenName: 'About',
+        props: {},
+      },
+    ],
+  },
+  {
+    id: 'links section',
+    name: 'Links',
+    items: [
+      {
+        id: 'dp cell',
+        name: 'The Daily Pennsylvanian',
+        screenName: 'WebView',
+        props: { link: 'https://thedp.com' },
+      },
+      {
+        id: 'street cell',
+        name: '34th Street',
+        screenName: 'WebView',
+        props: { link: 'https://34st.com' },
+      },
+      {
+        id: 'utb cell',
+        name: 'Under the Button',
+        screenName: 'WebView',
+        props: { link: 'https://underthebutton.com' },
+      },
+    ],
+  },
+]
+
 const SettingsCell = ({ item }) => {
   return (
     <View style={styles.cell}>
@@ -77,121 +142,31 @@ const SettingsSectionHeader = ({ title }) => (
 const SettingsSection = ({ navigateToScreen, name, items }) => (
   <View>
     <SettingsSectionHeader title={name} />
-    {items.map((l, i) => (
+    {items.map(el => (
       <TouchableOpacity
-        key={l.id}
+        key={el.id}
         activeOpacity={1}
-        onPress={() => {
-          navigateToScreen(l.screenName, l.props)
-        }}
+        onPress={() => navigateToScreen(el.screenName, el.props)}
       >
-        <SettingsCell item={l} />
+        <SettingsCell item={el} />
       </TouchableOpacity>
     ))}
   </View>
 )
 
-class SettingsScreen extends Component {
-  constructor(props) {
-    super(props)
-    this.navigateToScreen = this.navigateToScreen.bind(this)
-    this.publicationState = this.props.screenProps.state
-    this.sections = [
-      {
-        id: 'account section',
-        name: 'Account',
-        items: [
-          {
-            id: 'noti cell',
-            name: 'Notifications',
-            screenName: 'Notification',
-            props: {},
-          },
-          {
-            id: 'privacy cell',
-            name: 'Privacy',
-            screenName: 'Privacy',
-            props: {},
-          },
-          {
-            id: 'manage feed cell',
-            name: 'Manage Feed',
-            screenName: 'ManageFeedScreen',
-            props: {},
-          },
-          {
-            id: 'saved article cell',
-            name: 'Saved Article',
-            screenName: 'SavedArticles',
-            props: {
-              navigateToArticle: PARTIAL_NAVIGATE(
-                this.props.navigation,
-                this.publicationState,
-                'SettingsArticle',
-                NAVIGATE_TO_ARTICLE_SCREEN
-              ),
-            },
-          },
-        ],
-      },
-      {
-        id: 'features section',
-        name: 'Features',
-        items: [
-          {
-            id: 'about cell',
-            name: 'About',
-            screenName: 'About',
-            props: {},
-          },
-        ],
-      },
-      {
-        id: 'links section',
-        name: 'Links',
-        items: [
-          {
-            id: 'dp cell',
-            name: 'The Daily Pennsylvanian',
-            screenName: 'WebView',
-            props: { link: 'https://thedp.com' },
-          },
-          {
-            id: 'street cell',
-            name: '34th Street',
-            screenName: 'WebView',
-            props: { link: 'https://34st.com' },
-          },
-          {
-            id: 'utb cell',
-            name: 'Under the Button',
-            screenName: 'WebView',
-            props: { link: 'https://underthebutton.com' },
-          },
-        ],
-      },
-    ]
-  }
-
-  navigateToScreen(screenName, props) {
-    this.props.navigation.navigate(screenName, props)
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        {this.sections.map((l, i) => (
-          <SettingsSection
-            key={l.id}
-            name={l.name}
-            items={l.items}
-            navigateToScreen={this.navigateToScreen}
-            navigation={this.props.navigation}
-          />
-        ))}
-      </View>
-    )
-  }
+export const SettingsScreen = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      {settings_sections.map((l, i) => (
+        <SettingsSection
+          key={l.id}
+          name={l.name}
+          items={l.items}
+          navigateToScreen={(screen, props) =>
+            navigation.navigate(screen, props)
+          }
+        />
+      ))}
+    </View>
+  )
 }
-
-export { SettingsScreen, SettingsSectionHeader }
