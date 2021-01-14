@@ -32,7 +32,7 @@ export const SectionScreen = ({ route, navigation, screenProps }) => {
   useFocusEffect(
     useCallback(() => {
       if (data) {
-        console.log('refetch')
+        console.log(`refetching ${slug} screen article`)
         refetch()
       }
     }, [])

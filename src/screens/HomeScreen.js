@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import {
   StyleSheet,
   ScrollView,
   View,
   Text,
   RefreshControl,
-  SafeAreaView
+  SafeAreaView,
+  AppState
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -30,6 +31,7 @@ import {
   HOME_SECTION_FROM_TITLE
 } from '../utils/helperFunctions'
 import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
+import { useFocusEffect } from '@react-navigation/core'
 
 const styles = StyleSheet.create({
   container: {
@@ -146,19 +148,98 @@ const HomeView = ({
           )
         })}
       </ScrollView>
-      <CustomHeader
+      {/* <CustomHeader
         publicationState={publicationState}
         contentOffset={offset}
-      />
+      /> */}
     </View>
   )
 }
 
 export const HomeScreen = ({ navigation, screenProps }) => {
-  const publicationState = screenProps.state
-  const { loading, error, data, refetch } = useQuery(HOME_PAGE_QUERY, {
-    pollInterval: FIVE_MUNITES
-  })
+  // const publicationState = screenProps.state
+  const publicationState = {
+    currPublication: 'The Daily Pennsylvanian'
+  }
+
+  const [lastActiveTime, setLastActiveTime] = useState(Date.now())
+  const appState = useRef(AppState.currentState)
+  const [appStateState, setAppStateState] = useState(appState.current)
+
+  const handleAppStateChange = nextAppState => {
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      console.log('App has come to the foreground!')
+    }
+
+    if (appState.current.match(/active/)) {
+      setLastActiveTime(Date.now())
+      console.log('App has come to the background!')
+    }
+
+    appState.current = nextAppState
+    setAppStateState(appState.current)
+    console.log('AppState', appState.current)
+  }
+
+  useEffect(() => {
+    AppState.addEventListener('change', handleAppStateChange)
+
+    return () => {
+      AppState.removeEventListener('change', handleAppStateChange)
+    }
+  }, [])
+
+  const { loading, error, data, refetch } = useQuery(HOME_PAGE_QUERY)
+
+  useFocusEffect(
+    useCallback(() => {
+      // if appState === 'active' and last time on home screen is 5 mins ago, do refetch
+      console.log('home screen focused')
+      console.log(lastActiveTime)
+      const timeElapsed = (Date.now() - lastActiveTime) / 1000
+      console.log(timeElapsed)
+      // if (data && appState.current === 'active' && timeElapsed >= 5) {
+      //   console.log('refetching')
+      //   refetch()
+      // }
+
+      console.log(Boolean(data))
+
+      if (data) {
+        console.log('refetching home screen articles')
+        refetch()
+      }
+
+      return () => {
+        console.log('home screen blurred')
+        console.log(Date.now())
+        setLastActiveTime(Date.now())
+      }
+    }, [])
+  )
+
+  // useFocusEffect(() => {
+  //   const timeElapsed = (Date.now() - lastActiveTime) / 1000
+  //   console.log(timeElapsed)
+
+  //   if (data && appState.current === 'active' && timeElapsed >= 5) {
+  //     console.log('refetching home screen articles')
+  //     refetch()
+  //   }
+
+  //   // if (data) {
+  //   //   console.log(`refetching home screen articles`)
+  //   //   refetch()
+  //   // }
+
+  //   // return () => {
+  //   //   console.log(Date.now())
+  //   //   setLastActiveTime(Date.now())
+  //   // }
+  // }, [])
 
   if (!data) return <ActivityIndicator />
 
