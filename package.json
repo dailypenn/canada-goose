@@ -8,7 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@apollo/client": "^3.2.7",
+    "@apollo/client": "^3.3.6",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.2",
@@ -17,7 +17,6 @@
     "expo": "^40.0.0",
     "expo-app-loading": "^1.0.1",
     "expo-blur": "~8.2.0",
-    "expo-cli": "^3.28.5",
     "expo-font": "~8.4.0",
     "expo-linear-gradient": "~8.4.0",
     "expo-optimize": "^0.1.62",
