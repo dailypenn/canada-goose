@@ -8,12 +8,7 @@ import { PictureHeadline } from '../components'
 import { IMAGE_URL, TIME_AGO, AUTHORS } from '../utils/helperFunctions'
 import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
-import {
-  SAVED_ARTICLES_KEY,
-  SAVED_ARTICLE_PREFIX,
-  Storage,
-} from '../utils/storage'
-import { SavedArticlesScreen } from './SavedArticlesScreen'
+import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { Alert } from 'react-native'
 
 export const ArticleScreen = ({ navigation, route }) => {
@@ -31,17 +26,10 @@ export const ArticleScreen = ({ navigation, route }) => {
   }, [])
 
   const handleSave = async () => {
-    console.log('handle save')
-
     const date = new Date()
-
-    // Storage.clearAll()
-    // return
 
     let saved_articles = await Storage.getItem(SAVED_ARTICLES_KEY)
     if (saved_articles == null) saved_articles = []
-
-    console.log(saved_articles)
 
     if (saved_articles.some(x => x.slug == article.slug)) {
       Alert.alert('Oops', 'This article has already been saved!')

@@ -13,7 +13,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
-import { HOME_SECTIONS } from '../utils/constants'
+import { DP_HOME_SECTIONS } from '../utils/constants'
 
 const styles = StyleSheet.create({
   container: {
@@ -66,7 +66,7 @@ export class ManageFeedScreen extends Component {
     super(props)
     this.props = props
     this.state = {
-      currData: Object.keys(HOME_SECTIONS),
+      currData: Object.keys(DP_HOME_SECTIONS),
     }
     this.newOrder = null
     this.instructions =

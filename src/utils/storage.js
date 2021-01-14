@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
 export const HOME_FEED_ORDER_KEY = 'home feed order'
+
 export const SAVED_ARTICLES_KEY = 'saved articles'
-export const SAVED_ARTICLE_PREFIX = 'article'
 
 export const Storage = {
   getItem: async function (key) {
