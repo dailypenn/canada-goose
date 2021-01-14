@@ -31,8 +31,8 @@ export const HorizontalArticleCarousel = ({
       contentContainerStyle={{
         width: `${90 * articles.length}%`,
         paddingHorizontal: 10,
-        paddingTop: 5,
-        paddingBottom: 15,
+        paddingTop: 10,
+        paddingBottom: 35,
       }}
       showsHorizontalScrollIndicator={false}
       scrollEventThrottle={100}

@@ -174,7 +174,6 @@ class SettingsScreen extends Component {
   }
 
   navigateToScreen(screenName, props) {
-    console.log('navigating to', screenName, 'with props', props)
     this.props.navigation.navigate(screenName, props)
   }
 

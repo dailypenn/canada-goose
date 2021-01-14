@@ -1,9 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, ScrollView, View, Text } from 'react-native'
+import React, { useEffect, useState, useCallback } from 'react'
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  RefreshControl,
+  SafeAreaView
+} from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { HOME_PAGE_QUERY, HOME_SECTIONS } from '../utils/constants'
+import {
+  HOME_PAGE_QUERY,
+  HOME_SECTIONS,
+  FIVE_MUNITES
+} from '../utils/constants'
 import {
   CustomHeader,
   SectionHeader,
@@ -11,22 +22,23 @@ import {
   HorizontalArticleCarousel,
   ArticleList,
   ActivityIndicator,
+  HeaderLine
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
-  HOME_SECTION_FROM_TITLE,
+  HOME_SECTION_FROM_TITLE
 } from '../utils/helperFunctions'
 import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   text1: {
-    color: '#fff',
-  },
+    color: '#fff'
+  }
 })
 
 const HomeView = ({
@@ -35,6 +47,8 @@ const HomeView = ({
   navigation,
   publicationState,
   defaultSections,
+  loading,
+  refetch
 }) => {
   const [offset, setOffset] = useState(0)
   const [sections, setSections] = useState(defaultSections)
@@ -48,7 +62,7 @@ const HomeView = ({
     if (order == null) return
     if (order == Object.keys(sections)) return
 
-    var newSections = []
+    let newSections = []
     order.forEach(section => {
       defaultSections.forEach(item => {
         if (section == HOME_SECTION_FROM_TITLE(item.name)) {
@@ -64,11 +78,18 @@ const HomeView = ({
     loadHomeSectionOrder()
   }, [])
 
+  const onRefresh = useCallback(() => {
+    refetch()
+  })
+
   return (
     <View style={styles.container}>
       <ScrollView
         onScroll={event => handleScroll(event)}
         scrollEventThrottle={16}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={onRefresh} />
+        }
       >
         <TouchableOpacity
           activeOpacity={1}
@@ -87,6 +108,7 @@ const HomeView = ({
           />
         </TouchableOpacity>
 
+        <HeaderLine publication={publicationState.currPublication} />
         <SectionHeader
           title="Top Stories"
           publication={publicationState.currPublication}
@@ -106,6 +128,7 @@ const HomeView = ({
           const { name, articles } = el
           return (
             <View key={i}>
+              <HeaderLine publication={publicationState.currPublication} />
               <SectionHeader
                 title={name}
                 publication={publicationState.currPublication}
@@ -133,9 +156,11 @@ const HomeView = ({
 
 export const HomeScreen = ({ navigation, screenProps }) => {
   const publicationState = screenProps.state
-  const { loading, error, data } = useQuery(HOME_PAGE_QUERY)
+  const { loading, error, data, refetch } = useQuery(HOME_PAGE_QUERY, {
+    pollInterval: FIVE_MUNITES
+  })
 
-  if (loading) return <ActivityIndicator />
+  if (!data) return <ActivityIndicator />
 
   if (error) {
     console.log(error)
@@ -148,14 +173,14 @@ export const HomeScreen = ({ navigation, screenProps }) => {
     inOtherNews: { edges: newsArticles },
     inOtherOpinion: { edges: opinionArticles },
     inOtherSports: { edges: sportsArticles },
-    inOtherMultimedia: { edges: multimediaArticles },
+    inOtherMultimedia: { edges: multimediaArticles }
   } = data
 
   const defaultSections = [
     { name: HOME_SECTIONS.News, articles: newsArticles },
     { name: HOME_SECTIONS.Opinion, articles: opinionArticles },
     { name: HOME_SECTIONS.Sports, articles: sportsArticles },
-    { name: HOME_SECTIONS.Multimedia, articles: multimediaArticles },
+    { name: HOME_SECTIONS.Multimedia, articles: multimediaArticles }
   ]
 
   return (
@@ -165,6 +190,8 @@ export const HomeScreen = ({ navigation, screenProps }) => {
       navigation={navigation}
       publicationState={publicationState}
       defaultSections={defaultSections}
+      loading={loading}
+      refetch={refetch}
     />
   )
 }

@@ -238,3 +238,5 @@ export const HOME_SECTIONS = {
   Sports: 'Sports',
   Multimedia: 'Multimedia',
 }
+
+export const FIVE_MUNITES = 5 * 60 * 1000 

@@ -1,10 +1,6 @@
 import React, { useState } from 'react'
 import { useQuery } from '@apollo/client'
-import {
-  StyleSheet,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native'
+import { StyleSheet, ScrollView, SafeAreaView } from 'react-native'
 import { FlatGrid } from 'react-native-super-grid'
 import { TouchableOpacity } from 'react-native'
 
@@ -29,7 +25,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const DiscoveryView  = ({ navigation, publicationState }) => {
+const DiscoveryView = ({ navigation, publicationState }) => {
   navigateToSectionScreen = (section, slug) => {
     navigation.navigate('Section', {
       sectionName: section,
@@ -62,26 +58,17 @@ const DiscoveryView  = ({ navigation, publicationState }) => {
 }
 
 const SearchView = ({ filter, publication, navigation }) => {
-  const [offset, setOffset] = useState(0)
-
   const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
     variables: { filter },
-    pollInterval: 2000
+    fetchPolicy: 'cache-and-network'
   })
 
   if (loading) return <ActivityIndicator />
-
-  const handleScroll = scrollData => {
-    let newOffset = scrollData.nativeEvent.contentOffset.y
-    setOffset(newOffset)
-  }
 
   const { searchArticles: results } = data
 
   return (
     <ScrollView
-      onScroll={event => handleScroll(event)}
-      scrollEventThrottle={16}
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
     >

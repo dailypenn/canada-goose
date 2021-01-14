@@ -14,6 +14,7 @@ import {
   Storage,
 } from '../utils/storage'
 import { SavedArticlesScreen } from './SavedArticlesScreen'
+import { Alert } from 'react-native'
 
 export const ArticleScreen = ({ navigation, route }) => {
   const { article, publicationState } = route.params
@@ -39,15 +40,22 @@ export const ArticleScreen = ({ navigation, route }) => {
 
     let saved_articles = await Storage.getItem(SAVED_ARTICLES_KEY)
     if (saved_articles == null) saved_articles = []
+
+    console.log(saved_articles)
+
+    if (saved_articles.some(x => x.slug == article.slug)) {
+      Alert.alert('Oops', 'This article has already been saved!')
+      return
+    }
     let saved_successfully = await Storage.setItem(article.slug, article)
 
     if (saved_successfully) {
       saved_articles.push({
+        publicationState: publicationState,
         slug: article.slug,
         headline: article.headline,
         saved_at: date,
       })
-      // console.log(saved_articles)
       Storage.setItem(SAVED_ARTICLES_KEY, saved_articles)
     } else {
       console.log('error saving article')
@@ -119,7 +127,7 @@ export const ArticleScreen = ({ navigation, route }) => {
 
 ArticleScreen.navigationOptions = ({ route }) => ({
   title: '',
-  animationEnabled: false,
+  animationEnabled: true,
   headerRight: () => (
     <Button
       title={'Save'}

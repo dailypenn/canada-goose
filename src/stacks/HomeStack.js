@@ -10,37 +10,40 @@ import {
   ScreenWithDefaultParams,
   WebViewScreen,
 } from '../screens'
+import { NavigationContainer } from '@react-navigation/native'
 
 const Stack = createStackNavigator()
 
 export const HomeStack = ({ screenProps }) => (
-  <Stack.Navigator
-    initialRouteName="Home"
-    screenOptions={{
-      headerStyle: { backgroundColor: '#fff' },
-      headerTintColor: '#000',
-      headerTitleStyle: { fontWeight: 'bold' },
-    }}
-  >
-    <Stack.Screen
-      name="Home"
-      component={ScreenWithDefaultParams(HomeScreen, screenProps)}
-      options={{
-        title: 'Home',
-        headerShown: false,
+  <NavigationContainer independent={true}>
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerStyle: { backgroundColor: '#fff' },
+        headerTintColor: '#000',
+        headerTitleStyle: { fontWeight: 'bold' },
       }}
-    />
-    <Stack.Screen
-      name="HomeArticle"
-      component={ArticleScreen}
-      options={ArticleScreen.navigationOptions}
-    />
-    <Stack.Screen
-      name="ArticleBrowser"
-      component={WebViewScreen}
-      options={({ route }) => ({
-        link: route.params.link,
-      })}
-    />
-  </Stack.Navigator>
+    >
+      <Stack.Screen
+        name="Home"
+        component={ScreenWithDefaultParams(HomeScreen, screenProps)}
+        options={{
+          title: 'Home',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="HomeArticle"
+        component={ArticleScreen}
+        options={ArticleScreen.navigationOptions}
+      />
+      <Stack.Screen
+        name="ArticleBrowser"
+        component={WebViewScreen}
+        options={({ route }) => ({
+          link: route.params.link,
+        })}
+      />
+    </Stack.Navigator>
+  </NavigationContainer>
 )
