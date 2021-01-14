@@ -63,9 +63,13 @@ export const HorizontalArticleCell = ({
   timeAgo,
   authors,
 }) => {
-  console.log(title)
-  console.log(imageURL)
-  if (imageURL == "https://snworksceo.imgix.net/dpn/null.sized-1000x1000.null?w=1000" || imageURL == "https://snworksceo.imgix.net/dpn/.sized-1000x1000.?w=1000") {
+  // console.log(title)
+  // console.log(imageURL)
+  if (
+    imageURL ==
+      'https://snworksceo.imgix.net/dpn/null.sized-1000x1000.null?w=1000' ||
+    imageURL == 'https://snworksceo.imgix.net/dpn/.sized-1000x1000.?w=1000'
+  ) {
     return (
       <View>
         <View style={styles.hView}>

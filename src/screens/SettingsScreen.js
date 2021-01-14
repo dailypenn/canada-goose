@@ -3,34 +3,38 @@ import { TouchableOpacity, Text, View, StyleSheet } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
+import {
+  NAVIGATE_TO_ARTICLE_SCREEN,
+  PARTIAL_NAVIGATE,
+} from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
 
   cell: {
     paddingHorizontal: 15,
     justifyContent: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
 
   textView: {
     paddingVertical: 10,
     borderBottomColor: '#d4d4d4',
     borderBottomWidth: 0.6,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   divider: {
     paddingHorizontal: 15,
     borderColor: '#fff',
-    borderWidth: 1
+    borderWidth: 1,
   },
 
   spacer: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   sectionHeaderTitle: {
@@ -39,17 +43,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     paddingVertical: 5,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
 
   sectionHeaderView: {
     flexDirection: 'row',
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
   },
 
   regText: {
-    fontFamily: GEOMETRIC_REGULAR
-  }
+    fontFamily: GEOMETRIC_REGULAR,
+  },
 })
 
 const SettingsCell = ({ item }) => {
@@ -101,21 +105,34 @@ class SettingsScreen extends Component {
             id: 'noti cell',
             name: 'Notifications',
             screenName: 'Notification',
-            props: {}
+            props: {},
           },
           {
             id: 'privacy cell',
             name: 'Privacy',
             screenName: 'Privacy',
-            props: {}
+            props: {},
           },
           {
             id: 'manage feed cell',
             name: 'Manage Feed',
             screenName: 'ManageFeedScreen',
-            props: {}
-          }
-        ]
+            props: {},
+          },
+          {
+            id: 'saved article cell',
+            name: 'Saved Article',
+            screenName: 'SavedArticles',
+            props: {
+              navigateToArticle: PARTIAL_NAVIGATE(
+                this.props.navigation,
+                this.publicationState,
+                'SettingsArticle',
+                NAVIGATE_TO_ARTICLE_SCREEN
+              ),
+            },
+          },
+        ],
       },
       {
         id: 'features section',
@@ -125,9 +142,9 @@ class SettingsScreen extends Component {
             id: 'about cell',
             name: 'About',
             screenName: 'About',
-            props: {}
-          }
-        ]
+            props: {},
+          },
+        ],
       },
       {
         id: 'links section',
@@ -137,26 +154,27 @@ class SettingsScreen extends Component {
             id: 'dp cell',
             name: 'The Daily Pennsylvanian',
             screenName: 'WebView',
-            props: { link: 'https://thedp.com' }
+            props: { link: 'https://thedp.com' },
           },
           {
             id: 'street cell',
             name: '34th Street',
             screenName: 'WebView',
-            props: { link: 'https://34st.com' }
+            props: { link: 'https://34st.com' },
           },
           {
             id: 'utb cell',
             name: 'Under the Button',
             screenName: 'WebView',
-            props: { link: 'https://underthebutton.com' }
-          }
-        ]
-      }
+            props: { link: 'https://underthebutton.com' },
+          },
+        ],
+      },
     ]
   }
 
   navigateToScreen(screenName, props) {
+    console.log('navigating to', screenName, 'with props', props)
     this.props.navigation.navigate(screenName, props)
   }
 

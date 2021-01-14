@@ -12,6 +12,8 @@ import {
   ManageFeedScreen,
   WebViewScreen,
   ScreenWithDefaultParams,
+  SavedArticlesScreen,
+  ArticleScreen,
 } from '../screens'
 
 const Stack = createStackNavigator()
@@ -55,6 +57,22 @@ export const SettingsStack = ({ screenProps }) => (
       name="WebView"
       component={WebViewScreen}
       options={{ title: '' }}
+    />
+
+    <Stack.Screen
+      name="SavedArticles"
+      component={SavedArticlesScreen}
+      options={{ title: 'Saved Articles' }}
+    />
+
+    <Stack.Screen
+      name="SettingsArticle"
+      component={ArticleScreen}
+      options={({ route }) => ({
+        title: '',
+        animationEnabled: false,
+        headerBackTitleVisible: true,
+      })}
     />
   </Stack.Navigator>
 )

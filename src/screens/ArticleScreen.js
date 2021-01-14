@@ -1,5 +1,5 @@
-import React from 'react'
-import { Text, View, useWindowDimensions } from 'react-native'
+import React, { useEffect } from 'react'
+import { Text, View, useWindowDimensions, Button } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import HTML from 'react-native-render-html'
 import { useQuery } from '@apollo/client'
@@ -8,6 +8,12 @@ import { PictureHeadline } from '../components'
 import { IMAGE_URL, TIME_AGO, AUTHORS } from '../utils/helperFunctions'
 import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
+import {
+  SAVED_ARTICLES_KEY,
+  SAVED_ARTICLE_PREFIX,
+  Storage,
+} from '../utils/storage'
+import { SavedArticlesScreen } from './SavedArticlesScreen'
 
 export const ArticleScreen = ({ navigation, route }) => {
   const { article, publicationState } = route.params
@@ -17,6 +23,35 @@ export const ArticleScreen = ({ navigation, route }) => {
     const { loading, error, data } = useQuery(QUERY_ARTICLE_BY_SLUG, {
       variables: { slug: article.slug },
     })
+  }
+
+  useEffect(() => {
+    navigation.setParams({ handleSave: handleSave })
+  }, [])
+
+  const handleSave = async () => {
+    console.log('handle save')
+
+    const date = new Date()
+
+    // Storage.clearAll()
+    // return
+
+    let saved_articles = await Storage.getItem(SAVED_ARTICLES_KEY)
+    if (saved_articles == null) saved_articles = []
+    let saved_successfully = await Storage.setItem(article.slug, article)
+
+    if (saved_successfully) {
+      saved_articles.push({
+        slug: article.slug,
+        headline: article.headline,
+        saved_at: date,
+      })
+      // console.log(saved_articles)
+      Storage.setItem(SAVED_ARTICLES_KEY, saved_articles)
+    } else {
+      console.log('error saving article')
+    }
   }
 
   /* Currently author and image credits are not supported by
@@ -58,7 +93,9 @@ export const ArticleScreen = ({ navigation, route }) => {
       </View>
       <View style={{ padding: 20 }}>
         <HTML
-          onLinkPress={(e, href, _) => navigation.navigate('ArticleBrowser', { link: href })}
+          onLinkPress={(e, href, _) =>
+            navigation.navigate('ArticleBrowser', { link: href })
+          }
           source={{ html: article.content }}
           contentWidth={useWindowDimensions().width}
           tagsStyles={{
@@ -79,3 +116,16 @@ export const ArticleScreen = ({ navigation, route }) => {
     </ScrollView>
   )
 }
+
+ArticleScreen.navigationOptions = ({ route }) => ({
+  title: '',
+  animationEnabled: false,
+  headerRight: () => (
+    <Button
+      title={'Save'}
+      onPress={() => {
+        route.params.handleSave()
+      }}
+    />
+  ),
+})

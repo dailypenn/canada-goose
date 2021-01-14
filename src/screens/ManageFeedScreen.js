@@ -11,7 +11,6 @@ import {
 import SortableList from 'react-native-sortable-list'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
-import { SettingsSectionHeader } from './SettingsScreen'
 import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
 import { HOME_SECTIONS } from '../utils/constants'
