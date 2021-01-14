@@ -13,8 +13,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import {
   HOME_PAGE_QUERY,
-  HOME_SECTIONS,
-  FIVE_MUNITES
+  DP_HOME_SECTIONS,
+  FIVE_MUNITES,
 } from '../utils/constants'
 import {
   CustomHeader,
@@ -23,12 +23,12 @@ import {
   HorizontalArticleCarousel,
   ArticleList,
   ActivityIndicator,
-  HeaderLine
+  HeaderLine,
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
-  HOME_SECTION_FROM_TITLE
+  HOME_SECTION_FROM_TITLE,
 } from '../utils/helperFunctions'
 import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { useFocusEffect } from '@react-navigation/core'
@@ -36,11 +36,11 @@ import { useFocusEffect } from '@react-navigation/core'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   text1: {
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 })
 
 const HomeView = ({
@@ -50,7 +50,7 @@ const HomeView = ({
   publicationState,
   defaultSections,
   loading,
-  refetch
+  refetch,
 }) => {
   const [offset, setOffset] = useState(0)
   const [sections, setSections] = useState(defaultSections)
@@ -254,14 +254,14 @@ export const HomeScreen = ({ navigation, screenProps }) => {
     inOtherNews: { edges: newsArticles },
     inOtherOpinion: { edges: opinionArticles },
     inOtherSports: { edges: sportsArticles },
-    inOtherMultimedia: { edges: multimediaArticles }
+    inOtherMultimedia: { edges: multimediaArticles },
   } = data
 
   const defaultSections = [
-    { name: HOME_SECTIONS.News, articles: newsArticles },
-    { name: HOME_SECTIONS.Opinion, articles: opinionArticles },
-    { name: HOME_SECTIONS.Sports, articles: sportsArticles },
-    { name: HOME_SECTIONS.Multimedia, articles: multimediaArticles }
+    { name: DP_HOME_SECTIONS.News, articles: newsArticles },
+    { name: DP_HOME_SECTIONS.Opinion, articles: opinionArticles },
+    { name: DP_HOME_SECTIONS.Sports, articles: sportsArticles },
+    { name: DP_HOME_SECTIONS.Multimedia, articles: multimediaArticles },
   ]
 
   return (

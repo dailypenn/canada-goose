@@ -232,11 +232,11 @@ export const PublicationEnum = Object.freeze({
   utb: 'Under the Button',
 })
 
-export const HOME_SECTIONS = {
+export const DP_HOME_SECTIONS = {
   News: 'In Other News',
   Opinion: 'Opinion',
   Sports: 'Sports',
   Multimedia: 'Multimedia',
 }
 
-export const FIVE_MUNITES = 5 * 60 * 1000 
+export const FIVE_MUNITES = 5 * 60 * 1000

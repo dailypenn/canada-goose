@@ -36,11 +36,7 @@ export const HomeStack = ({ screenProps }) => (
       <Stack.Screen
         name="HomeArticle"
         component={ArticleScreen}
-        options={({ route }) => ({
-          title: route.params.article.headline,
-          animationEnabled: true,
-          headerBackTitleVisible: false,
-        })}
+        options={ArticleScreen.navigationOptions}
       />
       <Stack.Screen
         name="ArticleBrowser"
