@@ -6,7 +6,7 @@ import {
   Text,
   RefreshControl,
   SafeAreaView,
-  AppState
+  AppState,
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -157,12 +157,13 @@ const HomeView = ({
   )
 }
 
-const HomeScreenComp = ({ navigation, publication }) => {
+const HomeScreenComp = ({ navigation, publication, homeSectionReordered }) => {
   // const publicationState = screenProps.state
   console.log(`current publication is ${publication}`)
+  console.log(`current homeSectionReordered is ${homeSectionReordered}`)
 
   const publicationState = {
-    currPublication: 'The Daily Pennsylvanian'
+    currPublication: 'The Daily Pennsylvanian',
   }
 
   const [lastActiveTime, setLastActiveTime] = useState(Date.now())
@@ -280,6 +281,9 @@ const HomeScreenComp = ({ navigation, publication }) => {
   )
 }
 
-const mapStateToProps = ({ publication }) => ({ publication })
+const mapStateToProps = ({ publication, homeSectionReordered }) => ({
+  publication,
+  homeSectionReordered,
+})
 
 export const HomeScreen = connect(mapStateToProps)(HomeScreenComp)

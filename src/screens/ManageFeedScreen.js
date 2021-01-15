@@ -10,10 +10,12 @@ import {
 } from 'react-native'
 import SortableList from 'react-native-sortable-list'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { connect } from 'react-redux'
 
 import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
-import { DP_HOME_SECTIONS } from '../utils/constants'
+import { DP_HOME_SECTIONS, PublicationEnum } from '../utils/constants'
+import { REORDERED_HOME_SECTIONS } from '../actions'
 
 const styles = StyleSheet.create({
   container: {
@@ -61,9 +63,15 @@ const styles = StyleSheet.create({
   },
 })
 
-export class ManageFeedScreen extends Component {
+class ManageFeedScreenComp extends Component {
   constructor(props) {
     super(props)
+    console.log(
+      'settings screen comp',
+      props.publication,
+      props.homeSectionReordered
+    )
+
     this.props = props
     this.state = {
       currData: Object.keys(DP_HOME_SECTIONS),
@@ -71,15 +79,6 @@ export class ManageFeedScreen extends Component {
     this.newOrder = null
     this.instructions =
       'Press down and drag the sections to the order you would like to see them appear on the home page, then save and restart the app'
-  }
-
-  static navigationOptions = ({ route }) => {
-    return {
-      title: 'Manage Feed',
-      headerRight: () => (
-        <Button title={'Save'} onPress={() => route.params.handleSave()} />
-      ),
-    }
   }
 
   componentDidMount() {
@@ -101,6 +100,16 @@ export class ManageFeedScreen extends Component {
     if (this.newData == this.state.currData) return
     console.log('saving-', this.newData)
     await Storage.setItem(HOME_FEED_ORDER_KEY, this.newData)
+
+    this.props.dispatch({
+      type: REORDERED_HOME_SECTIONS,
+      publication: this.props.publication,
+    })
+    console.log(
+      'settings screen comp',
+      this.props.publication,
+      this.props.homeSectionReordered
+    )
   }
 
   orderItems = async () => {
@@ -196,3 +205,16 @@ class Row extends Component {
     )
   }
 }
+
+const mapStateToProps = ({ publication, homeSectionReordered }) => ({
+  publication,
+  homeSectionReordered,
+})
+
+export const ManageFeedScreen = connect(mapStateToProps)(ManageFeedScreenComp)
+ManageFeedScreen.navigationOptions = ({ route }) => ({
+  title: 'Manage Feed',
+  headerRight: () => (
+    <Button title={'Save'} onPress={() => route.params.handleSave()} />
+  ),
+})
