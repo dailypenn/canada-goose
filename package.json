@@ -19,6 +19,7 @@
     "expo-blur": "~8.2.0",
     "expo-cli": "^3.28.5",
     "expo-font": "~8.4.0",
+    "expo-haptics": "~8.4.0",
     "expo-linear-gradient": "~8.4.0",
     "expo-optimize": "^0.1.62",
     "expo-status-bar": "~1.0.2",
@@ -30,6 +31,7 @@
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-grid-component": "^2.0.1",
+    "react-native-modal": "^11.6.1",
     "react-native-reanimated": "~1.13.0",
     "react-native-render-html": "^5.0.1",
     "react-native-safe-area-context": "3.1.9",
@@ -37,8 +39,7 @@
     "react-native-sortable-list": "0.0.24",
     "react-native-super-grid": "^4.0.3",
     "react-native-web": "~0.13.12",
-    "react-native-webview": "11.0.0",
-    "expo-haptics": "~8.4.0"
+    "react-native-webview": "11.0.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
