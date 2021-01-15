@@ -12,7 +12,7 @@ import SortableList from 'react-native-sortable-list'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 
-import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
+import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
 import { DP_HOME_SECTIONS_TITLE } from '../utils/constants'
 import { REORDER_HOME_SECTIONS } from '../actions'
@@ -103,7 +103,10 @@ class ManageFeedScreenComp extends Component {
     this.newData = sorted
     if (this.newData == this.state.currData) return
     // console.log('saving-', this.newData)
-    await Storage.setItem(HOME_FEED_ORDER_KEY, this.newData)
+    await Storage.setItem(
+      GET_HOME_FEED_ORDER_KEY(this.props.publication),
+      this.newData
+    )
 
     this.props.dispatch({
       type: REORDER_HOME_SECTIONS,
@@ -112,7 +115,9 @@ class ManageFeedScreenComp extends Component {
   }
 
   orderItems = async () => {
-    let storedOrder = await Storage.getItem(HOME_FEED_ORDER_KEY)
+    let storedOrder = await Storage.getItem(
+      GET_HOME_FEED_ORDER_KEY(this.props.publication)
+    )
     if (storedOrder != null) {
       this.setState({ currData: storedOrder })
     }

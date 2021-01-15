@@ -35,7 +35,7 @@ import {
   GET_HOME_SECTIONS,
   GET_HOME_SECTION_NAME,
 } from '../utils/helperFunctions'
-import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
+import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { useFocusEffect } from '@react-navigation/core'
 
 const styles = StyleSheet.create({
@@ -65,7 +65,9 @@ const HomeView = ({
   }
 
   const loadHomeSectionOrder = async () => {
-    let order = await Storage.getItem(HOME_FEED_ORDER_KEY)
+    let order = await Storage.getItem(
+      GET_HOME_FEED_ORDER_KEY(publicationState.currPublication)
+    )
     if (order == null) return
     if (order == GET_HOME_SECTIONS(publicationState.currPublication)) return
 
