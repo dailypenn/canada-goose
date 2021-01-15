@@ -8,9 +8,17 @@ export const switchPublication = publication => ({
 })
 
 // SETTINGS SCREEN ACTIONS
-export const REORDERED_HOME_SECTIONS = 'REORDERED_HOME_SECTIONS'
+export const REORDER_HOME_SECTIONS = 'REORDER_HOME_SECTIONS'
 
 export const reorderedHomeSections = publication => ({
-  type: REORDERED_HOME_SECTIONS,
+  type: REORDER_HOME_SECTIONS,
   publication,
+})
+
+// ARTICLE SCREEN ACTIONS
+export const SAVE_NEW_ARTICLE = 'SAVE_NEW_ARTICLE'
+
+export const saveNewArticle = b => ({
+  type: SAVE_NEW_ARTICLE,
+  b,
 })

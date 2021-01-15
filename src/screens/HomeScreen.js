@@ -157,10 +157,10 @@ const HomeView = ({
   )
 }
 
-const HomeScreenComp = ({ navigation, publication, homeSectionReordered }) => {
+const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
   // const publicationState = screenProps.state
   console.log(`current publication is ${publication}`)
-  console.log(`current homeSectionReordered is ${homeSectionReordered}`)
+  console.log(`current reorderHomeSection is ${reorderHomeSection}`)
 
   const publicationState = {
     currPublication: 'The Daily Pennsylvanian',
@@ -281,9 +281,9 @@ const HomeScreenComp = ({ navigation, publication, homeSectionReordered }) => {
   )
 }
 
-const mapStateToProps = ({ publication, homeSectionReordered }) => ({
+const mapStateToProps = ({ publication, reorderHomeSection }) => ({
   publication,
-  homeSectionReordered,
+  reorderHomeSection,
 })
 
 export const HomeScreen = connect(mapStateToProps)(HomeScreenComp)

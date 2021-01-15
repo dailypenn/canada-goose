@@ -1,17 +1,36 @@
-import { REORDERED_HOME_SECTIONS } from '../actions'
+import { REORDER_HOME_SECTIONS, SAVE_NEW_ARTICLE } from '../actions'
 
 // when no publication's home sections were reordered
-const defaultState = null
+const defaultReorderedHomeSectionState = null
 
-const HomeSectionReorderedReducer = (state = defaultState, action) => {
+const ReorderHomeSectionReducer = (
+  state = defaultReorderedHomeSectionState,
+  action
+) => {
   const { type, publication } = action
 
   switch (type) {
-    case REORDERED_HOME_SECTIONS:
+    case REORDER_HOME_SECTIONS:
       return publication
     default:
       return state
   }
 }
 
-export default HomeSectionReorderedReducer
+const defaultNewSavedArticleState = false
+
+const NewSavedArticleReducer = (
+  state = defaultNewSavedArticleState,
+  action
+) => {
+  const { type, b } = action
+
+  switch (type) {
+    case SAVE_NEW_ARTICLE:
+      return b
+    default:
+      return state
+  }
+}
+
+export { ReorderHomeSectionReducer, NewSavedArticleReducer }

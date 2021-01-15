@@ -14,8 +14,8 @@ import { connect } from 'react-redux'
 
 import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
-import { DP_HOME_SECTIONS, PublicationEnum } from '../utils/constants'
-import { REORDERED_HOME_SECTIONS } from '../actions'
+import { DP_HOME_SECTIONS } from '../utils/constants'
+import { REORDER_HOME_SECTIONS } from '../actions'
 
 const styles = StyleSheet.create({
   container: {
@@ -69,7 +69,7 @@ class ManageFeedScreenComp extends Component {
     console.log(
       'settings screen comp',
       props.publication,
-      props.homeSectionReordered
+      props.reorderHomeSection
     )
 
     this.props = props
@@ -102,13 +102,13 @@ class ManageFeedScreenComp extends Component {
     await Storage.setItem(HOME_FEED_ORDER_KEY, this.newData)
 
     this.props.dispatch({
-      type: REORDERED_HOME_SECTIONS,
+      type: REORDER_HOME_SECTIONS,
       publication: this.props.publication,
     })
     console.log(
       'settings screen comp',
       this.props.publication,
-      this.props.homeSectionReordered
+      this.props.reorderHomeSection
     )
   }
 
@@ -206,9 +206,9 @@ class Row extends Component {
   }
 }
 
-const mapStateToProps = ({ publication, homeSectionReordered }) => ({
+const mapStateToProps = ({ publication, reorderHomeSection }) => ({
   publication,
-  homeSectionReordered,
+  reorderHomeSection,
 })
 
 export const ManageFeedScreen = connect(mapStateToProps)(ManageFeedScreenComp)
