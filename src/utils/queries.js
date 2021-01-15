@@ -16,6 +16,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -37,12 +38,13 @@ export const STREET_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
     }
 
-    focus: articles(first: 3, section: "34st-focus", publication: "street") {
+    focus: articles(first: 3, section: "focus", publication: "street") {
       hasNextPage
       edges {
         article {
@@ -58,6 +60,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -79,6 +82,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -100,6 +104,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -121,6 +126,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -149,6 +155,7 @@ export const UTB_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -170,6 +177,7 @@ export const UTB_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -191,6 +199,7 @@ export const UTB_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -212,6 +221,7 @@ export const UTB_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -233,6 +243,7 @@ export const UTB_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
