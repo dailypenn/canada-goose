@@ -6,7 +6,7 @@ import {
   Text,
   RefreshControl,
   SafeAreaView,
-  AppState,
+  AppState
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -16,6 +16,9 @@ import {
   HOME_PAGE_QUERY,
   DP_HOME_SECTIONS,
   FIVE_MUNITES,
+  PublicationEnum,
+  STREET_HOME_SECTIONS,
+  UTB_HOME_SECTIONS
 } from '../utils/constants'
 import {
   CustomHeader,
@@ -24,12 +27,12 @@ import {
   HorizontalArticleCarousel,
   ArticleList,
   ActivityIndicator,
-  HeaderLine,
+  HeaderLine
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
-  HOME_SECTION_FROM_TITLE,
+  HOME_SECTION_FROM_TITLE
 } from '../utils/helperFunctions'
 import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { useFocusEffect } from '@react-navigation/core'
@@ -37,11 +40,11 @@ import { useFocusEffect } from '@react-navigation/core'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   text1: {
-    color: '#fff',
-  },
+    color: '#fff'
+  }
 })
 
 const HomeView = ({
@@ -51,7 +54,7 @@ const HomeView = ({
   publicationState,
   defaultSections,
   loading,
-  refetch,
+  refetch
 }) => {
   const [offset, setOffset] = useState(0)
   const [sections, setSections] = useState(defaultSections)
@@ -163,7 +166,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
   console.log(`current reorderHomeSection is ${reorderHomeSection}`)
 
   const publicationState = {
-    currPublication: 'The Daily Pennsylvanian',
+    currPublication: 'The Daily Pennsylvanian'
   }
 
   const [lastActiveTime, setLastActiveTime] = useState(Date.now())
@@ -252,21 +255,28 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
     return <Text> Error </Text>
   }
 
+  let HOME_SECTIONS = []
+
+  switch (publication) {
+    case PublicationEnum.dp:
+      HOME_SECTIONS = DP_HOME_SECTIONS
+      break
+    case PublicationEnum.street:
+      HOME_SECTIONS = STREET_HOME_SECTIONS
+      break
+    default:
+      HOME_SECTIONS = UTB_HOME_SECTIONS
+  }
+
   const {
     centerpiece: { edges: centerArticles },
     top: { edges: topArticles },
-    inOtherNews: { edges: newsArticles },
-    inOtherOpinion: { edges: opinionArticles },
-    inOtherSports: { edges: sportsArticles },
-    inOtherMultimedia: { edges: multimediaArticles },
   } = data
 
-  const defaultSections = [
-    { name: DP_HOME_SECTIONS.News, articles: newsArticles },
-    { name: DP_HOME_SECTIONS.Opinion, articles: opinionArticles },
-    { name: DP_HOME_SECTIONS.Sports, articles: sportsArticles },
-    { name: DP_HOME_SECTIONS.Multimedia, articles: multimediaArticles },
-  ]
+  const defaultSections = HOME_SECTIONS.map(section => ({
+    name: section,
+    articles: data[section].edges
+  }))
 
   return (
     <HomeView
@@ -283,7 +293,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
 
 const mapStateToProps = ({ publication, reorderHomeSection }) => ({
   publication,
-  reorderHomeSection,
+  reorderHomeSection
 })
 
 export const HomeScreen = connect(mapStateToProps)(HomeScreenComp)

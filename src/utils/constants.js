@@ -44,7 +44,7 @@ export const HOME_PAGE_QUERY = gql`
       }
     }
 
-    inOtherNews: articles(first: 3, section: "app-front-news") {
+    news: articles(first: 3, section: "app-front-news") {
       hasNextPage
       edges {
         article {
@@ -65,7 +65,7 @@ export const HOME_PAGE_QUERY = gql`
       }
     }
 
-    inOtherOpinion: articles(first: 3, section: "news") {
+    opinion: articles(first: 3, section: "news") {
       hasNextPage
       edges {
         article {
@@ -86,7 +86,7 @@ export const HOME_PAGE_QUERY = gql`
       }
     }
 
-    inOtherSports: articles(first: 3, section: "news") {
+    sports: articles(first: 3, section: "news") {
       hasNextPage
       edges {
         article {
@@ -107,7 +107,7 @@ export const HOME_PAGE_QUERY = gql`
       }
     }
 
-    inOtherMultimedia: articles(first: 3, section: "news") {
+    multimedia: articles(first: 3, section: "news") {
       hasNextPage
       edges {
         article {
@@ -232,12 +232,14 @@ export const PublicationEnum = Object.freeze({
   utb: 'Under the Button',
 })
 
-export const DP_HOME_SECTIONS = {
+export const DP_HOME_SECTIONS_TO_NAME = {
   News: 'In Other News',
   Opinion: 'Opinion',
   Sports: 'Sports',
   Multimedia: 'Multimedia',
 }
+
+export const DP_HOME_SECTIONS = ['news', 'opinion', 'sports', 'multimedia']
 
 export const UTB_HOME_SECTIONS = ['interactive', 'news', 'opinion']
 
