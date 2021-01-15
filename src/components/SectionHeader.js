@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingTop: 5,
+    paddingBottom: 15,
   },
 })
 

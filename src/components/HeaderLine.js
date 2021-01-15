@@ -9,10 +9,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         //paddingVertical: 10,
         paddingTop: 0,
+        flexDirection: 'row',
     },
     coloredLine: {
         width: 120,
-        height: 3,
+        height: 4,
     },
 })
 
@@ -25,12 +26,13 @@ const lineStyle = publication => {
 
 export const HeaderLine = ({ publication }) => (
     <View style={styles.view}>
+        <View style={lineStyle(publication)}/>
         <View
             style={{
-                borderBottomColor: '#CCC',
-                borderBottomWidth: 2,
+                borderTopColor: '#CCC',
+                borderTopWidth: 2,
+                flex: 1,
             }}
         />
-        <View style={lineStyle(publication)}/>
     </View>
 )
