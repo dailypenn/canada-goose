@@ -15,16 +15,11 @@ const Tab = createBottomTabNavigator()
 
 export const TabNavigationController = ({ navigation }) => {
   const [currPublication, updateCurrPublication] = useState(PublicationEnum.dp)
-  const [pubMenuVisible, updatePubMenuVisibility] = useState(false)
 
   const switchPublication = newPublication => {
     if (nwePublication != currPublication) {
       updateCurrPublication(currPublication)
     }
-  }
-
-  const homeIconPressed = () => {
-    updatePubMenuVisibility(!pubMenuVisible)
   }
 
   // const bringUpActionSheet = () => {
@@ -72,7 +67,6 @@ export const TabNavigationController = ({ navigation }) => {
           name="HomeStack"
           component={ScreenWithDefaultParams(HomeStack, {
             state: CHILD_STATE,
-            onHomeIconLongPress: () => homeIconPressed(),
           })}
         />
         <Tab.Screen
