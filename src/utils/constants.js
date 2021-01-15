@@ -232,11 +232,24 @@ export const PublicationEnum = Object.freeze({
   utb: 'Under the Button',
 })
 
-export const DP_HOME_SECTIONS_TO_NAME = {
-  News: 'In Other News',
-  Opinion: 'Opinion',
-  Sports: 'Sports',
-  Multimedia: 'Multimedia',
+export const DP_HOME_SECTIONS_TITLE = {
+  news: 'In Other News',
+  opinion: 'Opinion',
+  sports: 'Sports',
+  multimedia: 'Multimedia',
+}
+
+export const UTB_HOME_SECTIONS_TITLES = {
+  interactive: 'Interactive',
+  news: 'News',
+  opinion: 'Opinion',
+}
+
+export const STREET_HOME_SECTIONS_TITLES = {
+  focus: 'Focus',
+  features: 'Features',
+  ego: 'Ego',
+  style: 'Style',
 }
 
 export const DP_HOME_SECTIONS = ['news', 'opinion', 'sports', 'multimedia']

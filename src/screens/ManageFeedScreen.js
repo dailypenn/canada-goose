@@ -14,8 +14,12 @@ import { connect } from 'react-redux'
 
 import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
-import { DP_HOME_SECTIONS_TO_NAME } from '../utils/constants'
+import { DP_HOME_SECTIONS_TITLE } from '../utils/constants'
 import { REORDER_HOME_SECTIONS } from '../actions'
+import {
+  GET_HOME_SECTIONS,
+  GET_HOME_SECTION_NAME,
+} from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   container: {
@@ -67,14 +71,14 @@ class ManageFeedScreenComp extends Component {
   constructor(props) {
     super(props)
     console.log(
-      'settings screen comp',
+      'manage feed screen comp',
       props.publication,
       props.reorderHomeSection
     )
 
     this.props = props
     this.state = {
-      currData: Object.keys(DP_HOME_SECTIONS_TO_NAME),
+      currData: GET_HOME_SECTIONS(props.publication),
     }
     this.newOrder = null
     this.instructions =
@@ -98,18 +102,13 @@ class ManageFeedScreenComp extends Component {
     })
     this.newData = sorted
     if (this.newData == this.state.currData) return
-    console.log('saving-', this.newData)
+    // console.log('saving-', this.newData)
     await Storage.setItem(HOME_FEED_ORDER_KEY, this.newData)
 
     this.props.dispatch({
       type: REORDER_HOME_SECTIONS,
       publication: this.props.publication,
     })
-    console.log(
-      'settings screen comp',
-      this.props.publication,
-      this.props.reorderHomeSection
-    )
   }
 
   orderItems = async () => {

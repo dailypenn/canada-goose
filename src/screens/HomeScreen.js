@@ -6,7 +6,7 @@ import {
   Text,
   RefreshControl,
   SafeAreaView,
-  AppState
+  AppState,
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -14,11 +14,11 @@ import { connect } from 'react-redux'
 
 import {
   HOME_PAGE_QUERY,
-  DP_HOME_SECTIONS,
+  // DP_HOME_SECTIONS,
   FIVE_MUNITES,
   PublicationEnum,
   STREET_HOME_SECTIONS,
-  UTB_HOME_SECTIONS
+  UTB_HOME_SECTIONS,
 } from '../utils/constants'
 import {
   CustomHeader,
@@ -27,12 +27,13 @@ import {
   HorizontalArticleCarousel,
   ArticleList,
   ActivityIndicator,
-  HeaderLine
+  HeaderLine,
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
-  HOME_SECTION_FROM_TITLE
+  GET_HOME_SECTIONS,
+  GET_HOME_SECTION_NAME,
 } from '../utils/helperFunctions'
 import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { useFocusEffect } from '@react-navigation/core'
@@ -40,11 +41,11 @@ import { useFocusEffect } from '@react-navigation/core'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   text1: {
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 })
 
 const HomeView = ({
@@ -54,7 +55,7 @@ const HomeView = ({
   publicationState,
   defaultSections,
   loading,
-  refetch
+  refetch,
 }) => {
   const [offset, setOffset] = useState(0)
   const [sections, setSections] = useState(defaultSections)
@@ -66,12 +67,12 @@ const HomeView = ({
   const loadHomeSectionOrder = async () => {
     let order = await Storage.getItem(HOME_FEED_ORDER_KEY)
     if (order == null) return
-    if (order == Object.keys(sections)) return
+    if (order == GET_HOME_SECTIONS(publicationState.currPublication)) return
 
     let newSections = []
     order.forEach(section => {
       defaultSections.forEach(item => {
-        if (section == HOME_SECTION_FROM_TITLE(item.name)) {
+        if (section == item.name) {
           newSections.push(item)
         }
       })
@@ -136,7 +137,10 @@ const HomeView = ({
             <View key={i}>
               <HeaderLine publication={publicationState.currPublication} />
               <SectionHeader
-                title={name}
+                title={GET_HOME_SECTION_NAME(
+                  publicationState.currPublication,
+                  name
+                )}
                 publication={publicationState.currPublication}
               />
               <ArticleList
@@ -166,7 +170,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
   console.log(`current reorderHomeSection is ${reorderHomeSection}`)
 
   const publicationState = {
-    currPublication: 'The Daily Pennsylvanian'
+    currPublication: 'The Daily Pennsylvanian',
   }
 
   const [lastActiveTime, setLastActiveTime] = useState(Date.now())
@@ -255,18 +259,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
     return <Text> Error </Text>
   }
 
-  let HOME_SECTIONS = []
-
-  switch (publication) {
-    case PublicationEnum.dp:
-      HOME_SECTIONS = DP_HOME_SECTIONS
-      break
-    case PublicationEnum.street:
-      HOME_SECTIONS = STREET_HOME_SECTIONS
-      break
-    default:
-      HOME_SECTIONS = UTB_HOME_SECTIONS
-  }
+  let HOME_SECTIONS = GET_HOME_SECTIONS(publication)
 
   const {
     centerpiece: { edges: centerArticles },
@@ -275,7 +268,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
 
   const defaultSections = HOME_SECTIONS.map(section => ({
     name: section,
-    articles: data[section].edges
+    articles: data[section].edges,
   }))
 
   return (
@@ -293,7 +286,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
 
 const mapStateToProps = ({ publication, reorderHomeSection }) => ({
   publication,
-  reorderHomeSection
+  reorderHomeSection,
 })
 
 export const HomeScreen = connect(mapStateToProps)(HomeScreenComp)

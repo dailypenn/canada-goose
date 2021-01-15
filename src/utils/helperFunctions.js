@@ -1,4 +1,13 @@
 import moment from 'moment'
+import {
+  DP_HOME_SECTIONS,
+  STREET_HOME_SECTIONS,
+  UTB_HOME_SECTIONS,
+  PublicationEnum,
+  DP_HOME_SECTIONS_TITLE,
+  UTB_HOME_SECTIONS_TITLES,
+  STREET_HOME_SECTIONS_TITLES,
+} from './constants'
 
 export const IMAGE_URL = (attachment_uuid, extension) =>
   `https://snworksceo.imgix.net/dpn/${attachment_uuid}.sized-1000x1000.${extension}?w=1000`
@@ -31,15 +40,24 @@ export const navigateToSectionScreen = section => {
   navigation.navigate('Article', { article, publicationState })
 }
 
-export const HOME_SECTION_FROM_TITLE = section => {
-  switch (section) {
-    case 'In Other News':
-      return 'News'
-    case 'Opinion':
-      return 'Opinion'
-    case 'Sports':
-      return 'Sports'
-    case 'Multimedia':
-      return 'Multimedia'
+export const GET_HOME_SECTIONS = publication => {
+  switch (publication) {
+    case PublicationEnum.dp:
+      return DP_HOME_SECTIONS
+    case PublicationEnum.street:
+      return STREET_HOME_SECTIONS
+    case PublicationEnum.utb:
+      return UTB_HOME_SECTIONS
+  }
+}
+
+export const GET_HOME_SECTION_NAME = (publication, section) => {
+  switch (publication) {
+    case PublicationEnum.dp:
+      return DP_HOME_SECTIONS_TITLE[section]
+    case PublicationEnum.utb:
+      return UTB_HOME_SECTIONS_TITLES[section]
+    case PublicationEnum.street:
+      return STREET_HOME_SECTIONS_TITLES[section]
   }
 }
