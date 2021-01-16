@@ -18,5 +18,16 @@
   {
     "name": "Daniel Tao",
     "pic": "../static/logos/default_profile_pic.png"
+  },{
+    "name": "Isabel Liang",
+    "pic": "../static/logos/default_profile_pic.png"
+  },
+  {
+    "name": "Felicity Yick",
+    "pic": "../static/logos/default_profile_pic.png"
+  },
+  {
+    "name": "Alana Kelly",
+    "pic": "../static/logos/default_profile_pic.png"
   }
 ]
