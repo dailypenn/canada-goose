@@ -16,7 +16,7 @@
 - 1 story from `app-top-multimedia`
 - ordering: news, opinion, sports, multimedia
 
-_IMPORTANT_: If the most recent story from `app-top-opinion` or `app-top-sports` or `app-top-multimedia` is published more than 4 days ago, it will be automatically replaced by an article from `app-top-news`
+_NOTE_: If the most recent story from `app-top-opinion` or `app-top-sports` or `app-top-multimedia` is published more than 4 days ago, it will be automatically replaced by an article from `app-top-news`
 
 **Sections**
 
@@ -26,6 +26,8 @@ _IMPORTANT_: If the most recent story from `app-top-opinion` or `app-top-sports`
 - `app-front-multimedia`
 
 3 Stories for each section (user can reorder these sections and show/ hide each section)
+
+_NOTE_: To avoid the same story showing up in both the carousel and the sections below it, just tag an article with either `app-top-xxx` or `app-front-xxx`
 
 #### Discover Page
 
