@@ -30,8 +30,8 @@ export const HomeStack = ({ screenProps, navigation }) => {
 
   return (
     <>
-      <PublicationModal screenProps={screenProps} navigation={navigation} />
       <NavigationContainer independent={true}>
+        <PublicationModal screenProps={screenProps} navigation={navigation} />
         <Stack.Navigator
           initialRouteName="Home"
           screenOptions={{
