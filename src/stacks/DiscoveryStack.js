@@ -41,11 +41,7 @@ export const DiscoveryStack = ({ screenProps }) => (
       <Stack.Screen
         name="SectionArticle"
         component={ArticleScreen}
-        options={({ route }) => ({
-          title: route.params.article.headline,
-          animationEnabled: true,
-          headerBackTitleVisible: false,
-        })}
+        options={ArticleScreen.navigationOptions}
       />
     </Stack.Navigator>
   </NavigationContainer>

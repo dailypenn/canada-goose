@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
-export const HOME_FEED_ORDER_KEY = 'home_feed_order'
+export const HOME_FEED_ORDER_KEY = 'home feed order'
+
+export const SAVED_ARTICLES_KEY = 'saved articles'
 
 export const Storage = {
   getItem: async function (key) {
@@ -13,16 +15,26 @@ export const Storage = {
   },
   setItem: async function (key, value) {
     try {
-      return await AsyncStorage.setItem(key, JSON.stringify(value))
+      await AsyncStorage.setItem(key, JSON.stringify(value))
+      return true
     } catch (e) {
       // setting error
+      return false
     }
   },
   removeItem: async function (key) {
     try {
-      return await AsyncStorage.removeItem(key)
+      await AsyncStorage.removeItem(key)
+      return true
     } catch (e) {
       // removing error
+      return false
     }
+  },
+
+  clearAll: async function () {
+    await AsyncStorage.clear(error => {
+      console.log('clearing error:', error)
+    })
   },
 }

@@ -33,8 +33,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1.6
   },
   container: {
-    //backgroundColor: 'rgba(220, 220, 220, 1.0)',
-    padding: 20
+    padding: 20,
   }
 })
 

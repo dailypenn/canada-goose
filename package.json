@@ -8,7 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@apollo/client": "^3.2.7",
+    "@apollo/client": "^3.3.6",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.2",
@@ -17,7 +17,6 @@
     "expo": "^40.0.0",
     "expo-app-loading": "^1.0.1",
     "expo-blur": "~8.2.0",
-    "expo-cli": "^3.28.5",
     "expo-font": "~8.4.0",
     "expo-haptics": "~8.4.0",
     "expo-linear-gradient": "~8.4.0",
@@ -34,10 +33,13 @@
     "react-native-modal": "^11.6.1",
     "react-native-reanimated": "~1.13.0",
     "react-native-render-html": "^5.0.1",
-    "react-native-safe-area-context": "3.1.9",
+    "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "~2.15.0",
     "react-native-sortable-list": "0.0.24",
     "react-native-super-grid": "^4.0.3",
+    "react-native-swipe-list-view": "^3.2.5",
+    "react-native-swipeable": "^0.6.0",
+    "react-native-swipeout": "^2.3.6",
     "react-native-web": "~0.13.12",
     "react-native-webview": "11.0.0"
   },

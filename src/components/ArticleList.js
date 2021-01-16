@@ -6,7 +6,7 @@ import { HorizontalArticleCell } from './HorizontalArticleCell'
 import { PrimaryHorizontalArticleCell } from './PrimaryHorizontalArticleCell'
 
 export const ArticleList = ({ articles, navigateToArticleScreen }) => (
-  <View>
+  <View style = {{marginBottom: 5}}>
     {articles.map((el, i) => {
       const {
         article: {
@@ -17,6 +17,7 @@ export const ArticleList = ({ articles, navigateToArticleScreen }) => (
           abstract,
         },
       } = el
+      const articlesLength = articles.length;
       if (i == 0) {
         return (
           <TouchableOpacity
@@ -28,6 +29,21 @@ export const ArticleList = ({ articles, navigateToArticleScreen }) => (
               title={headline}
               imageURL={IMAGE_URL(attachment_uuid, extension)}
               abstract={abstract}
+            />
+          </TouchableOpacity>
+        )
+      } else if (i == articlesLength - 1) {
+        return (
+          <TouchableOpacity
+            key={i}
+            activeOpacity={1}
+            onPress={() => navigateToArticleScreen(el.article)}
+          >
+            <HorizontalArticleCell
+              title={headline}
+              imageURL={IMAGE_URL(attachment_uuid, extension)}
+              timeAgo={TIME_AGO(published_at)}
+              authors={AUTHORS(authors)}
             />
           </TouchableOpacity>
         )
@@ -43,6 +59,13 @@ export const ArticleList = ({ articles, navigateToArticleScreen }) => (
               imageURL={IMAGE_URL(attachment_uuid, extension)}
               timeAgo={TIME_AGO(published_at)}
               authors={AUTHORS(authors)}
+            />
+            <View
+              style={{
+                borderBottomColor: '#CCC',
+                borderBottomWidth: 1,
+                marginHorizontal: 20,
+              }}
             />
           </TouchableOpacity>
         )
@@ -76,6 +99,13 @@ export const SearchArticleList = ({ articles, navigateToArticleScreen }) => (
             imageURL={IMAGE_URL(attachment_uuid, extension)}
             timeAgo={TIME_AGO(published_at)}
             authors={AUTHORS(authors)}
+          />
+          <View
+            style={{
+              borderBottomColor: '#CCC',
+              borderBottomWidth: 1,
+              marginHorizontal: 20,
+            }}
           />
         </TouchableOpacity>
       )
