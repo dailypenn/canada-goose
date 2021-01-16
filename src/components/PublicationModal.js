@@ -21,24 +21,32 @@ export const PublicationModal = ({ screenProps, navigation }) => {
 
     return unsubscribe
   }, [navigation])
-  console.log(navigation)
-  const styles = StyleSheet.create({
-    container: {
-      width: '100%',
-      margin: 0,
-    },
-    view: {
-      backgroundColor: 'white',
-      height: 300,
-      width: '100%',
-    },
-  })
 
   const SCREEN_DIMENSIONS = Dimensions.get('screen')
 
   const onSwipeStart = () => {}
 
   const onSwipeComplete = () => {}
+
+  const styles = StyleSheet.create({
+    bar: {
+      color: 'grey',
+    },
+    container: {
+      margin: 0,
+      justifyContent: 'flex-end',
+      alignContent: 'center',
+    },
+    view: {
+      backgroundColor: 'white',
+      width: SCREEN_DIMENSIONS.width,
+      height: 400,
+      alignSelf: 'center',
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      bottom: -20,
+    },
+  })
 
   const modalOptions = {
     isVisible: isVisible,
@@ -47,12 +55,15 @@ export const PublicationModal = ({ screenProps, navigation }) => {
     deviceHeight: SCREEN_DIMENSIONS.height,
     swipeDirection: 'down',
     onSwipeComplete: toggleVisibility,
+    backdropOpacity: 0.85,
+    styles: styles.container,
   }
 
   return (
     <Modal {...modalOptions}>
+      <View style={{ flex: 1 }}></View>
       <View style={styles.view}>
-        <Button title="Cancel that shit" onPress={() => toggleVisibility()} />
+        <View style={styles.bar} />
       </View>
     </Modal>
   )
