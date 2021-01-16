@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, Dimensions, StyleSheet } from 'react-native'
 import Modal from 'react-native-modal'
-import { Dimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as Haptics from 'expo-haptics'
 

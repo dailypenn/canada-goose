@@ -44,6 +44,7 @@ export const HorizontalArticleCarousel = ({
             headline,
             published_at,
             dominantMedia: { attachment_uuid, extension },
+            tag
           },
         } = el
         return (
@@ -53,10 +54,10 @@ export const HorizontalArticleCarousel = ({
               onPress={() => navigateToArticleScreen(el.article)}
             >
               <VerticalArticleCard
-                category="Politics"
+                category={tag}
                 time={TIME_AGO(published_at)}
                 title={headline}
-                imageUrl={IMAGE_URL(attachment_uuid, extension)}
+                imageUrl={IMAGE_URL(attachment_uuid, extension, publication)}
                 publication={publication}
               />
             </TouchableOpacity>

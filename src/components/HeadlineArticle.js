@@ -12,19 +12,20 @@ export const HeadlineArticle = ({ data, publication }) => {
       published_at,
       abstract,
       dominantMedia: { attachment_uuid, extension },
+      tag
     },
   } = data
 
   // TODO: CLEAN UP -- A LOT
-  var splitAbstract = abstract.split('<p>')[1].split('</p>')[0]
+  const splitAbstract = abstract.split('<p>')[1].split('</p>')[0]
 
   return (
     <View>
       <PictureHeadline
         headline={headline}
         time={TIME_AGO(published_at)}
-        imageUrl={IMAGE_URL(attachment_uuid, extension)}
-        category="NEWS"
+        imageUrl={IMAGE_URL(attachment_uuid, extension, publication)}
+        category={tag}
         publication={publication}
       />
       <Tagline tagline={splitAbstract} publication={publication} />

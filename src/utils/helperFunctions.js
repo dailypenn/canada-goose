@@ -1,4 +1,5 @@
 import moment from 'moment'
+
 import {
   DP_HOME_SECTIONS,
   STREET_HOME_SECTIONS,
@@ -6,12 +7,29 @@ import {
   PublicationEnum,
   DP_HOME_SECTIONS_TITLE,
   UTB_HOME_SECTIONS_TITLES,
-  STREET_HOME_SECTIONS_TITLES,
+  STREET_HOME_SECTIONS_TITLES
 } from './constants'
-import { DP_HOME_PAGE_QUERY, STREET_HOME_PAGE_QUERY, UTB_HOME_PAGE_QUERY } from './queries'
+import {
+  DP_HOME_PAGE_QUERY,
+  STREET_HOME_PAGE_QUERY,
+  UTB_HOME_PAGE_QUERY
+} from './queries'
 
-export const IMAGE_URL = (attachment_uuid, extension) =>
-  `https://snworksceo.imgix.net/dpn/${attachment_uuid}.sized-1000x1000.${extension}?w=1000`
+export const IMAGE_URL = (attachment_uuid, extension, publication) => {
+  let ceo_prefix = ''
+  switch (publication) {
+    case PublicationEnum.dp:
+      ceo_prefix = 'dpn'
+      break
+    case PublicationEnum.street:
+      ceo_prefix = 'dpn-34s'
+      break
+    default:
+      ceo_prefix = 'dpn-utb'
+  }
+
+  return `https://snworksceo.imgix.net/${ceo_prefix}/${attachment_uuid}.sized-1000x1000.${extension}?w=1000`
+}
 
 export const TIME_AGO = published_at =>
   moment(published_at, 'YYYY-MM-DD HH:mm:ss').fromNow()
@@ -28,11 +46,7 @@ export const PARTIAL_NAVIGATE = (navigation, toScreen, f) => {
   return article => f(navigation, toScreen, article)
 }
 
-export const NAVIGATE_TO_ARTICLE_SCREEN = (
-  navigation,
-  toScreen,
-  article
-) => {
+export const NAVIGATE_TO_ARTICLE_SCREEN = (navigation, toScreen, article) => {
   navigation.navigate(toScreen, { article })
 }
 

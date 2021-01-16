@@ -143,6 +143,7 @@ const HomeView = ({
                   'HomeArticle',
                   NAVIGATE_TO_ARTICLE_SCREEN
                 )}
+                publication={publication}
               />
             </View>
           )

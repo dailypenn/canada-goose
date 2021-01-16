@@ -12,7 +12,7 @@ import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { Alert } from 'react-native'
 
-const ArticleScreenComp = ({ navigation, route }) => {
+const ArticleScreenComp = ({ navigation, route, publication }) => {
   const { article } = route.params
 
   if (!article) {
@@ -40,7 +40,7 @@ const ArticleScreenComp = ({ navigation, route }) => {
 
     if (saved_successfully) {
       saved_articles.push({
-        publicationState: publicationState,
+        publication,
         slug: article.slug,
         headline: article.headline,
         saved_at: date,
@@ -62,10 +62,11 @@ const ArticleScreenComp = ({ navigation, route }) => {
         time={TIME_AGO(article.published_at)}
         imageUrl={IMAGE_URL(
           article.dominantMedia.attachment_uuid,
-          article.dominantMedia.extension
+          article.dominantMedia.extension,
+          publication
         )}
         category="NEWS"
-        publication={publicationState.currPublication}
+        publication={publication}
       />
       <View
         style={{

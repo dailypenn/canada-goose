@@ -5,8 +5,12 @@ import { IMAGE_URL, TIME_AGO, AUTHORS } from '../utils/helperFunctions'
 import { HorizontalArticleCell } from './HorizontalArticleCell'
 import { PrimaryHorizontalArticleCell } from './PrimaryHorizontalArticleCell'
 
-export const ArticleList = ({ articles, navigateToArticleScreen }) => (
-  <View style = {{marginBottom: 5}}>
+export const ArticleList = ({
+  articles,
+  navigateToArticleScreen,
+  publication
+}) => (
+  <View style={{ marginBottom: 5 }}>
     {articles.map((el, i) => {
       const {
         article: {
@@ -14,10 +18,10 @@ export const ArticleList = ({ articles, navigateToArticleScreen }) => (
           published_at,
           dominantMedia: { attachment_uuid, extension },
           authors,
-          abstract,
-        },
+          abstract
+        }
       } = el
-      const articlesLength = articles.length;
+      const articlesLength = articles.length
       if (i == 0) {
         return (
           <TouchableOpacity
@@ -27,7 +31,7 @@ export const ArticleList = ({ articles, navigateToArticleScreen }) => (
           >
             <PrimaryHorizontalArticleCell
               title={headline}
-              imageURL={IMAGE_URL(attachment_uuid, extension)}
+              imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
               abstract={abstract}
             />
           </TouchableOpacity>
@@ -41,7 +45,7 @@ export const ArticleList = ({ articles, navigateToArticleScreen }) => (
           >
             <HorizontalArticleCell
               title={headline}
-              imageURL={IMAGE_URL(attachment_uuid, extension)}
+              imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
               timeAgo={TIME_AGO(published_at)}
               authors={AUTHORS(authors)}
             />
@@ -56,7 +60,7 @@ export const ArticleList = ({ articles, navigateToArticleScreen }) => (
           >
             <HorizontalArticleCell
               title={headline}
-              imageURL={IMAGE_URL(attachment_uuid, extension)}
+              imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
               timeAgo={TIME_AGO(published_at)}
               authors={AUTHORS(authors)}
             />
@@ -64,7 +68,7 @@ export const ArticleList = ({ articles, navigateToArticleScreen }) => (
               style={{
                 borderBottomColor: '#CCC',
                 borderBottomWidth: 1,
-                marginHorizontal: 20,
+                marginHorizontal: 20
               }}
             />
           </TouchableOpacity>
@@ -81,7 +85,7 @@ export const SearchArticleList = ({ articles, navigateToArticleScreen }) => (
         headline,
         published_at,
         dominantMedia: { attachment_uuid, extension },
-        authors,
+        authors
       } = el
       return (
         <TouchableOpacity
@@ -104,7 +108,7 @@ export const SearchArticleList = ({ articles, navigateToArticleScreen }) => (
             style={{
               borderBottomColor: '#CCC',
               borderBottomWidth: 1,
-              marginHorizontal: 20,
+              marginHorizontal: 20
             }}
           />
         </TouchableOpacity>

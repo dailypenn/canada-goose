@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import * as Haptics from 'expo-haptics'
 
 import {
+  SettingsScreen,
   AboutScreen,
   NotificationScreen,
   PrivacyScreen,
@@ -36,7 +37,7 @@ export const SettingsStack = ({ navigation }) => {
     >
       <Stack.Screen
         name="Settings"
-        component={ScreenWithDefaultParams(SettingsScreen, screenProps)}
+        component={SettingsScreen}
         options={{
           title: 'Settings',
           headerShown: true,
