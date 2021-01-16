@@ -8,7 +8,7 @@ import {
   Text,
   TouchableHighlight,
   ScrollView,
-  Button
+  Button,
 } from 'react-native'
 import Animated, { Easing } from 'react-native-reanimated'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -20,7 +20,7 @@ import { ActivityIndicator } from './ActivityIndicator'
 import { ARTICLES_SEARCH } from '../utils/constants'
 import {
   PARTIAL_NAVIGATE,
-  NAVIGATE_TO_ARTICLE_SCREEN
+  NAVIGATE_TO_ARTICLE_SCREEN,
 } from '../utils/helperFunctions'
 import { GEOMETRIC_BOLD } from '../utils/fonts'
 
@@ -32,7 +32,7 @@ const height = Dimensions.get('window').height
 const SearchView = ({ filter, navigation }) => {
   const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
     variables: { filter },
-    fetchPolicy: 'cache-and-network'
+    fetchPolicy: 'cache-and-network',
   })
 
   if (loading) return <ActivityIndicator />
@@ -74,27 +74,27 @@ export const SearchBar = ({ navigation }) => {
     const input_x_pos_anim = {
       duration: 200,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const cancel_opacity_anim = {
       duration: 200,
       toValue: 1,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const content_y_pos_anim = {
       duration: 0,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const content_opacity_anim = {
       duration: 200,
       toValue: 1,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const title_opacity_anim = {
       duration: 200,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
 
     if (!focused) {
@@ -114,27 +114,27 @@ export const SearchBar = ({ navigation }) => {
     const input_x_pos_anim = {
       duration: 200,
       toValue: width,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const cancel_opacity_anim = {
       duration: 50,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const content_y_pos_anim = {
       duration: 200,
       toValue: height,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const content_opacity_anim = {
       duration: 200,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const title_opacity_anim = {
       duration: 300,
       toValue: 1,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
 
     if (focused) {
@@ -169,7 +169,7 @@ export const SearchBar = ({ navigation }) => {
             <Animated.View
               style={[
                 styles.input_box,
-                { transform: [{ translateX: input_x_pos }] }
+                { transform: [{ translateX: input_x_pos }] },
               ]}
             >
               {/* <Animated.View style={{ opacity: cancel_opacity }}>
@@ -204,8 +204,8 @@ export const SearchBar = ({ navigation }) => {
           styles.content,
           {
             opacity: content_opacity,
-            transform: [{ translateY: content_y_pos }]
-          }
+            transform: [{ translateY: content_y_pos }],
+          },
         ]}
       >
         <SafeAreaView style={styles.content_safe_area}>
@@ -231,15 +231,15 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: GEOMETRIC_BOLD,
     fontSize: 28,
-    lineHeight: 40
+    lineHeight: 40,
   },
   header_safe_area: {
-    zIndex: 1000
+    zIndex: 1000,
     //marginTop: 5,
   },
   header: {
     height: 50,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   header_inner: {
     flex: 1,
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
   },
   search_icon_box: {
     width: 40,
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEE',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   input_box: {
     height: 50,
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     backgroundColor: 'white',
-    width: width - 26 //width - 32
+    width: width - 26, //width - 32
   },
   back_icon_box: {
     width: 40,
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 5
+    marginRight: 5,
   },
   input: {
     flex: 1,
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e4e6eb',
     borderRadius: 16,
     paddingHorizontal: 16,
-    fontSize: 18
+    fontSize: 18,
   },
   content: {
     width: width,
@@ -291,37 +291,37 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     bottom: 0,
-    zIndex: 999
+    zIndex: 999,
   },
   content_safe_area: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   content_inner: {
     flex: 1,
-    paddingTop: 125
+    paddingTop: 125,
   },
   separator: {
     marginTop: 5,
     marginBottom: 5,
     height: 1,
-    backgroundColor: '#e6e4eb'
+    backgroundColor: '#e6e4eb',
   },
   image_placeholder_container: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    marginTop: '-50%'
+    marginTop: '-50%',
   },
   image_placeholder: {
     width: 150,
     height: 113,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   image_placeholder_text: {
     textAlign: 'center',
     color: 'gray',
-    marginTop: 5
+    marginTop: 5,
   },
   search_item: {
     flexDirection: 'row',
@@ -329,9 +329,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#e6e4eb',
-    marginLeft: 16
+    marginLeft: 16,
   },
   item_icon: {
-    marginRight: 15
-  }
+    marginRight: 15,
+  },
 })

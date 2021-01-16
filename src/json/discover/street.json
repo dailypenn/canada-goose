@@ -1,0 +1,41 @@
+[{
+    "category": "Letter",
+    "label-color": "#ff855c",
+    "img": "../../static/discover/street/letter.png"
+}, {
+    "cateogry": "Arts",
+    "label-color": "#f3f0ec",
+    "img": "../../static/discover/street/arts/png" 
+},{
+    "category": "Overheards",
+    "label-color": "#f1dbd8",
+    "img": "../../static/discover/street/overheard.png"
+}, {
+    "cateogry": "Film and TV",
+    "label-color": "#cf3932",
+    "img": "../../static/discover/street/film-tv.png"
+},{
+    "category": "Focus",
+    "label-color": "#f3f0ec",
+    "img": "../../static/discover/street/focus.png"
+}, {
+    "cateogry": "Features",
+    "label-color": "#f1bd8",
+    "img": "../../static/discover/street/features.png"
+},{
+    "category": "Music",
+    "label-color": "#f2f0ec",
+    "img": "../../static/discover/street/music.png"
+}, {
+    "cateogry": "Style",
+    "label-color": "#cf3932",
+    "img": "../../static/discover/street/style.png"
+},{
+    "category": "Ego",
+    "label-color": "#ff855c",
+    "img": "../../static/discover/street/ego.png"
+}, {
+    "cateogry": "WOTS",
+    "label-color": "#f1dbd8",
+    "img": "../../static/discover/street/wots.png"
+}]
