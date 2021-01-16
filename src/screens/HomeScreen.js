@@ -1,21 +1,19 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import {
   StyleSheet,
   ScrollView,
   View,
   Text,
   RefreshControl,
+  SafeAreaView,
+  AppState,
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { connect } from 'react-redux'
 
+import { HOME_PAGE_QUERY } from '../utils/constants'
 import {
-  HOME_PAGE_QUERY,
-  DP_HOME_SECTIONS,
-  FIVE_MUNITES,
-} from '../utils/constants'
-import {
-  CustomHeader,
   SectionHeader,
   HeadlineArticle,
   HorizontalArticleCarousel,
@@ -26,9 +24,11 @@ import {
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
-  HOME_SECTION_FROM_TITLE,
+  GET_HOME_SECTIONS,
+  GET_HOME_SECTION_NAME,
 } from '../utils/helperFunctions'
-import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
+import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
+import { useFocusEffect } from '@react-navigation/core'
 
 const styles = StyleSheet.create({
   container: {
@@ -48,6 +48,7 @@ const HomeView = ({
   defaultSections,
   loading,
   refetch,
+  reorderHomeSection,
 }) => {
   const [offset, setOffset] = useState(0)
   const [sections, setSections] = useState(defaultSections)
@@ -57,14 +58,16 @@ const HomeView = ({
   }
 
   const loadHomeSectionOrder = async () => {
-    let order = await Storage.getItem(HOME_FEED_ORDER_KEY)
+    let order = await Storage.getItem(
+      GET_HOME_FEED_ORDER_KEY(publicationState.currPublication)
+    )
     if (order == null) return
-    if (order == Object.keys(sections)) return
+    if (order == GET_HOME_SECTIONS(publicationState.currPublication)) return
 
     let newSections = []
     order.forEach(section => {
       defaultSections.forEach(item => {
-        if (section == HOME_SECTION_FROM_TITLE(item.name)) {
+        if (section == item.name) {
           newSections.push(item)
         }
       })
@@ -75,7 +78,7 @@ const HomeView = ({
 
   useEffect(() => {
     loadHomeSectionOrder()
-  }, [])
+  }, [reorderHomeSection])
 
   const onRefresh = useCallback(() => {
     refetch()
@@ -129,7 +132,10 @@ const HomeView = ({
             <View key={i}>
               <HeaderLine publication={publicationState.currPublication} />
               <SectionHeader
-                title={name}
+                title={GET_HOME_SECTION_NAME(
+                  publicationState.currPublication,
+                  name
+                )}
                 publication={publicationState.currPublication}
               />
               <ArticleList
@@ -153,11 +159,93 @@ const HomeView = ({
   )
 }
 
-export const HomeScreen = ({ navigation, screenProps }) => {
-  const publicationState = screenProps.state
-  const { loading, error, data, refetch } = useQuery(HOME_PAGE_QUERY, {
-    pollInterval: FIVE_MUNITES,
-  })
+const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
+  // const publicationState = screenProps.state
+  console.log(`current publication is ${publication}`)
+  console.log(`current reorderHomeSection is ${reorderHomeSection}`)
+
+  const publicationState = {
+    currPublication: 'The Daily Pennsylvanian',
+  }
+
+  const [lastActiveTime, setLastActiveTime] = useState(Date.now())
+  const appState = useRef(AppState.currentState)
+  const [appStateState, setAppStateState] = useState(appState.current)
+
+  const handleAppStateChange = nextAppState => {
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      console.log('App has come to the foreground!')
+    }
+
+    if (appState.current.match(/active/)) {
+      setLastActiveTime(Date.now())
+      console.log('App has come to the background!')
+    }
+
+    appState.current = nextAppState
+    setAppStateState(appState.current)
+    console.log('AppState', appState.current)
+  }
+
+  useEffect(() => {
+    AppState.addEventListener('change', handleAppStateChange)
+
+    return () => {
+      AppState.removeEventListener('change', handleAppStateChange)
+    }
+  }, [])
+
+  const { loading, error, data, refetch } = useQuery(HOME_PAGE_QUERY)
+
+  useFocusEffect(
+    useCallback(() => {
+      // if appState === 'active' and last time on home screen is 5 mins ago, do refetch
+      console.log('home screen focused')
+      console.log(lastActiveTime)
+      const timeElapsed = (Date.now() - lastActiveTime) / 1000
+      console.log(timeElapsed)
+      // if (data && appState.current === 'active' && timeElapsed >= 5) {
+      //   console.log('refetching')
+      //   refetch()
+      // }
+
+      console.log(Boolean(data))
+
+      if (data) {
+        console.log('refetching home screen articles')
+        refetch()
+      }
+
+      return () => {
+        console.log('home screen blurred')
+        console.log(Date.now())
+        setLastActiveTime(Date.now())
+      }
+    }, [])
+  )
+
+  // useFocusEffect(() => {
+  //   const timeElapsed = (Date.now() - lastActiveTime) / 1000
+  //   console.log(timeElapsed)
+
+  //   if (data && appState.current === 'active' && timeElapsed >= 5) {
+  //     console.log('refetching home screen articles')
+  //     refetch()
+  //   }
+
+  //   // if (data) {
+  //   //   console.log(`refetching home screen articles`)
+  //   //   refetch()
+  //   // }
+
+  //   // return () => {
+  //   //   console.log(Date.now())
+  //   //   setLastActiveTime(Date.now())
+  //   // }
+  // }, [])
 
   if (!data) return <ActivityIndicator />
 
@@ -166,21 +254,17 @@ export const HomeScreen = ({ navigation, screenProps }) => {
     return <Text> Error </Text>
   }
 
+  let HOME_SECTIONS = GET_HOME_SECTIONS(publication)
+
   const {
     centerpiece: { edges: centerArticles },
     top: { edges: topArticles },
-    inOtherNews: { edges: newsArticles },
-    inOtherOpinion: { edges: opinionArticles },
-    inOtherSports: { edges: sportsArticles },
-    inOtherMultimedia: { edges: multimediaArticles },
   } = data
 
-  const defaultSections = [
-    { name: DP_HOME_SECTIONS.News, articles: newsArticles },
-    { name: DP_HOME_SECTIONS.Opinion, articles: opinionArticles },
-    { name: DP_HOME_SECTIONS.Sports, articles: sportsArticles },
-    { name: DP_HOME_SECTIONS.Multimedia, articles: multimediaArticles },
-  ]
+  const defaultSections = HOME_SECTIONS.map(section => ({
+    name: section,
+    articles: data[section].edges,
+  }))
 
   return (
     <HomeView
@@ -191,6 +275,14 @@ export const HomeScreen = ({ navigation, screenProps }) => {
       defaultSections={defaultSections}
       loading={loading}
       refetch={refetch}
+      reorderHomeSection={reorderHomeSection}
     />
   )
 }
+
+const mapStateToProps = ({ publication, reorderHomeSection }) => ({
+  publication,
+  reorderHomeSection,
+})
+
+export const HomeScreen = connect(mapStateToProps)(HomeScreenComp)

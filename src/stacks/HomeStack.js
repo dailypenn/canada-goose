@@ -15,7 +15,7 @@ import { NavigationContainer } from '@react-navigation/native'
 const Stack = createStackNavigator()
 
 export const HomeStack = ({ screenProps }) => (
-  <NavigationContainer independent={true}>
+  // <NavigationContainer independent={true}>
     <Stack.Navigator
       initialRouteName="Home"
       screenOptions={{
@@ -26,7 +26,8 @@ export const HomeStack = ({ screenProps }) => (
     >
       <Stack.Screen
         name="Home"
-        component={ScreenWithDefaultParams(HomeScreen, screenProps)}
+        component={HomeScreen}
+        // component={ScreenWithDefaultParams(HomeScreen, screenProps)}
         options={{
           title: 'Home',
           headerShown: false,
@@ -45,5 +46,5 @@ export const HomeStack = ({ screenProps }) => (
         })}
       />
     </Stack.Navigator>
-  </NavigationContainer>
+  // </NavigationContainer>
 )
