@@ -76,9 +76,9 @@ const HomeView = ({
     setSections(newSections)
   }
 
-  useEffect(() => {
-    loadHomeSectionOrder()
-  }, [reorderHomeSection])
+  // useEffect(() => {
+  //   loadHomeSectionOrder()
+  // }, [reorderHomeSection])
 
   const onRefresh = useCallback(() => {
     refetch()
@@ -124,7 +124,7 @@ const HomeView = ({
           publication={publication}
         />
 
-        {sections.map((el, i) => {
+        {defaultSections.map((el, i) => {
           const { name, articles } = el
           return (
             <View key={i}>

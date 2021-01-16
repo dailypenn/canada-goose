@@ -18,6 +18,7 @@ export const DP_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -39,6 +40,7 @@ export const DP_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -60,6 +62,7 @@ export const DP_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -81,6 +84,7 @@ export const DP_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -102,6 +106,7 @@ export const DP_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
@@ -123,6 +128,7 @@ export const DP_HOME_PAGE_QUERY = gql`
             attachment_uuid
             extension
           }
+          tag
         }
         cursor
       }
