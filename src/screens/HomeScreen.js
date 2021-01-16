@@ -51,12 +51,16 @@ const HomeView = ({
   reorderHomeSection,
 }) => {
   const [offset, setOffset] = useState(0)
-  const [sections, setSections] = useState(defaultSections)
+  // const [sections, setSections] = useState(defaultSections)
 
   const handleScroll = scrollData => {
     setOffset(scrollData.nativeEvent.contentOffset.y)
   }
 
+  // TODO (liz): defaultSections cannot be stored inside useState
+  // otherwise, redux won't update it for some reasons
+  // a quick fix I can think of is to put this function inside HomeScreenComp
+  // and pass the ordered sections to this component
   const loadHomeSectionOrder = async () => {
     let order = await Storage.getItem(
       GET_HOME_FEED_ORDER_KEY(publication)
