@@ -13,16 +13,17 @@ import {
   ManageFeedScreen,
   WebViewScreen,
   SavedArticlesScreen,
-  ArticleScreen
+  ArticleScreen,
 } from '../screens'
 
 const Stack = createStackNavigator()
 
 export const SettingsStack = ({ navigation }) => {
+  console.log(navigation.isFocused())
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', e => {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+      if (!navigation.isFocused())
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
     })
 
     return unsubscribe
@@ -32,7 +33,7 @@ export const SettingsStack = ({ navigation }) => {
     <Stack.Navigator
       initialRouteName="Settings"
       screenOptions={{
-        headerTitleStyle: { fontWeight: 'bold' }
+        headerTitleStyle: { fontWeight: 'bold' },
       }}
     >
       <Stack.Screen
@@ -81,7 +82,7 @@ export const SettingsStack = ({ navigation }) => {
         options={({ route }) => ({
           title: '',
           animationEnabled: false,
-          headerBackTitleVisible: true
+          headerBackTitleVisible: true,
         })}
       />
     </Stack.Navigator>

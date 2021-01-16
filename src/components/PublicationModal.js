@@ -14,7 +14,7 @@ const SCREEN_DIMENSIONS = Dimensions.get('screen')
 const PUBLICATIONS = [
   PublicationEnum.dp,
   PublicationEnum.street,
-  PublicationEnum.utb
+  PublicationEnum.utb,
 ]
 
 const PublicationOption = ({ publication, isCurrent }) => {
@@ -64,7 +64,11 @@ const PublicationOption = ({ publication, isCurrent }) => {
   )
 }
 
-const PublicationModalComp = ({ navigation, publication, dispatchSwitchPublication }) => {
+const PublicationModalComp = ({
+  navigation,
+  publication,
+  dispatchSwitchPublication,
+}) => {
   const [isVisible, updateVisibility] = useState(false) // Whether or not the modal is visible
   const [currentlySwiping, updateSwipeStatus] = useState(false) // Flags when swipes have started, but this is not blocking out touchable opacity presses :(
 
@@ -80,9 +84,11 @@ const PublicationModalComp = ({ navigation, publication, dispatchSwitchPublicati
   // Function called when user selects a new publication
   const selectedPublication = pub => {
     if (!currentlySwiping) {
-      if (pub != publication) dispatchSwitchPublication(pub)
+      if (pub != publication) {
+        dispatchSwitchPublication(pub)
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+      }
       updateVisibility(false)
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
     }
   }
 
@@ -93,17 +99,17 @@ const PublicationModalComp = ({ navigation, publication, dispatchSwitchPublicati
       height: 5,
       alignSelf: 'center',
       borderRadius: 10,
-      marginBottom: 20
+      marginBottom: 20,
     },
     container: {
       margin: 0,
-      justifyContent: 'flex-end'
+      justifyContent: 'flex-end',
     },
     label: {
       fontFamily: GEOMETRIC_BOLD,
       fontSize: 20,
       color: '#444',
-      marginBottom: 10
+      marginBottom: 10,
     },
     view: {
       backgroundColor: 'white',
@@ -114,8 +120,8 @@ const PublicationModalComp = ({ navigation, publication, dispatchSwitchPublicati
       borderTopRightRadius: 10,
       bottom: -20,
       paddingTop: 10,
-      paddingHorizontal: 20
-    }
+      paddingHorizontal: 20,
+    },
   })
 
   const modalOptions = {
@@ -129,7 +135,7 @@ const PublicationModalComp = ({ navigation, publication, dispatchSwitchPublicati
     onSwipeComplete: () => updateVisibility(false),
     onBackButtonPress: () => updateVisibility(false),
     backdropOpacity: 0.85,
-    styles: styles.container
+    styles: styles.container,
   }
 
   return (
@@ -160,7 +166,7 @@ const mapStateToProps = ({ publication }) => ({ publication })
 
 const mapDispatchToProps = dispatch => ({
   dispatchSwitchPublication: publication =>
-    dispatch(switchPublication(publication))
+    dispatch(switchPublication(publication)),
 })
 
 export const PublicationModal = connect(

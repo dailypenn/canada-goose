@@ -4,11 +4,7 @@ import React, { useEffect, useState, forwardRef, createRef } from 'react'
 import * as Haptics from 'expo-haptics'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import {
-  HomeScreen,
-  ArticleScreen,
-  WebViewScreen
-} from '../screens'
+import { HomeScreen, ArticleScreen, WebViewScreen } from '../screens'
 import { PublicationModal } from '../components'
 
 const Stack = createStackNavigator()
@@ -19,7 +15,8 @@ export const HomeStack = ({ navigation }) => {
   // Haptic feedback when tab bar is pressed
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', e => {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+      if (!navigation.isFocused())
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
     })
 
     return unsubscribe
@@ -33,7 +30,7 @@ export const HomeStack = ({ navigation }) => {
         screenOptions={{
           headerStyle: { backgroundColor: '#fff' },
           headerTintColor: '#000',
-          headerTitleStyle: { fontWeight: 'bold' }
+          headerTitleStyle: { fontWeight: 'bold' },
         }}
       >
         <Stack.Screen
@@ -41,7 +38,7 @@ export const HomeStack = ({ navigation }) => {
           component={HomeScreen}
           options={{
             title: 'Home',
-            headerShown: false
+            headerShown: false,
           }}
         />
         <Stack.Screen
@@ -50,14 +47,14 @@ export const HomeStack = ({ navigation }) => {
           options={({ route }) => ({
             title: route.params.article.headline,
             animationEnabled: true,
-            headerBackTitleVisible: false
+            headerBackTitleVisible: false,
           })}
         />
         <Stack.Screen
           name="ArticleBrowser"
           component={WebViewScreen}
           options={({ route }) => ({
-            link: route.params.link
+            link: route.params.link,
           })}
         />
       </Stack.Navigator>
