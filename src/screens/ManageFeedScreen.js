@@ -10,10 +10,16 @@ import {
 } from 'react-native'
 import SortableList from 'react-native-sortable-list'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { connect } from 'react-redux'
 
-import { HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
+import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
-import { DP_HOME_SECTIONS } from '../utils/constants'
+import { DP_HOME_SECTIONS_TITLE } from '../utils/constants'
+import { REORDER_HOME_SECTIONS } from '../actions'
+import {
+  GET_HOME_SECTIONS,
+  GET_HOME_SECTION_NAME,
+} from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   container: {
@@ -61,25 +67,22 @@ const styles = StyleSheet.create({
   },
 })
 
-export class ManageFeedScreen extends Component {
+class ManageFeedScreenComp extends Component {
   constructor(props) {
     super(props)
+    console.log(
+      'manage feed screen comp',
+      props.publication,
+      props.reorderHomeSection
+    )
+
     this.props = props
     this.state = {
-      currData: Object.keys(DP_HOME_SECTIONS),
+      currData: GET_HOME_SECTIONS(props.publication),
     }
     this.newOrder = null
     this.instructions =
-      'Press down and drag the sections to the order you would like to see them appear on the home page, then save and restart the app'
-  }
-
-  static navigationOptions = ({ route }) => {
-    return {
-      title: 'Manage Feed',
-      headerRight: () => (
-        <Button title={'Save'} onPress={() => route.params.handleSave()} />
-      ),
-    }
+      'Press down and drag the sections to the order you would like to see them appear on the home page'
   }
 
   componentDidMount() {
@@ -99,12 +102,22 @@ export class ManageFeedScreen extends Component {
     })
     this.newData = sorted
     if (this.newData == this.state.currData) return
-    console.log('saving-', this.newData)
-    await Storage.setItem(HOME_FEED_ORDER_KEY, this.newData)
+    // console.log('saving-', this.newData)
+    await Storage.setItem(
+      GET_HOME_FEED_ORDER_KEY(this.props.publication),
+      this.newData
+    )
+
+    this.props.dispatch({
+      type: REORDER_HOME_SECTIONS,
+      publication: this.props.publication,
+    })
   }
 
   orderItems = async () => {
-    let storedOrder = await Storage.getItem(HOME_FEED_ORDER_KEY)
+    let storedOrder = await Storage.getItem(
+      GET_HOME_FEED_ORDER_KEY(this.props.publication)
+    )
     if (storedOrder != null) {
       this.setState({ currData: storedOrder })
     }
@@ -196,3 +209,16 @@ class Row extends Component {
     )
   }
 }
+
+const mapStateToProps = ({ publication, reorderHomeSection }) => ({
+  publication,
+  reorderHomeSection,
+})
+
+export const ManageFeedScreen = connect(mapStateToProps)(ManageFeedScreenComp)
+ManageFeedScreen.navigationOptions = ({ route }) => ({
+  title: 'Manage Feed',
+  headerRight: () => (
+    <Button title={'Save'} onPress={() => route.params.handleSave()} />
+  ),
+})

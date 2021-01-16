@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useQuery } from '@apollo/client'
-import { StyleSheet, ScrollView, SafeAreaView } from 'react-native'
+import { StyleSheet, ScrollView, SafeAreaView, View } from 'react-native'
 import { FlatGrid } from 'react-native-super-grid'
 import { TouchableOpacity } from 'react-native'
 
@@ -21,12 +21,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingVertical: 20
+    paddingBottom: 20
   }
 })
 
 const DiscoveryView = ({ navigation, publicationState }) => {
-  navigateToSectionScreen = (section, slug) => {
+  const navigateToSectionScreen = (section, slug) => {
     navigation.navigate('Section', {
       sectionName: section,
       slug
@@ -35,13 +35,13 @@ const DiscoveryView = ({ navigation, publicationState }) => {
 
   return (
     <FlatGrid
-      ListHeaderComponent={
-        <SectionHeader
-          title="Top Sections"
-          publication={publicationState.currPublication}
-        />
-      }
-      ListHeaderComponentStyle={styles.container}
+      // ListHeaderComponent={
+      //   <SectionHeader
+      //     title="Top Sections"
+      //     publication={publicationState.currPublication}
+      //   />
+      // }
+      // ListHeaderComponentStyle={styles.container}
       data={SECTIONS}
       renderItem={({ item, i }) => (
         <TouchableOpacity
@@ -57,57 +57,18 @@ const DiscoveryView = ({ navigation, publicationState }) => {
   )
 }
 
-const SearchView = ({ filter, publication, navigation }) => {
-  const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
-    variables: { filter },
-    fetchPolicy: 'cache-and-network'
-  })
-
-  if (loading) return <ActivityIndicator />
-
-  const { searchArticles: results } = data
-
-  return (
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-      keyboardDismissMode="on-drag"
-    >
-      <SectionHeader title="Sections" />
-      <SectionHeader title="Articles" />
-      <SearchArticleList
-        articles={results}
-        navigateToArticleScreen={PARTIAL_NAVIGATE(
-          navigation,
-          publication,
-          'SectionArticle',
-          NAVIGATE_TO_ARTICLE_SCREEN
-        )}
-      />
-    </ScrollView>
-  )
-}
-
 export const DiscoveryScreen = ({ navigation, screenProps }) => {
-  const [filter, setFilter] = useState('')
+  // const [filter, setFilter] = useState('')
 
   const publicationState = screenProps.state
 
   return (
     <SafeAreaView style={styles.container}>
-      <SearchBar setFilter={setFilter} />
-      {Boolean(filter) && (
-        <SearchView
-          filter={filter}
-          publication={publicationState}
-          navigation={navigation}
-        />
-      )}
-      {!filter && (
-        <DiscoveryView
-          navigation={navigation}
-          publicationState={publicationState}
-        />
-      )}
+      <SearchBar publication={publicationState} navigation={navigation} />
+      <DiscoveryView
+        navigation={navigation}
+        publicationState={publicationState}
+      />
     </SafeAreaView>
   )
 }

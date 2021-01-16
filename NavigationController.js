@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import { Animated, Dimensions, Button, Easing } from 'react-native'
+import React, { useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import * as Haptics from 'expo-haptics'
-import Modal from 'react-native-modal'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 
 import { HomeStack, DiscoveryStack, SettingsStack } from './src/stacks'
 import { PublicationEnum } from './src/utils/constants'
 import { ScreenWithDefaultParams } from './src/screens'
-import { View } from 'react-native'
+import RootReducer from './src/reducers'
+
+const store = createStore(RootReducer)
 
 const Tab = createBottomTabNavigator()
 
@@ -31,58 +33,60 @@ export const TabNavigationController = ({ navigation }) => {
 
   const CHILD_STATE = {
     currPublication,
-    switchPublication,
+    switchPublication
   }
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
-            let iconName
+    <Provider store={store}>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ color, size }) => {
+              let iconName
 
-            if (route.name === 'HomeStack') {
-              iconName = 'ios-home'
-            } else if (route.name == 'DiscoveryStack') iconName = 'ios-search'
-            else if (route.name === 'SettingsStack') iconName = 'ios-settings'
+              if (route.name === 'HomeStack') {
+                iconName = 'ios-home'
+              } else if (route.name == 'DiscoveryStack') iconName = 'ios-search'
+              else if (route.name === 'SettingsStack') iconName = 'ios-settings'
 
-            return <Ionicons name={iconName} size={30} color={color} />
-          },
-        })}
-        tabBarOptions={{
-          activeTintColor: '#A61E21',
-          inactiveTintColor: 'gray',
-          showLabel: false,
-          style: {
-            shadowColor: 'black',
-            shadowOpacity: 0.1,
-            shadowRadius: 3,
-          },
-          onPress: () => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-          },
-        }}
-      >
-        <Tab.Screen
-          name="HomeStack"
-          component={ScreenWithDefaultParams(HomeStack, {
-            state: CHILD_STATE,
+              return <Ionicons name={iconName} size={30} color={color} />
+            }
           })}
-        />
-        <Tab.Screen
-          name="DiscoveryStack"
-          component={ScreenWithDefaultParams(DiscoveryStack, {
-            state: CHILD_STATE,
-          })}
-        />
-        <Tab.Screen
-          name="SettingsStack"
-          component={ScreenWithDefaultParams(SettingsStack, {
-            state: CHILD_STATE,
-          })}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+          tabBarOptions={{
+            activeTintColor: '#A61E21',
+            inactiveTintColor: 'gray',
+            showLabel: false,
+            style: {
+              shadowColor: 'black',
+              shadowOpacity: 0.1,
+              shadowRadius: 3
+            },
+            onPress: () => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            }
+          }}
+        >
+          <Tab.Screen
+            name="HomeStack"
+            component={ScreenWithDefaultParams(HomeStack, {
+              state: CHILD_STATE
+            })}
+          />
+          <Tab.Screen
+            name="DiscoveryStack"
+            component={ScreenWithDefaultParams(DiscoveryStack, {
+              state: CHILD_STATE
+            })}
+          />
+          <Tab.Screen
+            name="SettingsStack"
+            component={ScreenWithDefaultParams(SettingsStack, {
+              state: CHILD_STATE
+            })}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   )
 }
 
