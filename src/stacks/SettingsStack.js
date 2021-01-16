@@ -13,8 +13,6 @@ import {
   ManageFeedScreen,
   WebViewScreen,
   ScreenWithDefaultParams,
-  SavedArticlesScreen,
-  ArticleScreen,
 } from '../screens'
 
 const Stack = createStackNavigator()
@@ -23,6 +21,7 @@ export const SettingsStack = ({ screenProps, navigation }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', e => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
     })
 
     return unsubscribe
@@ -35,6 +34,14 @@ export const SettingsStack = ({ screenProps, navigation }) => {
         headerTitleStyle: { fontWeight: 'bold' },
       }}
     >
+      <Stack.Screen
+        name="Settings"
+        component={ScreenWithDefaultParams(SettingsScreen, screenProps)}
+        options={{
+          title: 'Settings',
+          headerShown: true,
+        }}
+      />
       <Stack.Screen
         name="About"
         component={AboutScreen}
@@ -59,22 +66,6 @@ export const SettingsStack = ({ screenProps, navigation }) => {
         name="WebView"
         component={WebViewScreen}
         options={{ title: '' }}
-      />
-
-      <Stack.Screen
-        name="SavedArticles"
-        component={SavedArticlesScreen}
-        options={{ title: 'Saved Articles' }}
-      />
-
-      <Stack.Screen
-        name="SettingsArticle"
-        component={ArticleScreen}
-        options={({ route }) => ({
-          title: '',
-          animationEnabled: false,
-          headerBackTitleVisible: true,
-        })}
       />
     </Stack.Navigator>
   )

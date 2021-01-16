@@ -17,32 +17,47 @@ const PUBLICATIONS = [
 ]
 
 const PublicationOption = ({ publication, isCurrent }) => {
+  const TEXT_COLOR = PublicationPrimaryColor(publication)
+
+  const styles = StyleSheet.create({
+    container: {
+      height: 70,
+      width: '100%',
+      borderRadius: 5,
+      marginBottom: 15,
+      justifyContent: 'flex-start' || 'center',
+      alignContent: 'center',
+      padding: 10,
+      flexDirection: 'row',
+    },
+    publicationTitle: {
+      textTransform: 'uppercase',
+      fontFamily: GEOMETRIC_BOLD,
+      fontSize: 16,
+      lineHeight: 20,
+      color: TEXT_COLOR,
+    },
+    subtitle: {
+      fontFamily: GEOMETRIC_REGULAR,
+      fontSize: 12,
+      lineHeight: 14,
+      color: TEXT_COLOR,
+    },
+  })
   return (
-    <View
-      style={{
-        height: 70,
-        width: '100%',
-        backgroundColor: isCurrent
-          ? PublicationPrimaryColor(publication)
-          : null,
-        borderColor: isCurrent ? null : PublicationPrimaryColor(publication),
-        borderWidth: isCurrent ? null : 2,
-        borderRadius: 5,
-        marginBottom: 15,
-        justifyContent: 'center',
-        padding: 20,
-      }}
-    >
-      <Text
+    <View style={styles.container}>
+      <View
         style={{
-          textTransform: 'uppercase',
-          fontFamily: GEOMETRIC_BOLD,
-          fontSize: 16,
-          color: isCurrent ? 'white' : PublicationPrimaryColor(publication),
+          backgroundColor: TEXT_COLOR,
+          aspectRatio: 1,
+          marginRight: 10,
+          borderRadius: 10,
         }}
-      >
-        {publication}
-      </Text>
+      />
+      <View>
+        <Text style={styles.publicationTitle}>{publication}</Text>
+        <Text style={styles.subtitle}>{isCurrent ? 'Selected' : 'Switch'}</Text>
+      </View>
     </View>
   )
 }
@@ -52,11 +67,10 @@ export const PublicationModal = ({ screenProps, navigation }) => {
     state: { currPublication, switchPublication },
   } = screenProps
 
-  const [isVisible, updateVisibility] = useState(false)
+  const [isVisible, updateVisibility] = useState(false) // Whether or not the modal is visible
+  const [currentlySwiping, updateSwipeStatus] = useState(false) // Flags when swipes have started, but this is not blocking out touchable opacity presses :(
 
-  const toggleVisibility = () => {
-    updateVisibility(!isVisible)
-  }
+  const toggleVisibility = () => updateVisibility(!isVisible)
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabLongPress', e => {
@@ -67,10 +81,13 @@ export const PublicationModal = ({ screenProps, navigation }) => {
     return unsubscribe
   }, [navigation])
 
+  // Function called when user selects a new publication
   const selectedPublication = pub => {
-    console.log(pub)
-    if (pub != currPublication) switchPublication(pub)
-    toggleVisibility()
+    if (!currentlySwiping) {
+      switchPublication(pub)
+      updateVisibility(false)
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+    }
   }
 
   const styles = StyleSheet.create({
@@ -110,7 +127,9 @@ export const PublicationModal = ({ screenProps, navigation }) => {
     hideModalContentWhileAnimating: true,
     deviceWidth: SCREEN_DIMENSIONS.width,
     deviceHeight: SCREEN_DIMENSIONS.height,
-    swipeDirection: 'down',
+    swipeDirection: ['down'],
+    onSwipeMove: () => updateSwipeStatus(true), // Block
+    onSwipeCancel: () => setTimeout(() => updateSwipeStatus(false), 100), // Ensures no accidental press
     onSwipeComplete: toggleVisibility,
     onBackButtonPress: toggleVisibility,
     backdropOpacity: 0.85,
@@ -119,17 +138,15 @@ export const PublicationModal = ({ screenProps, navigation }) => {
 
   return (
     <Modal {...modalOptions}>
-      <View style={{ flex: 1 }} onPress={() => toggleVisibility()}></View>
+      <View style={{ flex: 1 }}></View>
       <View style={styles.view}>
         <View style={styles.bar} />
-        <Text style={styles.label}>
-          <Ionicons name={'sync-circle-outline'} size={20} color="#444" />
-          {' Switch Publication'}
-        </Text>
+
         {PUBLICATIONS.map((el, index) => (
           <TouchableOpacity
             activeOpacity={el == currPublication ? 0.9 : 0.7}
             onPress={() => selectedPublication(el)}
+            disabled={currentlySwiping}
           >
             <PublicationOption
               publication={el}
