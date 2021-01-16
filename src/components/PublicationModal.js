@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Button, StyleSheet } from 'react-native'
+import { View, Text, Dimensions, StyleSheet } from 'react-native'
 import * as Haptics from 'expo-haptics'
 import Modal from 'react-native-modal'
-import { Dimensions } from 'react-native'
+
 import { PublicationPrimaryColor } from '../utils/branding'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { PublicationEnum } from '../utils/constants'
 
 const SCREEN_DIMENSIONS = Dimensions.get('screen')
@@ -50,9 +49,11 @@ const PublicationOption = ({ publication, isCurrent }) => {
       borderRadius: 10,
     },
   })
+
   return (
     <View style={styles.container}>
       <View style={styles.imagePlaceholder} />
+      {/* Eventually will be repleaced with logos. TODO */}
       <View>
         <Text style={styles.publicationTitle}>{publication}</Text>
         <Text style={styles.subtitle}>{isCurrent ? 'Selected' : 'Switch'}</Text>
@@ -69,12 +70,10 @@ export const PublicationModal = ({ screenProps, navigation }) => {
   const [isVisible, updateVisibility] = useState(false) // Whether or not the modal is visible
   const [currentlySwiping, updateSwipeStatus] = useState(false) // Flags when swipes have started, but this is not blocking out touchable opacity presses :(
 
-  const toggleVisibility = () => updateVisibility(!isVisible)
-
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabLongPress', e => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
-      toggleVisibility()
+      updateVisibility(true)
     })
 
     return unsubscribe
@@ -129,8 +128,8 @@ export const PublicationModal = ({ screenProps, navigation }) => {
     swipeDirection: ['down'],
     onSwipeMove: () => updateSwipeStatus(true), // Block
     onSwipeCancel: () => setTimeout(() => updateSwipeStatus(false), 100), // Ensures no accidental press
-    onSwipeComplete: toggleVisibility,
-    onBackButtonPress: toggleVisibility,
+    onSwipeComplete: () => updateVisibility(false),
+    onBackButtonPress: () => updateVisibility(false),
     backdropOpacity: 0.85,
     styles: styles.container,
   }
@@ -143,7 +142,7 @@ export const PublicationModal = ({ screenProps, navigation }) => {
 
         {PUBLICATIONS.map((el, index) => (
           <TouchableOpacity
-            activeOpacity={el == currPublication ? 0.9 : 0.7}
+            activeOpacity={0.7}
             onPress={() => selectedPublication(el)}
             disabled={currentlySwiping}
           >
