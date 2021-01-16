@@ -18,34 +18,32 @@ const PUBLICATIONS = [
 
 const PublicationOption = ({ publication, isCurrent }) => {
   return (
-    <TouchableOpacity activeOpacity={isCurrent ? 0.9 : 0.7}>
-      <View
+    <View
+      style={{
+        height: 70,
+        width: '100%',
+        backgroundColor: isCurrent
+          ? PublicationPrimaryColor(publication)
+          : null,
+        borderColor: isCurrent ? null : PublicationPrimaryColor(publication),
+        borderWidth: isCurrent ? null : 2,
+        borderRadius: 5,
+        marginBottom: 15,
+        justifyContent: 'center',
+        padding: 20,
+      }}
+    >
+      <Text
         style={{
-          height: 70,
-          width: '100%',
-          backgroundColor: isCurrent
-            ? PublicationPrimaryColor(publication)
-            : null,
-          borderColor: isCurrent ? null : PublicationPrimaryColor(publication),
-          borderWidth: isCurrent ? null : 2,
-          borderRadius: 5,
-          marginBottom: 15,
-          justifyContent: 'center',
-          padding: 20,
+          textTransform: 'uppercase',
+          fontFamily: GEOMETRIC_BOLD,
+          fontSize: 16,
+          color: isCurrent ? 'white' : PublicationPrimaryColor(publication),
         }}
       >
-        <Text
-          style={{
-            textTransform: 'uppercase',
-            fontFamily: GEOMETRIC_BOLD,
-            fontSize: 16,
-            color: isCurrent ? 'white' : PublicationPrimaryColor(publication),
-          }}
-        >
-          {publication}
-        </Text>
-      </View>
-    </TouchableOpacity>
+        {publication}
+      </Text>
+    </View>
   )
 }
 
@@ -69,6 +67,12 @@ export const PublicationModal = ({ screenProps, navigation }) => {
     return unsubscribe
   }, [navigation])
 
+  const selectedPublication = pub => {
+    console.log(pub)
+    if (pub != currPublication) switchPublication(pub)
+    toggleVisibility()
+  }
+
   const styles = StyleSheet.create({
     bar: {
       backgroundColor: '#CCC',
@@ -91,7 +95,7 @@ export const PublicationModal = ({ screenProps, navigation }) => {
     view: {
       backgroundColor: 'white',
       width: SCREEN_DIMENSIONS.width,
-      height: 400,
+      height: 370,
       alignSelf: 'center',
       borderTopLeftRadius: 10,
       borderTopRightRadius: 10,
@@ -122,11 +126,17 @@ export const PublicationModal = ({ screenProps, navigation }) => {
           <Ionicons name={'sync-circle-outline'} size={20} color="#444" />
           {' Switch Publication'}
         </Text>
-        {PUBLICATIONS.map(el => (
-          <PublicationOption
-            publication={el}
-            isCurrent={el == currPublication}
-          />
+        {PUBLICATIONS.map((el, index) => (
+          <TouchableOpacity
+            activeOpacity={el == currPublication ? 0.9 : 0.7}
+            onPress={() => selectedPublication(el)}
+          >
+            <PublicationOption
+              publication={el}
+              isCurrent={el == currPublication}
+              id={index}
+            />
+          </TouchableOpacity>
         ))}
       </View>
     </Modal>

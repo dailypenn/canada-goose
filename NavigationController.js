@@ -17,7 +17,7 @@ export const TabNavigationController = ({ navigation }) => {
   const [currPublication, updateCurrPublication] = useState(PublicationEnum.dp)
 
   const switchPublication = newPublication => {
-    if (nwePublication != currPublication) {
+    if (newPublication != currPublication) {
       updateCurrPublication(currPublication)
     }
   }
