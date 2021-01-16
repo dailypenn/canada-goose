@@ -21,6 +21,7 @@ export const SettingsStack = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', e => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
     })
 
     return unsubscribe
@@ -33,6 +34,14 @@ export const SettingsStack = ({ navigation }) => {
         headerTitleStyle: { fontWeight: 'bold' }
       }}
     >
+      <Stack.Screen
+        name="Settings"
+        component={ScreenWithDefaultParams(SettingsScreen, screenProps)}
+        options={{
+          title: 'Settings',
+          headerShown: true,
+        }}
+      />
       <Stack.Screen
         name="About"
         component={AboutScreen}

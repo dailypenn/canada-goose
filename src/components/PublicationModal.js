@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, Dimensions, StyleSheet } from 'react-native'
 import Modal from 'react-native-modal'
 import { Dimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import * as Haptics from 'expo-haptics'
 
-import { GEOMETRIC_BOLD } from '../utils/fonts'
 import { PublicationPrimaryColor } from '../utils/branding'
+import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { PublicationEnum } from '../utils/constants'
 import { switchPublication } from '../actions'
 
@@ -19,57 +18,73 @@ const PUBLICATIONS = [
   PublicationEnum.utb
 ]
 
-const PublicationOption = ({ publication, isCurrent }) => (
-  <View
-    style={{
+const PublicationOption = ({ publication, isCurrent }) => {
+  const TEXT_COLOR = PublicationPrimaryColor(publication)
+
+  const styles = StyleSheet.create({
+    container: {
       height: 70,
       width: '100%',
-      backgroundColor: isCurrent ? PublicationPrimaryColor(publication) : null,
-      borderColor: isCurrent ? null : PublicationPrimaryColor(publication),
-      borderWidth: isCurrent ? null : 2,
       borderRadius: 5,
       marginBottom: 15,
-      justifyContent: 'center',
-      padding: 20
-    }}
-  >
-    <Text
-      style={{
-        textTransform: 'uppercase',
-        fontFamily: GEOMETRIC_BOLD,
-        fontSize: 16,
-        color: isCurrent ? 'white' : PublicationPrimaryColor(publication)
-      }}
-    >
-      {publication}
-    </Text>
-  </View>
-)
+      justifyContent: 'flex-start' || 'center',
+      alignContent: 'center',
+      padding: 10,
+      flexDirection: 'row',
+    },
+    publicationTitle: {
+      textTransform: 'uppercase',
+      fontFamily: GEOMETRIC_BOLD,
+      fontSize: 16,
+      lineHeight: 20,
+      color: TEXT_COLOR,
+    },
+    subtitle: {
+      fontFamily: GEOMETRIC_REGULAR,
+      fontSize: 12,
+      lineHeight: 14,
+      color: TEXT_COLOR,
+    },
+    imagePlaceholder: {
+      backgroundColor: TEXT_COLOR,
+      aspectRatio: 1,
+      marginRight: 10,
+      borderRadius: 10,
+    },
+  })
 
-const PublicationModalComp = ({
-  navigation,
-  publication,
-  dispatchSwitchPublication
-}) => {
-  const [isVisible, updateVisibility] = useState(false)
+  return (
+    <View style={styles.container}>
+      <View style={styles.imagePlaceholder} />
+      {/* Eventually will be repleaced with logos. TODO */}
+      <View>
+        <Text style={styles.publicationTitle}>{publication}</Text>
+        <Text style={styles.subtitle}>{isCurrent ? 'Selected' : 'Switch'}</Text>
+      </View>
+    </View>
+  )
+}
 
-  const toggleVisibility = () => {
-    updateVisibility(!isVisible)
-  }
+const PublicationModalComp = ({ navigation, publication, dispatchSwitchPublication }) => {
+  const [isVisible, updateVisibility] = useState(false) // Whether or not the modal is visible
+  const [currentlySwiping, updateSwipeStatus] = useState(false) // Flags when swipes have started, but this is not blocking out touchable opacity presses :(
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabLongPress', e => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
-      toggleVisibility()
+      updateVisibility(true)
     })
 
     return unsubscribe
   }, [navigation])
 
+  // Function called when user selects a new publication
   const selectedPublication = pub => {
-    console.log(pub)
-    if (pub != publication) dispatchSwitchPublication(pub)
-    toggleVisibility()
+    if (!currentlySwiping) {
+      if (pub != publication) dispatchSwitchPublication(pub)
+      updateVisibility(false)
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+    }
   }
 
   const styles = StyleSheet.create({
@@ -109,26 +124,26 @@ const PublicationModalComp = ({
     hideModalContentWhileAnimating: true,
     deviceWidth: SCREEN_DIMENSIONS.width,
     deviceHeight: SCREEN_DIMENSIONS.height,
-    swipeDirection: 'down',
-    onSwipeComplete: toggleVisibility,
-    onBackButtonPress: toggleVisibility,
+    swipeDirection: ['down'],
+    onSwipeMove: () => updateSwipeStatus(true), // Block
+    onSwipeCancel: () => setTimeout(() => updateSwipeStatus(false), 100), // Ensures no accidental press
+    onSwipeComplete: () => updateVisibility(false),
+    onBackButtonPress: () => updateVisibility(false),
     backdropOpacity: 0.85,
     styles: styles.container
   }
 
   return (
     <Modal {...modalOptions}>
-      <View style={{ flex: 1 }} onPress={() => toggleVisibility()}></View>
+      <View style={{ flex: 1 }}></View>
       <View style={styles.view}>
         <View style={styles.bar} />
-        <Text style={styles.label}>
-          <Ionicons name={'sync-circle-outline'} size={20} color="#444" />
-          {' Switch Publication'}
-        </Text>
+
         {PUBLICATIONS.map((el, index) => (
           <TouchableOpacity
-            activeOpacity={el == publication ? 0.9 : 0.7}
+            activeOpacity={0.7}
             onPress={() => selectedPublication(el)}
+            disabled={currentlySwiping}
           >
             <PublicationOption
               publication={el}
