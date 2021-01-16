@@ -2,52 +2,52 @@
   {
     "cateogry": "Arts",
     "label-color": "#f3f0ec",
-    "img": "https://storage.googleapis.com/mobile-discover/arts.png"
+    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
   },
   {
     "category": "Ego",
     "label-color": "#ff855c",
-    "img": "https://storage.googleapis.com/mobile-discover/ego.png"
+    "img": "https://storage.googleapis.com/mobile-storage/ego.png"
   },
   {
     "cateogry": "Features",
     "label-color": "#f1bd8",
-    "img": "https://storage.googleapis.com/mobile-discover/features.png"
+    "img": "https://storage.googleapis.com/mobile-storage/features.png"
   },
   {
     "cateogry": "Film and TV",
     "label-color": "#cf3932",
-    "img": "https://storage.googleapis.com/mobile-discover/film-tv.png"
+    "img": "https://storage.googleapis.com/mobile-storage/film-tv.png"
   },
   {
     "category": "Focus",
     "label-color": "#f3f0ec",
-    "img": "https://storage.googleapis.com/mobile-discover/focus.png"
+    "img": "https://storage.googleapis.com/mobile-storage/focus.png"
   },
   {
     "category": "Letter",
     "label-color": "#ff855c",
-    "img": "https://storage.googleapis.com/mobile-discover/letter.png"
+    "img": "https://storage.googleapis.com/mobile-storage/letter.png"
   },
   {
     "category": "Music",
     "label-color": "#f2f0ec",
-    "img": "https://storage.googleapis.com/mobile-discover/music.png"
+    "img": "https://storage.googleapis.com/mobile-storage/music.png"
   },
   {
     "category": "Overheards",
     "label-color": "#f1dbd8",
-    "img": "https://storage.googleapis.com/mobile-discover/overheards.png"
+    "img": "https://storage.googleapis.com/mobile-storage/overheards.png"
   },
   {
     "cateogry": "Style",
     "label-color": "#cf3932",
-    "img": "https://storage.googleapis.com/mobile-discover/style.png"
+    "img": "https://storage.googleapis.com/mobile-storage/style.png"
   },
 
   {
     "cateogry": "WOTS",
     "label-color": "#f1dbd8",
-    "img": "https://storage.googleapis.com/mobile-discover/wots.png"
+    "img": "https://storage.googleapis.com/mobile-storage/wots.png"
   }
 ]
