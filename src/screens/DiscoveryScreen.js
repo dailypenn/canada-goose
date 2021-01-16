@@ -1,21 +1,10 @@
-import React, { useState } from 'react'
-import { useQuery } from '@apollo/client'
-import { StyleSheet, ScrollView, SafeAreaView, View } from 'react-native'
+import React from 'react'
+import { StyleSheet, SafeAreaView } from 'react-native'
 import { FlatGrid } from 'react-native-super-grid'
 import { TouchableOpacity } from 'react-native'
 
-import { ARTICLES_SEARCH, SECTIONS } from '../utils/constants'
-import {
-  SectionHeader,
-  SearchArticleList,
-  DiscoveryCell,
-  ActivityIndicator,
-  SearchBar
-} from '../components'
-import {
-  PARTIAL_NAVIGATE,
-  NAVIGATE_TO_ARTICLE_SCREEN
-} from '../utils/helperFunctions'
+import { SECTIONS } from '../utils/constants'
+import { DiscoveryCell, SearchBar } from '../components'
 
 const styles = StyleSheet.create({
   container: {
@@ -25,7 +14,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const DiscoveryView = ({ navigation, publicationState }) => {
+const DiscoveryView = ({ navigation }) => {
   const navigateToSectionScreen = (section, slug) => {
     navigation.navigate('Section', {
       sectionName: section,
@@ -57,18 +46,9 @@ const DiscoveryView = ({ navigation, publicationState }) => {
   )
 }
 
-export const DiscoveryScreen = ({ navigation, screenProps }) => {
-  // const [filter, setFilter] = useState('')
-
-  const publicationState = screenProps.state
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <SearchBar publication={publicationState} navigation={navigation} />
-      <DiscoveryView
-        navigation={navigation}
-        publicationState={publicationState}
-      />
-    </SafeAreaView>
-  )
-}
+export const DiscoveryScreen = ({ navigation }) => (
+  <SafeAreaView style={styles.container}>
+    <SearchBar navigation={navigation} />
+    <DiscoveryView navigation={navigation} />
+  </SafeAreaView>
+)

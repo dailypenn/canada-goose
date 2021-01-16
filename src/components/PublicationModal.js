@@ -1,57 +1,56 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Button, StyleSheet } from 'react-native'
-import * as Haptics from 'expo-haptics'
+import { connect } from 'react-redux'
+import { View, Text, StyleSheet } from 'react-native'
 import Modal from 'react-native-modal'
 import { Dimensions } from 'react-native'
-import { PublicationPrimaryColor } from '../utils/branding'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import * as Haptics from 'expo-haptics'
+
+import { GEOMETRIC_BOLD } from '../utils/fonts'
+import { PublicationPrimaryColor } from '../utils/branding'
 import { PublicationEnum } from '../utils/constants'
+import { switchPublication } from '../actions'
 
 const SCREEN_DIMENSIONS = Dimensions.get('screen')
 const PUBLICATIONS = [
   PublicationEnum.dp,
   PublicationEnum.street,
-  PublicationEnum.utb,
+  PublicationEnum.utb
 ]
 
-const PublicationOption = ({ publication, isCurrent }) => {
-  return (
-    <View
+const PublicationOption = ({ publication, isCurrent }) => (
+  <View
+    style={{
+      height: 70,
+      width: '100%',
+      backgroundColor: isCurrent ? PublicationPrimaryColor(publication) : null,
+      borderColor: isCurrent ? null : PublicationPrimaryColor(publication),
+      borderWidth: isCurrent ? null : 2,
+      borderRadius: 5,
+      marginBottom: 15,
+      justifyContent: 'center',
+      padding: 20
+    }}
+  >
+    <Text
       style={{
-        height: 70,
-        width: '100%',
-        backgroundColor: isCurrent
-          ? PublicationPrimaryColor(publication)
-          : null,
-        borderColor: isCurrent ? null : PublicationPrimaryColor(publication),
-        borderWidth: isCurrent ? null : 2,
-        borderRadius: 5,
-        marginBottom: 15,
-        justifyContent: 'center',
-        padding: 20,
+        textTransform: 'uppercase',
+        fontFamily: GEOMETRIC_BOLD,
+        fontSize: 16,
+        color: isCurrent ? 'white' : PublicationPrimaryColor(publication)
       }}
     >
-      <Text
-        style={{
-          textTransform: 'uppercase',
-          fontFamily: GEOMETRIC_BOLD,
-          fontSize: 16,
-          color: isCurrent ? 'white' : PublicationPrimaryColor(publication),
-        }}
-      >
-        {publication}
-      </Text>
-    </View>
-  )
-}
+      {publication}
+    </Text>
+  </View>
+)
 
-export const PublicationModal = ({ screenProps, navigation }) => {
-  const {
-    state: { currPublication, switchPublication },
-  } = screenProps
-
+const PublicationModalComp = ({
+  navigation,
+  publication,
+  dispatchSwitchPublication
+}) => {
   const [isVisible, updateVisibility] = useState(false)
 
   const toggleVisibility = () => {
@@ -69,7 +68,7 @@ export const PublicationModal = ({ screenProps, navigation }) => {
 
   const selectedPublication = pub => {
     console.log(pub)
-    if (pub != currPublication) switchPublication(pub)
+    if (pub != publication) dispatchSwitchPublication(pub)
     toggleVisibility()
   }
 
@@ -80,17 +79,17 @@ export const PublicationModal = ({ screenProps, navigation }) => {
       height: 5,
       alignSelf: 'center',
       borderRadius: 10,
-      marginBottom: 20,
+      marginBottom: 20
     },
     container: {
       margin: 0,
-      justifyContent: 'flex-end',
+      justifyContent: 'flex-end'
     },
     label: {
       fontFamily: GEOMETRIC_BOLD,
       fontSize: 20,
       color: '#444',
-      marginBottom: 10,
+      marginBottom: 10
     },
     view: {
       backgroundColor: 'white',
@@ -101,8 +100,8 @@ export const PublicationModal = ({ screenProps, navigation }) => {
       borderTopRightRadius: 10,
       bottom: -20,
       paddingTop: 10,
-      paddingHorizontal: 20,
-    },
+      paddingHorizontal: 20
+    }
   })
 
   const modalOptions = {
@@ -114,7 +113,7 @@ export const PublicationModal = ({ screenProps, navigation }) => {
     onSwipeComplete: toggleVisibility,
     onBackButtonPress: toggleVisibility,
     backdropOpacity: 0.85,
-    styles: styles.container,
+    styles: styles.container
   }
 
   return (
@@ -128,12 +127,12 @@ export const PublicationModal = ({ screenProps, navigation }) => {
         </Text>
         {PUBLICATIONS.map((el, index) => (
           <TouchableOpacity
-            activeOpacity={el == currPublication ? 0.9 : 0.7}
+            activeOpacity={el == publication ? 0.9 : 0.7}
             onPress={() => selectedPublication(el)}
           >
             <PublicationOption
               publication={el}
-              isCurrent={el == currPublication}
+              isCurrent={el == publication}
               id={index}
             />
           </TouchableOpacity>
@@ -142,3 +141,15 @@ export const PublicationModal = ({ screenProps, navigation }) => {
     </Modal>
   )
 }
+
+const mapStateToProps = ({ publication }) => ({ publication })
+
+const mapDispatchToProps = dispatch => ({
+  dispatchSwitchPublication: publication =>
+    dispatch(switchPublication(publication))
+})
+
+export const PublicationModal = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PublicationModalComp)

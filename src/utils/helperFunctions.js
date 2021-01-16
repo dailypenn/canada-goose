@@ -8,6 +8,7 @@ import {
   UTB_HOME_SECTIONS_TITLES,
   STREET_HOME_SECTIONS_TITLES,
 } from './constants'
+import { DP_HOME_PAGE_QUERY, STREET_HOME_PAGE_QUERY, UTB_HOME_PAGE_QUERY } from './queries'
 
 export const IMAGE_URL = (attachment_uuid, extension) =>
   `https://snworksceo.imgix.net/dpn/${attachment_uuid}.sized-1000x1000.${extension}?w=1000`
@@ -23,21 +24,31 @@ export const AUTHORS = authorArr => {
   return authorNames.join(', ')
 }
 
-export const PARTIAL_NAVIGATE = (navigation, publicationState, toScreen, f) => {
-  return article => f(navigation, toScreen, article, publicationState)
+export const PARTIAL_NAVIGATE = (navigation, toScreen, f) => {
+  return article => f(navigation, toScreen, article)
 }
 
 export const NAVIGATE_TO_ARTICLE_SCREEN = (
   navigation,
   toScreen,
-  article,
-  publicationState
+  article
 ) => {
-  navigation.navigate(toScreen, { article, publicationState })
+  navigation.navigate(toScreen, { article })
 }
 
 export const navigateToSectionScreen = section => {
   navigation.navigate('Article', { article, publicationState })
+}
+
+export const GET_HOME_QUERIES = publication => {
+  switch (publication) {
+    case PublicationEnum.dp:
+      return DP_HOME_PAGE_QUERY
+    case PublicationEnum.street:
+      return STREET_HOME_PAGE_QUERY
+    default:
+      return UTB_HOME_PAGE_QUERY
+  }
 }
 
 export const GET_HOME_SECTIONS = publication => {

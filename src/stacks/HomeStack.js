@@ -10,9 +10,10 @@ import {
   WebViewScreen
 } from '../screens'
 import { PublicationModal } from '../components'
+
 const Stack = createStackNavigator()
 
-export const HomeStack = ({ screenProps, navigation }) => {
+export const HomeStack = ({ navigation }) => {
   // Register long press to change screens
 
   // Haptic feedback when tab bar is pressed
@@ -26,7 +27,7 @@ export const HomeStack = ({ screenProps, navigation }) => {
 
   return (
     <>
-      <PublicationModal screenProps={screenProps} navigation={navigation} />
+      <PublicationModal navigation={navigation} />
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{

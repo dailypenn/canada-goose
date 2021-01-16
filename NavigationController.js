@@ -7,8 +7,6 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 
 import { HomeStack, DiscoveryStack, SettingsStack } from './src/stacks'
-import { PublicationEnum } from './src/utils/constants'
-import { ScreenWithDefaultParams } from './src/screens'
 import RootReducer from './src/reducers'
 
 const store = createStore(RootReducer)
@@ -16,14 +14,6 @@ const store = createStore(RootReducer)
 const Tab = createBottomTabNavigator()
 
 export const TabNavigationController = ({ navigation }) => {
-  const [currPublication, updateCurrPublication] = useState(PublicationEnum.dp)
-
-  const switchPublication = newPublication => {
-    if (newPublication != currPublication) {
-      updateCurrPublication(currPublication)
-    }
-  }
-
   // const bringUpActionSheet = () => {
   //   Animated.timing(bounceValue, {
   //     toValue: 1,
@@ -31,17 +21,12 @@ export const TabNavigationController = ({ navigation }) => {
   //   }).str
   // }
 
-  const CHILD_STATE = {
-    currPublication,
-    switchPublication
-  }
-
   return (
     <Provider store={store}>
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
-            tabBarIcon: ({ color, size }) => {
+            tabBarIcon: ({ color }) => {
               let iconName
 
               if (route.name === 'HomeStack') {
@@ -68,21 +53,15 @@ export const TabNavigationController = ({ navigation }) => {
         >
           <Tab.Screen
             name="HomeStack"
-            component={ScreenWithDefaultParams(HomeStack, {
-              state: CHILD_STATE
-            })}
+            component={HomeStack}
           />
           <Tab.Screen
             name="DiscoveryStack"
-            component={ScreenWithDefaultParams(DiscoveryStack, {
-              state: CHILD_STATE
-            })}
+            component={DiscoveryStack}
           />
           <Tab.Screen
             name="SettingsStack"
-            component={ScreenWithDefaultParams(SettingsStack, {
-              state: CHILD_STATE
-            })}
+            component={SettingsStack}
           />
         </Tab.Navigator>
       </NavigationContainer>

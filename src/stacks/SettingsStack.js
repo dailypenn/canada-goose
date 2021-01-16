@@ -6,20 +6,18 @@ import { createStackNavigator } from '@react-navigation/stack'
 import * as Haptics from 'expo-haptics'
 
 import {
-  SettingsScreen,
   AboutScreen,
   NotificationScreen,
   PrivacyScreen,
   ManageFeedScreen,
   WebViewScreen,
-  ScreenWithDefaultParams,
   SavedArticlesScreen,
-  ArticleScreen,
+  ArticleScreen
 } from '../screens'
 
 const Stack = createStackNavigator()
 
-export const SettingsStack = ({ screenProps, navigation }) => {
+export const SettingsStack = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', e => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
@@ -32,7 +30,7 @@ export const SettingsStack = ({ screenProps, navigation }) => {
     <Stack.Navigator
       initialRouteName="Settings"
       screenOptions={{
-        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleStyle: { fontWeight: 'bold' }
       }}
     >
       <Stack.Screen
@@ -73,7 +71,7 @@ export const SettingsStack = ({ screenProps, navigation }) => {
         options={({ route }) => ({
           title: '',
           animationEnabled: false,
-          headerBackTitleVisible: true,
+          headerBackTitleVisible: true
         })}
       />
     </Stack.Navigator>

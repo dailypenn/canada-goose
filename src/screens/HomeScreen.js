@@ -5,15 +5,15 @@ import {
   View,
   Text,
   RefreshControl,
-  SafeAreaView,
   AppState,
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
+import { useFocusEffect } from '@react-navigation/core'
 
-import { HOME_PAGE_QUERY } from '../utils/constants'
 import {
+  CustomHeader,
   SectionHeader,
   HeadlineArticle,
   HorizontalArticleCarousel,
@@ -26,9 +26,9 @@ import {
   NAVIGATE_TO_ARTICLE_SCREEN,
   GET_HOME_SECTIONS,
   GET_HOME_SECTION_NAME,
+  GET_HOME_QUERIES
 } from '../utils/helperFunctions'
 import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
-import { useFocusEffect } from '@react-navigation/core'
 
 const styles = StyleSheet.create({
   container: {
@@ -44,7 +44,7 @@ const HomeView = ({
   centerArticles,
   topArticles,
   navigation,
-  publicationState,
+  publication,
   defaultSections,
   loading,
   refetch,
@@ -59,10 +59,10 @@ const HomeView = ({
 
   const loadHomeSectionOrder = async () => {
     let order = await Storage.getItem(
-      GET_HOME_FEED_ORDER_KEY(publicationState.currPublication)
+      GET_HOME_FEED_ORDER_KEY(publication)
     )
     if (order == null) return
-    if (order == GET_HOME_SECTIONS(publicationState.currPublication)) return
+    if (order == GET_HOME_SECTIONS(publication)) return
 
     let newSections = []
     order.forEach(section => {
@@ -99,50 +99,47 @@ const HomeView = ({
             NAVIGATE_TO_ARTICLE_SCREEN(
               navigation,
               'HomeArticle',
-              centerArticles[0].article,
-              publicationState
+              centerArticles[0].article
             )
           }
         >
           <HeadlineArticle
             data={centerArticles[0]}
-            publication={publicationState.currPublication}
+            publication={publication}
           />
         </TouchableOpacity>
 
-        <HeaderLine publication={publicationState.currPublication} />
+        <HeaderLine publication={publication} />
         <SectionHeader
           title="Top Stories"
-          publication={publicationState.currPublication}
+          publication={publication}
         />
         <HorizontalArticleCarousel
           articles={topArticles}
           navigateToArticleScreen={PARTIAL_NAVIGATE(
             navigation,
-            publicationState,
             'HomeArticle',
             NAVIGATE_TO_ARTICLE_SCREEN
           )}
-          publication={publicationState.currPublication}
+          publication={publication}
         />
 
         {sections.map((el, i) => {
           const { name, articles } = el
           return (
             <View key={i}>
-              <HeaderLine publication={publicationState.currPublication} />
+              <HeaderLine publication={publication} />
               <SectionHeader
                 title={GET_HOME_SECTION_NAME(
-                  publicationState.currPublication,
+                  publication,
                   name
                 )}
-                publication={publicationState.currPublication}
+                publication={publication}
               />
               <ArticleList
                 articles={articles}
                 navigateToArticleScreen={PARTIAL_NAVIGATE(
                   navigation,
-                  publicationState,
                   'HomeArticle',
                   NAVIGATE_TO_ARTICLE_SCREEN
                 )}
@@ -152,7 +149,7 @@ const HomeView = ({
         })}
       </ScrollView>
       <CustomHeader
-        publicationState={publicationState}
+        publication={publication}
         contentOffset={offset}
       />
     </View>
@@ -160,13 +157,8 @@ const HomeView = ({
 }
 
 const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
-  // const publicationState = screenProps.state
   console.log(`current publication is ${publication}`)
   console.log(`current reorderHomeSection is ${reorderHomeSection}`)
-
-  const publicationState = {
-    currPublication: 'The Daily Pennsylvanian',
-  }
 
   const [lastActiveTime, setLastActiveTime] = useState(Date.now())
   const appState = useRef(AppState.currentState)
@@ -198,7 +190,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
     }
   }, [])
 
-  const { loading, error, data, refetch } = useQuery(HOME_PAGE_QUERY)
+  const { loading, error, data, refetch } = useQuery(GET_HOME_QUERIES(publication))
 
   useFocusEffect(
     useCallback(() => {
@@ -271,7 +263,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
       centerArticles={centerArticles}
       topArticles={topArticles}
       navigation={navigation}
-      publicationState={publicationState}
+      publication={publication}
       defaultSections={defaultSections}
       loading={loading}
       refetch={refetch}

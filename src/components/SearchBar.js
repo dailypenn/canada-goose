@@ -1,9 +1,4 @@
 import React, { useState, useRef } from 'react'
-
-import { SectionHeader } from './SectionHeader'
-import { SearchArticleList } from './ArticleList'
-import { ActivityIndicator } from './ActivityIndicator'
-
 import {
   SafeAreaView,
   Dimensions,
@@ -13,27 +8,57 @@ import {
   Text,
   TouchableHighlight,
   ScrollView,
-  Button,
+  Button
 } from 'react-native'
-
+import Animated, { Easing } from 'react-native-reanimated'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
 import { useQuery } from '@apollo/client'
+
+import { SectionHeader } from './SectionHeader'
+import { SearchArticleList } from './ArticleList'
+import { ActivityIndicator } from './ActivityIndicator'
 import { ARTICLES_SEARCH } from '../utils/constants'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN
 } from '../utils/helperFunctions'
-import { DISPLAY_SERIF_BLACK, GEOMETRIC_BOLD } from '../utils/fonts'
+import { GEOMETRIC_BOLD } from '../utils/fonts'
 
-import Animated, { Easing } from 'react-native-reanimated'
 const { Value, timing } = Animated
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 
-export const SearchBar = ({ navigation, publication }) => {
+const SearchView = ({ filter, navigation }) => {
+  const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
+    variables: { filter },
+    fetchPolicy: 'cache-and-network'
+  })
 
+  if (loading) return <ActivityIndicator />
+
+  const { searchArticles: results } = data
+
+  return (
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag"
+    >
+      <SectionHeader title="Sections" />
+      <SectionHeader title="Articles" />
+      <SearchArticleList
+        articles={results}
+        navigateToArticleScreen={PARTIAL_NAVIGATE(
+          navigation,
+          'SectionArticle',
+          NAVIGATE_TO_ARTICLE_SCREEN
+        )}
+      />
+    </ScrollView>
+  )
+}
+
+export const SearchBar = ({ navigation }) => {
   const [focused, setFocused] = useState(false)
   const [keyword, setKeyword] = useState('')
 
@@ -46,7 +71,6 @@ export const SearchBar = ({ navigation, publication }) => {
   const input = useRef()
 
   const _onFocus = () => {
-
     const input_x_pos_anim = {
       duration: 200,
       toValue: 0,
@@ -87,7 +111,6 @@ export const SearchBar = ({ navigation, publication }) => {
   }
 
   const _onBlur = () => {
-
     const input_x_pos_anim = {
       duration: 200,
       toValue: width,
@@ -137,14 +160,17 @@ export const SearchBar = ({ navigation, publication }) => {
             </Animated.View>
             <TouchableHighlight
               activeOpacity={1}
-              underlayColor={"#ccd0d5"}
+              underlayColor={'#ccd0d5'}
               onPress={_onFocus}
               style={styles.search_icon_box}
             >
               <Ionicons name="search" size={20} color="#000" />
             </TouchableHighlight>
             <Animated.View
-              style={[styles.input_box, { transform: [{ translateX: input_x_pos }] }]}
+              style={[
+                styles.input_box,
+                { transform: [{ translateX: input_x_pos }] }
+              ]}
             >
               {/* <Animated.View style={{ opacity: cancel_opacity }}>
                 <TouchableHighlight
@@ -161,37 +187,39 @@ export const SearchBar = ({ navigation, publication }) => {
                 placeholder="Search"
                 clearButtonMode="always"
                 value={keyword}
-                onChangeText={(value) => setKeyword(value)}
+                onChangeText={value => setKeyword(value)}
                 style={styles.input}
                 returnKeyType="search"
               />
               <Animated.View style={{ opacity: cancel_opacity }}>
-                <Button
-                  title="Cancel"
-                  onPress={_onBlur}
-                  color="#333"
-                />
+                <Button title="Cancel" onPress={_onBlur} color="#333" />
               </Animated.View>
             </Animated.View>
           </View>
         </View>
       </SafeAreaView>
 
-      <Animated.View style={[styles.content, { opacity: content_opacity, transform: [{ translateY: content_y_pos }] }]}>
+      <Animated.View
+        style={[
+          styles.content,
+          {
+            opacity: content_opacity,
+            transform: [{ translateY: content_y_pos }]
+          }
+        ]}
+      >
         <SafeAreaView style={styles.content_safe_area}>
           <View style={styles.content_inner}>
             <View style={styles.separator} />
-            {
-              keyword === ''
-                ?
-                <View style={styles.image_placeholder_container}>
-                  <Text style={styles.image_placeholder_text}>
-                    Try searching for articles or sections
-                  </Text>
-                </View>
-                :
-                <SearchView filter={keyword} publication={publication} navigation={navigation} />
-            }
+            {keyword === '' ? (
+              <View style={styles.image_placeholder_container}>
+                <Text style={styles.image_placeholder_text}>
+                  Try searching for articles or sections
+                </Text>
+              </View>
+            ) : (
+              <SearchView filter={keyword} navigation={navigation} />
+            )}
           </View>
         </SafeAreaView>
       </Animated.View>
@@ -199,49 +227,19 @@ export const SearchBar = ({ navigation, publication }) => {
   )
 }
 
-const SearchView = ({ filter, publication, navigation }) => {
-  const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
-    variables: { filter },
-    fetchPolicy: 'cache-and-network'
-  })
-
-  if (loading) return <ActivityIndicator />
-
-  const { searchArticles: results } = data
-
-  return (
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-      keyboardDismissMode="on-drag"
-    >
-      <SectionHeader title="Sections" />
-      <SectionHeader title="Articles" />
-      <SearchArticleList
-        articles={results}
-        navigateToArticleScreen={PARTIAL_NAVIGATE(
-          navigation,
-          publication,
-          'SectionArticle',
-          NAVIGATE_TO_ARTICLE_SCREEN
-        )}
-      />
-    </ScrollView>
-  )
-}
-
 const styles = StyleSheet.create({
   title: {
     fontFamily: GEOMETRIC_BOLD,
     fontSize: 28,
-    lineHeight: 40,
+    lineHeight: 40
   },
   header_safe_area: {
-    zIndex: 1000,
+    zIndex: 1000
     //marginTop: 5,
   },
   header: {
     height: 50,
-    paddingHorizontal: 16,
+    paddingHorizontal: 16
   },
   header_inner: {
     flex: 1,
@@ -285,7 +283,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e4e6eb',
     borderRadius: 16,
     paddingHorizontal: 16,
-    fontSize: 18,
+    fontSize: 18
   },
   content: {
     width: width,
@@ -301,7 +299,7 @@ const styles = StyleSheet.create({
   },
   content_inner: {
     flex: 1,
-    paddingTop: 125,
+    paddingTop: 125
   },
   separator: {
     marginTop: 5,

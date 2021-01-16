@@ -3,6 +3,7 @@ import { Text, View, useWindowDimensions, Button } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import HTML from 'react-native-render-html'
 import { useQuery } from '@apollo/client'
+import { connect } from 'react-redux'
 
 import { PictureHeadline } from '../components'
 import { IMAGE_URL, TIME_AGO, AUTHORS } from '../utils/helperFunctions'
@@ -11,8 +12,8 @@ import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { Alert } from 'react-native'
 
-export const ArticleScreen = ({ navigation, route }) => {
-  const { article, publicationState } = route.params
+const ArticleScreenComp = ({ navigation, route }) => {
+  const { article } = route.params
 
   if (!article) {
     // TODO: Check that article is already fetched
@@ -113,7 +114,7 @@ export const ArticleScreen = ({ navigation, route }) => {
   )
 }
 
-ArticleScreen.navigationOptions = ({ route }) => ({
+ArticleScreenComp.navigationOptions = ({ route }) => ({
   title: '',
   animationEnabled: true,
   headerRight: () => (
@@ -125,3 +126,7 @@ ArticleScreen.navigationOptions = ({ route }) => ({
     />
   ),
 })
+
+const mapStateToProps = ({ publication }) => ({ publication })
+
+export const ArticleScreen = connect(mapStateToProps)(ArticleScreenComp)

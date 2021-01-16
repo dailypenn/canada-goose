@@ -1,3 +1,135 @@
+import { gql } from '@apollo/client'
+
+export const DP_HOME_PAGE_QUERY = gql`
+  query {
+    centerpiece: articles(first: 1, section: "centerpiece") {
+      hasNextPage
+      edges {
+        article {
+          slug
+          headline
+          abstract
+          content
+          published_at
+          authors {
+            name
+          }
+          dominantMedia {
+            attachment_uuid
+            extension
+          }
+        }
+        cursor
+      }
+    }
+
+    top: articles(first: 5, section: "top") {
+      hasNextPage
+      edges {
+        article {
+          slug
+          headline
+          abstract
+          content
+          published_at
+          authors {
+            name
+          }
+          dominantMedia {
+            attachment_uuid
+            extension
+          }
+        }
+        cursor
+      }
+    }
+
+    news: articles(first: 3, section: "app-front-news") {
+      hasNextPage
+      edges {
+        article {
+          slug
+          headline
+          abstract
+          content
+          published_at
+          authors {
+            name
+          }
+          dominantMedia {
+            attachment_uuid
+            extension
+          }
+        }
+        cursor
+      }
+    }
+
+    opinion: articles(first: 3, section: "news") {
+      hasNextPage
+      edges {
+        article {
+          slug
+          headline
+          abstract
+          content
+          published_at
+          authors {
+            name
+          }
+          dominantMedia {
+            attachment_uuid
+            extension
+          }
+        }
+        cursor
+      }
+    }
+
+    sports: articles(first: 3, section: "news") {
+      hasNextPage
+      edges {
+        article {
+          slug
+          headline
+          abstract
+          content
+          published_at
+          authors {
+            name
+          }
+          dominantMedia {
+            attachment_uuid
+            extension
+          }
+        }
+        cursor
+      }
+    }
+
+    multimedia: articles(first: 3, section: "news") {
+      hasNextPage
+      edges {
+        article {
+          slug
+          headline
+          abstract
+          content
+          published_at
+          authors {
+            name
+          }
+          dominantMedia {
+            attachment_uuid
+            extension
+          }
+        }
+        cursor
+      }
+    }
+  }
+`
+
 export const STREET_HOME_PAGE_QUERY = gql`
   query {
     centerpiece: articles(first: 1, section: "featured", publication: "street") {

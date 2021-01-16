@@ -1,6 +1,6 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { StyleSheet, Text, ScrollView, RefreshControl } from 'react-native'
-import { useQuery, NetworkStatus } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 
 import { ActivityIndicator, ArticleList } from '../components'
 import { SECTIONS_QUERY } from '../utils/constants'
@@ -17,8 +17,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export const SectionScreen = ({ route, navigation, screenProps }) => {
-  const publication = screenProps.state
+export const SectionScreen = ({ route, navigation }) => {
   const { slug } = route.params
 
   const { loading, error, data, refetch } = useQuery(
@@ -62,7 +61,6 @@ export const SectionScreen = ({ route, navigation, screenProps }) => {
         articles={articles}
         navigateToArticleScreen={PARTIAL_NAVIGATE(
           navigation,
-          publication,
           'SectionArticle',
           NAVIGATE_TO_ARTICLE_SCREEN
         )}

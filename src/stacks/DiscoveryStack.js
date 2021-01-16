@@ -4,45 +4,38 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import {
-  ArticleScreen,
-  DiscoveryScreen,
-  ScreenWithDefaultParams,
-  SectionScreen,
-} from '../screens'
+import { ArticleScreen, DiscoveryScreen, SectionScreen } from '../screens'
 import { NavigationContainer } from '@react-navigation/native'
 
 const Stack = createStackNavigator()
 
-export const DiscoveryStack = ({ screenProps }) => (
-  <NavigationContainer independent={true}>
-    <Stack.Navigator
-      initialRouteName="Discovery"
-      screenOptions={{
-        headerStyle: { backgroundColor: '#fff' },
-        headerTintColor: '#000',
-        headerTitleStyle: { fontWeight: 'bold' },
-        headerBackTitleVisible: false,
-      }}
-    >
-      <Stack.Screen
-        name="Discovery"
-        component={ScreenWithDefaultParams(DiscoveryScreen, screenProps)}
-        options={{ title: 'Discover', headerShown: false }}
-      />
-      <Stack.Screen
-        name="Section"
-        component={ScreenWithDefaultParams(SectionScreen, screenProps)}
-        options={({ route }) => ({
-          title: route.params.sectionName,
-          animationEnabled: true,
-        })}
-      />
-      <Stack.Screen
-        name="SectionArticle"
-        component={ArticleScreen}
-        options={ArticleScreen.navigationOptions}
-      />
-    </Stack.Navigator>
-  </NavigationContainer>
+export const DiscoveryStack = () => (
+  <Stack.Navigator
+    initialRouteName="Discovery"
+    screenOptions={{
+      headerStyle: { backgroundColor: '#fff' },
+      headerTintColor: '#000',
+      headerTitleStyle: { fontWeight: 'bold' },
+      headerBackTitleVisible: false
+    }}
+  >
+    <Stack.Screen
+      name="Discovery"
+      component={DiscoveryScreen}
+      options={{ title: 'Discover', headerShown: false }}
+    />
+    <Stack.Screen
+      name="Section"
+      component={SectionScreen}
+      options={({ route }) => ({
+        title: route.params.sectionName,
+        animationEnabled: true
+      })}
+    />
+    <Stack.Screen
+      name="SectionArticle"
+      component={ArticleScreen}
+      options={ArticleScreen.navigationOptions}
+    />
+  </Stack.Navigator>
 )
