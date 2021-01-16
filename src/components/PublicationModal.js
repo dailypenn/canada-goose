@@ -43,17 +43,16 @@ const PublicationOption = ({ publication, isCurrent }) => {
       lineHeight: 14,
       color: TEXT_COLOR,
     },
+    imagePlaceholder: {
+      backgroundColor: TEXT_COLOR,
+      aspectRatio: 1,
+      marginRight: 10,
+      borderRadius: 10,
+    },
   })
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          backgroundColor: TEXT_COLOR,
-          aspectRatio: 1,
-          marginRight: 10,
-          borderRadius: 10,
-        }}
-      />
+      <View style={styles.imagePlaceholder} />
       <View>
         <Text style={styles.publicationTitle}>{publication}</Text>
         <Text style={styles.subtitle}>{isCurrent ? 'Selected' : 'Switch'}</Text>
