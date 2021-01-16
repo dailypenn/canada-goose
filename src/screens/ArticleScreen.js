@@ -91,9 +91,16 @@ const ArticleScreenComp = ({ navigation, route, publication }) => {
       </View>
       <View style={{ padding: 20 }}>
         <HTML
-          onLinkPress={(e, href, _) =>
-            navigation.navigate('ArticleBrowser', { link: href })
-          }
+          onLinkPress={(e, href, _) => {
+            // TODO: Find a better way to do this
+            const PARSED_URL = href.split('thedp.com/article')
+            if (PARSED_URL.length == 2) {
+              navigation.navigate('', {
+                article: { slug: PARSED_URL[1] },
+                // TODO: Fix, for some reason this is not working
+              })
+            } else navigation.navigate('ArticleBrowser', { link: href })
+          }}
           source={{ html: article.content }}
           contentWidth={useWindowDimensions().width}
           tagsStyles={{
