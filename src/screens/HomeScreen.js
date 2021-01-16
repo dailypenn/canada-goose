@@ -12,16 +12,8 @@ import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
 
+import { HOME_PAGE_QUERY } from '../utils/constants'
 import {
-  HOME_PAGE_QUERY,
-  // DP_HOME_SECTIONS,
-  FIVE_MUNITES,
-  PublicationEnum,
-  STREET_HOME_SECTIONS,
-  UTB_HOME_SECTIONS,
-} from '../utils/constants'
-import {
-  CustomHeader,
   SectionHeader,
   HeadlineArticle,
   HorizontalArticleCarousel,
@@ -56,6 +48,7 @@ const HomeView = ({
   defaultSections,
   loading,
   refetch,
+  reorderHomeSection,
 }) => {
   const [offset, setOffset] = useState(0)
   const [sections, setSections] = useState(defaultSections)
@@ -85,7 +78,7 @@ const HomeView = ({
 
   useEffect(() => {
     loadHomeSectionOrder()
-  }, [])
+  }, [reorderHomeSection])
 
   const onRefresh = useCallback(() => {
     refetch()
@@ -282,6 +275,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
       defaultSections={defaultSections}
       loading={loading}
       refetch={refetch}
+      reorderHomeSection={reorderHomeSection}
     />
   )
 }

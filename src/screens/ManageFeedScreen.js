@@ -82,7 +82,7 @@ class ManageFeedScreenComp extends Component {
     }
     this.newOrder = null
     this.instructions =
-      'Press down and drag the sections to the order you would like to see them appear on the home page, then save and restart the app'
+      'Press down and drag the sections to the order you would like to see them appear on the home page'
   }
 
   componentDidMount() {
