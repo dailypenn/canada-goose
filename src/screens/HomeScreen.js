@@ -151,10 +151,10 @@ const HomeView = ({
           )
         })}
       </ScrollView>
-      {/* <CustomHeader
+      <CustomHeader
         publicationState={publicationState}
         contentOffset={offset}
-      /> */}
+      />
     </View>
   )
 }

@@ -80,13 +80,13 @@ export const HorizontalArticleCell = ({
             </Text>
           </View>
         </View>
-        <View
+        {/* <View
           style={{
             borderBottomColor: '#CCC',
             borderBottomWidth: 1,
             marginHorizontal: 20,
           }}
-        />
+        /> */}
       </View>
     )
   } else {
@@ -105,13 +105,13 @@ export const HorizontalArticleCell = ({
             <Image style={styles.image} source={{ uri: imageURL }} />
           </View>
         </View>
-        <View
+        {/* <View
           style={{
             borderBottomColor: '#CCC',
             borderBottomWidth: 1,
             marginHorizontal: 20,
           }}
-        />
+        /> */}
       </View>
     )
   }
