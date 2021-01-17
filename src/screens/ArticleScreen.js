@@ -80,14 +80,14 @@ const ArticleScreenComp = ({ navigation, route, publication }) => {
             fontSize: 16,
           }}
         >{`By: ${AUTHORS(article.authors)}`}</Text>
-        <Text
+        {/* <Text
           style={{
             fontFamily: GEOMETRIC_BOLD,
             fontSize: 16,
           }}
         >
           {'Photo Credit: ' + photographer}
-        </Text>
+        </Text> */}
       </View>
       <View style={{ padding: 20 }}>
         <HTML
