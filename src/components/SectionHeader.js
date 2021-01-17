@@ -20,15 +20,15 @@ const styles = StyleSheet.create({
   },
 })
 
-const titleStyle = publication => {
-  return {
-    ...{ color: PublicationPrimaryColor(publication) },
-    ...styles.title,
-  }
-}
+// const titleStyle = publication => {
+//   return {
+//     ...{ color: PublicationPrimaryColor(publication) },
+//     ...styles.title,
+//   }
+// }
 
-export const SectionHeader = ({ title, publication }) => (
+export const SectionHeader = ({ title }) => (
   <View style={styles.view}>
-    <Text style={titleStyle(publication)}>{title}</Text>
+    <Text style={styles.title}>{title}</Text>
   </View>
 )

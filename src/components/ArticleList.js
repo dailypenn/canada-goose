@@ -75,3 +75,42 @@ export const ArticleList = ({
     })}
   </View>
 )
+
+export const SearchArticleList = ({ articles, navigateToArticleScreen, publication }) => (
+  <View style={{ paddingLeft: 0 }}>
+    {articles.map(el => {
+      const {
+        headline,
+        published_at,
+        dominantMedia: { attachment_uuid, extension },
+        authors
+      } = el
+      return (
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => navigateToArticleScreen(el)}
+          key={headline}
+        >
+          <HorizontalArticleCell
+            style={{
+              borderWidth: 4,
+              borderColor: '#0F0',
+              marginVertical: 10
+            }}
+            title={headline}
+            imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
+            timeAgo={published_at}
+            authors={AUTHORS(authors)}
+          />
+          <View
+            style={{
+              borderBottomColor: '#CCC',
+              borderBottomWidth: 1,
+              marginHorizontal: 20
+            }}
+          />
+        </TouchableOpacity>
+      )
+    })}
+  </View>
+)

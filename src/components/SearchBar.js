@@ -22,7 +22,7 @@ import {
   NAVIGATE_TO_ARTICLE_SCREEN,
 } from '../utils/helperFunctions'
 import { GEOMETRIC_BOLD } from '../utils/fonts'
-import { ArticleList } from './ArticleList'
+import { SearchArticleList } from './ArticleList'
 
 const { Value, timing } = Animated
 
@@ -46,7 +46,7 @@ const SearchView = ({ filter, navigation, publication }) => {
     >
       <SectionHeader title="Sections" />
       <SectionHeader title="Articles" />
-      <ArticleList
+      <SearchArticleList
         articles={results}
         publication={publication}
         navigateToArticleScreen={PARTIAL_NAVIGATE(
@@ -109,6 +109,7 @@ export const SearchBar = ({ navigation, publication }) => {
     input.current.focus()
 
     setFocused(true)
+    setKeyword('')
   }
 
   const _onBlur = () => {
@@ -191,6 +192,8 @@ export const SearchBar = ({ navigation, publication }) => {
                 onChangeText={value => setKeyword(value)}
                 style={styles.input}
                 returnKeyType="search"
+                autoCapitalize='none'
+                autoCorrect={false}
               />
               <Animated.View style={{ opacity: cancel_opacity }}>
                 <Button title="Cancel" onPress={_onBlur} color="#333" />
