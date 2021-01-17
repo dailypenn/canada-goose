@@ -86,3 +86,11 @@ export const GET_HOME_SECTION_NAME = (publication, section) => {
       return STREET_HOME_SECTIONS_TITLES[section]
   }
 }
+
+export const parseAbstract = abstract => {
+  if (!abstract) {
+    return ''
+  }
+
+  return abstract.split('<p>')[1].split('</p>')[0]
+}

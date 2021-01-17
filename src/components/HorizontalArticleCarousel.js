@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, ScrollView, View, Dimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { IMAGE_URL, TIME_AGO } from '../utils/helperFunctions'
+import { IMAGE_URL } from '../utils/helperFunctions'
 import VerticalArticleCard from './VerticalArticleCard'
 
 const { width } = Dimensions.get('window')
@@ -12,14 +12,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
+    paddingHorizontal: 10
+  }
 })
 
 export const HorizontalArticleCarousel = ({
   articles,
   navigateToArticleScreen,
-  publication,
+  publication
 }) => {
   return (
     <ScrollView
@@ -32,7 +32,7 @@ export const HorizontalArticleCarousel = ({
         width: `${90 * articles.length}%`,
         paddingHorizontal: 10,
         paddingTop: 10,
-        paddingBottom: 35,
+        paddingBottom: 35
       }}
       showsHorizontalScrollIndicator={false}
       scrollEventThrottle={100}
@@ -40,22 +40,20 @@ export const HorizontalArticleCarousel = ({
     >
       {articles.map((el, i) => {
         const {
-          article: {
-            headline,
-            published_at,
-            dominantMedia: { attachment_uuid, extension },
-            tag
-          },
+          headline,
+          published_at,
+          dominantMedia: { attachment_uuid, extension },
+          tag
         } = el
         return (
           <View style={styles.cardContainerView} key={i}>
             <TouchableOpacity
               activeOpacity={1}
-              onPress={() => navigateToArticleScreen(el.article)}
+              onPress={() => navigateToArticleScreen(el)}
             >
               <VerticalArticleCard
                 category={tag}
-                time={TIME_AGO(published_at)}
+                time={published_at}
                 title={headline}
                 imageUrl={IMAGE_URL(attachment_uuid, extension, publication)}
                 publication={publication}

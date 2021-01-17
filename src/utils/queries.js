@@ -2,389 +2,284 @@ import { gql } from '@apollo/client'
 
 export const DP_HOME_PAGE_QUERY = gql`
   query {
-    centerpiece: articles(first: 1, section: "centerpiece") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    centerpiece: homeArticles(first: 1, section: "centerpiece") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    top: articles(first: 5, section: "top") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    top: homeArticles(first: 5, section: "top") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    news: articles(first: 3, section: "app-front-news") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    news: homeArticles(first: 3, section: "app-front-news") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    opinion: articles(first: 3, section: "news") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    opinion: homeArticles(first: 3, section: "app-front-opinion") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    sports: articles(first: 3, section: "news") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    sports: homeArticles(first: 3, section: "app-front-sports") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    multimedia: articles(first: 3, section: "news") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    multimedia: homeArticles(first: 3, section: "app-front-multimedia") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
   }
 `
 
 export const STREET_HOME_PAGE_QUERY = gql`
   query {
-    centerpiece: articles(first: 1, section: "featured", publication: "street") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    centerpiece: homeArticles(first: 1, section: "featured", publication: "street") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    top: articles(first: 5, section: "top", publication: "street") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    top: homeArticles(first: 5, section: "top", publication: "street") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    focus: articles(first: 3, section: "focus", publication: "street") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    focus: homeArticles(first: 3, section: "focus", publication: "street") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    features: articles(first: 3, section: "features", publication: "street") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    features: homeArticles(first: 3, section: "features", publication: "street") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    ego: articles(first: 3, section: "ego", publication: "street") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    ego: homeArticles(first: 3, section: "ego", publication: "street") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    style: articles(first: 3, section: "style", publication: "street") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    style: homeArticles(first: 3, section: "style", publication: "street") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
   }
 `
 
-
-
-
 export const UTB_HOME_PAGE_QUERY = gql`
   query {
-    centerpiece: articles(first: 1, section: "centerpiece", publication: "utb") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    centerpiece: homeArticles(first: 1, section: "centerpiece", publication: "utb") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    top: articles(first: 5, section: "top", publication: "utb") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    top: homeArticles(first: 5, section: "top", publication: "utb") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    interactive: articles(first: 3, section: "choose-your-own-adventure", publication: "utb") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    interactive: homeArticles(first: 3, section: "choose-your-own-adventure", publication: "utb") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    news: articles(first: 3, section: "news", publication: "utb") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    news: homeArticles(first: 3, section: "news", publication: "utb") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
 
-    opinion: articles(first: 3, section: "news", publication: "utb") {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-          tag
-        }
-        cursor
+    opinion: homeArticles(first: 3, section: "opinion", publication: "utb") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
       }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
     }
   }
 `

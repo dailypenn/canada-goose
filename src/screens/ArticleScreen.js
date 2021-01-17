@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/client'
 import { connect } from 'react-redux'
 
 import { PictureHeadline } from '../components'
-import { IMAGE_URL, TIME_AGO, AUTHORS } from '../utils/helperFunctions'
+import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
 import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
@@ -59,13 +59,13 @@ const ArticleScreenComp = ({ navigation, route, publication }) => {
     <ScrollView>
       <PictureHeadline
         headline={article.headline}
-        time={TIME_AGO(article.published_at)}
+        time={article.published_at}
         imageUrl={IMAGE_URL(
           article.dominantMedia.attachment_uuid,
           article.dominantMedia.extension,
           publication
         )}
-        category="NEWS"
+        category={article.tag}
         publication={publication}
       />
       <View
@@ -80,14 +80,14 @@ const ArticleScreenComp = ({ navigation, route, publication }) => {
             fontSize: 16,
           }}
         >{`By: ${AUTHORS(article.authors)}`}</Text>
-        <Text
+        {/* <Text
           style={{
             fontFamily: GEOMETRIC_BOLD,
             fontSize: 16,
           }}
         >
           {'Photo Credit: ' + photographer}
-        </Text>
+        </Text> */}
       </View>
       <View style={{ padding: 20 }}>
         <HTML

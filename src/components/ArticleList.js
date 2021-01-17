@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, TouchableOpacity } from 'react-native'
 
-import { IMAGE_URL, TIME_AGO, AUTHORS } from '../utils/helperFunctions'
+import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
 import { HorizontalArticleCell } from './HorizontalArticleCell'
 import { PrimaryHorizontalArticleCell } from './PrimaryHorizontalArticleCell'
 
@@ -13,13 +13,11 @@ export const ArticleList = ({
   <View style={{ marginBottom: 5 }}>
     {articles.map((el, i) => {
       const {
-        article: {
-          headline,
-          published_at,
-          dominantMedia: { attachment_uuid, extension },
-          authors,
-          abstract
-        }
+        headline,
+        published_at,
+        dominantMedia: { attachment_uuid, extension },
+        authors,
+        abstract
       } = el
       const articlesLength = articles.length
       if (i == 0) {
@@ -27,7 +25,7 @@ export const ArticleList = ({
           <TouchableOpacity
             key={i}
             activeOpacity={1}
-            onPress={() => navigateToArticleScreen(el.article)}
+            onPress={() => navigateToArticleScreen(el)}
           >
             <PrimaryHorizontalArticleCell
               title={headline}
@@ -41,12 +39,12 @@ export const ArticleList = ({
           <TouchableOpacity
             key={i}
             activeOpacity={1}
-            onPress={() => navigateToArticleScreen(el.article)}
+            onPress={() => navigateToArticleScreen(el)}
           >
             <HorizontalArticleCell
               title={headline}
               imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
-              timeAgo={TIME_AGO(published_at)}
+              timeAgo={published_at}
               authors={AUTHORS(authors)}
             />
           </TouchableOpacity>
@@ -56,12 +54,12 @@ export const ArticleList = ({
           <TouchableOpacity
             key={i}
             activeOpacity={1}
-            onPress={() => navigateToArticleScreen(el.article)}
+            onPress={() => navigateToArticleScreen(el)}
           >
             <HorizontalArticleCell
               title={headline}
               imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
-              timeAgo={TIME_AGO(published_at)}
+              timeAgo={published_at}
               authors={AUTHORS(authors)}
             />
             <View
@@ -101,7 +99,7 @@ export const SearchArticleList = ({ articles, navigateToArticleScreen }) => (
             }}
             title={headline}
             imageURL={IMAGE_URL(attachment_uuid, extension)}
-            timeAgo={TIME_AGO(published_at)}
+            timeAgo={published_at}
             authors={AUTHORS(authors)}
           />
           <View
