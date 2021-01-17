@@ -2,7 +2,7 @@ import { View } from 'react-native'
 import { Tagline } from './Tagline'
 import React from 'react'
 import { PictureHeadline } from './PictureHeadline'
-import { IMAGE_URL, TIME_AGO } from '../utils/helperFunctions'
+import { IMAGE_URL } from '../utils/helperFunctions'
 
 export const HeadlineArticle = ({ data, publication }) => {
   // console.log(publication)
@@ -23,7 +23,7 @@ export const HeadlineArticle = ({ data, publication }) => {
     <View>
       <PictureHeadline
         headline={headline}
-        time={TIME_AGO(published_at)}
+        time={published_at}
         imageUrl={IMAGE_URL(attachment_uuid, extension, publication)}
         category={tag}
         publication={publication}

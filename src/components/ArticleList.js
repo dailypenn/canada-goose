@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, TouchableOpacity } from 'react-native'
 
-import { IMAGE_URL, TIME_AGO, AUTHORS } from '../utils/helperFunctions'
+import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
 import { HorizontalArticleCell } from './HorizontalArticleCell'
 import { PrimaryHorizontalArticleCell } from './PrimaryHorizontalArticleCell'
 
@@ -46,7 +46,7 @@ export const ArticleList = ({
             <HorizontalArticleCell
               title={headline}
               imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
-              timeAgo={TIME_AGO(published_at)}
+              timeAgo={published_at}
               authors={AUTHORS(authors)}
             />
           </TouchableOpacity>
@@ -61,7 +61,7 @@ export const ArticleList = ({
             <HorizontalArticleCell
               title={headline}
               imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
-              timeAgo={TIME_AGO(published_at)}
+              timeAgo={published_at}
               authors={AUTHORS(authors)}
             />
             <View
@@ -101,7 +101,7 @@ export const SearchArticleList = ({ articles, navigateToArticleScreen }) => (
             }}
             title={headline}
             imageURL={IMAGE_URL(attachment_uuid, extension)}
-            timeAgo={TIME_AGO(published_at)}
+            timeAgo={published_at}
             authors={AUTHORS(authors)}
           />
           <View
