@@ -248,6 +248,7 @@ const PublicationModalComp = ({
               activeOpacity={0.7}
               onPress={() => selectedPublication(el)}
               disabled={currentlySwiping}
+              key={index}
             >
               <PublicationOption
                 publication={el}
