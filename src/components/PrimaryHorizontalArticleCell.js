@@ -6,6 +6,7 @@ import {
   GEOMETRIC_REGULAR,
   BODY_SERIF
 } from '../utils/fonts'
+import { parseAbstract } from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   title: {
@@ -36,7 +37,8 @@ const styles = StyleSheet.create({
 })
 
 export const PrimaryHorizontalArticleCell = ({ imageURL, title, abstract }) => {
-  var splitAbstract = abstract.split('<p>')[1].split('</p>')[0]
+  const parsedAbstract = parseAbstract(abstract)
+
   if (imageURL == "https://snworksceo.imgix.net/dpn/null.sized-1000x1000.null?w=1000" || imageURL == "https://snworksceo.imgix.net/dpn/.sized-1000x1000.?w=1000") {
     return (
       <View>
@@ -44,7 +46,7 @@ export const PrimaryHorizontalArticleCell = ({ imageURL, title, abstract }) => {
           <Text style={styles.title} numberOfLines={5}>
             {title}
           </Text>
-          <Text style={styles.abstract}>{splitAbstract}</Text>
+          <Text style={styles.abstract}>{parsedAbstract}</Text>
         </View>
         <View
           style={{
@@ -63,7 +65,7 @@ export const PrimaryHorizontalArticleCell = ({ imageURL, title, abstract }) => {
           <Text style={styles.title} numberOfLines={5}>
             {title}
           </Text>
-          <Text style={styles.abstract}>{splitAbstract}</Text>
+          <Text style={styles.abstract}>{parsedAbstract}</Text>
         </View>
         <View
           style={{

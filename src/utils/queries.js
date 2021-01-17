@@ -266,7 +266,7 @@ export const UTB_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    opinion: homeArticles(first: 3, section: "news", publication: "utb") {
+    opinion: homeArticles(first: 3, section: "opinion", publication: "utb") {
       slug
       headline
       abstract

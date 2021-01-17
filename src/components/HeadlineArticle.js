@@ -1,8 +1,9 @@
-import { View } from 'react-native'
-import { Tagline } from './Tagline'
 import React from 'react'
+import { View } from 'react-native'
+
+import { Tagline } from './Tagline'
 import { PictureHeadline } from './PictureHeadline'
-import { IMAGE_URL } from '../utils/helperFunctions'
+import { IMAGE_URL, parseAbstract } from '../utils/helperFunctions'
 
 export const HeadlineArticle = ({ data, publication }) => {
   // console.log(publication)
@@ -14,8 +15,10 @@ export const HeadlineArticle = ({ data, publication }) => {
     tag
   } = data
 
+  console.log(headline)
+
   // TODO: CLEAN UP -- A LOT
-  const splitAbstract = abstract.split('<p>')[1].split('</p>')[0]
+  const parsedAbstract = parseAbstract(abstract)
 
   return (
     <View>
@@ -26,7 +29,7 @@ export const HeadlineArticle = ({ data, publication }) => {
         category={tag}
         publication={publication}
       />
-      <Tagline tagline={splitAbstract} publication={publication} />
+      <Tagline tagline={parsedAbstract} publication={publication} />
     </View>
   )
 }
