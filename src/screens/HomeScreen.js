@@ -65,8 +65,8 @@ const HomeView = ({
     let order = await Storage.getItem(
       GET_HOME_FEED_ORDER_KEY(publication)
     )
-    if (order == null) return
-    if (order == GET_HOME_SECTIONS(publication)) return
+    if (order == null) return defaultSections
+    if (order == GET_HOME_SECTIONS(publication)) return defaultSections
 
     let newSections = []
     order.forEach(section => {
@@ -77,8 +77,12 @@ const HomeView = ({
       })
     })
 
-    setSections(newSections)
+    return newSections
   }
+
+  // const sections = await loadHomeSectionOrder()
+
+  // console.log(sections.length)
 
   // useEffect(() => {
   //   loadHomeSectionOrder()
@@ -162,10 +166,9 @@ const HomeView = ({
 }
 
 const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
-  console.log(`current publication is ${publication}`)
   console.log(`current reorderHomeSection is ${reorderHomeSection}`)
 
-  const [lastActiveTime, setLastActiveTime] = useState(Date.now())
+  // const [lastActiveTime, setLastActiveTime] = useState(Date.now())
   const appState = useRef(AppState.currentState)
   const [appStateState, setAppStateState] = useState(appState.current)
 
@@ -178,7 +181,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
     }
 
     if (appState.current.match(/active/)) {
-      setLastActiveTime(Date.now())
+      // setLastActiveTime(Date.now())
       console.log('App has come to the background!')
     }
 
@@ -201,9 +204,9 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
     useCallback(() => {
       // if appState === 'active' and last time on home screen is 5 mins ago, do refetch
       console.log('home screen focused')
-      console.log(lastActiveTime)
-      const timeElapsed = (Date.now() - lastActiveTime) / 1000
-      console.log(timeElapsed)
+      // console.log(lastActiveTime)
+      // const timeElapsed = (Date.now() - lastActiveTime) / 1000
+      // console.log(timeElapsed)
       // if (data && appState.current === 'active' && timeElapsed >= 5) {
       //   console.log('refetching')
       //   refetch()
@@ -218,10 +221,10 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
 
       return () => {
         console.log('home screen blurred')
-        console.log(Date.now())
-        setLastActiveTime(Date.now())
+        // console.log(Date.now())
+        // setLastActiveTime(Date.now())
       }
-    }, [])
+    }, [data])
   )
 
   // useFocusEffect(() => {
