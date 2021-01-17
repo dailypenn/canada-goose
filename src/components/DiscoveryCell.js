@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     aspectRatio: 4 / 3,
     marginHorizontal: 0,
     marginVertical: 0,
-    borderRadius: 5,
+    borderRadius: 12,
     padding: 10,
     backgroundColor: '#f00',
     overflow: 'hidden',

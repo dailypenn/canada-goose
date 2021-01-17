@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, SafeAreaView } from 'react-native'
+import { StyleSheet, SafeAreaView, Dimensions } from 'react-native'
 import { connect } from 'react-redux'
 import { FlatGrid } from 'react-native-super-grid'
 import { TouchableOpacity } from 'react-native'
@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
     paddingBottom: 20
   }
 })
+
+const width = Dimensions.get('window').width
+const height = Dimensions.get('window').height
 
 const DiscoveryView = ({ navigation, publication }) => {
   const navigateToSectionScreen = (section, slug) => {
@@ -46,6 +49,8 @@ const DiscoveryView = ({ navigation, publication }) => {
         //   />
         // }
         // ListHeaderComponentStyle={styles.container}
+        itemDimension={width/2-40}
+        spacing={13}
         data={SECTIONS}
         renderItem={({ item, i }) => (
           <TouchableOpacity
