@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: PROFILE_PIC_SIZE,
     height: PROFILE_PIC_SIZE,
-    borderRadius: PROFILE_PIC_SIZE / 2,
+    borderRadius: 10,
   },
 
   profilePicCell: {

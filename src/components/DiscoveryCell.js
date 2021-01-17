@@ -7,7 +7,7 @@ import { GEOMETRIC_BOLD } from '../utils/fonts'
 const styles = StyleSheet.create({
   imageBackground: {
     flex: 1,
-    height: 100,
+    aspectRatio: 4 / 3,
     marginHorizontal: 0,
     marginVertical: 0,
     borderRadius: 5,

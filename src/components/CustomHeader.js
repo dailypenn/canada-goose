@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const CustomHeader = ({ publicationState, contentOffset }) => {
+export const CustomHeader = ({ publication, contentOffset }) => {
   const FADE_START = 100
   const FADE_END = 175
   const FADE_DIST = FADE_END - FADE_START
@@ -72,13 +72,6 @@ export const CustomHeader = ({ publicationState, contentOffset }) => {
 
   const animateMenu = () => {
     // TO DO: create animation here
-
-    // TO DO: move this to where a publication is selected
-    const newPub =
-      publicationState.currPublication == PublicationEnum.utb
-        ? PublicationEnum.dp
-        : PublicationEnum.utb
-    publicationState.switchPublication(newPub)
   }
 
   /** Function that determins top padding of header depending
@@ -125,7 +118,7 @@ export const CustomHeader = ({ publicationState, contentOffset }) => {
           }}
         >
           <Image
-            source={getLogo(publicationState.currPublication, contentOffset)}
+            source={getLogo(publication, contentOffset)}
             style={styles.image}
           />
         </SafeAreaView>

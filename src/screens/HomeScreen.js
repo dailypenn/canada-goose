@@ -5,15 +5,15 @@ import {
   View,
   Text,
   RefreshControl,
-  SafeAreaView,
   AppState,
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
+import { useFocusEffect } from '@react-navigation/core'
 
-import { HOME_PAGE_QUERY } from '../utils/constants'
 import {
+  CustomHeader,
   SectionHeader,
   HeadlineArticle,
   HorizontalArticleCarousel,
@@ -26,9 +26,9 @@ import {
   NAVIGATE_TO_ARTICLE_SCREEN,
   GET_HOME_SECTIONS,
   GET_HOME_SECTION_NAME,
+  GET_HOME_QUERIES
 } from '../utils/helperFunctions'
 import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
-import { useFocusEffect } from '@react-navigation/core'
 
 const styles = StyleSheet.create({
   container: {
@@ -44,25 +44,29 @@ const HomeView = ({
   centerArticles,
   topArticles,
   navigation,
-  publicationState,
+  publication,
   defaultSections,
   loading,
   refetch,
   reorderHomeSection,
 }) => {
   const [offset, setOffset] = useState(0)
-  const [sections, setSections] = useState(defaultSections)
+  // const [sections, setSections] = useState(defaultSections)
 
   const handleScroll = scrollData => {
     setOffset(scrollData.nativeEvent.contentOffset.y)
   }
 
+  // TODO (liz): defaultSections cannot be stored inside useState
+  // otherwise, redux won't update it for some reasons
+  // a quick fix I can think of is to put this function inside HomeScreenComp
+  // and pass the ordered sections to this component
   const loadHomeSectionOrder = async () => {
     let order = await Storage.getItem(
-      GET_HOME_FEED_ORDER_KEY(publicationState.currPublication)
+      GET_HOME_FEED_ORDER_KEY(publication)
     )
     if (order == null) return
-    if (order == GET_HOME_SECTIONS(publicationState.currPublication)) return
+    if (order == GET_HOME_SECTIONS(publication)) return
 
     let newSections = []
     order.forEach(section => {
@@ -76,9 +80,9 @@ const HomeView = ({
     setSections(newSections)
   }
 
-  useEffect(() => {
-    loadHomeSectionOrder()
-  }, [reorderHomeSection])
+  // useEffect(() => {
+  //   loadHomeSectionOrder()
+  // }, [reorderHomeSection])
 
   const onRefresh = useCallback(() => {
     refetch()
@@ -99,60 +103,58 @@ const HomeView = ({
             NAVIGATE_TO_ARTICLE_SCREEN(
               navigation,
               'HomeArticle',
-              centerArticles[0].article,
-              publicationState
+              centerArticles[0]
             )
           }
         >
           <HeadlineArticle
             data={centerArticles[0]}
-            publication={publicationState.currPublication}
+            publication={publication}
           />
         </TouchableOpacity>
 
-        <HeaderLine publication={publicationState.currPublication} />
+        <HeaderLine publication={publication} />
         <SectionHeader
           title="Top Stories"
-          publication={publicationState.currPublication}
+          publication={publication}
         />
         <HorizontalArticleCarousel
           articles={topArticles}
           navigateToArticleScreen={PARTIAL_NAVIGATE(
             navigation,
-            publicationState,
             'HomeArticle',
             NAVIGATE_TO_ARTICLE_SCREEN
           )}
-          publication={publicationState.currPublication}
+          publication={publication}
         />
 
-        {sections.map((el, i) => {
+        {defaultSections.map((el, i) => {
           const { name, articles } = el
           return (
             <View key={i}>
-              <HeaderLine publication={publicationState.currPublication} />
+              <HeaderLine publication={publication} />
               <SectionHeader
                 title={GET_HOME_SECTION_NAME(
-                  publicationState.currPublication,
+                  publication,
                   name
                 )}
-                publication={publicationState.currPublication}
+                publication={publication}
               />
               <ArticleList
                 articles={articles}
                 navigateToArticleScreen={PARTIAL_NAVIGATE(
                   navigation,
-                  publicationState,
                   'HomeArticle',
                   NAVIGATE_TO_ARTICLE_SCREEN
                 )}
+                publication={publication}
               />
             </View>
           )
         })}
       </ScrollView>
       <CustomHeader
-        publicationState={publicationState}
+        publication={publication}
         contentOffset={offset}
       />
     </View>
@@ -160,13 +162,8 @@ const HomeView = ({
 }
 
 const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
-  // const publicationState = screenProps.state
   console.log(`current publication is ${publication}`)
   console.log(`current reorderHomeSection is ${reorderHomeSection}`)
-
-  const publicationState = {
-    currPublication: 'The Daily Pennsylvanian',
-  }
 
   const [lastActiveTime, setLastActiveTime] = useState(Date.now())
   const appState = useRef(AppState.currentState)
@@ -198,7 +195,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
     }
   }, [])
 
-  const { loading, error, data, refetch } = useQuery(HOME_PAGE_QUERY)
+  const { loading, error, data, refetch } = useQuery(GET_HOME_QUERIES(publication))
 
   useFocusEffect(
     useCallback(() => {
@@ -257,13 +254,13 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
   let HOME_SECTIONS = GET_HOME_SECTIONS(publication)
 
   const {
-    centerpiece: { edges: centerArticles },
-    top: { edges: topArticles },
+    centerpiece: centerArticles,
+    top: topArticles,
   } = data
 
   const defaultSections = HOME_SECTIONS.map(section => ({
     name: section,
-    articles: data[section].edges,
+    articles: data[section],
   }))
 
   return (
@@ -271,7 +268,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
       centerArticles={centerArticles}
       topArticles={topArticles}
       navigation={navigation}
-      publicationState={publicationState}
+      publication={publication}
       defaultSections={defaultSections}
       loading={loading}
       refetch={refetch}

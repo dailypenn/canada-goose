@@ -3,16 +3,17 @@ import { Text, View, useWindowDimensions, Button } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import HTML from 'react-native-render-html'
 import { useQuery } from '@apollo/client'
+import { connect } from 'react-redux'
 
 import { PictureHeadline } from '../components'
-import { IMAGE_URL, TIME_AGO, AUTHORS } from '../utils/helperFunctions'
+import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
 import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { Alert } from 'react-native'
 
-export const ArticleScreen = ({ navigation, route }) => {
-  const { article, publicationState } = route.params
+const ArticleScreenComp = ({ navigation, route, publication }) => {
+  const { article } = route.params
 
   if (!article) {
     // TODO: Check that article is already fetched
@@ -39,7 +40,7 @@ export const ArticleScreen = ({ navigation, route }) => {
 
     if (saved_successfully) {
       saved_articles.push({
-        publicationState: publicationState,
+        publication,
         slug: article.slug,
         headline: article.headline,
         saved_at: date,
@@ -58,13 +59,14 @@ export const ArticleScreen = ({ navigation, route }) => {
     <ScrollView>
       <PictureHeadline
         headline={article.headline}
-        time={TIME_AGO(article.published_at)}
+        time={article.published_at}
         imageUrl={IMAGE_URL(
           article.dominantMedia.attachment_uuid,
-          article.dominantMedia.extension
+          article.dominantMedia.extension,
+          publication
         )}
-        category="NEWS"
-        publication={publicationState.currPublication}
+        category={article.tag}
+        publication={publication}
       />
       <View
         style={{
@@ -78,20 +80,27 @@ export const ArticleScreen = ({ navigation, route }) => {
             fontSize: 16,
           }}
         >{`By: ${AUTHORS(article.authors)}`}</Text>
-        <Text
+        {/* <Text
           style={{
             fontFamily: GEOMETRIC_BOLD,
             fontSize: 16,
           }}
         >
           {'Photo Credit: ' + photographer}
-        </Text>
+        </Text> */}
       </View>
       <View style={{ padding: 20 }}>
         <HTML
-          onLinkPress={(e, href, _) =>
-            navigation.navigate('ArticleBrowser', { link: href })
-          }
+          onLinkPress={(e, href, _) => {
+            // TODO: Find a better way to do this
+            const PARSED_URL = href.split('thedp.com/article')
+            if (PARSED_URL.length == 2) {
+              navigation.navigate('', {
+                article: { slug: PARSED_URL[1] },
+                // TODO: Fix, for some reason this is not working
+              })
+            } else navigation.navigate('ArticleBrowser', { link: href })
+          }}
           source={{ html: article.content }}
           contentWidth={useWindowDimensions().width}
           tagsStyles={{
@@ -113,7 +122,7 @@ export const ArticleScreen = ({ navigation, route }) => {
   )
 }
 
-ArticleScreen.navigationOptions = ({ route }) => ({
+ArticleScreenComp.navigationOptions = ({ route }) => ({
   title: '',
   animationEnabled: true,
   headerRight: () => (
@@ -125,3 +134,7 @@ ArticleScreen.navigationOptions = ({ route }) => ({
     />
   ),
 })
+
+const mapStateToProps = ({ publication }) => ({ publication })
+
+export const ArticleScreen = connect(mapStateToProps)(ArticleScreenComp)

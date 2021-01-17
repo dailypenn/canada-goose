@@ -1,78 +1,75 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { Image } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import * as Haptics from 'expo-haptics'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import { TouchableHighlight } from 'react-native'
 
 import { HomeStack, DiscoveryStack, SettingsStack } from './src/stacks'
-import { PublicationEnum } from './src/utils/constants'
-import { ScreenWithDefaultParams } from './src/screens'
 import RootReducer from './src/reducers'
+import { DP_RED_RGBA, PublicationPrimaryColor } from './src/utils/branding'
+import { PublicationEnum } from './src/utils/constants'
 
 const store = createStore(RootReducer)
 
 const Tab = createBottomTabNavigator()
+
 export const TabNavigationController = ({ navigation }) => {
-  const [currPublication, updateCurrPublication] = useState(PublicationEnum.dp)
-  const [pubMenuVisible, updatePubMenuVisibility] = useState(false)
-
-  const switchPublication = newPublication => {
-    if (newPublication != currPublication) {
-      updateCurrPublication(currPublication)
-    }
-  }
-
-  useEffect(() => {})
-
-  const CHILD_STATE = { currPublication, switchPublication }
+  // const bringUpActionSheet = () => {
+  //   Animated.timing(bounceValue, {
+  //     toValue: 1,
+  //     duration: 500,
+  //   }).str
+  // }
 
   return (
     <Provider store={store}>
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
-            tabBarIcon: ({ color, size }) => {
+            tabBarIcon: ({ color }) => {
               let iconName
 
               if (route.name === 'HomeStack') {
-                iconName = 'ios-home'
-              } else if (route.name == 'DiscoveryStack') iconName = 'ios-search'
-              else if (route.name === 'SettingsStack') iconName = 'ios-settings'
+                return (
+                  <Image
+                    source={
+                      color == PublicationPrimaryColor(PublicationEnum.dp)
+                        ? require('./src/static/logos/dp-logo-small-red.png')
+                        : require('./src/static/logos/dp-logo-small-grey.png')
+                    }
+                    style={{
+                      width: 32,
+                      resizeMode: 'contain',
+                      alignSelf: 'center',
+                    }}
+                  />
+                )
+              } else if (route.name == 'DiscoveryStack') iconName = 'search'
+              else if (route.name === 'SettingsStack') iconName = 'cog'
 
               return <Ionicons name={iconName} size={30} color={color} />
-            }
+            },
           })}
           tabBarOptions={{
-            activeTintColor: '#A61E21',
+            activeTintColor: PublicationPrimaryColor(PublicationEnum.dp),
             inactiveTintColor: 'gray',
             showLabel: false,
             style: {
               shadowColor: 'black',
               shadowOpacity: 0.1,
-              shadowRadius: 3
-            }
+              shadowRadius: 3,
+            },
+            onPress: () => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            },
           }}
         >
-          <Tab.Screen
-            name="HomeStack"
-            component={ScreenWithDefaultParams(HomeStack, {
-              state: CHILD_STATE
-            })}
-          />
-          <Tab.Screen
-            name="DiscoveryStack"
-            component={ScreenWithDefaultParams(DiscoveryStack, {
-              state: CHILD_STATE
-            })}
-          />
-          <Tab.Screen
-            name="SettingsStack"
-            component={ScreenWithDefaultParams(SettingsStack, {
-              state: CHILD_STATE
-            })}
-          />
+          <Tab.Screen name="HomeStack" component={HomeStack} />
+          <Tab.Screen name="DiscoveryStack" component={DiscoveryStack} />
+          <Tab.Screen name="SettingsStack" component={SettingsStack} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>
@@ -80,7 +77,6 @@ export const TabNavigationController = ({ navigation }) => {
 }
 
 // export class TabNavigationController extends Component {
-//   constructor(props) {
 //     super(props)
 //     this.switchPublication = this.switchPublication.bind(this)
 //     // this.updatePublicationMenuVisible = this.updatePublicationMenuVisible.bind(

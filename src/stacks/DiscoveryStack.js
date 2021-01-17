@@ -1,21 +1,22 @@
 // Navigation stack within the Discovery tab
 // Includes routes to the discovery and section screens
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-
-import {
-  ArticleScreen,
-  DiscoveryScreen,
-  ScreenWithDefaultParams,
-  SectionScreen,
-} from '../screens'
 import { NavigationContainer } from '@react-navigation/native'
+import * as Haptics from 'expo-haptics'
 
+import { ArticleScreen, DiscoveryScreen, SectionScreen } from '../screens'
 const Stack = createStackNavigator()
 
-export const DiscoveryStack = ({ screenProps }) => (
-  <NavigationContainer independent={true}>
+export const DiscoveryStack = ({ navigation }) => {
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('tabPress', e => {
+      if (!navigation.isFocused())
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+    })
+  })
+  return (
     <Stack.Navigator
       initialRouteName="Discovery"
       screenOptions={{
@@ -27,12 +28,12 @@ export const DiscoveryStack = ({ screenProps }) => (
     >
       <Stack.Screen
         name="Discovery"
-        component={ScreenWithDefaultParams(DiscoveryScreen, screenProps)}
+        component={DiscoveryScreen}
         options={{ title: 'Discover', headerShown: false }}
       />
       <Stack.Screen
         name="Section"
-        component={ScreenWithDefaultParams(SectionScreen, screenProps)}
+        component={SectionScreen}
         options={({ route }) => ({
           title: route.params.sectionName,
           animationEnabled: true,
@@ -44,5 +45,5 @@ export const DiscoveryStack = ({ screenProps }) => (
         options={ArticleScreen.navigationOptions}
       />
     </Stack.Navigator>
-  </NavigationContainer>
-)
+  )
+}

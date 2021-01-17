@@ -1,9 +1,4 @@
 import React, { useState, useRef } from 'react'
-
-import { SectionHeader } from './SectionHeader'
-import { SearchArticleList } from './ArticleList'
-import { ActivityIndicator } from './ActivityIndicator'
-
 import {
   SafeAreaView,
   Dimensions,
@@ -15,25 +10,56 @@ import {
   ScrollView,
   Button,
 } from 'react-native'
-
+import Animated, { Easing } from 'react-native-reanimated'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
 import { useQuery } from '@apollo/client'
-import { ARTICLES_SEARCH } from '../utils/constants'
+
+import { SectionHeader } from './SectionHeader'
+import { ActivityIndicator } from './ActivityIndicator'
+import { ARTICLES_SEARCH } from '../utils/queries'
 import {
   PARTIAL_NAVIGATE,
-  NAVIGATE_TO_ARTICLE_SCREEN
+  NAVIGATE_TO_ARTICLE_SCREEN,
 } from '../utils/helperFunctions'
-import { DISPLAY_SERIF_BLACK, GEOMETRIC_BOLD } from '../utils/fonts'
+import { GEOMETRIC_BOLD } from '../utils/fonts'
+import { ArticleList } from './ArticleList'
 
-import Animated, { Easing } from 'react-native-reanimated'
 const { Value, timing } = Animated
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 
-export const SearchBar = ({ navigation, publication }) => {
+const SearchView = ({ filter, navigation, publication }) => {
+  const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
+    variables: { filter, publication },
+    fetchPolicy: 'cache-and-network',
+  })
 
+  if (!data) return <ActivityIndicator />
+
+  const { searchArticles: results } = data
+
+  return (
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag"
+    >
+      <SectionHeader title="Sections" />
+      <SectionHeader title="Articles" />
+      <ArticleList
+        articles={results}
+        publication={publication}
+        navigateToArticleScreen={PARTIAL_NAVIGATE(
+          navigation,
+          'SectionArticle',
+          NAVIGATE_TO_ARTICLE_SCREEN
+        )}
+      />
+    </ScrollView>
+  )
+}
+
+export const SearchBar = ({ navigation, publication }) => {
   const [focused, setFocused] = useState(false)
   const [keyword, setKeyword] = useState('')
 
@@ -46,31 +72,30 @@ export const SearchBar = ({ navigation, publication }) => {
   const input = useRef()
 
   const _onFocus = () => {
-
     const input_x_pos_anim = {
       duration: 200,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const cancel_opacity_anim = {
       duration: 200,
       toValue: 1,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const content_y_pos_anim = {
       duration: 0,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const content_opacity_anim = {
       duration: 200,
       toValue: 1,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const title_opacity_anim = {
       duration: 200,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
 
     if (!focused) {
@@ -87,31 +112,30 @@ export const SearchBar = ({ navigation, publication }) => {
   }
 
   const _onBlur = () => {
-
     const input_x_pos_anim = {
       duration: 200,
       toValue: width,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const cancel_opacity_anim = {
       duration: 50,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const content_y_pos_anim = {
       duration: 200,
       toValue: height,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const content_opacity_anim = {
       duration: 200,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
     const title_opacity_anim = {
       duration: 300,
       toValue: 1,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }
 
     if (focused) {
@@ -137,14 +161,17 @@ export const SearchBar = ({ navigation, publication }) => {
             </Animated.View>
             <TouchableHighlight
               activeOpacity={1}
-              underlayColor={"#ccd0d5"}
+              underlayColor={'#ccd0d5'}
               onPress={_onFocus}
               style={styles.search_icon_box}
             >
               <Ionicons name="search" size={20} color="#000" />
             </TouchableHighlight>
             <Animated.View
-              style={[styles.input_box, { transform: [{ translateX: input_x_pos }] }]}
+              style={[
+                styles.input_box,
+                { transform: [{ translateX: input_x_pos }] },
+              ]}
             >
               {/* <Animated.View style={{ opacity: cancel_opacity }}>
                 <TouchableHighlight
@@ -161,71 +188,43 @@ export const SearchBar = ({ navigation, publication }) => {
                 placeholder="Search"
                 clearButtonMode="always"
                 value={keyword}
-                onChangeText={(value) => setKeyword(value)}
+                onChangeText={value => setKeyword(value)}
                 style={styles.input}
                 returnKeyType="search"
               />
               <Animated.View style={{ opacity: cancel_opacity }}>
-                <Button
-                  title="Cancel"
-                  onPress={_onBlur}
-                  color="#333"
-                />
+                <Button title="Cancel" onPress={_onBlur} color="#333" />
               </Animated.View>
             </Animated.View>
           </View>
         </View>
       </SafeAreaView>
 
-      <Animated.View style={[styles.content, { opacity: content_opacity, transform: [{ translateY: content_y_pos }] }]}>
+      <Animated.View
+        style={[
+          styles.content,
+          {
+            opacity: content_opacity,
+            transform: [{ translateY: content_y_pos }],
+          },
+        ]}
+      >
         <SafeAreaView style={styles.content_safe_area}>
           <View style={styles.content_inner}>
             <View style={styles.separator} />
-            {
-              keyword === ''
-                ?
-                <View style={styles.image_placeholder_container}>
-                  <Text style={styles.image_placeholder_text}>
-                    Try searching for articles or sections
-                  </Text>
-                </View>
-                :
-                <SearchView filter={keyword} publication={publication} navigation={navigation} />
-            }
+            {keyword === '' ? (
+              <View style={styles.image_placeholder_container}>
+                <Text style={styles.image_placeholder_text}>
+                  Try searching for articles or sections
+                </Text>
+              </View>
+            ) : (
+              <SearchView filter={keyword} navigation={navigation} publication={publication} />
+            )}
           </View>
         </SafeAreaView>
       </Animated.View>
     </>
-  )
-}
-
-const SearchView = ({ filter, publication, navigation }) => {
-  const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
-    variables: { filter },
-    fetchPolicy: 'cache-and-network'
-  })
-
-  if (loading) return <ActivityIndicator />
-
-  const { searchArticles: results } = data
-
-  return (
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-      keyboardDismissMode="on-drag"
-    >
-      <SectionHeader title="Sections" />
-      <SectionHeader title="Articles" />
-      <SearchArticleList
-        articles={results}
-        navigateToArticleScreen={PARTIAL_NAVIGATE(
-          navigation,
-          publication,
-          'SectionArticle',
-          NAVIGATE_TO_ARTICLE_SCREEN
-        )}
-      />
-    </ScrollView>
   )
 }
 
@@ -249,7 +248,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
   },
   search_icon_box: {
     width: 40,
@@ -258,7 +257,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEE',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   input_box: {
     height: 50,
@@ -268,7 +267,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     backgroundColor: 'white',
-    width: width - 26 //width - 32
+    width: width - 26, //width - 32
   },
   back_icon_box: {
     width: 40,
@@ -277,7 +276,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 5
+    marginRight: 5,
   },
   input: {
     flex: 1,
@@ -293,11 +292,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     bottom: 0,
-    zIndex: 999
+    zIndex: 999,
   },
   content_safe_area: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   content_inner: {
     flex: 1,
@@ -307,23 +306,23 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
     height: 1,
-    backgroundColor: '#e6e4eb'
+    backgroundColor: '#e6e4eb',
   },
   image_placeholder_container: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    marginTop: '-50%'
+    marginTop: '-50%',
   },
   image_placeholder: {
     width: 150,
     height: 113,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   image_placeholder_text: {
     textAlign: 'center',
     color: 'gray',
-    marginTop: 5
+    marginTop: 5,
   },
   search_item: {
     flexDirection: 'row',
@@ -331,9 +330,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#e6e4eb',
-    marginLeft: 16
+    marginLeft: 16,
   },
   item_icon: {
-    marginRight: 15
-  }
+    marginRight: 15,
+  },
 })

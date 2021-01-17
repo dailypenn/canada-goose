@@ -18,7 +18,6 @@ import { DP_HOME_SECTIONS_TITLE } from '../utils/constants'
 import { REORDER_HOME_SECTIONS } from '../actions'
 import {
   GET_HOME_SECTIONS,
-  GET_HOME_SECTION_NAME,
 } from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({

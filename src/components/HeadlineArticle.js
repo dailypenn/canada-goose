@@ -1,33 +1,32 @@
-import { View } from 'react-native'
-import { Tagline } from './Tagline'
 import React from 'react'
+import { View } from 'react-native'
+
+import { Tagline } from './Tagline'
 import { PictureHeadline } from './PictureHeadline'
-import { IMAGE_URL, TIME_AGO } from '../utils/helperFunctions'
+import { IMAGE_URL, parseAbstract } from '../utils/helperFunctions'
 
 export const HeadlineArticle = ({ data, publication }) => {
-  // console.log(publication)
   const {
-    article: {
-      headline,
-      published_at,
-      abstract,
-      dominantMedia: { attachment_uuid, extension },
-    },
+    headline,
+    published_at,
+    abstract,
+    dominantMedia: { attachment_uuid, extension },
+    tag
   } = data
 
   // TODO: CLEAN UP -- A LOT
-  var splitAbstract = abstract.split('<p>')[1].split('</p>')[0]
+  const parsedAbstract = parseAbstract(abstract)
 
   return (
     <View>
       <PictureHeadline
         headline={headline}
-        time={TIME_AGO(published_at)}
-        imageUrl={IMAGE_URL(attachment_uuid, extension)}
-        category="NEWS"
+        time={published_at}
+        imageUrl={IMAGE_URL(attachment_uuid, extension, publication)}
+        category={tag}
         publication={publication}
       />
-      <Tagline tagline={splitAbstract} publication={publication} />
+      <Tagline tagline={parsedAbstract} publication={publication} />
     </View>
   )
 }

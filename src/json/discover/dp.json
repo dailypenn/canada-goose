@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Academics",
+    "slug": "academics",
+    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+  },
+  {
+    "name": "Administration",
+    "slug": "administration",
+    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+  },
+  {
+    "name": "Identities",
+    "slug": "identities",
+    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+  },
+  {
+    "name": "Politics",
+    "slug": "politics",
+    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+  },
+  {
+    "name": "Student Life",
+    "slug": "student-life",
+    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+  },
+  {
+    "name": "Sports",
+    "slug": "sports",
+    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+  },
+  {
+    "name": "Staff Editorials",
+    "slug": "editorials",
+    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+  },
+  {
+    "name": "Opinion Columns",
+    "slug": "columns",
+    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+  }
+]
