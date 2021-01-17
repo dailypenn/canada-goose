@@ -102,7 +102,7 @@ export const DP_HOME_PAGE_QUERY = gql`
 
 export const STREET_HOME_PAGE_QUERY = gql`
   query {
-    centerpiece: homeArticles(first: 1, section: "featured", publication: "street") {
+    centerpiece: homeArticles(first: 1, section: "featured", publication: "34th Street") {
       slug
       headline
       abstract
@@ -118,7 +118,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    top: homeArticles(first: 5, section: "top", publication: "street") {
+    top: homeArticles(first: 5, section: "top", publication: "34th Street") {
       slug
       headline
       abstract
@@ -134,7 +134,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    focus: homeArticles(first: 3, section: "focus", publication: "street") {
+    focus: homeArticles(first: 3, section: "focus", publication: "34th Street") {
       slug
       headline
       abstract
@@ -150,7 +150,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    features: homeArticles(first: 3, section: "features", publication: "street") {
+    features: homeArticles(first: 3, section: "features", publication: "34th Street") {
       slug
       headline
       abstract
@@ -166,7 +166,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    ego: homeArticles(first: 3, section: "ego", publication: "street") {
+    ego: homeArticles(first: 3, section: "ego", publication: "34th Street") {
       slug
       headline
       abstract
@@ -182,7 +182,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    style: homeArticles(first: 3, section: "style", publication: "street") {
+    style: homeArticles(first: 3, section: "style", publication: "34th Street") {
       slug
       headline
       abstract
@@ -202,7 +202,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
 
 export const UTB_HOME_PAGE_QUERY = gql`
   query {
-    centerpiece: homeArticles(first: 1, section: "centerpiece", publication: "utb") {
+    centerpiece: homeArticles(first: 1, section: "centerpiece", publication: "Under the Button") {
       slug
       headline
       abstract
@@ -218,7 +218,7 @@ export const UTB_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    top: homeArticles(first: 5, section: "top", publication: "utb") {
+    top: homeArticles(first: 5, section: "top", publication: "Under the Button") {
       slug
       headline
       abstract
@@ -234,7 +234,7 @@ export const UTB_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    interactive: homeArticles(first: 3, section: "choose-your-own-adventure", publication: "utb") {
+    interactive: homeArticles(first: 3, section: "choose-your-own-adventure", publication: "Under the Button") {
       slug
       headline
       abstract
@@ -250,7 +250,7 @@ export const UTB_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    news: homeArticles(first: 3, section: "news", publication: "utb") {
+    news: homeArticles(first: 3, section: "news", publication: "Under the Button") {
       slug
       headline
       abstract
@@ -266,7 +266,27 @@ export const UTB_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    opinion: homeArticles(first: 3, section: "opinion", publication: "utb") {
+    opinion: homeArticles(first: 3, section: "opinion", publication: "Under the Button") {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
+      }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
+    }
+  }
+`
+
+export const SECTIONS_QUERY = gql`
+  query($section: String!, $publication: String!) {
+    sectionArticles(section: $section, publication: $publication) {
       slug
       headline
       abstract

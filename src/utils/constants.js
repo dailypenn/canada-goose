@@ -19,31 +19,6 @@ export const ARTICLES_SEARCH = gql`
   }
 `
 
-export const SECTIONS_QUERY = gql`
-  query($section: String!) {
-    articles(first: 10, section: $section) {
-      hasNextPage
-      edges {
-        article {
-          slug
-          headline
-          abstract
-          content
-          published_at
-          authors {
-            name
-          }
-          dominantMedia {
-            attachment_uuid
-            extension
-          }
-        }
-        cursor
-      }
-    }
-  }
-`
-
 // Enum for the 3 publications included in this app
 export const PublicationEnum = Object.freeze({
   dp: 'The Daily Pennsylvanian',
