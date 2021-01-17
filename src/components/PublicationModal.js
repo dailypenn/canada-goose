@@ -52,7 +52,7 @@ const PublicationOption = ({ publication, isCurrent }) => {
           ...rtrn,
           ...{
             image: isCurrent ? DP_LOGO_WHITE : DP_LOGO_RED,
-            subtitle: 'Founded in 1885',
+            subtitle: 'Student-Run News Since 1885',
           },
         }
         break
@@ -70,7 +70,7 @@ const PublicationOption = ({ publication, isCurrent }) => {
           ...rtrn,
           ...{
             image: isCurrent ? UTB_LOGO_WHITE : UTB_LOGO_BLUE,
-            subtitle: "Penn's Only Intentionally Satirical Magazine",
+            subtitle: "Penn's Only Intentionally Satirical Publication",
           },
         }
     }
