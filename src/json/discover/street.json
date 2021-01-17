@@ -1,52 +1,62 @@
 [
   {
-    "cateogry": "Arts",
+    "name": "Arts",
+    "slug": "arts",
     "label-color": "#f3f0ec",
     "img": "https://storage.googleapis.com/mobile-storage/arts.png"
   },
   {
-    "category": "Ego",
+    "name": "Ego",
+    "slug": "ego",
     "label-color": "#ff855c",
     "img": "https://storage.googleapis.com/mobile-storage/ego.png"
   },
   {
-    "cateogry": "Features",
+    "name": "Features",
+    "slug": "features",
     "label-color": "#f1bd8",
     "img": "https://storage.googleapis.com/mobile-storage/features.png"
   },
   {
-    "cateogry": "Film and TV",
+    "name": "Film and TV",
+    "slug": "film",
     "label-color": "#cf3932",
     "img": "https://storage.googleapis.com/mobile-storage/film-tv.png"
   },
   {
-    "category": "Focus",
+    "name": "Focus",
+    "slug": "focus",
     "label-color": "#f3f0ec",
     "img": "https://storage.googleapis.com/mobile-storage/focus.png"
   },
   {
-    "category": "Letter",
+    "name": "Letter",
+    "slug": "letter",
     "label-color": "#ff855c",
     "img": "https://storage.googleapis.com/mobile-storage/letter.png"
   },
   {
-    "category": "Music",
+    "name": "Music",
+    "slug": "music",
     "label-color": "#f2f0ec",
     "img": "https://storage.googleapis.com/mobile-storage/music.png"
   },
   {
-    "category": "Overheards",
+    "name": "Overheards",
+    "slug": "overheards",
     "label-color": "#f1dbd8",
     "img": "https://storage.googleapis.com/mobile-storage/overheards.png"
   },
   {
-    "cateogry": "Style",
+    "name": "Style",
+    "slug": "style",
     "label-color": "#cf3932",
     "img": "https://storage.googleapis.com/mobile-storage/style.png"
   },
 
   {
-    "cateogry": "WOTS",
+    "name": "WOTS",
+    "slug": "word-on-the-street",
     "label-color": "#f1dbd8",
     "img": "https://storage.googleapis.com/mobile-storage/wots.png"
   }
