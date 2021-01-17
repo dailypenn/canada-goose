@@ -65,7 +65,7 @@ const ArticleScreenComp = ({ navigation, route, publication }) => {
           article.dominantMedia.extension,
           publication
         )}
-        category="NEWS"
+        category={article.tag}
         publication={publication}
       />
       <View

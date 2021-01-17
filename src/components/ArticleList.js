@@ -25,7 +25,7 @@ export const ArticleList = ({
           <TouchableOpacity
             key={i}
             activeOpacity={1}
-            onPress={() => navigateToArticleScreen(el.article)}
+            onPress={() => navigateToArticleScreen(el)}
           >
             <PrimaryHorizontalArticleCell
               title={headline}
@@ -39,7 +39,7 @@ export const ArticleList = ({
           <TouchableOpacity
             key={i}
             activeOpacity={1}
-            onPress={() => navigateToArticleScreen(el.article)}
+            onPress={() => navigateToArticleScreen(el)}
           >
             <HorizontalArticleCell
               title={headline}
@@ -54,7 +54,7 @@ export const ArticleList = ({
           <TouchableOpacity
             key={i}
             activeOpacity={1}
-            onPress={() => navigateToArticleScreen(el.article)}
+            onPress={() => navigateToArticleScreen(el)}
           >
             <HorizontalArticleCell
               title={headline}
