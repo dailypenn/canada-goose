@@ -12,14 +12,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
+    paddingHorizontal: 10
+  }
 })
 
 export const HorizontalArticleCarousel = ({
   articles,
   navigateToArticleScreen,
-  publication,
+  publication
 }) => {
   return (
     <ScrollView
@@ -32,7 +32,7 @@ export const HorizontalArticleCarousel = ({
         width: `${90 * articles.length}%`,
         paddingHorizontal: 10,
         paddingTop: 10,
-        paddingBottom: 35,
+        paddingBottom: 35
       }}
       showsHorizontalScrollIndicator={false}
       scrollEventThrottle={100}
@@ -40,12 +40,10 @@ export const HorizontalArticleCarousel = ({
     >
       {articles.map((el, i) => {
         const {
-          article: {
-            headline,
-            published_at,
-            dominantMedia: { attachment_uuid, extension },
-            tag
-          },
+          headline,
+          published_at,
+          dominantMedia: { attachment_uuid, extension },
+          tag
         } = el
         return (
           <View style={styles.cardContainerView} key={i}>

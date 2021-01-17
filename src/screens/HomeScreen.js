@@ -103,7 +103,7 @@ const HomeView = ({
             NAVIGATE_TO_ARTICLE_SCREEN(
               navigation,
               'HomeArticle',
-              centerArticles[0].article
+              centerArticles[0]
             )
           }
         >
@@ -254,13 +254,13 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
   let HOME_SECTIONS = GET_HOME_SECTIONS(publication)
 
   const {
-    centerpiece: { edges: centerArticles },
-    top: { edges: topArticles },
+    centerpiece: centerArticles,
+    top: topArticles,
   } = data
 
   const defaultSections = HOME_SECTIONS.map(section => ({
     name: section,
-    articles: data[section].edges,
+    articles: data[section],
   }))
 
   return (

@@ -13,13 +13,11 @@ export const ArticleList = ({
   <View style={{ marginBottom: 5 }}>
     {articles.map((el, i) => {
       const {
-        article: {
-          headline,
-          published_at,
-          dominantMedia: { attachment_uuid, extension },
-          authors,
-          abstract
-        }
+        headline,
+        published_at,
+        dominantMedia: { attachment_uuid, extension },
+        authors,
+        abstract
       } = el
       const articlesLength = articles.length
       if (i == 0) {

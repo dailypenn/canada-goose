@@ -7,13 +7,11 @@ import { IMAGE_URL } from '../utils/helperFunctions'
 export const HeadlineArticle = ({ data, publication }) => {
   // console.log(publication)
   const {
-    article: {
-      headline,
-      published_at,
-      abstract,
-      dominantMedia: { attachment_uuid, extension },
-      tag
-    },
+    headline,
+    published_at,
+    abstract,
+    dominantMedia: { attachment_uuid, extension },
+    tag
   } = data
 
   // TODO: CLEAN UP -- A LOT
