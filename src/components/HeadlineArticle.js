@@ -6,7 +6,6 @@ import { PictureHeadline } from './PictureHeadline'
 import { IMAGE_URL, parseAbstract } from '../utils/helperFunctions'
 
 export const HeadlineArticle = ({ data, publication }) => {
-  // console.log(publication)
   const {
     headline,
     published_at,
@@ -14,8 +13,6 @@ export const HeadlineArticle = ({ data, publication }) => {
     dominantMedia: { attachment_uuid, extension },
     tag
   } = data
-
-  console.log(headline)
 
   // TODO: CLEAN UP -- A LOT
   const parsedAbstract = parseAbstract(abstract)
