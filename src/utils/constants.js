@@ -1,24 +1,3 @@
-import { gql } from '@apollo/client'
-
-export const ARTICLES_SEARCH = gql`
-  query($filter: String!) {
-    searchArticles(filter: $filter) {
-      slug
-      headline
-      abstract
-      content
-      published_at
-      authors {
-        name
-      }
-      dominantMedia {
-        attachment_uuid
-        extension
-      }
-    }
-  }
-`
-
 // Enum for the 3 publications included in this app
 export const PublicationEnum = Object.freeze({
   dp: 'The Daily Pennsylvanian',

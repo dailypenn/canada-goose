@@ -71,7 +71,7 @@ const DiscoveryView = ({ navigation, publication }) => {
 
 const DiscoveryScreenComp = ({ navigation, publication }) => (
   <SafeAreaView style={styles.container}>
-    <SearchBar navigation={navigation} />
+    <SearchBar navigation={navigation} publication={publication} />
     <DiscoveryView navigation={navigation} publication={publication} />
   </SafeAreaView>
 )

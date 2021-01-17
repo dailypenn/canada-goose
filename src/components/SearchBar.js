@@ -15,27 +15,27 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useQuery } from '@apollo/client'
 
 import { SectionHeader } from './SectionHeader'
-import { SearchArticleList } from './ArticleList'
 import { ActivityIndicator } from './ActivityIndicator'
-import { ARTICLES_SEARCH } from '../utils/constants'
+import { ARTICLES_SEARCH } from '../utils/queries'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
 } from '../utils/helperFunctions'
 import { GEOMETRIC_BOLD } from '../utils/fonts'
+import { ArticleList } from './ArticleList'
 
 const { Value, timing } = Animated
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 
-const SearchView = ({ filter, navigation }) => {
+const SearchView = ({ filter, navigation, publication }) => {
   const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
-    variables: { filter },
+    variables: { filter, publication },
     fetchPolicy: 'cache-and-network',
   })
 
-  if (loading) return <ActivityIndicator />
+  if (!data) return <ActivityIndicator />
 
   const { searchArticles: results } = data
 
@@ -46,8 +46,9 @@ const SearchView = ({ filter, navigation }) => {
     >
       <SectionHeader title="Sections" />
       <SectionHeader title="Articles" />
-      <SearchArticleList
+      <ArticleList
         articles={results}
+        publication={publication}
         navigateToArticleScreen={PARTIAL_NAVIGATE(
           navigation,
           'SectionArticle',
@@ -58,7 +59,7 @@ const SearchView = ({ filter, navigation }) => {
   )
 }
 
-export const SearchBar = ({ navigation }) => {
+export const SearchBar = ({ navigation, publication }) => {
   const [focused, setFocused] = useState(false)
   const [keyword, setKeyword] = useState('')
 
@@ -218,7 +219,7 @@ export const SearchBar = ({ navigation }) => {
                 </Text>
               </View>
             ) : (
-              <SearchView filter={keyword} navigation={navigation} />
+              <SearchView filter={keyword} navigation={navigation} publication={publication} />
             )}
           </View>
         </SafeAreaView>

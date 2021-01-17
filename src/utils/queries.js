@@ -303,3 +303,23 @@ export const SECTIONS_QUERY = gql`
     }
   }
 `
+
+export const ARTICLES_SEARCH = gql`
+  query($filter: String!, $publication: String!) {
+    searchArticles(filter: $filter, publication: $publication) {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
+      }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
+    }
+  }
+`
