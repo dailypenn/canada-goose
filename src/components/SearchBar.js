@@ -223,7 +223,7 @@ export const SearchBar = ({ navigation, publication }) => {
             {keyword === '' ? (
               <View style={styles.image_placeholder_container}>
                 <Text style={styles.image_placeholder_text}>
-                  Try searching for articles or sections
+                  Try searching for articles
                 </Text>
               </View>
             ) : (
