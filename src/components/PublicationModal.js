@@ -7,9 +7,9 @@ import {
   StyleSheet,
   Image,
   Animated,
+  TouchableOpacity,
 } from 'react-native'
 import Modal from 'react-native-modal'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as Haptics from 'expo-haptics'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -167,6 +167,8 @@ const PublicationModalComp = ({
 
   // Function called when user selects a new publication
   const selectedPublication = pub => {
+    console.log('pub pressed!')
+    console.log(pub)
     if (!currentlySwiping) {
       if (pub != publication) {
         dispatchSwitchPublication(pub)
@@ -221,7 +223,10 @@ const PublicationModalComp = ({
     deviceWidth: SCREEN_DIMENSIONS.width,
     deviceHeight: SCREEN_DIMENSIONS.height,
     swipeDirection: ['down'],
-    onSwipeMove: () => updateSwipeStatus(true), // Block
+    onSwipeMove: () => {
+      console.log('asdf')
+      updateSwipeStatus(true)
+    }, // Block
     onSwipeCancel: () => setTimeout(() => updateSwipeStatus(false), 100), // Ensures no accidental press
     onSwipeComplete: () => updateVisibility(false),
     onBackButtonPress: () => updateVisibility(false),
@@ -237,7 +242,6 @@ const PublicationModalComp = ({
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => selectedPublication(publication)}
-          disabled={currentlySwiping}
         >
           <PublicationOption publication={publication} isCurrent={true} />
         </TouchableOpacity>

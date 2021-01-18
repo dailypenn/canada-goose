@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingBottom: 20
-  }
+    paddingBottom: 20,
+  },
 })
 
 const width = Dimensions.get('window').width
@@ -24,7 +24,7 @@ const DiscoveryView = ({ navigation, publication }) => {
   const navigateToSectionScreen = (section, slug) => {
     navigation.navigate('Section', {
       sectionName: section,
-      slug
+      slug,
     })
   }
 
@@ -49,7 +49,7 @@ const DiscoveryView = ({ navigation, publication }) => {
         //   />
         // }
         // ListHeaderComponentStyle={styles.container}
-        itemDimension={width/2-40}
+        itemDimension={width / 2 - 40}
         spacing={13}
         data={SECTIONS}
         renderItem={({ item, i }) => (
@@ -66,13 +66,8 @@ const DiscoveryView = ({ navigation, publication }) => {
     )
   }
 
-  return (
-    <Text>
-      Generate a random article for UTB bro
-    </Text>
-  )
+  return <Text>Generate a random article for UTB bro</Text>
 }
-
 
 const DiscoveryScreenComp = ({ navigation, publication }) => (
   <SafeAreaView style={styles.container}>

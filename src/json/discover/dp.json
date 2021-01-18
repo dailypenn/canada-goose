@@ -2,41 +2,41 @@
   {
     "name": "Academics",
     "slug": "academics",
-    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+    "img": "https://storage.googleapis.com/mobile-storage/dp-academics.png"
   },
   {
     "name": "Administration",
     "slug": "administration",
-    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+    "img": "https://storage.googleapis.com/mobile-storage/dp-administration.png"
   },
   {
     "name": "Identities",
     "slug": "identities",
-    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+    "img": "https://storage.googleapis.com/mobile-storage/dp-identities.png"
   },
   {
     "name": "Politics",
     "slug": "politics",
-    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+    "img": "https://storage.googleapis.com/mobile-storage/dp-politics.png"
   },
   {
     "name": "Student Life",
     "slug": "student-life",
-    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+    "img": "https://storage.googleapis.com/mobile-storage/dp-student-life.png"
   },
   {
     "name": "Sports",
     "slug": "sports",
-    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+    "img": "https://storage.googleapis.com/mobile-storage/dp-sports.png"
   },
   {
     "name": "Staff Editorials",
     "slug": "editorials",
-    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+    "img": "https://storage.googleapis.com/mobile-storage/dp-editorials.png"
   },
   {
     "name": "Opinion Columns",
     "slug": "columns",
-    "img": "https://storage.googleapis.com/mobile-storage/arts.png"
+    "img": "https://storage.googleapis.com/mobile-storage/dp-columns.png"
   }
 ]
