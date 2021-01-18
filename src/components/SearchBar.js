@@ -49,7 +49,6 @@ const SearchView = ({ filter, navigation, publication }) => {
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
     >
-      <SectionHeader title="Sections" />
       <SectionHeader title="Articles" />
       <SearchArticleList
         articles={results}
