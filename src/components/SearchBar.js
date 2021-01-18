@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 import Animated, { Easing } from 'react-native-reanimated'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight, getBottomSpace, ifIphoneX } from 'react-native-iphone-x-helper'
 import { useQuery } from '@apollo/client'
 
 import { SectionHeader } from './SectionHeader'
@@ -227,14 +227,14 @@ export const SearchBar = ({ navigation, publication }) => {
                 </Text>
               </View>
             ) : (
-              <SearchView filter={keyword} navigation={navigation} publication={publication} />
-            )}
+                <SearchView filter={keyword} navigation={navigation} publication={publication} />
+              )}
           </View>
         </SafeAreaView>
       </Animated.View>
     </>
   )
-} 
+}
 
 const styles = StyleSheet.create({
   title: {
@@ -295,11 +295,16 @@ const styles = StyleSheet.create({
   },
   content: {
     width: width,
-    height: height-(49 + 50 + topInset + bottomInset),
+    height: height - (49 + 50 + topInset + bottomInset),
     position: 'absolute',
     // left: 0,
     // bottom: 0,
     zIndex: 999,
+    ...ifIphoneX({
+      height: height - (49 + 50 + topInset + bottomInset) + 4,
+    }, {
+      height: height - (49 + 50 + topInset + bottomInset),
+    })
   },
   content_safe_area: {
     flex: 1,
