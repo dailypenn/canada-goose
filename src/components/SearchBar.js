@@ -12,6 +12,7 @@ import {
 } from 'react-native'
 import Animated, { Easing } from 'react-native-reanimated'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper'
 import { useQuery } from '@apollo/client'
 
 import { SectionHeader } from './SectionHeader'
@@ -29,7 +30,11 @@ const { Value, timing } = Animated
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 
+const topInset = getStatusBarHeight(true)
+const bottomInset = getBottomSpace()
+
 const SearchView = ({ filter, navigation, publication }) => {
+
   const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
     variables: { filter, publication },
     fetchPolicy: 'cache-and-network',
@@ -84,7 +89,7 @@ export const SearchBar = ({ navigation, publication }) => {
     }
     const content_y_pos_anim = {
       duration: 0,
-      toValue: 0,
+      toValue: topInset + 50,
       easing: Easing.inOut(Easing.ease),
     }
     const content_opacity_anim = {
@@ -113,6 +118,7 @@ export const SearchBar = ({ navigation, publication }) => {
   }
 
   const _onBlur = () => {
+
     const input_x_pos_anim = {
       duration: 200,
       toValue: width,
@@ -156,7 +162,7 @@ export const SearchBar = ({ navigation, publication }) => {
     <>
       <SafeAreaView style={styles.header_safe_area}>
         <View style={styles.header}>
-          <View style={styles.header_inner}>
+          <View style={styles.header_inner} >
             <Animated.View style={{ opacity: title_opacity }}>
               <Text style={styles.title}>Discover</Text>
             </Animated.View>
@@ -229,7 +235,7 @@ export const SearchBar = ({ navigation, publication }) => {
       </Animated.View>
     </>
   )
-}
+} 
 
 const styles = StyleSheet.create({
   title: {
@@ -239,7 +245,6 @@ const styles = StyleSheet.create({
   },
   header_safe_area: {
     zIndex: 1000,
-    //marginTop: 5,
   },
   header: {
     height: 50,
@@ -291,10 +296,10 @@ const styles = StyleSheet.create({
   },
   content: {
     width: width,
-    height: height,
+    height: height-(49 + 50 + topInset + bottomInset),
     position: 'absolute',
-    left: 0,
-    bottom: 0,
+    // left: 0,
+    // bottom: 0,
     zIndex: 999,
   },
   content_safe_area: {
@@ -303,11 +308,11 @@ const styles = StyleSheet.create({
   },
   content_inner: {
     flex: 1,
-    paddingTop: 125,
+    paddingTop: 0,
   },
   separator: {
     marginTop: 5,
-    marginBottom: 5,
+    marginBottom: 0,
     height: 1,
     backgroundColor: '#e6e4eb',
   },
@@ -339,3 +344,4 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
 })
+
