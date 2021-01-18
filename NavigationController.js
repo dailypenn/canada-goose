@@ -1,22 +1,19 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import { Image } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import * as Haptics from 'expo-haptics'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
 
 import { HomeStack, DiscoveryStack, SettingsStack } from './src/stacks'
-import RootReducer from './src/reducers'
 import { DP_RED_RGBA, PublicationPrimaryColor } from './src/utils/branding'
 import { PublicationEnum } from './src/utils/constants'
 
-const store = createStore(RootReducer)
-
 const Tab = createBottomTabNavigator()
 
-export const TabNavigationController = ({ navigation }) => {
+const TabNavigationController = ({ publication }) => {
+  console.log(`navigation controller ${publication}`)
   // const bringUpActionSheet = () => {
   //   Animated.timing(bounceValue, {
   //     toValue: 1,
@@ -25,56 +22,58 @@ export const TabNavigationController = ({ navigation }) => {
   // }
 
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ color }) => {
-              let iconName
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ color }) => {
+            let iconName
 
-              if (route.name === 'HomeStack') {
-                return (
-                  <Image
-                    source={
-                      color == PublicationPrimaryColor(PublicationEnum.dp)
-                        ? require('./src/static/logos/dp-logo-small-red.png')
-                        : require('./src/static/logos/dp-logo-small-grey.png')
-                    }
-                    style={{
-                      width: 32,
-                      resizeMode: 'contain',
-                      alignSelf: 'center',
-                    }}
-                  />
-                )
-              } else if (route.name == 'DiscoveryStack') iconName = 'search'
-              else if (route.name === 'SettingsStack') iconName = 'cog'
+            if (route.name === 'HomeStack') {
+              return (
+                <Image
+                  source={
+                    color == PublicationPrimaryColor(PublicationEnum.dp)
+                      ? require('./src/static/logos/dp-logo-small-red.png')
+                      : require('./src/static/logos/dp-logo-small-grey.png')
+                  }
+                  style={{
+                    width: 32,
+                    resizeMode: 'contain',
+                    alignSelf: 'center'
+                  }}
+                />
+              )
+            } else if (route.name == 'DiscoveryStack') iconName = 'search'
+            else if (route.name === 'SettingsStack') iconName = 'cog'
 
-              return <Ionicons name={iconName} size={30} color={color} />
-            },
-          })}
-          tabBarOptions={{
-            activeTintColor: PublicationPrimaryColor(PublicationEnum.dp),
-            inactiveTintColor: 'gray',
-            showLabel: false,
-            style: {
-              shadowColor: 'black',
-              shadowOpacity: 0.1,
-              shadowRadius: 3,
-            },
-            onPress: () => {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-            },
-          }}
-        >
-          <Tab.Screen name="HomeStack" component={HomeStack} />
-          <Tab.Screen name="DiscoveryStack" component={DiscoveryStack} />
-          <Tab.Screen name="SettingsStack" component={SettingsStack} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </Provider>
+            return <Ionicons name={iconName} size={30} color={color} />
+          }
+        })}
+        tabBarOptions={{
+          activeTintColor: PublicationPrimaryColor(PublicationEnum.dp),
+          inactiveTintColor: 'gray',
+          showLabel: false,
+          style: {
+            shadowColor: 'black',
+            shadowOpacity: 0.1,
+            shadowRadius: 3
+          },
+          onPress: () => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+          }
+        }}
+      >
+        <Tab.Screen name="HomeStack" component={HomeStack} />
+        <Tab.Screen name="DiscoveryStack" component={DiscoveryStack} />
+        <Tab.Screen name="SettingsStack" component={SettingsStack} />
+      </Tab.Navigator>
+    </NavigationContainer>
   )
 }
+
+const mapStateToProps = ({ publication }) => ({ publication })
+
+export default connect(mapStateToProps)(TabNavigationController)
 
 // export class TabNavigationController extends Component {
 //     super(props)
