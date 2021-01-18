@@ -7,9 +7,9 @@ import { ActivityIndicator } from './src/components'
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  uri: 'http://localhost:5000/graphql',
-  // uri: 'https://graphql-295919.ue.r.appspot.com/graphql',
-  cache: new InMemoryCache()
+  // uri: 'http://localhost:5000/graphql',
+  uri: 'https://graphql-295919.ue.r.appspot.com/graphql',
+  cache: new InMemoryCache(),
 })
 
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
     }
 
     loadAssets()
-    
+
     setAssetsLoaded(true)
   }, [])
 

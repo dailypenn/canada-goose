@@ -110,6 +110,7 @@ export const CustomHeader = ({ publication, contentOffset }) => {
           barStyle={
             contentOffset >= FADE_END ? 'dark-content' : 'light-content'
           }
+          backgroundColor={contentOffset >= FADE_END ? 'white' : 'black'}
         />
         <SafeAreaView
           style={{
