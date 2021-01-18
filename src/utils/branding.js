@@ -2,6 +2,17 @@
 
 import { PublicationEnum } from './constants'
 
+export const DP_LOGO_RED_URI = 'src/static/logos/dp-logo-small-red.png'
+export const DP_LOGO_WHITE_URI = 'src/static/logos/dp-logo-small-white.png'
+
+export const STREET_LOGO_TEAL_URI =
+  'src/static/logos/street-logo-small-teal.png'
+export const STREET_LOGO_WHITE_URI =
+  'src/static/logos/street-logo-small-white.png'
+
+export const UTB_LOGO_BLUE = 'src/static/logos/utb-logo-small-blue.png'
+export const UTB_LOGO_WHITE = 'src/static/logos/utb-logo-small-white.png'
+
 export const DP_RED = '#D72E25' //'#A61E21'
 export const UTB_BLUE = '#3964A6'
 export const STREET_TURQ = '#25B7B6'
