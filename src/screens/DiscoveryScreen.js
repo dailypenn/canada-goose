@@ -11,11 +11,17 @@ import { connect } from 'react-redux'
 import { FlatGrid } from 'react-native-super-grid'
 
 import { PublicationEnum } from '../utils/constants'
-import { DiscoveryCell, SearchBar, RandomButton } from '../components'
+import {
+  DiscoveryCell,
+  SearchBar,
+  RandomButton,
+  DefaultStatusBar,
+} from '../components'
 import { StatusBar } from 'react-native'
 import { View } from 'react-native'
 import { Text } from 'react-native'
 import { DP_RED } from '../utils/branding'
+import { useIsFocused } from '@react-navigation/native'
 const DP_SECTIONS = require('../json/discover/dp.json')
 const STREET_SECTIONS = require('../json/discover/street.json')
 
@@ -24,7 +30,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     //paddingBottom: 20,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+    paddingTop: Platform.OS == 'android' ? 10 : 0,
   },
 })
 
@@ -94,12 +100,15 @@ const DiscoveryView = ({ navigation, publication }) => {
   )
 }
 
-const DiscoveryScreenComp = ({ navigation, publication }) => (
-  <SafeAreaView style={styles.container}>
-    <SearchBar navigation={navigation} publication={publication} />
-    <DiscoveryView navigation={navigation} publication={publication} />
-  </SafeAreaView>
-)
+const DiscoveryScreenComp = ({ navigation, publication }) => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <DefaultStatusBar />
+      <SearchBar navigation={navigation} publication={publication} />
+      <DiscoveryView navigation={navigation} publication={publication} />
+    </SafeAreaView>
+  )
+}
 
 const mapStateToProps = ({ publication }) => ({ publication })
 
