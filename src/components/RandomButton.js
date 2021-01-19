@@ -7,8 +7,9 @@ import {
   Dimensions,
   Pressable,
 } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import * as Haptics from 'expo-haptics'
 import { DP_RED } from '../utils/branding'
+import { Platform } from 'react-native'
 
 export const RandomButton = ({ onButtonPress }) => {
   const MAX_HEIGHT = 80
@@ -32,6 +33,8 @@ export const RandomButton = ({ onButtonPress }) => {
       useNativeDriver: false,
     })
 
+    console.log('occuring')
+
     Animated.parallel([anim, negAnim]).start()
     setTimeout(() => {
       onButtonPress()
@@ -39,6 +42,8 @@ export const RandomButton = ({ onButtonPress }) => {
   }
 
   const onTouchIn = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+
     const anim = Animated.timing(pressOffset, {
       toValue: MAX_HEIGHT - MIN_HEIGHT,
       duration: IN_DURATION,
@@ -53,74 +58,82 @@ export const RandomButton = ({ onButtonPress }) => {
 
     Animated.parallel([anim, negAnim]).start()
   }
+
+  const UI = (
+    <View
+      style={{
+        width: '85%',
+        aspectRatio: 1,
+        borderRadius: Dimensions.get('window').height,
+        position: 'absolute',
+        transform: [{ rotateX: '45deg' }],
+        backgroundColor: 'grey',
+        alignSelf: 'center',
+      }}
+    >
+      <Animated.View
+        style={{
+          width: '80%',
+          alignSelf: 'center',
+          aspectRatio: 1,
+          top: 40,
+          borderRadius: Dimensions.get('window').height,
+          backgroundColor: '#831A15',
+        }}
+      />
+      <Animated.View
+        style={{
+          height: negPressOffset,
+          bottom: '40%',
+          width: '80%',
+          top: 100,
+          position: 'absolute',
+          backgroundColor: '#831A15',
+          transform: [{ translateY: pressOffset }],
+          alignSelf: 'center',
+        }}
+      />
+      <Animated.View
+        style={{
+          width: '80%',
+          aspectRatio: 1,
+          position: 'absolute',
+          alignSelf: 'center',
+          alignContent: 'center',
+          justifyContent: 'center',
+          top: -40,
+          transform: [{ translateY: pressOffset }],
+          borderRadius: Dimensions.get('window').height,
+          backgroundColor: DP_RED,
+        }}
+      >
+        <Text
+          style={{
+            alignSelf: 'center',
+            fontSize: 30,
+            fontFamily: 'ComicSans',
+            padding: 20,
+            textAlign: 'center',
+            color: 'white',
+            transform: [{ rotate: '20deg' }],
+          }}
+        >
+          Random Content Generator 3000
+        </Text>
+      </Animated.View>
+    </View>
+  )
+
   return (
     <Pressable
       onPressIn={onTouchIn}
-      onPressOut={onPress}
-      style={{ backgroundColor: 'blue', top: -100 }}
+      onPress={onPress}
+      style={{
+        height: Dimensions.get('window').width * 0.6,
+        width: '100%',
+      }}
     >
-      <View
-        style={{
-          width: '85%',
-          aspectRatio: 1,
-          borderRadius: Dimensions.get('window').height,
-          position: 'absolute',
-          transform: [{ rotateX: '45deg' }],
-          backgroundColor: 'grey',
-          alignSelf: 'center',
-        }}
-      >
-        <Animated.View
-          style={{
-            width: '80%',
-            alignSelf: 'center',
-            aspectRatio: 1,
-            top: 40,
-            borderRadius: Dimensions.get('window').height,
-            backgroundColor: '#831A15',
-          }}
-        />
-        <Animated.View
-          style={{
-            height: negPressOffset,
-            bottom: '40%',
-            width: '80%',
-            top: 100,
-            position: 'absolute',
-            backgroundColor: '#831A15',
-            transform: [{ translateY: pressOffset }],
-            alignSelf: 'center',
-          }}
-        />
-        <Animated.View
-          style={{
-            width: '80%',
-            aspectRatio: 1,
-            position: 'absolute',
-            alignSelf: 'center',
-            alignContent: 'center',
-            justifyContent: 'center',
-            top: -40,
-            transform: [{ translateY: pressOffset }],
-            borderRadius: Dimensions.get('window').height,
-            backgroundColor: DP_RED,
-          }}
-        >
-          <Text
-            style={{
-              alignSelf: 'center',
-              fontSize: 30,
-              fontFamily: 'ComicSans',
-              padding: 20,
-              textAlign: 'center',
-              color: 'white',
-              transform: [{ rotate: '20deg' }],
-            }}
-          >
-            Random Content Generator 3000
-          </Text>
-        </Animated.View>
-      </View>
+      {UI}
     </Pressable>
   )
 }
