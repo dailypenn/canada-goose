@@ -92,5 +92,5 @@ export const parseAbstract = abstract => {
     return ''
   }
 
-  return abstract.split('<p>')[1].split('</p>')[0]
+  return abstract.split('<p>')[1].split('</p>')[0].replace('&nbsp;', '')
 }
