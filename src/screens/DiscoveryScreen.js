@@ -5,6 +5,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Easing,
+  Platform,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { FlatGrid } from 'react-native-super-grid'
@@ -22,7 +23,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingBottom: 20,
+    //paddingBottom: 20,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
 })
 
@@ -69,7 +71,6 @@ const DiscoveryView = ({ navigation, publication }) => {
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => navigateToSectionScreen(item.name, item.slug)}
-            style={styles.item}
             key={i}
           >
             <DiscoveryCell category={item.name} imageURL={item.img} />

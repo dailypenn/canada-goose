@@ -9,8 +9,10 @@ import {
   TouchableHighlight,
   ScrollView,
   Button,
+  Animated,
+  Platform,
 } from 'react-native'
-import Animated, { Easing } from 'react-native-reanimated'
+// import Animated, { Easing } from 'react-native-reanimated'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { getStatusBarHeight, getBottomSpace, ifIphoneX } from 'react-native-iphone-x-helper'
 import { useQuery } from '@apollo/client'
@@ -25,13 +27,15 @@ import {
 import { GEOMETRIC_BOLD } from '../utils/fonts'
 import { SearchArticleList } from './ArticleList'
 
-const { Value, timing } = Animated
+const { Value, timing, Clock } = Animated
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
+const screenHeight = Dimensions.get('screen').height
 
 const topInset = getStatusBarHeight(true)
 const bottomInset = getBottomSpace()
+const bottomBar = Platform.OS === "android" ? (screenHeight - height - topInset) : 0 //black bar on android
 
 const SearchView = ({ filter, navigation, publication }) => {
 
@@ -49,7 +53,7 @@ const SearchView = ({ filter, navigation, publication }) => {
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
     >
-      <SectionHeader title="Articles" />
+      {/* <SectionHeader title="Articles" /> */}
       <SearchArticleList
         articles={results}
         publication={publication}
@@ -69,7 +73,7 @@ export const SearchBar = ({ navigation, publication }) => {
 
   const [input_x_pos] = useState(new Value(width))
   const [cancel_opacity] = useState(new Value(0))
-  const [content_y_pos] = useState(new Value(height))
+  const [content_y_pos] = useState(new Value(height + 500))
   const [content_opacity] = useState(new Value(0))
   const [title_opacity] = useState(new Value(1))
 
@@ -79,27 +83,32 @@ export const SearchBar = ({ navigation, publication }) => {
     const input_x_pos_anim = {
       duration: 200,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease),
+      // easing: Easing.inOut(Easing.ease),
+      useNativeDriver: false,
     }
     const cancel_opacity_anim = {
       duration: 200,
       toValue: 1,
-      easing: Easing.inOut(Easing.ease),
+      // easing: Easing.inOut(Easing.ease),
+      useNativeDriver: false,
     }
     const content_y_pos_anim = {
       duration: 0,
       toValue: topInset + 50,
-      easing: Easing.inOut(Easing.ease),
+      // easing: Easing.inOut(Easing.ease),
+      useNativeDriver: false,
     }
     const content_opacity_anim = {
       duration: 200,
       toValue: 1,
-      easing: Easing.inOut(Easing.ease),
+      // easing: Easing.inOut(Easing.ease),
+      useNativeDriver: false,
     }
     const title_opacity_anim = {
       duration: 200,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease),
+      // easing: Easing.inOut(Easing.ease),
+      useNativeDriver: false,
     }
 
     if (!focused) {
@@ -121,27 +130,32 @@ export const SearchBar = ({ navigation, publication }) => {
     const input_x_pos_anim = {
       duration: 200,
       toValue: width,
-      easing: Easing.inOut(Easing.ease),
+      // easing: Easing.inOut(Easing.ease),
+      useNativeDriver: false,
     }
     const cancel_opacity_anim = {
       duration: 50,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease),
+      // easing: Easing.inOut(Easing.ease),
+      useNativeDriver: false,
     }
     const content_y_pos_anim = {
-      duration: 200,
-      toValue: height,
-      easing: Easing.inOut(Easing.ease),
+      duration: 300,
+      toValue: height + 500,
+      // easing: Easing.inOut(Easing.ease),
+      useNativeDriver: false,
     }
     const content_opacity_anim = {
-      duration: 200,
+      duration: 300,
       toValue: 0,
-      easing: Easing.inOut(Easing.ease),
+      // easing: Easing.inOut(Easing.ease),
+      useNativeDriver: false,
     }
     const title_opacity_anim = {
-      duration: 300,
+      duration: 400,
       toValue: 1,
-      easing: Easing.inOut(Easing.ease),
+      // easing: Easing.inOut(Easing.ease),
+      useNativeDriver: false,
     }
 
     if (focused) {
@@ -179,35 +193,53 @@ export const SearchBar = ({ navigation, publication }) => {
                 { transform: [{ translateX: input_x_pos }] },
               ]}
             >
-              {/* <Animated.View style={{ opacity: cancel_opacity }}>
-                <TouchableHighlight
-                  activeOpacity={1}
-                  underlayColor={"#ccd0d5"}
-                  onPress={_onBlur}
-                  style={styles.back_icon_box}
-                >
-                  <Ionicons name="chevron-back-outline" size={22} color="#666" />
-                </TouchableHighlight>
-              </Animated.View> */}
-              <TextInput
-                ref={input}
-                placeholder="Search"
-                clearButtonMode="always"
-                value={keyword}
-                onChangeText={value => setKeyword(value)}
-                style={styles.input}
-                returnKeyType="search"
-                autoCapitalize='none'
-                autoCorrect={false}
-              />
-              <Animated.View style={{ opacity: cancel_opacity }}>
-                <Button title="Cancel" onPress={_onBlur} color="#333" />
-              </Animated.View>
+              {Platform.OS === "android" ? (
+                <>
+                  <Animated.View style={{ opacity: cancel_opacity }}>
+                    <TouchableHighlight
+                      activeOpacity={1}
+                      underlayColor={"#ccd0d5"}
+                      onPress={_onBlur}
+                      style={styles.back_icon_box}
+                    >
+                      <Ionicons name="chevron-back-outline" size={22} color="#666" />
+                    </TouchableHighlight>
+                  </Animated.View>
+                  <TextInput
+                    ref={input}
+                    placeholder="Search"
+                    clearButtonMode="always"
+                    value={keyword}
+                    onChangeText={value => setKeyword(value)}
+                    style={styles.input}
+                    returnKeyType="search"
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                  />
+                </>
+              ) : (
+                  <>
+                    <TextInput
+                      ref={input}
+                      placeholder="Search"
+                      clearButtonMode="always"
+                      value={keyword}
+                      onChangeText={value => setKeyword(value)}
+                      style={styles.input}
+                      returnKeyType="search"
+                      autoCapitalize='none'
+                      autoCorrect={false}
+                    />
+                    <Animated.View style={{ opacity: cancel_opacity }}>
+                      <Button title="Cancel" onPress={_onBlur} color="#333" />
+                    </Animated.View>
+                  </>
+                )}
             </Animated.View>
           </View>
         </View>
       </SafeAreaView>
-
+      {/* <View style = {styles.test}></View> */}
       <Animated.View
         style={[
           styles.content,
@@ -237,6 +269,17 @@ export const SearchBar = ({ navigation, publication }) => {
 }
 
 const styles = StyleSheet.create({
+  test: {
+    backgroundColor: '#692',
+    position: 'absolute',
+    height: 100,
+    width: 100,
+    borderWidth: 5,
+    borderColor: '#000',
+    top: 24,
+    left: 0,
+    zIndex: 1200,
+  },
   title: {
     fontFamily: GEOMETRIC_BOLD,
     fontSize: 28,
@@ -295,7 +338,7 @@ const styles = StyleSheet.create({
   },
   content: {
     width: width,
-    height: height - (49 + 50 + topInset + bottomInset),
+    height: height - (49 + 50 + topInset + bottomInset + bottomBar),
     position: 'absolute',
     // left: 0,
     // bottom: 0,
@@ -303,7 +346,7 @@ const styles = StyleSheet.create({
     ...ifIphoneX({
       height: height - (49 + 50 + topInset + bottomInset) + 4,
     }, {
-      height: height - (49 + 50 + topInset + bottomInset),
+      height: height - (49 + 50 + topInset + bottomInset + bottomBar),
     })
   },
   content_safe_area: {
@@ -348,4 +391,3 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
 })
-
