@@ -1,11 +1,20 @@
 import React from 'react'
-import { StyleSheet, SafeAreaView, Dimensions } from 'react-native'
+import {
+  StyleSheet,
+  SafeAreaView,
+  Dimensions,
+  TouchableOpacity,
+  Easing,
+} from 'react-native'
 import { connect } from 'react-redux'
 import { FlatGrid } from 'react-native-super-grid'
-import { TouchableOpacity } from 'react-native'
 
 import { PublicationEnum } from '../utils/constants'
-import { DiscoveryCell, SearchBar } from '../components'
+import { DiscoveryCell, SearchBar, RandomButton } from '../components'
+import { StatusBar } from 'react-native'
+import { View } from 'react-native'
+import { Text } from 'react-native'
+import { DP_RED } from '../utils/branding'
 const DP_SECTIONS = require('../json/discover/dp.json')
 const STREET_SECTIONS = require('../json/discover/street.json')
 
@@ -28,6 +37,10 @@ const DiscoveryView = ({ navigation, publication }) => {
     })
   }
 
+  const onButtonPress = () => {
+    //TODO: Call for random article and transition
+  }
+
   let SECTIONS = []
 
   switch (publication) {
@@ -39,7 +52,7 @@ const DiscoveryView = ({ navigation, publication }) => {
       break
   }
 
-  if (SECTIONS) {
+  if (publication != PublicationEnum.utb) {
     return (
       <FlatGrid
         // ListHeaderComponent={
@@ -66,7 +79,18 @@ const DiscoveryView = ({ navigation, publication }) => {
     )
   }
 
-  return <Text>Generate a random article for UTB bro</Text>
+  return (
+    <View
+      style={{
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignContent: 'center',
+      }}
+    >
+      <RandomButton onButtonPress={onButtonPress} />
+    </View>
+  )
 }
 
 const DiscoveryScreenComp = ({ navigation, publication }) => (

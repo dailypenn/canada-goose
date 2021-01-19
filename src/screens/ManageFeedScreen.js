@@ -16,9 +16,7 @@ import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
 import { DP_HOME_SECTIONS_TITLE } from '../utils/constants'
 import { REORDER_HOME_SECTIONS } from '../actions'
-import {
-  GET_HOME_SECTIONS,
-} from '../utils/helperFunctions'
+import { GET_HOME_SECTIONS } from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   container: {
