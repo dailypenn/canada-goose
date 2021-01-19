@@ -29,9 +29,9 @@ const styles = StyleSheet.create({
       width: 2,
       height: 4,
     },
-    shadowOpacity: 0.32,
-    shadowRadius: 5.46,
-    elevation: 9,
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+    elevation: 3,
   },
   list: {
     flex: 1,

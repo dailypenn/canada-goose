@@ -5,7 +5,7 @@ import * as Haptics from 'expo-haptics'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import { HomeScreen, ArticleScreen, WebViewScreen } from '../screens'
-import { PublicationModal } from '../components'
+import { DefaultStatusBar, PublicationModal } from '../components'
 
 const Stack = createStackNavigator()
 
@@ -24,6 +24,7 @@ export const HomeStack = ({ navigation }) => {
 
   return (
     <>
+      <DefaultStatusBar />
       <PublicationModal navigation={navigation} />
       <Stack.Navigator
         initialRouteName="Home"

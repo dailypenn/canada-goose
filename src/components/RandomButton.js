@@ -110,8 +110,8 @@ export const RandomButton = ({ onButtonPress }) => {
           style={{
             alignSelf: 'center',
             fontSize: 30,
-            fontFamily: GEOMETRIC_REGULAR,
-            padding: 20,
+            fontFamily: GEOMETRIC_BOLD,
+            padding: 25,
             textAlign: 'center',
             color: 'white',
             transform: [{ rotate: '20deg' }],

@@ -3,6 +3,7 @@ import { TouchableOpacity, Text, View, StyleSheet } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
+import { DefaultStatusBar } from '../components'
 
 const styles = StyleSheet.create({
   container: {
@@ -155,17 +156,20 @@ const SettingsSection = ({ navigateToScreen, name, items }) => (
 
 export const SettingsScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      {settings_sections.map((l, i) => (
-        <SettingsSection
-          key={l.id}
-          name={l.name}
-          items={l.items}
-          navigateToScreen={(screen, props) =>
-            navigation.navigate(screen, props)
-          }
-        />
-      ))}
-    </View>
+    <>
+      <DefaultStatusBar />
+      <View style={styles.container}>
+        {settings_sections.map((l, i) => (
+          <SettingsSection
+            key={l.id}
+            name={l.name}
+            items={l.items}
+            navigateToScreen={(screen, props) =>
+              navigation.navigate(screen, props)
+            }
+          />
+        ))}
+      </View>
+    </>
   )
 }

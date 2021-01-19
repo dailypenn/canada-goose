@@ -94,7 +94,7 @@ export const PictureHeadline = ({
       <View style={{ width: '100%' }}>
         <View style={{ padding: 15 }}>
           <View style={styles.spacer} />
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', alignContent: 'center' }}>
             <CategoryTag name={category} publication={publication} />
             <View style={styles.spacer} />
             <Text style={styles.blackTime}>{time}</Text>
