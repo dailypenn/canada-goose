@@ -15,7 +15,6 @@ export const BODY_SERIF_ITALIC = 'LibertinusItalic'
 
 export const loadFonts = async () => {
   Font.loadAsync({
-    ComicSans: require(`${FONT_FOLDER}/Comic-Sans/ComicSansMSBold.ttf`),
     Libertinus: require(`${FONT_FOLDER}/Libertinus/LibertinusSerif-Regular.otf`),
     LibertinusItalic: require(`${FONT_FOLDER}/Libertinus/LibertinusSerif-Italic.otf`),
     PlayfairDisplayBold: require(`${FONT_FOLDER}/Butler/GT-Sectra-Fine-Bold.otf`),
