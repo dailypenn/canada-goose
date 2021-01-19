@@ -10,7 +10,7 @@ import {
 import * as Haptics from 'expo-haptics'
 import { DP_RED } from '../utils/branding'
 import { Platform } from 'react-native'
-import { GEOMETRIC_BOLD } from '../utils/fonts'
+import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 
 export const RandomButton = ({ onButtonPress }) => {
   const MAX_HEIGHT = 80
@@ -112,7 +112,7 @@ export const RandomButton = ({ onButtonPress }) => {
           style={{
             alignSelf: 'center',
             fontSize: 30,
-            fontFamily: GEOMETRIC_BOLD,
+            fontFamily: GEOMETRIC_REGULAR,
             padding: 20,
             textAlign: 'center',
             color: 'white',

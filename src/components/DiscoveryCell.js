@@ -37,7 +37,10 @@ const styles = StyleSheet.create({
 
 export const DiscoveryCell = ({ imageURL, category }) => {
   return (
-    <ImageBackground style={styles.imageBackground} source={{ uri: imageURL }}>
+    <ImageBackground
+      style={styles.imageBackground}
+      source={{ uri: imageURL, cache: 'force-cache' }}
+    >
       <LinearGradient
         colors={['transparent', 'rgba(0,0,0,0.5)']}
         style={styles.gradient}
