@@ -13,13 +13,6 @@ import { PublicationEnum } from './src/utils/constants'
 const Tab = createBottomTabNavigator()
 
 const TabNavigationController = ({ publication }) => {
-  console.log(`navigation controller ${publication}`)
-  // const bringUpActionSheet = () => {
-  //   Animated.timing(bounceValue, {
-  //     toValue: 1,
-  //     duration: 500,
-  //   }).str
-  // }
   const DP_LOGO_RED = require('./src/static/logos/dp-logo-small-red.png')
   const DP_LOGO_GREY = require('./src/static/logos/dp-logo-small-grey.png')
 

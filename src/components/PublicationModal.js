@@ -172,11 +172,6 @@ const PublicationModalComp = ({
 
   // Function called when user selects a new publication
   const selectedPublication = pub => {
-    console.log('\n\n\n\n\n')
-    console.log('Font loading: ' + Font.isLoading(DISPLAY_SERIF_BLACK))
-    console.log('Font loaded: ' + Font.isLoaded(DISPLAY_SERIF_BLACK))
-    console.log('pub pressed!')
-    console.log(pub)
     if (!currentlySwiping) {
       if (pub != publication) {
         dispatchSwitchPublication(pub)
@@ -232,7 +227,6 @@ const PublicationModalComp = ({
     deviceHeight: SCREEN_DIMENSIONS.height,
     swipeDirection: ['down'],
     onSwipeMove: () => {
-      console.log('asdf')
       updateSwipeStatus(true)
     }, // Block
     onSwipeCancel: () => setTimeout(() => updateSwipeStatus(false), 100), // Ensures no accidental press

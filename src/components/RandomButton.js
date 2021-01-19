@@ -34,8 +34,6 @@ export const RandomButton = ({ onButtonPress }) => {
       useNativeDriver: false,
     })
 
-    console.log('occuring')
-
     Animated.parallel([anim, negAnim]).start()
     setTimeout(() => {
       onButtonPress()
