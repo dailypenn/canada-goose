@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontSize: 14,
     fontFamily: GEOMETRIC_BOLD,
-    fontWeight: 'bold',
     opacity: 1.0,
   },
   spacer: {

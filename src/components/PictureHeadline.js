@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: DISPLAY_SERIF_BOLD,
     fontSize: 26,
-    fontWeight: 'bold',
     marginBottom: 20,
     marginTop: 10,
     flexShrink: 1,
@@ -30,7 +29,6 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: DISPLAY_SERIF_BOLD,
     fontSize: 26,
-    fontWeight: 'bold',
     marginBottom: 20,
     marginTop: 10,
     flexShrink: 1,
@@ -42,7 +40,6 @@ const styles = StyleSheet.create({
     fontFamily: GEOMETRIC_REGULAR,
     textTransform: 'uppercase',
     fontSize: 14,
-    fontWeight: 'bold',
     opacity: 0.75,
   },
 
@@ -88,7 +85,11 @@ export const PictureHeadline = ({
   imageUrl,
   publication,
 }) => {
-  if (imageUrl == "https://snworksceo.imgix.net/dpn/null.sized-1000x1000.null?w=1000" || imageUrl == "https://snworksceo.imgix.net/dpn/.sized-1000x1000.?w=1000") {
+  if (
+    imageUrl ==
+      'https://snworksceo.imgix.net/dpn/null.sized-1000x1000.null?w=1000' ||
+    imageUrl == 'https://snworksceo.imgix.net/dpn/.sized-1000x1000.?w=1000'
+  ) {
     return (
       <View style={{ width: '100%' }}>
         <View style={{ padding: 15 }}>
@@ -113,7 +114,10 @@ export const PictureHeadline = ({
   } else {
     return (
       <View style={styles.view}>
-        <ImageBackground style={styles.imageBackground} source={{ uri: imageUrl }}>
+        <ImageBackground
+          style={styles.imageBackground}
+          source={{ uri: imageUrl }}
+        >
           <LinearGradient
             colors={['transparent', 'rgba(0,0,0,0.8)']}
             style={styles.gradient}

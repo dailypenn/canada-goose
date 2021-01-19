@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     fontFamily: DISPLAY_SERIF_BOLD,
     flex: 1,
     fontSize: 18,
-    fontWeight: 'bold',
     lineHeight: 22,
   },
   byline: {
@@ -41,7 +40,6 @@ const styles = StyleSheet.create({
     fontFamily: 'HelveticaNeue-CondensedBold',
     textTransform: 'uppercase',
     fontSize: 13,
-    fontWeight: 'bold',
     lineHeight: 13,
     paddingBottom: 4,
   },

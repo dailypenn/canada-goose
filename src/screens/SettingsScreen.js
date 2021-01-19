@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     fontFamily: GEOMETRIC_BOLD,
     color: '#a1a1a1',
     fontSize: 14,
-    fontWeight: 'bold',
     paddingVertical: 5,
     textTransform: 'uppercase',
   },

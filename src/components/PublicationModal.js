@@ -12,9 +12,14 @@ import {
 import Modal from 'react-native-modal'
 import * as Haptics from 'expo-haptics'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import * as Font from 'expo-font'
 
 import { PublicationPrimaryColor } from '../utils/branding'
-import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
+import {
+  DISPLAY_SERIF_BLACK,
+  GEOMETRIC_BOLD,
+  GEOMETRIC_REGULAR,
+} from '../utils/fonts'
 import { PublicationEnum } from '../utils/constants'
 import { switchPublication } from '../actions'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
@@ -167,6 +172,9 @@ const PublicationModalComp = ({
 
   // Function called when user selects a new publication
   const selectedPublication = pub => {
+    console.log('\n\n\n\n\n')
+    console.log('Font loading: ' + Font.isLoading(DISPLAY_SERIF_BLACK))
+    console.log('Font loaded: ' + Font.isLoaded(DISPLAY_SERIF_BLACK))
     console.log('pub pressed!')
     console.log(pub)
     if (!currentlySwiping) {

@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     fontFamily: GEOMETRIC_BOLD,
     textTransform: 'uppercase',
     fontSize: 14,
-    fontWeight: 'bold',
     color: '#fff',
   },
   view: {

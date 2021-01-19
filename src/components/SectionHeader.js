@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: DISPLAY_SERIF_BLACK,
     fontSize: 28,
-    fontWeight: 'bold',
     marginBottom: 0,
     marginTop: 0,
     lineHeight: 35,

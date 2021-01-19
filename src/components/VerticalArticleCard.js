@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: DISPLAY_SERIF_BOLD,
     fontSize: 20,
-    fontWeight: 'bold',
     marginBottom: 20,
     marginTop: 12,
     flexShrink: 1,
@@ -52,7 +51,6 @@ const styles = StyleSheet.create({
     fontFamily: GEOMETRIC_BOLD,
     textTransform: 'uppercase',
     fontSize: 14,
-    fontWeight: 'bold',
   },
 
   time: {
