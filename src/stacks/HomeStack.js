@@ -3,27 +3,45 @@
 import React, { useEffect, useState, forwardRef, createRef } from 'react'
 import * as Haptics from 'expo-haptics'
 import { createStackNavigator } from '@react-navigation/stack'
+import { IS_ONBOARDED_KEY, Storage } from '../utils/storage'
 
-import { HomeScreen, ArticleScreen, WebViewScreen } from '../screens'
+import {
+  HomeScreen,
+  ArticleScreen,
+  WebViewScreen,
+  OnboardingModal,
+} from '../screens'
 import { DefaultStatusBar, PublicationModal } from '../components'
 
 const Stack = createStackNavigator()
 
 export const HomeStack = ({ navigation }) => {
-  // Register long press to change screens
+  const [isOnboarded, hasCompletedOnboarding] = useState(true)
 
   // Haptic feedback when tab bar is pressed
   useEffect(() => {
+    // Haptic feedback on tab presses
     const unsubscribe = navigation.addListener('tabPress', e => {
       if (!navigation.isFocused())
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+
+      hasCompletedOnboarding(false)
     })
 
+    async function getOnboardingStatus() {
+      await Storage.getItem(IS_ONBOARDED_KEY).then(onboarded => {
+        hasCompletedOnboarding(isOnboarded)
+      })
+    }
+
+    getOnboardingStatus()
+
     return unsubscribe
-  }, [navigation])
+  }, [navigation, hasCompletedOnboarding])
 
   return (
     <>
+      <OnboardingModal {...{ hasCompletedOnboarding, isOnboarded }} />
       <DefaultStatusBar />
       <PublicationModal navigation={navigation} />
       <Stack.Navigator
