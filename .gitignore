@@ -368,3 +368,6 @@ Temporary Items
 .DS_Store
 
 yarn.lock
+
+# bare workflow
+ios

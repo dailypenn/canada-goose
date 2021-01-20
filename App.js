@@ -23,11 +23,9 @@ const App = () => {
   useEffect(() => {
     const loadAssets = async () => {
       await loadFonts()
+      setAssetsLoaded(true)
     }
-
     loadAssets()
-
-    setAssetsLoaded(true)
   }, [])
 
   if (assetsLoaded) {
