@@ -1,5 +1,7 @@
 // HOME SCREEN ACTIONS
 
+import { PublicationEnum } from '../utils/constants'
+
 export const SWITCH_PUBLICATION = 'SWITCH_PUBLICATION'
 
 export const switchPublication = publication => ({
@@ -7,11 +9,37 @@ export const switchPublication = publication => ({
   publication,
 })
 
+export const SET_INIT = 'SET_INIT'
+export const setInit = result => {
+  return {
+    type: SET_INIT,
+    updates: [
+      {
+        publication: PublicationEnum.dp,
+        newSections: JSON.parse(result[0][1]),
+      },
+      {
+        publication: PublicationEnum.street,
+        newSections: JSON.parse(result[1][1]),
+      },
+      {
+        publication: PublicationEnum.utb,
+        newSections: JSON.parse(result[2][1]),
+      },
+    ],
+  }
+}
 // SETTINGS SCREEN ACTIONS
 export const REORDER_HOME_SECTIONS = 'REORDER_HOME_SECTIONS'
 
 export const reorderedHomeSections = publication => ({
   type: REORDER_HOME_SECTIONS,
+  publication,
+})
+
+export const UPDATE_HOME_SECTIONS = 'UPDATE_HOME_SECTIONS'
+export const loadHomeSections = publication => ({
+  type: UPDATE_HOME_SECTIONS,
   publication,
 })
 
