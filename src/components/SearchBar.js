@@ -269,17 +269,17 @@ export const SearchBar = ({ navigation, publication }) => {
 }
 
 const styles = StyleSheet.create({
-  test: {
-    backgroundColor: '#692',
-    position: 'absolute',
-    height: 100,
-    width: 100,
-    borderWidth: 5,
-    borderColor: '#000',
-    top: 24,
-    left: 0,
-    zIndex: 1200,
-  },
+  // test: {
+  //   backgroundColor: '#692',
+  //   position: 'absolute',
+  //   height: 100,
+  //   width: 100,
+  //   borderWidth: 5,
+  //   borderColor: '#000',
+  //   top: 24,
+  //   left: 0,
+  //   zIndex: 1200,
+  // },
   title: {
     fontFamily: GEOMETRIC_BOLD,
     fontSize: 28,
@@ -290,7 +290,8 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 50,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
+    //backgroundColor: '#ff0',
   },
   header_inner: {
     flex: 1,
@@ -315,9 +316,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     top: 0,
-    left: 0,
+    //left: 0,
     backgroundColor: 'white',
-    width: width - 26, //width - 32
+    width: width - 20, //width - 32
+    ...Platform.select({
+      ios: {
+        left: 0,
+      },
+      android: {
+        right: 0,
+      },
+    }),
   },
   back_icon_box: {
     width: 40,
@@ -327,6 +336,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 5,
+    marginLeft: 5,
   },
   input: {
     flex: 1,
