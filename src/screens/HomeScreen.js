@@ -125,14 +125,7 @@ const HomeView = ({
   )
 }
 
-const HomeScreenComp = ({
-  navigation,
-  publication,
-  reorderHomeSection,
-  homeSection,
-}) => {
-  console.log(`current reorderHomeSection is ${reorderHomeSection}`)
-
+const HomeScreenComp = ({ navigation, publication, homeSection }) => {
   // const [lastActiveTime, setLastActiveTime] = useState(Date.now())
   const appState = useRef(AppState.currentState)
   const [appStateState, setAppStateState] = useState(appState.current)

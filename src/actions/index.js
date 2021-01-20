@@ -29,13 +29,6 @@ export const setInit = result => {
     ],
   }
 }
-// SETTINGS SCREEN ACTIONS
-export const REORDER_HOME_SECTIONS = 'REORDER_HOME_SECTIONS'
-
-export const reorderedHomeSections = publication => ({
-  type: REORDER_HOME_SECTIONS,
-  publication,
-})
 
 export const UPDATE_HOME_SECTIONS = 'UPDATE_HOME_SECTIONS'
 export const loadHomeSections = publication => ({

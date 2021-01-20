@@ -67,11 +67,7 @@ const styles = StyleSheet.create({
 class ManageFeedScreenComp extends Component {
   constructor(props) {
     super(props)
-    console.log(
-      'manage feed screen comp',
-      props.publication,
-      props.reorderHomeSection
-    )
+    console.log('manage feed screen comp', props.publication)
 
     this.props = props
     this.state = {
@@ -213,9 +209,8 @@ class Row extends Component {
   }
 }
 
-const mapStateToProps = ({ publication, reorderHomeSection }) => ({
+const mapStateToProps = ({ publication }) => ({
   publication,
-  reorderHomeSection,
 })
 
 export const ManageFeedScreen = connect(mapStateToProps)(ManageFeedScreenComp)

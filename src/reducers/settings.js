@@ -29,23 +29,6 @@ const HomeSectionReducer = (state = defaultHomeSectionsState, action) => {
   }
 }
 
-// when no publication's home sections were reordered
-const defaultReorderedHomeSectionState = null
-
-const ReorderHomeSectionReducer = (
-  state = defaultReorderedHomeSectionState,
-  action
-) => {
-  const { type, publication } = action
-
-  switch (type) {
-    case REORDER_HOME_SECTIONS:
-      return publication
-    default:
-      return state
-  }
-}
-
 const defaultNewSavedArticleState = false
 
 const NewSavedArticleReducer = (
@@ -62,4 +45,4 @@ const NewSavedArticleReducer = (
   }
 }
 
-export { ReorderHomeSectionReducer, NewSavedArticleReducer, HomeSectionReducer }
+export { NewSavedArticleReducer, HomeSectionReducer }
