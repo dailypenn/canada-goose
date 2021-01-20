@@ -1,9 +1,4 @@
-import {
-  UPDATE_HOME_SECTIONS,
-  REORDER_HOME_SECTIONS,
-  SAVE_NEW_ARTICLE,
-  SET_INIT,
-} from '../actions'
+import { UPDATE_HOME_SECTIONS, SAVE_NEW_ARTICLE, SET_INIT } from '../actions'
 
 const defaultHomeSectionsState = {}
 

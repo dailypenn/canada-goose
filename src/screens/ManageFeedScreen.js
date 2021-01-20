@@ -14,8 +14,7 @@ import { connect } from 'react-redux'
 
 import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
-import { DP_HOME_SECTIONS_TITLE } from '../utils/constants'
-import { REORDER_HOME_SECTIONS, UPDATE_HOME_SECTIONS } from '../actions'
+import { UPDATE_HOME_SECTIONS } from '../actions'
 import { GET_HOME_SECTIONS } from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
@@ -101,10 +100,6 @@ class ManageFeedScreenComp extends Component {
       this.newData
     )
 
-    // this.props.dispatch({
-    //   type: REORDER_HOME_SECTIONS,
-    //   publication: this.props.publication,
-    // })
     this.props.dispatch({
       type: UPDATE_HOME_SECTIONS,
       updates: [
