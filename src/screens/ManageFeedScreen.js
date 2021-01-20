@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import {
   Text,
   View,
@@ -63,37 +63,48 @@ const styles = StyleSheet.create({
   },
 })
 
-class ManageFeedScreenComp extends Component {
+class ManageFeedForPublication extends Component {
   constructor(props) {
     super(props)
-    console.log('manage feed screen comp', props.publication)
+    const {
+      navigation,
+      publication,
+      homeSectionPreferences,
+      dispatch,
+    } = this.props
 
-    this.props = props
-    this.state = {
-      currData: GET_HOME_SECTIONS(props.publication),
-    }
+    this.navigation = navigation
+    this.publication = publication
+    this.homeSectionPreferences = homeSectionPreferences
+    this.dispatch = dispatch
+
+    // console.log('MANAGE FEED FOR PUBLICATION', publication)
+
+    this.currData = this.homeSectionPreferences
+      ? this.homeSectionPreferences[this.publication]
+      : GET_HOME_SECTIONS(this.publication)
+
     this.newOrder = null
     this.instructions =
       'Press down and drag the sections to the order you would like to see them appear on the home page'
   }
 
   componentDidMount() {
-    this.orderItems()
-    this.props.navigation.setParams({ handleSave: this._handleSave.bind(this) })
+    this.props.navigation.setParams({ handleSave: this._handleSave })
   }
 
   _handleSave = async () => {
     if (this.newOrder == null) return
     var sorted = []
     this.newOrder.forEach(i => {
-      this.state.currData.forEach((d, j) => {
+      this.currData.forEach((d, j) => {
         if (i == j) {
           sorted.push(d)
         }
       })
     })
     this.newData = sorted
-    if (this.newData == this.state.currData) return
+    if (this.newData == this.currData) return
     // console.log('saving-', this.newData)
     await Storage.setItem(
       GET_HOME_FEED_ORDER_KEY(this.props.publication),
@@ -103,47 +114,45 @@ class ManageFeedScreenComp extends Component {
     this.props.dispatch(
       updateHomeSections(this.props.publication, this.newData)
     )
-
-    // this.props.dispatch({
-    //   type: UPDATE_HOME_SECTIONS,
-    //   updates: [
-    //     { publication: this.props.publication, newSections: this.newData },
-    //   ],
-    // })
-  }
-
-  orderItems = async () => {
-    let storedOrder = await Storage.getItem(
-      GET_HOME_FEED_ORDER_KEY(this.props.publication)
-    )
-    if (storedOrder != null) {
-      this.setState({ currData: storedOrder })
-    }
-  }
-
-  onReleaseRow = (key, currentOrder) => {
-    this.newOrder = currentOrder
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} key={this.publication}>
         <View style={styles.sectionContainer}>
           <SortableList
             style={styles.list}
-            data={this.state.currData}
-            renderRow={this._renderRow}
-            onReleaseRow={this.onReleaseRow}
+            data={this.currData}
+            renderRow={({ data, active }) => {
+              return <Row data={data} active={active} />
+            }}
+            onReleaseRow={(key, currentOrder) => {
+              this.newOrder = currentOrder
+            }}
           />
         </View>
         <Text style={styles.description}>{this.instructions}</Text>
       </View>
     )
   }
+}
 
-  _renderRow = ({ data, active }) => {
-    return <Row data={data} active={active} />
-  }
+const ManageFeedScreenComp = ({
+  navigation,
+  publication,
+  settings,
+  dispatch,
+}) => {
+  // console.log('MANAGE FEED SCREEN COMP', publication)
+  return (
+    <ManageFeedForPublication
+      key={publication}
+      navigation={navigation}
+      publication={publication}
+      homeSectionPreferences={settings.homeSectionPreferences}
+      dispatch={dispatch}
+    />
+  )
 }
 
 class Row extends Component {
@@ -180,13 +189,13 @@ class Row extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.active !== nextProps.active) {
+  componentDidUpdate(prevProps) {
+    if (this.props.active != prevProps.active) {
       Animated.timing(this._active, {
         duration: 300,
         easing: Easing.bounce,
-        toValue: Number(nextProps.active),
-        useNativeDriver: false,
+        toValue: Number(this.props.active),
+        useNativeDriver: true,
       }).start()
     }
   }
@@ -208,8 +217,9 @@ class Row extends Component {
   }
 }
 
-const mapStateToProps = ({ publication }) => ({
+const mapStateToProps = ({ publication, settings }) => ({
   publication,
+  settings,
 })
 
 export const ManageFeedScreen = connect(mapStateToProps)(ManageFeedScreenComp)
