@@ -8,6 +8,7 @@ import { DISPLAY_SERIF_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { NAVIGATE_TO_ARTICLE_SCREEN, TIME_AGO } from '../utils/helperFunctions'
 import { connect } from 'react-redux'
+import { unsaveArticle } from '../actions'
 
 const styles = StyleSheet.create({
   cell: {
@@ -79,11 +80,11 @@ const SwipeableRow = ({ item, navigationHandler, deleteHandler }) => {
   )
 }
 
-const SavedArticlesScreenComp = ({ navigation, settings }) => {
+const SavedArticlesScreenComp = ({ navigation, settings, dispatch }) => {
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
 
   console.log('SAVED ARTICLES SCREEN COMP', savedArticles)
-  // Storage.clearAll()
+  Storage.clearAll()
 
   if (settings.savedArticles != null) {
     settings.savedArticles.forEach(element => {
@@ -106,8 +107,11 @@ const SavedArticlesScreenComp = ({ navigation, settings }) => {
     let successful = await Storage.removeItem(item.slug)
     if (successful) {
       const remainingArticles = savedArticles.filter(item => item.slug !== slug)
-      await Storage.setItem(SAVED_ARTICLES_KEY, remainingArticles)
-      setSavedArticles(remainingArticles)
+      let saved_successfully = await Storage.setItem(
+        SAVED_ARTICLES_KEY,
+        remainingArticles
+      )
+      if (saved_successfully) dispatch(unsaveArticle(item))
     }
   }
 

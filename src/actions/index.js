@@ -57,3 +57,13 @@ export const saveNewArticle = item => {
     },
   }
 }
+
+export const UNSAVE_NEW_ARTICLE = 'UNSAVE_NEW_ARTICLE'
+export const unsaveArticle = item => {
+  return {
+    type: UNSAVE_NEW_ARTICLE,
+    updates: {
+      savedArticles: [item],
+    },
+  }
+}

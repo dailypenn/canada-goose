@@ -12,9 +12,18 @@ import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { Alert } from 'react-native'
 import { saveNewArticle } from '../actions'
+import { TouchableOpacity } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
 
-const ArticleScreenComp = ({ navigation, route, publication, dispatch }) => {
+const ArticleScreenComp = ({
+  navigation,
+  route,
+  publication,
+  settings,
+  dispatch,
+}) => {
   const { article } = route.params
+  const savedArticles = settings.savedArticles ? settings.savedArticles : []
 
   if (!article) {
     // TODO: Check that article is already fetched
@@ -24,17 +33,17 @@ const ArticleScreenComp = ({ navigation, route, publication, dispatch }) => {
   }
 
   useEffect(() => {
-    navigation.setParams({ handleSave: handleSave })
-  }, [])
+    navigation.setParams({
+      handleSave: handleSave,
+      alreadySaved: savedArticles.some(obj => obj.slug == article.slug),
+    })
+  }, [settings.savedArticles])
 
-  const handleSave = async () => {
+  const handleSave = async alreadySaved => {
     const date = new Date()
 
-    let saved_articles = await Storage.getItem(SAVED_ARTICLES_KEY)
-    if (saved_articles == null) saved_articles = []
-
-    if (saved_articles.some(obj => obj.slug == article.slug)) {
-      Alert.alert('Oops', 'This article has already been saved!')
+    if (alreadySaved) {
+      Alert.alert('TODO', 'UNSAVE')
       return
     }
 
@@ -44,12 +53,14 @@ const ArticleScreenComp = ({ navigation, route, publication, dispatch }) => {
       saved_at: date,
       publication: publication,
     }
-    saved_articles.push(newData)
-    // console.log('saving', saved_articles)
+
+    let newSavedArticles = [...savedArticles]
+    newSavedArticles.push(newData)
+    console.log('saving', newData.article.headline)
 
     let saved_successfully = await Storage.setItem(
       SAVED_ARTICLES_KEY,
-      saved_articles
+      newSavedArticles
     )
 
     if (saved_successfully) dispatch(saveNewArticle(newData))
@@ -130,18 +141,25 @@ const ArticleScreenComp = ({ navigation, route, publication, dispatch }) => {
 ArticleScreenComp.navigationOptions = ({ route }) => ({
   title: '',
   animationEnabled: true,
-  headerRight: () => (
-    <Button
-      title={'Save'}
-      onPress={() => {
-        route.params.handleSave()
-      }}
-    />
-  ),
+  headerRight: () => {
+    let icon = 'bookmark-outline'
+    if (route.params.alreadySaved) icon = 'bookmark'
+
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          route.params.handleSave(route.params.alreadySaved)
+        }}
+      >
+        <Ionicons name={icon} size={24} color="black" />
+      </TouchableOpacity>
+    )
+  },
 })
 
-const mapStateToProps = ({ publication }) => ({
+const mapStateToProps = ({ publication, settings }) => ({
   publication,
+  settings,
 })
 
 export const ArticleScreen = connect(mapStateToProps)(ArticleScreenComp)
