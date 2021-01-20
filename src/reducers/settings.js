@@ -2,7 +2,6 @@ import {
   UPDATE_HOME_SECTIONS,
   SET_INIT,
   SAVE_NEW_ARTICLE,
-  DELETE_ARTICLE,
   UNSAVE_NEW_ARTICLE,
 } from '../actions'
 
@@ -51,26 +50,18 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
       }
     case UNSAVE_NEW_ARTICLE:
       const removeSlug = updates.savedArticles[0].slug
+      console.log('removeslug', removeSlug)
       const remainingArticles = state.savedArticles.filter(
         item => item.slug !== removeSlug
       )
-      // console.log('unsave article', removeSlug)
-      // console.log(
-      //   'remaining articles',
-      //   remainingArticles.map(a => {
-      //     a.slug
-      //   })
-      // )
 
       return {
         ...state,
-        savedArticles: state.savedArticles.filter(
-          item => item.slug !== updates.savedArticles[0].slug
-        ),
+        savedArticles: remainingArticles,
       }
     default:
       return state
   }
 }
 
-export { SettingsReducer }
+export default SettingsReducer

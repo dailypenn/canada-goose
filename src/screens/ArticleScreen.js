@@ -1,19 +1,23 @@
 import React, { useEffect } from 'react'
-import { Text, View, useWindowDimensions, Button } from 'react-native'
+import {
+  Text,
+  View,
+  useWindowDimensions,
+  TouchableOpacity,
+  Alert,
+} from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import HTML from 'react-native-render-html'
 import { useQuery } from '@apollo/client'
 import { connect } from 'react-redux'
+import { Ionicons } from '@expo/vector-icons'
 
 import { PictureHeadline } from '../components'
 import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
 import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
-import { Alert } from 'react-native'
-import { saveNewArticle } from '../actions'
-import { TouchableOpacity } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import { saveNewArticle, unsaveArticle } from '../actions'
 
 const ArticleScreenComp = ({
   navigation,
@@ -34,18 +38,24 @@ const ArticleScreenComp = ({
 
   useEffect(() => {
     navigation.setParams({
-      handleSave: handleSave,
+      handlePress: handlePress,
       alreadySaved: savedArticles.some(obj => obj.slug == article.slug),
     })
   }, [settings.savedArticles])
 
-  const handleSave = async alreadySaved => {
-    const date = new Date()
+  const deleteHandler = async article => {
+    console.log('UNSAVEEEE')
+    const slug = article.slug
+    const remainingArticles = savedArticles.filter(item => item.slug !== slug)
+    let saved_successfully = await Storage.setItem(
+      SAVED_ARTICLES_KEY,
+      remainingArticles
+    )
+    if (saved_successfully) dispatch(unsaveArticle({ slug: article.slug }))
+  }
 
-    if (alreadySaved) {
-      Alert.alert('TODO', 'UNSAVE')
-      return
-    }
+  const saveHandler = async article => {
+    const date = new Date()
 
     const newData = {
       slug: article.slug,
@@ -65,6 +75,11 @@ const ArticleScreenComp = ({
 
     if (saved_successfully) dispatch(saveNewArticle(newData))
     else Alert.alert('Oops', 'There was an error saving article :(')
+  }
+
+  const handlePress = async alreadySaved => {
+    if (!alreadySaved) saveHandler(article)
+    else deleteHandler(article)
   }
 
   /* Currently author and image credits are not supported by
@@ -146,13 +161,15 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
     if (route.params.alreadySaved) icon = 'bookmark'
 
     return (
-      <TouchableOpacity
-        onPress={() => {
-          route.params.handleSave(route.params.alreadySaved)
-        }}
-      >
-        <Ionicons name={icon} size={24} color="black" />
-      </TouchableOpacity>
+      <View style={{ padding: 10 }}>
+        <TouchableOpacity
+          onPress={() => {
+            route.params.handlePress(route.params.alreadySaved)
+          }}
+        >
+          <Ionicons name={icon} size={25} color="black" />
+        </TouchableOpacity>
+      </View>
     )
   },
 })

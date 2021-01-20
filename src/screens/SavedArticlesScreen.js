@@ -83,7 +83,7 @@ const SwipeableRow = ({ item, navigationHandler, deleteHandler }) => {
 const SavedArticlesScreenComp = ({ navigation, settings, dispatch }) => {
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
 
-  console.log('SAVED ARTICLES SCREEN COMP', savedArticles)
+  // console.log('SAVED ARTICLES SCREEN COMP', savedArticles)
   Storage.clearAll()
 
   if (settings.savedArticles != null) {
@@ -104,15 +104,12 @@ const SavedArticlesScreenComp = ({ navigation, settings, dispatch }) => {
 
   const deleteHandler = async item => {
     const slug = item.slug
-    let successful = await Storage.removeItem(item.slug)
-    if (successful) {
-      const remainingArticles = savedArticles.filter(item => item.slug !== slug)
-      let saved_successfully = await Storage.setItem(
-        SAVED_ARTICLES_KEY,
-        remainingArticles
-      )
-      if (saved_successfully) dispatch(unsaveArticle(item))
-    }
+    const remainingArticles = savedArticles.filter(item => item.slug !== slug)
+    let saved_successfully = await Storage.setItem(
+      SAVED_ARTICLES_KEY,
+      remainingArticles
+    )
+    if (saved_successfully) dispatch(unsaveArticle(item))
   }
 
   return (
