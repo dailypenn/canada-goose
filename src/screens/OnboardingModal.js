@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   SafeAreaView,
+  StyleSheet,
   Animated,
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -30,19 +31,27 @@ const ONBOARDING_CONTENT = [
 
 const MAX_GRADIENT_BUTTON_SIZE = Dimensions.get('screen').width * 0.9
 const MIN_GRAIDENT_BUTTON_SIZE = Dimensions.get('screen').width * 0.2
+const MAX_PUB_OPACITY = 0.6
 
 const PageZero = () => {
-  const DP_LOGO = require('../static/logos/dp-logo-small-red.png')
-  const UTB_LOGO = require('../static/logos/utb-logo-small-blue.png')
-  const STREET_LOGO = require('../static/logos/street-logo-small-teal.png')
+  const DP_LOGO = require('../static/logos/dp-logo-small-grey.png')
+  const UTB_LOGO = require('../static/logos/utb-logo-small-grey.png')
+  const STREET_LOGO = require('../static/logos/street-logo-small-grey.png')
   const [buttonWidth] = useState(new Animated.Value(0))
   const [buttonOpacity] = useState(new Animated.Value(0))
   const [buttonPosY] = useState(new Animated.Value(100))
-
   const [buttonPosX] = useState(new Animated.Value(0))
   const [logoPosX] = useState(new Animated.Value(0))
   const [logoPosY] = useState(new Animated.Value(0))
   const [logoOpacity] = useState(new Animated.Value(0))
+  const logoSkew = logoPosY.interpolate({
+    inputRange: [0, 150],
+    outputRange: ['0deg', '20deg'],
+  })
+
+  const [dpOpacity] = useState(new Animated.Value(0))
+  const [streetOpacity] = useState(new Animated.Value(0))
+  const [utbOpacity] = useState(new Animated.Value(0))
 
   const enterZero = async () => {
     buttonPosX.setValue(0)
@@ -80,6 +89,31 @@ const PageZero = () => {
       easing: Easing.out(Easing.exp),
     })
 
+    const dpFade = Animated.timing(dpOpacity, {
+      toValue: MAX_PUB_OPACITY,
+      duration: 1500,
+      useNativeDriver: false,
+      easing: Easing.out(Easing.cubic),
+    })
+
+    const streetFade = Animated.timing(streetOpacity, {
+      toValue: MAX_PUB_OPACITY,
+      duration: 1500,
+      useNativeDriver: false,
+      easing: Easing.out(Easing.cubic),
+    })
+
+    const utbFade = Animated.timing(utbOpacity, {
+      toValue: MAX_PUB_OPACITY,
+      duration: 1500,
+      useNativeDriver: false,
+      easing: Easing.out(Easing.cubic),
+    })
+
+    Animated.sequence([
+      Animated.delay(200),
+      Animated.stagger(100, [dpFade, streetFade, utbFade]),
+    ]).start()
     const buttonAnimations = Animated.parallel([
       fadeInButton,
       expandButton,
@@ -127,12 +161,28 @@ const PageZero = () => {
       easing: Easing.in(Easing.cubic),
     })
 
-    // const buttonAnimations = Animated.parallel(
-    //   fadeOutButton,
-    //   shrinkButton,
-    //   buttonXMove
-    // ).start()
-    const logoAnimations = Animated.parallel([fadeOutLogo, logoXMove]).start()
+    const dpFadeOut = Animated.timing(dpOpacity, {
+      toValue: 0,
+      duration: EXIT_ANIM_TIME,
+      useNativeDriver: false,
+      easing: Easing.out(Easing.cubic),
+    })
+
+    const streetFadeOut = Animated.timing(streetOpacity, {
+      toValue: 0,
+      duration: EXIT_ANIM_TIME,
+      useNativeDriver: false,
+      easing: Easing.out(Easing.cubic),
+    })
+    const utbFadeOut = Animated.timing(utbOpacity, {
+      toValue: 0,
+      duration: EXIT_ANIM_TIME,
+      useNativeDriver: false,
+      easing: Easing.out(Easing.cubic),
+    })
+
+    Animated.stagger(100, [dpFadeOut, streetFadeOut, utbFadeOut]).start()
+    Animated.parallel([fadeOutLogo, logoXMove]).start()
 
     // Animated.stagger(100, [logoAnimations, buttonAnimations]).start()
 
@@ -168,10 +218,42 @@ const PageZero = () => {
             backgroundColor: '#DDD',
             borderRadius: 20, // TODO: Remove later
             alignSelf: 'center',
-            transform: [{ translateY: logoPosY }, { translateX: logoPosX }],
+            transform: [
+              { translateY: logoPosY },
+              { translateX: logoPosX },
+              { rotate: logoSkew },
+            ],
             opacity: logoOpacity,
           }}
-        />
+        >
+          <Image
+            source={require('../static/get-started-button-background.jpg')}
+            style={{ width: '100%', height: '100%', borderRadius: 20 }}
+          />
+        </Animated.View>
+        <View
+          style={{
+            width: '120%',
+            height: 80,
+            marginTop: 30,
+            alignSelf: 'center',
+            flexDirection: 'row',
+            alignContent: 'space-between',
+          }}
+        >
+          <Animated.Image
+            source={DP_LOGO}
+            style={[styles.pubLogo, { opacity: dpOpacity }]}
+          />
+          <Animated.Image
+            source={STREET_LOGO}
+            style={[styles.pubLogo, { opacity: streetOpacity }]}
+          />
+          <Animated.Image
+            source={UTB_LOGO}
+            style={[styles.pubLogo, { opacity: utbOpacity }]}
+          />
+        </View>
       </View>
       <GradientButton
         title="Get Started"
@@ -197,6 +279,16 @@ const PageZero = () => {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  pubLogo: {
+    flex: 1,
+    resizeMode: 'contain',
+    height: 50,
+    aspectRatio: 1,
+    marginHorizontal: 15,
+  },
+})
 
 export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
   const [isVisible, updateVisibility] = useState(isOnboarded)
