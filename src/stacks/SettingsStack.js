@@ -79,11 +79,7 @@ export const SettingsStack = ({ navigation }) => {
       <Stack.Screen
         name="SettingsArticle"
         component={ArticleScreen}
-        options={({ route }) => ({
-          title: '',
-          animationEnabled: false,
-          headerBackTitleVisible: true,
-        })}
+        options={ArticleScreen.navigationOptions}
       />
     </Stack.Navigator>
   )
