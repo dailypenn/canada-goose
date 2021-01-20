@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 })
 
 const SavedArticleCell = ({ title, savedAt, category, publication }) => {
-  const timeAgo = 'Saved ' + TIME_AGO(new Date(savedAt))
+  // const timeAgo = 'Saved ' + TIME_AGO(new Date(savedAt))
   return (
     <View style={styles.cell}>
       <View style={{ flexDirection: 'column' }}>
@@ -62,12 +62,7 @@ const SavedArticleCell = ({ title, savedAt, category, publication }) => {
           <Text style={styles.subText}>
             {publication} • {category}
           </Text>
-
           <View style={styles.spacer} />
-
-          {/* <View style={styles.chevron}>
-            <Entypo name="chevron-right" size={20} color="#c4c4c4" />
-          </View> */}
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{title}</Text>
@@ -92,7 +87,7 @@ const SwipeableRow = ({ item, navigationHandler, deleteHandler }) => {
         <SavedArticleCell
           title={article.headline}
           savedAt={saved_at}
-          category="news"
+          category={article.tag}
           publication={item.publication}
         />
       </TouchableOpacity>
@@ -104,12 +99,13 @@ const SavedArticlesScreenComp = ({ navigation, settings, dispatch }) => {
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
 
   // console.log('SAVED ARTICLES SCREEN COMP', savedArticles)
-  Storage.clearAll()
 
   if (settings.savedArticles != null) {
     settings.savedArticles.forEach(element => {
       console.log(element.article.headline)
     })
+  } else {
+    console.log('settings. savedarticles is null')
   }
 
   const navigationHandler = async item => {

@@ -66,7 +66,7 @@ const ArticleScreenComp = ({
 
     let newSavedArticles = [...savedArticles]
     newSavedArticles.push(newData)
-    console.log('saving', newData.article.headline)
+    console.log('saving', newData.article)
 
     let saved_successfully = await Storage.setItem(
       SAVED_ARTICLES_KEY,
