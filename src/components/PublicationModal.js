@@ -24,6 +24,8 @@ import { PublicationEnum } from '../utils/constants'
 import { switchPublication } from '../actions'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { color } from 'react-native-reanimated'
+import { StatusBar } from 'react-native'
+import { useIsFocused } from '@react-navigation/native'
 
 const SCREEN_DIMENSIONS = Dimensions.get('screen')
 const PUBLICATIONS = [
@@ -160,7 +162,7 @@ const PublicationModalComp = ({
 }) => {
   const [isVisible, updateVisibility] = useState(false) // Whether or not the modal is visible
   const [currentlySwiping, updateSwipeStatus] = useState(false) // Flags when swipes have started, but this is not blocking out touchable opacity presses :(
-
+  const isFocused = useIsFocused()
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabLongPress', e => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
@@ -232,40 +234,45 @@ const PublicationModalComp = ({
     onSwipeCancel: () => setTimeout(() => updateSwipeStatus(false), 100), // Ensures no accidental press
     onSwipeComplete: () => updateVisibility(false),
     onBackButtonPress: () => updateVisibility(false),
-    backdropOpacity: 0.85,
+    backdropOpacity: 0.9,
     styles: styles.container,
   }
 
   return (
-    <Modal {...modalOptions}>
-      <View style={{ flex: 1 }}></View>
-      <View style={styles.view}>
-        <View style={styles.bar} />
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() => selectedPublication(publication)}
-        >
-          <PublicationOption publication={publication} isCurrent={true} />
-        </TouchableOpacity>
-        <View style={styles.line} />
-        {PUBLICATIONS.map((el, index) => {
-          return el == publication ? null : (
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => selectedPublication(el)}
-              disabled={currentlySwiping}
-              key={index}
-            >
-              <PublicationOption
-                publication={el}
-                isCurrent={false}
+    <>
+      {isVisible && Platform.OS == 'android' ? (
+        <StatusBar backgroundColor={'rgba(0, 0, 0, 1)'} animated={true} />
+      ) : null}
+      <Modal {...modalOptions}>
+        <View style={{ flex: 1 }}></View>
+        <View style={styles.view}>
+          <View style={styles.bar} />
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => selectedPublication(publication)}
+          >
+            <PublicationOption publication={publication} isCurrent={true} />
+          </TouchableOpacity>
+          <View style={styles.line} />
+          {PUBLICATIONS.map((el, index) => {
+            return el == publication ? null : (
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => selectedPublication(el)}
+                disabled={currentlySwiping}
                 key={index}
-              />
-            </TouchableOpacity>
-          )
-        })}
-      </View>
-    </Modal>
+              >
+                <PublicationOption
+                  publication={el}
+                  isCurrent={false}
+                  key={index}
+                />
+              </TouchableOpacity>
+            )
+          })}
+        </View>
+      </Modal>
+    </>
   )
 }
 
