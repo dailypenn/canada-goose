@@ -24,7 +24,7 @@ import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
 } from '../utils/helperFunctions'
-import { GEOMETRIC_BOLD } from '../utils/fonts'
+import { GEOMETRIC_BOLD, DISPLAY_SERIF_BLACK } from '../utils/fonts'
 import { SearchArticleList } from './ArticleList'
 
 const { Value, timing, Clock } = Animated
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   //   zIndex: 1200,
   // },
   title: {
-    fontFamily: GEOMETRIC_BOLD,
+    fontFamily: DISPLAY_SERIF_BLACK,//GEOMETRIC_BOLD,
     fontSize: 28,
     lineHeight: 40,
   },
@@ -290,8 +290,7 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 50,
-    paddingHorizontal: 10,
-    //backgroundColor: '#ff0',
+    paddingHorizontal: 16,
   },
   header_inner: {
     flex: 1,
@@ -316,9 +315,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     top: 0,
-    //left: 0,
     backgroundColor: 'white',
-    width: width - 20, //width - 32
+    width: width - 32,
     ...Platform.select({
       ios: {
         left: 0,
@@ -353,11 +351,19 @@ const styles = StyleSheet.create({
     // left: 0,
     // bottom: 0,
     zIndex: 999,
-    ...ifIphoneX({
-      height: height - (49 + 50 + topInset + bottomInset) + 4,
-    }, {
-      height: height - (49 + 50 + topInset + bottomInset + bottomBar),
-    })
+    ...Platform.select({
+      ios: {
+        ...ifIphoneX({
+          height: height - (49 + 50 + topInset + bottomInset) + 4,
+        }, {
+          height: height - (49 + 50 + topInset + bottomInset),
+        }),
+      },
+      android: {
+        height: height - (49 + 50 + bottomInset), // + bottomBar
+      },
+    }),
+    //backgroundColor: '#f0f',
   },
   content_safe_area: {
     flex: 1,
