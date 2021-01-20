@@ -1,4 +1,9 @@
-import { UPDATE_HOME_SECTIONS, SET_INIT, SAVE_NEW_ARTICLE } from '../actions'
+import {
+  UPDATE_HOME_SECTIONS,
+  SET_INIT,
+  SAVE_NEW_ARTICLE,
+  saveNewArticle,
+} from '../actions'
 
 const defaultSettingsState = {
   savedArticles: null,
@@ -8,21 +13,26 @@ const defaultSettingsState = {
 const SettingsReducer = (state = defaultSettingsState, action) => {
   const { type, updates } = action
 
-  const getNewHomeSectionData = updates => {
-    if (updates == null) return {}
+  const getNewHomeSectionData = homeSectionPreferences => {
+    if (homeSectionPreferences == null) return {}
     data = {}
-    updates.map(el => {
+    homeSectionPreferences.map(el => {
       data[el.publication] = el.newSections
     })
     return data
   }
 
+  const getNewSavedArticleData = savedArticles => {
+    return savedArticles ? savedArticles : []
+  }
+
   switch (type) {
     case SET_INIT:
-      const newData = getNewHomeSectionData(updates.homeSectionPreferences)
       return {
-        homeSectionPreferences: newData,
-        savedArticles: updates.savedArticles,
+        homeSectionPreferences: getNewHomeSectionData(
+          updates.homeSectionPreferences
+        ),
+        savedArticles: getNewSavedArticleData(updates.savedArticles),
       }
     case UPDATE_HOME_SECTIONS:
       const { publication, newSections } = updates.homeSectionPreferences[0]
@@ -34,7 +44,6 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
         },
       }
     case SAVE_NEW_ARTICLE:
-      console.log('newly saved')
       return {
         ...state,
         savedArticles: [...state.savedArticles, updates.savedArticles[0]],

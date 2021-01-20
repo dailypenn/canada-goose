@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 
 import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
-import { updateHomeSections, UPDATE_HOME_SECTIONS } from '../actions'
+import { updateHomeSections } from '../actions'
 import { GET_HOME_SECTIONS } from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
@@ -78,11 +78,15 @@ class ManageFeedForPublication extends Component {
     this.homeSectionPreferences = homeSectionPreferences
     this.dispatch = dispatch
 
-    // console.log('MANAGE FEED FOR PUBLICATION', publication)
+    const homeSectionPreference = homeSectionPreferences
+      ? homeSectionPreferences[publication]
+      : null
 
-    this.currData = this.homeSectionPreferences
-      ? this.homeSectionPreferences[this.publication]
+    this.currData = homeSectionPreference
+      ? homeSectionPreference
       : GET_HOME_SECTIONS(this.publication)
+
+    // console.log('MANAGE FEED FOR PUBLICATION', publication, this.currData)
 
     this.newOrder = null
     this.instructions =

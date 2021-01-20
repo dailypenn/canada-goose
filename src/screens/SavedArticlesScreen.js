@@ -2,17 +2,32 @@ import React, { useEffect, useState } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { RightSwipeDeleteRow } from '../components/RightSwipeDeleteRow'
+import { Entypo } from '@expo/vector-icons'
 
 import { DISPLAY_SERIF_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { NAVIGATE_TO_ARTICLE_SCREEN, TIME_AGO } from '../utils/helperFunctions'
+import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
   cell: {
     padding: 20,
+    flexDirection: 'row',
     backgroundColor: '#fff',
     borderBottomColor: '#c4c4c4',
     borderBottomWidth: 0.6,
+  },
+
+  textContainer: {
+    width: '85%',
+  },
+
+  chevron: {
+    justifyContent: 'center',
+  },
+
+  spacer: {
+    flex: 1,
   },
 
   title: {
@@ -42,29 +57,39 @@ const SavedArticleCell = ({ title, savedAt }) => {
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subText}>{timeAgo}</Text>
       </View>
+      <View style={styles.spacer} />
+      <View style={styles.chevron}>
+        <Entypo name="chevron-right" size={20} color="#c4c4c4" />
+      </View>
     </View>
   )
 }
 
-const SwipeableRow = ({ item, navigationHandler, deleteHandler }) => (
-  <RightSwipeDeleteRow deleteHandler={() => deleteHandler(item)}>
-    <TouchableOpacity onPress={() => navigationHandler(item)} activeOpacity={1}>
-      <SavedArticleCell title={item.headline} savedAt={item.saved_at} />
-    </TouchableOpacity>
-  </RightSwipeDeleteRow>
-)
+const SwipeableRow = ({ item, navigationHandler, deleteHandler }) => {
+  const { _, article, saved_at } = item
+  return (
+    <RightSwipeDeleteRow deleteHandler={() => deleteHandler(item)}>
+      <TouchableOpacity
+        onPress={() => navigationHandler(item)}
+        activeOpacity={1}
+      >
+        <SavedArticleCell title={article.headline} savedAt={saved_at} />
+      </TouchableOpacity>
+    </RightSwipeDeleteRow>
+  )
+}
 
-export const SavedArticlesScreen = ({ navigation }) => {
-  const [savedArticles, setSavedArticles] = useState([])
+const SavedArticlesScreenComp = ({ navigation, settings }) => {
+  const savedArticles = settings.savedArticles ? settings.savedArticles : []
 
-  const loadSavedArticles = async () => {
-    let data = await Storage.getItem(SAVED_ARTICLES_KEY)
-    if (data != null) setSavedArticles(data)
+  console.log('SAVED ARTICLES SCREEN COMP', savedArticles)
+  // Storage.clearAll()
+
+  if (settings.savedArticles != null) {
+    settings.savedArticles.forEach(element => {
+      console.log(element.article.headline)
+    })
   }
-
-  useEffect(() => {
-    loadSavedArticles()
-  }, [])
 
   const navigationHandler = async item => {
     let article = await Storage.getItem(item.slug)
@@ -92,13 +117,24 @@ export const SavedArticlesScreen = ({ navigation }) => {
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       keyExtractor={(_, index) => index}
-      renderItem={({ item }) => (
-        <SwipeableRow
-          item={item}
-          navigationHandler={navigationHandler}
-          deleteHandler={deleteHandler}
-        />
-      )}
+      renderItem={({ item }) => {
+        return (
+          <SwipeableRow
+            item={item}
+            navigationHandler={navigationHandler}
+            deleteHandler={deleteHandler}
+          />
+        )
+      }}
     />
   )
 }
+
+const mapStateToProps = ({ publication, settings }) => ({
+  publication,
+  settings,
+})
+
+export const SavedArticlesScreen = connect(mapStateToProps)(
+  SavedArticlesScreenComp
+)

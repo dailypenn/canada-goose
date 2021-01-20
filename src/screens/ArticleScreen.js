@@ -33,25 +33,27 @@ const ArticleScreenComp = ({ navigation, route, publication, dispatch }) => {
     let saved_articles = await Storage.getItem(SAVED_ARTICLES_KEY)
     if (saved_articles == null) saved_articles = []
 
-    if (saved_articles.some(x => x.slug == article.slug)) {
+    if (saved_articles.some(obj => obj.slug == article.slug)) {
       Alert.alert('Oops', 'This article has already been saved!')
       return
     }
-    let saved_successfully = await Storage.setItem(article.slug, article)
 
-    if (saved_successfully) {
-      const item = {
-        publication,
-        slug: article.slug,
-        headline: article.headline,
-        saved_at: date,
-      }
-      saved_articles.push(item)
-      Storage.setItem(SAVED_ARTICLES_KEY, saved_articles)
-      dispatch(saveNewArticle(item))
-    } else {
-      console.log('error saving article')
+    const newData = {
+      slug: article.slug,
+      article: article,
+      saved_at: date,
+      publication: publication,
     }
+    saved_articles.push(newData)
+    // console.log('saving', saved_articles)
+
+    let saved_successfully = await Storage.setItem(
+      SAVED_ARTICLES_KEY,
+      saved_articles
+    )
+
+    if (saved_successfully) dispatch(saveNewArticle(newData))
+    else Alert.alert('Oops', 'There was an error saving article :(')
   }
 
   /* Currently author and image credits are not supported by
