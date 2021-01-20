@@ -1,11 +1,14 @@
-import { UPDATE_HOME_SECTIONS, SAVE_NEW_ARTICLE, SET_INIT } from '../actions'
+import { UPDATE_HOME_SECTIONS, SET_INIT, SAVE_NEW_ARTICLE } from '../actions'
 
-const defaultHomeSectionsState = {}
+const defaultSettingsState = {
+  savedArticles: null,
+  homeSectionPreferences: null,
+}
 
-const HomeSectionReducer = (state = defaultHomeSectionsState, action) => {
+const SettingsReducer = (state = defaultSettingsState, action) => {
   const { type, updates } = action
 
-  const getNewData = updates => {
+  const getNewHomeSectionData = updates => {
     if (updates == null) return {}
     data = {}
     updates.map(el => {
@@ -16,28 +19,29 @@ const HomeSectionReducer = (state = defaultHomeSectionsState, action) => {
 
   switch (type) {
     case SET_INIT:
-      return Object.assign({}, getNewData(updates), state)
+      const newData = getNewHomeSectionData(updates.homeSectionPreferences)
+      return {
+        homeSectionPreferences: newData,
+        savedArticles: updates.savedArticles,
+      }
     case UPDATE_HOME_SECTIONS:
-      return Object.assign({}, state, getNewData(updates))
-    default:
-      return state
-  }
-}
-
-const defaultNewSavedArticleState = false
-
-const NewSavedArticleReducer = (
-  state = defaultNewSavedArticleState,
-  action
-) => {
-  const { type, b } = action
-
-  switch (type) {
+      const { publication, newSections } = updates.homeSectionPreferences[0]
+      return {
+        ...state,
+        homeSectionPreferences: {
+          ...state.homeSectionPreferences,
+          [publication]: newSections,
+        },
+      }
     case SAVE_NEW_ARTICLE:
-      return b
+      console.log('newly saved')
+      return {
+        ...state,
+        savedArticles: [...state.savedArticles, updates.savedArticles[0]],
+      }
     default:
       return state
   }
 }
 
-export { NewSavedArticleReducer, HomeSectionReducer }
+export { SettingsReducer }

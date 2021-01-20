@@ -9,7 +9,10 @@ import TabNavigationController from './NavigationController'
 import { loadFonts } from './src/utils/fonts'
 import { ActivityIndicator } from './src/components'
 import RootReducer from './src/reducers'
-import { GET_HOME_FEED_ORDER_KEY } from './src/utils/storage'
+import {
+  GET_HOME_FEED_ORDER_KEY,
+  SAVED_ARTICLES_KEY,
+} from './src/utils/storage'
 import { PublicationEnum } from './src/utils/constants'
 import { setInit } from './src/actions'
 
@@ -28,6 +31,7 @@ const getAsyncStorage = () => {
       GET_HOME_FEED_ORDER_KEY(PublicationEnum.dp),
       GET_HOME_FEED_ORDER_KEY(PublicationEnum.street),
       GET_HOME_FEED_ORDER_KEY(PublicationEnum.utb),
+      SAVED_ARTICLES_KEY,
     ]).then(result => {
       dispatch(setInit(result))
     })

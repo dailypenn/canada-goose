@@ -125,15 +125,24 @@ const HomeView = ({
   )
 }
 
-const HomeScreenComp = ({ navigation, publication, homeSection }) => {
+const HomeScreenComp = ({ navigation, publication, settings }) => {
   // const [lastActiveTime, setLastActiveTime] = useState(Date.now())
   const appState = useRef(AppState.currentState)
   const [appStateState, setAppStateState] = useState(appState.current)
+  const { homeSectionPreferences, savedArticles } = settings
+
+  // let homeSections =
+  //   homeSection[publication] == null
+  //     ? GET_HOME_SECTIONS(publication)
+  //     : homeSection[publication]
 
   let homeSections =
-    homeSection[publication] == null
+    homeSectionPreferences == null ||
+    homeSectionPreferences[publication] == null
       ? GET_HOME_SECTIONS(publication)
-      : homeSection[publication]
+      : homeSectionPreferences[publication]
+
+  // let homeSections = GET_HOME_SECTIONS(publication)
 
   const handleAppStateChange = nextAppState => {
     if (
@@ -161,10 +170,14 @@ const HomeScreenComp = ({ navigation, publication, homeSection }) => {
   }, [])
 
   useEffect(() => {
-    console.log('update homeSection')
+    console.log(
+      '@@@@@@@ update homeSection @@@@@@@',
+      settings.homeSectionPreferences[publication]
+    )
     // console.log(homeSection)
-    homeSections = homeSection[publication]
-  }, [homeSection])
+    // homeSections = homeSection[publication]
+    // homeSections = settings.homeSectionPreferences[publication]
+  }, [settings.homeSectionPreferences])
 
   const { loading, error, data, refetch } = useQuery(
     GET_HOME_QUERIES(publication)
@@ -205,9 +218,9 @@ const HomeScreenComp = ({ navigation, publication, homeSection }) => {
   )
 }
 
-const mapStateToProps = ({ publication, homeSection }) => ({
+const mapStateToProps = ({ publication, settings }) => ({
   publication,
-  homeSection,
+  settings,
 })
 
 export const HomeScreen = connect(mapStateToProps)(HomeScreenComp)

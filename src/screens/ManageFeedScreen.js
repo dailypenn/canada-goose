@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 
 import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
-import { UPDATE_HOME_SECTIONS } from '../actions'
+import { updateHomeSections, UPDATE_HOME_SECTIONS } from '../actions'
 import { GET_HOME_SECTIONS } from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
@@ -100,12 +100,16 @@ class ManageFeedScreenComp extends Component {
       this.newData
     )
 
-    this.props.dispatch({
-      type: UPDATE_HOME_SECTIONS,
-      updates: [
-        { publication: this.props.publication, newSections: this.newData },
-      ],
-    })
+    this.props.dispatch(
+      updateHomeSections(this.props.publication, this.newData)
+    )
+
+    // this.props.dispatch({
+    //   type: UPDATE_HOME_SECTIONS,
+    //   updates: [
+    //     { publication: this.props.publication, newSections: this.newData },
+    //   ],
+    // })
   }
 
   orderItems = async () => {

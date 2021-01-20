@@ -11,8 +11,9 @@ import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { Alert } from 'react-native'
+import { saveNewArticle } from '../actions'
 
-const ArticleScreenComp = ({ navigation, route, publication }) => {
+const ArticleScreenComp = ({ navigation, route, publication, dispatch }) => {
   const { article } = route.params
 
   if (!article) {
@@ -39,13 +40,15 @@ const ArticleScreenComp = ({ navigation, route, publication }) => {
     let saved_successfully = await Storage.setItem(article.slug, article)
 
     if (saved_successfully) {
-      saved_articles.push({
+      const item = {
         publication,
         slug: article.slug,
         headline: article.headline,
         saved_at: date,
-      })
+      }
+      saved_articles.push(item)
       Storage.setItem(SAVED_ARTICLES_KEY, saved_articles)
+      dispatch(saveNewArticle(item))
     } else {
       console.log('error saving article')
     }
@@ -135,6 +138,8 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
   ),
 })
 
-const mapStateToProps = ({ publication }) => ({ publication })
+const mapStateToProps = ({ publication }) => ({
+  publication,
+})
 
 export const ArticleScreen = connect(mapStateToProps)(ArticleScreenComp)
