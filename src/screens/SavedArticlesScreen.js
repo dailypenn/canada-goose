@@ -9,6 +9,8 @@ import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { NAVIGATE_TO_ARTICLE_SCREEN, TIME_AGO } from '../utils/helperFunctions'
 import { connect } from 'react-redux'
 import { unsaveArticle } from '../actions'
+import { CategoryTag } from '../components'
+import { PublicationEnum } from '../utils/constants'
 
 const styles = StyleSheet.create({
   cell: {
@@ -20,7 +22,8 @@ const styles = StyleSheet.create({
   },
 
   textContainer: {
-    width: '85%',
+    // backgroundColor: 'red',
+    width: '95%',
   },
 
   chevron: {
@@ -41,7 +44,7 @@ const styles = StyleSheet.create({
     color: '#888',
     fontFamily: GEOMETRIC_REGULAR,
     fontSize: 12,
-    paddingTop: 10,
+    paddingBottom: 10,
   },
 
   rightSwipeItem: {
@@ -50,13 +53,25 @@ const styles = StyleSheet.create({
   },
 })
 
-const SavedArticleCell = ({ title, savedAt }) => {
+const SavedArticleCell = ({ title, savedAt, category, publication }) => {
   const timeAgo = 'Saved ' + TIME_AGO(new Date(savedAt))
   return (
     <View style={styles.cell}>
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subText}>{timeAgo}</Text>
+      <View style={{ flexDirection: 'column' }}>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={styles.subText}>
+            {publication} • {category}
+          </Text>
+
+          <View style={styles.spacer} />
+
+          {/* <View style={styles.chevron}>
+            <Entypo name="chevron-right" size={20} color="#c4c4c4" />
+          </View> */}
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{title}</Text>
+        </View>
       </View>
       <View style={styles.spacer} />
       <View style={styles.chevron}>
@@ -74,7 +89,12 @@ const SwipeableRow = ({ item, navigationHandler, deleteHandler }) => {
         onPress={() => navigationHandler(item)}
         activeOpacity={1}
       >
-        <SavedArticleCell title={article.headline} savedAt={saved_at} />
+        <SavedArticleCell
+          title={article.headline}
+          savedAt={saved_at}
+          category="news"
+          publication={item.publication}
+        />
       </TouchableOpacity>
     </RightSwipeDeleteRow>
   )
@@ -93,11 +113,10 @@ const SavedArticlesScreenComp = ({ navigation, settings, dispatch }) => {
   }
 
   const navigationHandler = async item => {
-    let article = await Storage.getItem(item.slug)
     NAVIGATE_TO_ARTICLE_SCREEN(
       navigation,
       'SettingsArticle',
-      article,
+      item.article,
       item.publicationState
     )
   }
