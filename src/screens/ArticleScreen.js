@@ -5,19 +5,21 @@ import {
   useWindowDimensions,
   TouchableOpacity,
   Alert,
+  Button,
 } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import HTML from 'react-native-render-html'
-import { useQuery } from '@apollo/client'
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
+import { useLazyQuery } from '@apollo/client'
 
-import { PictureHeadline } from '../components'
+import { PictureHeadline, ActivityIndicator } from '../components'
 import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
-import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
+import { PublicationEnum } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { saveNewArticle, unsaveArticle } from '../actions'
+import { UTB_RANDOM_ARTICLE } from '../utils/queries'
 
 const ArticleScreenComp = ({
   navigation,
@@ -26,15 +28,22 @@ const ArticleScreenComp = ({
   settings,
   dispatch,
 }) => {
-  const { article } = route.params
+  const [article, setArticle] = useState(route.params.article)
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
 
-  if (!article) {
-    // TODO: Check that article is already fetched
-    const { loading, error, data } = useQuery(QUERY_ARTICLE_BY_SLUG, {
-      variables: { slug: article.slug },
-    })
-  }
+  const [getRandomArticle, { loading, data }] = useLazyQuery(
+    UTB_RANDOM_ARTICLE,
+    {
+      fetchPolicy: 'cache-and-network',
+    }
+  )
+
+  // if (!article) {
+  //   // TODO: Check that article is already fetched
+  //   const { loading, error, data } = useQuery(QUERY_ARTICLE_BY_SLUG, {
+  //     variables: { slug: article.slug },
+  //   })
+  // }
 
   useEffect(() => {
     navigation.setParams({
@@ -53,6 +62,18 @@ const ArticleScreenComp = ({
     )
     if (saved_successfully) dispatch(unsaveArticle({ slug: article.slug }))
   }
+
+  useEffect(() => {
+    if (publication === PublicationEnum.utb && !article) {
+      getRandomArticle()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (data) {
+      setArticle(data.utbRandomArticle)
+    }
+  }, [data])
 
   const saveHandler = async article => {
     const date = new Date()
@@ -86,6 +107,9 @@ const ArticleScreenComp = ({
   GraphQL queries, so hard coding right now */
   // TODO: Fetch from CEO
   const photographer = 'Pitt Shure'
+
+  if (loading || !article) return <ActivityIndicator />
+
   return (
     <ScrollView>
       <PictureHeadline
@@ -133,7 +157,7 @@ const ArticleScreenComp = ({
             } else navigation.navigate('ArticleBrowser', { link: href })
           }}
           source={{ html: article.content }}
-          contentWidth={useWindowDimensions().width}
+          // contentWidth={useWindowDimensions().width}
           tagsStyles={{
             p: {
               fontSize: 18,

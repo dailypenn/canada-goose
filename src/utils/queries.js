@@ -323,3 +323,23 @@ export const ARTICLES_SEARCH = gql`
     }
   }
 `
+
+export const UTB_RANDOM_ARTICLE = gql`
+  query {
+    utbRandomArticle {
+      slug
+      headline
+      abstract
+      content
+      published_at
+      authors {
+        name
+      }
+      dominantMedia {
+        attachment_uuid
+        extension
+      }
+      tag
+    }
+  }
+`

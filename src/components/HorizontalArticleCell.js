@@ -78,13 +78,6 @@ export const HorizontalArticleCell = ({
             </Text>
           </View>
         </View>
-        {/* <View
-          style={{
-            borderBottomColor: '#CCC',
-            borderBottomWidth: 1,
-            marginHorizontal: 20,
-          }}
-        /> */}
       </View>
     )
   } else {
@@ -103,17 +96,7 @@ export const HorizontalArticleCell = ({
             <Image style={styles.image} source={{ uri: imageURL }} />
           </View>
         </View>
-        {/* <View
-          style={{
-            borderBottomColor: '#CCC',
-            borderBottomWidth: 1,
-            marginHorizontal: 20,
-          }}
-        /> */}
       </View>
     )
   }
 }
-
-//<Text style={categoryStyle(publication)}>{category}</Text>
-// style = {{borderWidth: 1, borderColor: '#333', marginVertical: 10}}

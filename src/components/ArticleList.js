@@ -31,6 +31,8 @@ export const ArticleList = ({
               title={headline}
               imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
               abstract={abstract}
+              timeAgo={published_at}
+              authors={AUTHORS(authors)}
             />
           </TouchableOpacity>
         )
