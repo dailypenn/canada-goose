@@ -157,7 +157,7 @@ const HomeView = ({
             backgroundColor: '#fff',
             alignItems: 'center',
             //justifyContent: "center",
-            borderBottomColor: '#AAA',
+            borderBottomColor: '#DDD',
             borderBottomWidth: 1,
             opacity: opacity,
             //paddingTop: getStatusBarHeight(true) + 12,

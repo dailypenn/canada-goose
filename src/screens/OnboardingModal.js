@@ -320,6 +320,7 @@ export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
       onNextPage={() => {
         console.log('updated page!')
         updatePageNumber(1)
+        setTimeout(() => updatePageNumber(0), 1000)
       }}
     />
   )
