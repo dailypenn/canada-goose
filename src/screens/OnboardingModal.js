@@ -33,7 +33,7 @@ const MAX_GRADIENT_BUTTON_SIZE = Dimensions.get('screen').width * 0.9
 const MIN_GRAIDENT_BUTTON_SIZE = Dimensions.get('screen').width * 0.2
 const MAX_PUB_OPACITY = 0.6
 
-const PageZero = () => {
+const PageZero = ({ onNextPage }) => {
   const DP_LOGO = require('../static/logos/dp-logo-small-grey.png')
   const UTB_LOGO = require('../static/logos/utb-logo-small-grey.png')
   const STREET_LOGO = require('../static/logos/street-logo-small-grey.png')
@@ -42,7 +42,7 @@ const PageZero = () => {
   const [buttonPosY] = useState(new Animated.Value(100))
   const [buttonPosX] = useState(new Animated.Value(0))
   const [logoPosX] = useState(new Animated.Value(0))
-  const [logoPosY] = useState(new Animated.Value(0))
+  const [logoPosY] = useState(new Animated.Value(200))
   const [logoOpacity] = useState(new Animated.Value(0))
   const logoSkew = logoPosY.interpolate({
     inputRange: [0, 150],
@@ -78,7 +78,7 @@ const PageZero = () => {
 
     const fadeInLogo = Animated.timing(logoOpacity, {
       toValue: 1,
-      duration: 400,
+      duration: 1000,
       useNativeDriver: false,
     })
 
@@ -126,21 +126,21 @@ const PageZero = () => {
   const exitZero = async () => {
     const EXIT_ANIM_TIME = 300
     // Alter Gradient Button Width
-    const shrinkButton = Animated.timing(buttonWidth, {
+    await Animated.timing(buttonWidth, {
       toValue: MIN_GRAIDENT_BUTTON_SIZE,
       duration: EXIT_ANIM_TIME,
       useNativeDriver: false,
       easing: Easing.in(Easing.cubic),
     }).start()
 
-    const fadeOutButton = Animated.timing(buttonOpacity, {
+    await Animated.timing(buttonOpacity, {
       toValue: 0,
       duration: EXIT_ANIM_TIME,
       useNativeDriver: false,
       easing: Easing.in(Easing.cubic),
     }).start()
 
-    const buttonXMove = Animated.timing(buttonPosX, {
+    await Animated.timing(buttonPosX, {
       toValue: -200,
       duration: EXIT_ANIM_TIME,
       useNativeDriver: false,
@@ -183,18 +183,11 @@ const PageZero = () => {
 
     Animated.stagger(100, [dpFadeOut, streetFadeOut, utbFadeOut]).start()
     Animated.parallel([fadeOutLogo, logoXMove]).start()
-
-    // Animated.stagger(100, [logoAnimations, buttonAnimations]).start()
-
-    setTimeout(() => {
-      buttonPosY.setValue(150)
-      logoPosY.setValue(150)
-    }, EXIT_ANIM_TIME)
   }
 
   useEffect(() => {
-    enterZero()
-  })
+    setTimeout(() => enterZero(), 500)
+  }, [])
   return (
     <SafeAreaView
       style={{
@@ -208,7 +201,9 @@ const PageZero = () => {
           width: '40%',
           alignSelf: 'center',
           position: 'absolute',
-          top: Dimensions.get('screen').height * 0.15,
+          top:
+            Dimensions.get('screen').height *
+            (Platform.OS == 'ios' ? 0.15 : 0.05),
         }}
       >
         <Animated.View
@@ -226,10 +221,27 @@ const PageZero = () => {
             opacity: logoOpacity,
           }}
         >
-          <Image
+          <ImageBackground
             source={require('../static/get-started-button-background.jpg')}
-            style={{ width: '100%', height: '100%', borderRadius: 20 }}
-          />
+            style={{
+              width: '100%',
+              height: '100%',
+              resizeMode: 'contain',
+              borderRadius: 20,
+              justifyContent: 'center',
+            }}
+          >
+            <Image
+              source={require('../static/logos/dp-logo-small-white.png')}
+              style={{
+                width: '60%',
+                marginTop: 10,
+                height: '80%',
+                resizeMode: 'contain',
+                alignSelf: 'center',
+              }}
+            />
+          </ImageBackground>
         </Animated.View>
         <View
           style={{
@@ -264,16 +276,14 @@ const PageZero = () => {
           width: buttonWidth,
           height: 60,
           position: 'absolute',
-          bottom: 50,
+          bottom: Platform.OS == 'ios' ? 50 : 30,
           alignSelf: 'center',
           justifySelf: 'center',
           transform: [{ translateY: buttonPosY }, { translateX: buttonPosX }],
         }}
-        onButtonPress={() => {
+        onButtonPress={async () => {
           exitZero()
-          setTimeout(() => {
-            enterZero()
-          }, 1000)
+          setTimeout(() => onNextPage(), 1000)
         }}
       />
     </SafeAreaView>
@@ -292,9 +302,9 @@ const styles = StyleSheet.create({
 
 export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
   const [isVisible, updateVisibility] = useState(isOnboarded)
+  const [pageNumber, updatePageNumber] = useState(0)
 
   const NUM_PAGES = ONBOARDING_CONTENT.length
-  let currPage = 0
 
   const MODAL_OPTIONS = {
     isVisible: isVisible,
@@ -303,6 +313,20 @@ export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
     animationOut: 'fadeOut',
     animationOutTiming: 1000,
   }
+
+  let currPage = (
+    <PageZero
+      onNextPage={() => {
+        console.log('updated page!')
+        updatePageNumber(1)
+      }}
+    />
+  )
+
+  if (pageNumber == 1) {
+    currPage = null
+  }
+
   return (
     <Modal
       {...MODAL_OPTIONS}
@@ -314,8 +338,8 @@ export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
         backgroundColor: 'white',
       }}
     >
+      {currPage}
       <DefaultStatusBar />
-      <PageZero />
     </Modal>
   )
 }
