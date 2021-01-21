@@ -1,3 +1,5 @@
+import { PublicationPrimaryColor } from './branding'
+
 // Enum for the 3 publications included in this app
 export const PublicationEnum = Object.freeze({
   dp: 'The Daily Pennsylvanian',
@@ -32,3 +34,90 @@ export const UTB_HOME_SECTIONS = ['interactive', 'news', 'opinion']
 export const STREET_HOME_SECTIONS = ['focus', 'features', 'ego', 'style']
 
 export const FIVE_MUNITES = 5 * 60 * 1000
+
+export const SETTINGS_SECTIONS = [
+  {
+    id: 'account section',
+    name: 'Personal',
+    items: [
+      {
+        id: 'manage feed cell',
+        icon: 'list',
+        color: '#007aff',
+        name: 'Manage Feed',
+        screenName: 'ManageFeedScreen',
+        props: {},
+      },
+      {
+        id: 'saved article cell',
+        icon: 'bookmarks',
+        color: '#f6a327',
+        name: 'Bookmarked Articles',
+        screenName: 'SavedArticles',
+        props: {},
+      },
+    ],
+  },
+  {
+    id: 'settings section',
+    name: 'Settings',
+    items: [
+      {
+        id: 'noti cell',
+        icon: 'notifications',
+        color: '#f9423b',
+        name: 'Notifications',
+        screenName: 'Notification',
+        props: {},
+      },
+      {
+        id: 'privacy cell',
+        icon: 'shield-checkmark',
+        color: '#66d464',
+        name: 'Privacy',
+        screenName: 'Privacy',
+        props: {},
+      },
+    ],
+  },
+  {
+    id: 'features section',
+    name: 'Features',
+    items: [
+      {
+        id: 'about cell',
+        icon: 'people',
+        color: '#c4c4c4',
+        name: 'Operation Canada Goose x Jay',
+        screenName: 'About',
+        props: {},
+      },
+      {
+        id: 'dp cell',
+        icon: 'newspaper',
+        color: '#4d49de',
+        color: PublicationPrimaryColor(PublicationEnum.dp),
+
+        name: 'The Daily Pennsylvanian',
+        screenName: 'WebView',
+        props: { link: 'https://thedp.com' },
+      },
+      {
+        id: 'street cell',
+        icon: 'newspaper',
+        color: PublicationPrimaryColor(PublicationEnum.street),
+        name: '34th Street',
+        screenName: 'WebView',
+        props: { link: 'https://34st.com' },
+      },
+      {
+        id: 'utb cell',
+        icon: 'newspaper',
+        color: PublicationPrimaryColor(PublicationEnum.utb),
+        name: 'Under the Button',
+        screenName: 'WebView',
+        props: { link: 'https://underthebutton.com' },
+      },
+    ],
+  },
+]
