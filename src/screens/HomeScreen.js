@@ -29,7 +29,7 @@ import {
   NAVIGATE_TO_ARTICLE_SCREEN,
   GET_HOME_SECTIONS,
   GET_HOME_SECTION_NAME,
-  GET_HOME_QUERIES
+  GET_HOME_QUERIES,
 } from '../utils/helperFunctions'
 import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { PublicationEnum } from '../utils/constants'
@@ -68,9 +68,7 @@ const HomeView = ({
   // a quick fix I can think of is to put this function inside HomeScreenComp
   // and pass the ordered sections to this component
   const loadHomeSectionOrder = async () => {
-    let order = await Storage.getItem(
-      GET_HOME_FEED_ORDER_KEY(publication)
-    )
+    let order = await Storage.getItem(GET_HOME_FEED_ORDER_KEY(publication))
     if (order == null) return defaultSections
     if (order == GET_HOME_SECTIONS(publication)) return defaultSections
 
@@ -100,25 +98,24 @@ const HomeView = ({
 
   //Header consts
   const [scrollY, setScrollY] = useState(new Animated.Value(0))
-  const minScroll = 10;
-  const AnimatedHeaderHeight = getStatusBarHeight(true) + 50;
-  const negativeHeaderHeight = Platform.OS === "android" ? (-AnimatedHeaderHeight) : -(AnimatedHeaderHeight - getStatusBarHeight(true))
+  const minScroll = 10
+  const AnimatedHeaderHeight = getStatusBarHeight(true) + 50
+  const negativeHeaderHeight =
+    Platform.OS === 'android'
+      ? -AnimatedHeaderHeight
+      : -(AnimatedHeaderHeight - getStatusBarHeight(true))
   const clampedScrollY = scrollY.interpolate({
     inputRange: [minScroll, minScroll + 1],
     outputRange: [0, 1],
     extrapolateLeft: 'clamp',
-  });
-  const minusScrollY = Animated.multiply(clampedScrollY, -1);
-  const translateY = Animated.diffClamp(
-    minusScrollY,
-    negativeHeaderHeight,
-    0,
-  );
+  })
+  const minusScrollY = Animated.multiply(clampedScrollY, -1)
+  const translateY = Animated.diffClamp(minusScrollY, negativeHeaderHeight, 0)
   const opacity = translateY.interpolate({
     inputRange: [negativeHeaderHeight, 0],
     outputRange: [0, 1],
     extrapolate: 'clamp',
-  });
+  })
   const DP_HEADER_LOGO = require('../static/logos/dp-header.png')
   const ST_HEADER_LOGO = require('../static/logos/34st-header.png')
   const UTB_HEADER_LOGO = require('../static/logos/utb-header2.png')
@@ -136,58 +133,80 @@ const HomeView = ({
 
   return (
     <View style={styles.container}>
-      <Animated.View style={[{
-        height: AnimatedHeaderHeight,
-        position: "absolute",
-        width: "100%",
-        zIndex: 2,
-        backgroundColor: "#fff",
-        borderBottomColor: "#AAA",
-        borderBottomWidth: 1,
-      }, { transform: [{ translateY: translateY }] }]}>
-      </Animated.View>
-      <Animated.View style={[{
-        height: AnimatedHeaderHeight,
-        position: "absolute",
-        width: "100%",
-        zIndex: 3,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        //justifyContent: "center",
-        borderBottomColor: "#AAA",
-        borderBottomWidth: 1,
-        opacity: opacity,
-        //paddingTop: getStatusBarHeight(true) + 12,
-        ...Platform.select({
-          ios: {
-            paddingTop: getStatusBarHeight(true) + 10,
+      <Animated.View
+        style={[
+          {
+            height: AnimatedHeaderHeight,
+            position: 'absolute',
+            width: '100%',
+            zIndex: 2,
+            backgroundColor: '#fff',
+            borderBottomColor: '#AAA',
+            borderBottomWidth: 1,
           },
-          android: {
-            paddingTop: getStatusBarHeight(true),
+          { transform: [{ translateY: translateY }] },
+        ]}
+      ></Animated.View>
+      <Animated.View
+        style={[
+          {
+            height: AnimatedHeaderHeight,
+            position: 'absolute',
+            width: '100%',
+            zIndex: 3,
+            backgroundColor: '#fff',
+            alignItems: 'center',
+            //justifyContent: "center",
+            borderBottomColor: '#AAA',
+            borderBottomWidth: 1,
+            opacity: opacity,
+            //paddingTop: getStatusBarHeight(true) + 12,
+            ...Platform.select({
+              ios: {
+                paddingTop: getStatusBarHeight(true) + 10,
+              },
+              android: {
+                paddingTop: getStatusBarHeight(true),
+              },
+            }),
           },
-        }),
-      }, { transform: [{ translateY: translateY }] }]}>
-        <View style={{height:28}}>
+          { transform: [{ translateY: translateY }] },
+        ]}
+      >
+        <View style={{ height: 28 }}>
           <Image
             source={GET_HEADER_LOGO()}
-            style={{ flex: 1, resizeMode: 'contain'}}
+            style={{ flex: 1, resizeMode: 'contain' }}
           />
         </View>
       </Animated.View>
 
       <Animated.ScrollView
         //onScroll={event => handleScroll(event)}
-        style={{ paddingTop: Platform.select({ android: AnimatedHeaderHeight, ios: 0 }) }}
+        style={{
+          paddingTop: Platform.select({
+            android: AnimatedHeaderHeight,
+            ios: 0,
+          }),
+        }}
         contentInset={{ top: AnimatedHeaderHeight }}
-        contentOffset={{ x: 0, y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight }) }}
+        contentOffset={{
+          x: 0,
+          y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight }),
+        }}
         automaticallyAdjustContentInsets={false}
         //
         onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }]
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
         )}
         scrollEventThrottle={16}
         refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={onRefresh} progressViewOffset={AnimatedHeaderHeight} />
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={onRefresh}
+            progressViewOffset={AnimatedHeaderHeight}
+          />
         }
       >
         <TouchableOpacity
@@ -200,17 +219,11 @@ const HomeView = ({
             )
           }
         >
-          <HeadlineArticle
-            data={centerArticles[0]}
-            publication={publication}
-          />
+          <HeadlineArticle data={centerArticles[0]} publication={publication} />
         </TouchableOpacity>
 
         <HeaderLine publication={publication} />
-        <SectionHeader
-          title="Top Stories"
-          publication={publication}
-        />
+        <SectionHeader title="Top Stories" publication={publication} />
         <HorizontalArticleCarousel
           articles={topArticles}
           navigateToArticleScreen={PARTIAL_NAVIGATE(
@@ -227,10 +240,7 @@ const HomeView = ({
             <View key={i}>
               <HeaderLine publication={publication} />
               <SectionHeader
-                title={GET_HOME_SECTION_NAME(
-                  publication,
-                  name
-                )}
+                title={GET_HOME_SECTION_NAME(publication, name)}
                 publication={publication}
               />
               <ArticleList
@@ -283,7 +293,9 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
     }
   }, [])
 
-  const { loading, error, data, refetch } = useQuery(GET_HOME_QUERIES(publication))
+  const { loading, error, data, refetch } = useQuery(
+    GET_HOME_QUERIES(publication)
+  )
 
   useFocusEffect(
     useCallback(() => {
@@ -341,10 +353,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
 
   let HOME_SECTIONS = GET_HOME_SECTIONS(publication)
 
-  const {
-    centerpiece: centerArticles,
-    top: topArticles,
-  } = data
+  const { centerpiece: centerArticles, top: topArticles } = data
 
   const defaultSections = HOME_SECTIONS.map(section => ({
     name: section,

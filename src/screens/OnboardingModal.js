@@ -110,17 +110,19 @@ const PageZero = ({ onNextPage }) => {
       easing: Easing.out(Easing.cubic),
     })
 
-    Animated.sequence([
-      Animated.delay(200),
-      Animated.stagger(100, [dpFade, streetFade, utbFade]),
-    ]).start()
-    const buttonAnimations = Animated.parallel([
-      fadeInButton,
-      expandButton,
-      yMoveButton,
-    ])
-    const logoAnimations = Animated.parallel([fadeInLogo, yMoveLogo])
-    Animated.stagger(300, [logoAnimations, buttonAnimations]).start()
+    Animated.sequence(
+      [
+        Animated.delay(200),
+        Animated.stagger(100, [dpFade, streetFade, utbFade]),
+      ],
+      {}
+    ).start()
+    const buttonAnimations = Animated.parallel(
+      [fadeInButton, expandButton, yMoveButton],
+      {}
+    )
+    const logoAnimations = Animated.parallel([fadeInLogo, yMoveLogo], {})
+    Animated.stagger(300, [logoAnimations, buttonAnimations], {}).start()
   }
 
   const exitZero = async () => {
@@ -182,7 +184,7 @@ const PageZero = ({ onNextPage }) => {
     })
 
     Animated.stagger(100, [dpFadeOut, streetFadeOut, utbFadeOut]).start()
-    Animated.parallel([fadeOutLogo, logoXMove]).start()
+    Animated.parallel([fadeOutLogo, logoXMove], {}).start()
   }
 
   useEffect(() => {
@@ -235,7 +237,6 @@ const PageZero = ({ onNextPage }) => {
               source={require('../static/logos/dp-logo-small-white.png')}
               style={{
                 width: '60%',
-                marginTop: 10,
                 height: '80%',
                 resizeMode: 'contain',
                 alignSelf: 'center',

@@ -38,7 +38,8 @@ export const GradientButton = ({
         duration: 10000,
         easing: Easing.linear,
         useNativeDriver: false,
-      })
+      }),
+      {}
     ).start()
   })
 
