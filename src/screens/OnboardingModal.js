@@ -12,7 +12,11 @@ import {
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import { DefaultStatusBar, GradientButton } from '../components'
+import {
+  DefaultStatusBar,
+  GradientButton,
+  InverseGradientButton,
+} from '../components'
 import { DP_RED } from '../utils/branding'
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { ImageBackground } from 'react-native'
@@ -20,6 +24,8 @@ import { Image } from 'react-native'
 import { Easing } from 'react-native'
 import MaskedView from '@react-native-community/masked-view'
 import { Dimensions } from 'react-native'
+import { Touchable } from 'react-native'
+import { Platform } from 'react-native'
 
 const ONBOARDING_CONTENT = [
   {
@@ -189,6 +195,9 @@ const PageZero = ({ onNextPage }) => {
 
   useEffect(() => {
     setTimeout(() => enterZero(), 500)
+    return () => {
+      exitZero()
+    }
   }, [])
   return (
     <SafeAreaView
@@ -282,7 +291,7 @@ const PageZero = ({ onNextPage }) => {
           justifySelf: 'center',
           transform: [{ translateY: buttonPosY }, { translateX: buttonPosX }],
         }}
-        onButtonPress={async () => {
+        onButtonPress={() => {
           exitZero()
           setTimeout(() => onNextPage(), 1000)
         }}
@@ -301,6 +310,68 @@ const styles = StyleSheet.create({
   },
 })
 
+const InfoPage = ({ onNextPage, onPrevPage }) => {
+  const [buttonAnim] = useState(new Animated.Value(0))
+  const buttonPosX = buttonAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [200, 0],
+  })
+
+  useEffect(() => {
+    Animated.timing(buttonAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: false,
+      easing: Easing.out(Easing.exp),
+    }).start()
+
+    return () => {
+      Animated.timing(buttonAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: false,
+        easing: Easing.in(Easing.cubic),
+      })
+    }
+  })
+
+  return (
+    <SafeAreaView style={{ width: '100%', height: '100%' }}>
+      <Animated.View
+        style={{
+          flexDirection: 'row',
+          paddingHorizontal: 15,
+          alignContent: 'space-between',
+          width: '100%',
+          opacity: buttonAnim,
+          height: 60,
+          position: 'absolute',
+          bottom: Platform.OS == 'ios' ? 50 : 30,
+          justifyContent: 'center',
+          justifySelf: 'center',
+          alignSelf: 'center',
+          transform: [{ translateX: buttonPosX }],
+        }}
+      >
+        <InverseGradientButton
+          title="Back"
+          iconName="caret-back-outline"
+          iconInFront={true}
+          style={{ height: 60, width: 140 }}
+          onButtonPress={onPrevPage}
+        />
+        <View style={{ flex: 1 }} />
+        <GradientButton
+          title="Next"
+          iconName="caret-forward-outline"
+          iconInFront={false}
+          style={{ height: 60, width: 140 }}
+        />
+      </Animated.View>
+    </SafeAreaView>
+  )
+}
+
 export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
   const [isVisible, updateVisibility] = useState(isOnboarded)
   const [pageNumber, updatePageNumber] = useState(0)
@@ -315,19 +386,19 @@ export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
     animationOutTiming: 1000,
   }
 
-  let currPage = (
-    <PageZero
-      onNextPage={() => {
-        console.log('updated page!')
-        updatePageNumber(1)
-        setTimeout(() => updatePageNumber(0), 1000)
-      }}
-    />
-  )
-
-  if (pageNumber == 1) {
-    currPage = null
-  }
+  let currPage =
+    pageNumber == 0 ? (
+      <PageZero
+        onNextPage={() => {
+          updatePageNumber(1)
+        }}
+      />
+    ) : (
+      <InfoPage
+        onNextPage={() => updatePageNumber(pageNumber + 1)}
+        onPrevPage={() => updatePageNumber(pageNumber - 1)}
+      />
+    )
 
   return (
     <Modal

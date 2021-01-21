@@ -41,7 +41,7 @@ export const HomeStack = ({ navigation }) => {
 
   return (
     <>
-      {/* <OnboardingModal {...{ hasCompletedOnboarding, isOnboarded }} /> */}
+      <OnboardingModal {...{ hasCompletedOnboarding, isOnboarded }} />
       <DefaultStatusBar />
       <PublicationModal navigation={navigation} />
       <Stack.Navigator

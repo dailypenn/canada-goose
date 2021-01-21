@@ -16,7 +16,7 @@ import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { Easing } from 'react-native'
 import MaskedView from '@react-native-community/masked-view'
 
-export const GradientButton = ({
+export const InverseGradientButton = ({
   title,
   iconName,
   iconInFront,
@@ -47,35 +47,35 @@ export const GradientButton = ({
     <Animated.View style={style}>
       <TouchableOpacity
         style={{
-          height: 60,
+          height: '100%',
           width: '100%',
-          flexDirection: iconInFront ? 'row-reverse' : 'row',
           justifyContent: 'center',
+          alignContent: 'center',
         }}
         activeOpacity={0.8}
         onPress={onButtonPress}
       >
-        <MaskedView
-          style={styles.maskContainer}
-          maskElement={<View style={styles.maskingView} />}
-        >
-          <Animated.Image
-            style={[styles.image, { transform: [{ rotate: spin }] }]}
-            source={GET_STARTED_BACKGROUND}
-          />
-        </MaskedView>
-
-        <Text style={styles.text}>{title}</Text>
-        <Ionicons
-          name={iconName}
-          size={24}
-          color="white"
+        <View
           style={{
-            alignSelf: 'center',
-            paddingLeft: iconInFront ? 0 : 10,
-            paddingRight: iconInFront ? 10 : 0,
+            justifyContent: 'center',
+            alignContent: 'center',
+            flexDirection: 'row-reverse',
+            width: '100%',
+            height: '100%',
           }}
-        />
+        >
+          <Text style={styles.text}>{title}</Text>
+          <Ionicons
+            name={iconName}
+            size={24}
+            color="#AAA"
+            style={{
+              alignSelf: 'center',
+              paddingLeft: iconInFront ? 0 : 10,
+              paddingRight: iconInFront ? 10 : 0,
+            }}
+          />
+        </View>
       </TouchableOpacity>
     </Animated.View>
   )
@@ -85,28 +85,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: GEOMETRIC_BOLD,
     fontSize: 24,
-    color: 'white',
+    color: '#AAA',
     alignSelf: 'center',
-  },
-  image: {
-    width: '100%',
-    aspectRatio: 1,
-    resizeMode: 'cover',
-    alignSelf: 'center',
-    position: 'absolute',
-    borderRadius: 10000,
-    paddingHorizontal: 5,
-  },
-  maskingView: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'black',
-    borderRadius: 20,
-  },
-  maskContainer: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    justifyContent: 'center',
   },
 })
