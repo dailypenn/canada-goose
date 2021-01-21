@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component } from 'react'
 import {
   Text,
   View,
@@ -6,7 +6,7 @@ import {
   Easing,
   StyleSheet,
   Platform,
-  Button,
+  Button
 } from 'react-native'
 import SortableList from 'react-native-sortable-list'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -21,22 +21,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#eee',
+    backgroundColor: '#eee'
   },
 
   sectionContainer: {
     flexDirection: 'row',
     marginTop: 15,
     borderTopColor: '#d4d4d4',
-    borderTopWidth: 0.6,
+    borderTopWidth: 0.6
   },
 
   icon: {
-    paddingEnd: 10,
+    paddingEnd: 10
   },
 
   list: {
-    flex: 1,
+    flex: 1
   },
 
   row: {
@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     flex: 1,
     borderBottomColor: '#d4d4d4',
-    borderBottomWidth: 0.6,
+    borderBottomWidth: 0.6
   },
 
   regText: {
-    fontFamily: GEOMETRIC_REGULAR,
+    fontFamily: GEOMETRIC_REGULAR
   },
 
   description: {
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingHorizontal: 15,
     fontSize: 12,
-    color: '#808080',
-  },
+    color: '#808080'
+  }
 })
 
 class ManageFeedForPublication extends Component {
@@ -70,7 +70,7 @@ class ManageFeedForPublication extends Component {
       navigation,
       publication,
       homeSectionPreferences,
-      dispatch,
+      dispatch
     } = this.props
 
     this.navigation = navigation
@@ -93,6 +93,8 @@ class ManageFeedForPublication extends Component {
       'Press down and drag the sections to the order you would like to see them appear on the home page'
   }
 
+  // TODO: componentDidMount is just useEffect(() => {}, [])
+  // the empty dependecy list means things inside this useEffect is only called once
   componentDidMount() {
     this.props.navigation.setParams({ handleSave: this._handleSave })
   }
@@ -146,7 +148,7 @@ const ManageFeedScreenComp = ({
   navigation,
   publication,
   settings,
-  dispatch,
+  dispatch
 }) => {
   // console.log('MANAGE FEED SCREEN COMP', publication)
   return (
@@ -174,10 +176,10 @@ class Row extends Component {
             {
               scale: this._active.interpolate({
                 inputRange: [0, 1],
-                outputRange: [1, 1.1],
-              }),
-            },
-          ],
+                outputRange: [1, 1.1]
+              })
+            }
+          ]
         },
 
         android: {
@@ -185,22 +187,26 @@ class Row extends Component {
             {
               scale: this._active.interpolate({
                 inputRange: [0, 1],
-                outputRange: [1, 1.07],
-              }),
-            },
-          ],
-        },
-      }),
+                outputRange: [1, 1.07]
+              })
+            }
+          ]
+        }
+      })
     }
   }
 
+  // TODO: can convert this to functional component,
+  // all we are saying is checking if there is change to `active`
+  // so in useEffect, we add `active` to the dependency list
+  // so it becomes useEffect(() => {}, [active])
   componentDidUpdate(prevProps) {
     if (this.props.active != prevProps.active) {
       Animated.timing(this._active, {
         duration: 300,
         easing: Easing.bounce,
         toValue: Number(this.props.active),
-        useNativeDriver: true,
+        useNativeDriver: true
       }).start()
     }
   }
@@ -224,7 +230,7 @@ class Row extends Component {
 
 const mapStateToProps = ({ publication, settings }) => ({
   publication,
-  settings,
+  settings
 })
 
 export const ManageFeedScreen = connect(mapStateToProps)(ManageFeedScreenComp)
@@ -232,5 +238,5 @@ ManageFeedScreen.navigationOptions = ({ route }) => ({
   title: 'Manage Feed',
   headerRight: () => (
     <Button title={'Save'} onPress={() => route.params.handleSave()} />
-  ),
+  )
 })

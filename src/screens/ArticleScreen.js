@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Text,
-  View,
-  useWindowDimensions,
-  TouchableOpacity,
-  Alert,
-  Button
-} from 'react-native'
+import { Text, View, TouchableOpacity, Alert } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import HTML from 'react-native-render-html'
 import { connect } from 'react-redux'
@@ -63,7 +56,7 @@ const ArticleScreenComp = ({
         handlePress: handlePress,
         alreadySaved: savedArticles.some(obj => obj.slug == article.slug),
         article
-      }) 
+      })
     }
   }, [settings.savedArticles, article])
 
@@ -184,14 +177,14 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
   title: '',
   animationEnabled: true,
   headerRight: () => {
-    const { params: { handlePress, alreadySaved, article } } = route
+    const {
+      params: { handlePress, alreadySaved, article }
+    } = route
     let icon = 'bookmark-outline'
     if (alreadySaved) icon = 'bookmark'
 
     return (
-      <TouchableOpacity
-        onPress={() => handlePress(alreadySaved, article)}
-      >
+      <TouchableOpacity onPress={() => handlePress(alreadySaved, article)}>
         <View style={{ paddingRight: 10 }}>
           <Ionicons name={icon} size={25} color="black" />
         </View>
