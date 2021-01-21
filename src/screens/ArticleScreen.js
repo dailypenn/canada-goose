@@ -1,30 +1,42 @@
-import React, { useEffect } from 'react'
-import { Text, View, useWindowDimensions, Button } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Text, View, Button, Alert } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import HTML from 'react-native-render-html'
-import { useQuery } from '@apollo/client'
 import { connect } from 'react-redux'
+import { useLazyQuery } from '@apollo/client'
 
-import { PictureHeadline } from '../components'
+import { PictureHeadline, ActivityIndicator } from '../components'
 import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
-import { QUERY_ARTICLE_BY_SLUG } from '../utils/constants'
+import { PublicationEnum } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
-import { Alert } from 'react-native'
+import { UTB_RANDOM_ARTICLE } from '../utils/queries'
 
 const ArticleScreenComp = ({ navigation, route, publication }) => {
-  const { article } = route.params
+  const [article, setArticle] = useState(route.params.article)
 
-  if (!article) {
-    // TODO: Check that article is already fetched
-    const { loading, error, data } = useQuery(QUERY_ARTICLE_BY_SLUG, {
-      variables: { slug: article.slug },
-    })
-  }
+  const [getRandomArticle, { loading, data }] = useLazyQuery(UTB_RANDOM_ARTICLE, {
+    fetchPolicy: 'cache-and-network'
+  })
+
+  // if (!article) {
+  //   // TODO: Check that article is already fetched
+  //   const { loading, error, data } = useQuery(QUERY_ARTICLE_BY_SLUG, {
+  //     variables: { slug: article.slug },
+  //   })
+  // }
 
   useEffect(() => {
-    navigation.setParams({ handleSave: handleSave })
+    if (publication === PublicationEnum.utb && !article) {
+      getRandomArticle()
+    }
   }, [])
+
+  useEffect(() => {
+    if (data) {
+      setArticle(data.utbRandomArticle)
+    }
+  }, [data])
 
   const handleSave = async () => {
     const date = new Date()
@@ -43,7 +55,7 @@ const ArticleScreenComp = ({ navigation, route, publication }) => {
         publication,
         slug: article.slug,
         headline: article.headline,
-        saved_at: date,
+        saved_at: date
       })
       Storage.setItem(SAVED_ARTICLES_KEY, saved_articles)
     } else {
@@ -55,6 +67,9 @@ const ArticleScreenComp = ({ navigation, route, publication }) => {
   GraphQL queries, so hard coding right now */
   // TODO: Fetch from CEO
   const photographer = 'Pitt Shure'
+
+  if (loading || !article) return <ActivityIndicator />
+
   return (
     <ScrollView>
       <PictureHeadline
@@ -71,13 +86,13 @@ const ArticleScreenComp = ({ navigation, route, publication }) => {
       <View
         style={{
           paddingHorizontal: 20,
-          paddingVertical: 10,
+          paddingVertical: 10
         }}
       >
         <Text
           style={{
             fontFamily: GEOMETRIC_BOLD,
-            fontSize: 16,
+            fontSize: 16
           }}
         >{`By: ${AUTHORS(article.authors)}`}</Text>
         {/* <Text
@@ -96,24 +111,24 @@ const ArticleScreenComp = ({ navigation, route, publication }) => {
             const PARSED_URL = href.split('thedp.com/article')
             if (PARSED_URL.length == 2) {
               navigation.navigate('', {
-                article: { slug: PARSED_URL[1] },
+                article: { slug: PARSED_URL[1] }
                 // TODO: Fix, for some reason this is not working
               })
             } else navigation.navigate('ArticleBrowser', { link: href })
           }}
           source={{ html: article.content }}
-          contentWidth={useWindowDimensions().width}
+          // contentWidth={useWindowDimensions().width}
           tagsStyles={{
             p: {
               fontSize: 18,
               lineHeight: 28,
               paddingBottom: 30,
-              fontFamily: BODY_SERIF,
+              fontFamily: BODY_SERIF
             },
             a: {
-              fontSize: 18,
+              fontSize: 18
             },
-            img: { paddingBottom: 10 },
+            img: { paddingBottom: 10 }
           }}
           ignoredTags={['div']}
         />
@@ -132,7 +147,7 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
         route.params.handleSave()
       }}
     />
-  ),
+  )
 })
 
 const mapStateToProps = ({ publication }) => ({ publication })

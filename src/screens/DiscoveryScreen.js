@@ -1,21 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   StyleSheet,
   SafeAreaView,
   Dimensions,
   TouchableOpacity,
-  Easing,
   Platform,
+  StatusBar,
+  View
 } from 'react-native'
 import { connect } from 'react-redux'
 import { FlatGrid } from 'react-native-super-grid'
+import { useLazyQuery } from '@apollo/client'
 
 import { PublicationEnum } from '../utils/constants'
 import { DiscoveryCell, SearchBar, RandomButton } from '../components'
-import { StatusBar } from 'react-native'
-import { View } from 'react-native'
-import { Text } from 'react-native'
-import { DP_RED } from '../utils/branding'
+import { UTB_RANDOM_ARTICLE } from '../utils/queries'
+
 const DP_SECTIONS = require('../json/discover/dp.json')
 const STREET_SECTIONS = require('../json/discover/street.json')
 
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
-  },
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+  }
 })
 
 const width = Dimensions.get('window').width
@@ -34,12 +34,12 @@ const DiscoveryView = ({ navigation, publication }) => {
   const navigateToSectionScreen = (section, slug) => {
     navigation.navigate('Section', {
       sectionName: section,
-      slug,
+      slug
     })
   }
 
   const onButtonPress = () => {
-    //TODO: Call for random article and transition
+    navigation.navigate('SectionArticle', { article: null })
   }
 
   let SECTIONS = []
@@ -85,7 +85,7 @@ const DiscoveryView = ({ navigation, publication }) => {
         width: '100%',
         height: '100%',
         justifyContent: 'center',
-        alignContent: 'center',
+        alignContent: 'center'
       }}
     >
       <RandomButton onButtonPress={onButtonPress} />
