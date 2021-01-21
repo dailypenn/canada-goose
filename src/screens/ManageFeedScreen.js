@@ -6,7 +6,7 @@ import {
   Easing,
   StyleSheet,
   Platform,
-  Button
+  Button,
 } from 'react-native'
 import SortableList from 'react-native-sortable-list'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -21,22 +21,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#eee'
+    backgroundColor: '#eee',
   },
 
   sectionContainer: {
     flexDirection: 'row',
     marginTop: 15,
     borderTopColor: '#d4d4d4',
-    borderTopWidth: 0.6
+    borderTopWidth: 0.6,
   },
 
   icon: {
-    paddingEnd: 10
+    paddingEnd: 10,
   },
 
   list: {
-    flex: 1
+    flex: 1,
   },
 
   row: {
@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     flex: 1,
     borderBottomColor: '#d4d4d4',
-    borderBottomWidth: 0.6
+    borderBottomWidth: 0.6,
   },
 
   regText: {
-    fontFamily: GEOMETRIC_REGULAR
+    fontFamily: GEOMETRIC_REGULAR,
   },
 
   description: {
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingHorizontal: 15,
     fontSize: 12,
-    color: '#808080'
-  }
+    color: '#808080',
+  },
 })
 
 class ManageFeedForPublication extends Component {
@@ -70,7 +70,7 @@ class ManageFeedForPublication extends Component {
       navigation,
       publication,
       homeSectionPreferences,
-      dispatch
+      dispatch,
     } = this.props
 
     this.navigation = navigation
@@ -148,19 +148,16 @@ const ManageFeedScreenComp = ({
   navigation,
   publication,
   settings,
-  dispatch
-}) => {
-  // console.log('MANAGE FEED SCREEN COMP', publication)
-  return (
-    <ManageFeedForPublication
-      key={publication}
-      navigation={navigation}
-      publication={publication}
-      homeSectionPreferences={settings.homeSectionPreferences}
-      dispatch={dispatch}
-    />
-  )
-}
+  dispatch,
+}) => (
+  <ManageFeedForPublication
+    key={publication}
+    navigation={navigation}
+    publication={publication}
+    homeSectionPreferences={settings.homeSectionPreferences}
+    dispatch={dispatch}
+  />
+)
 
 class Row extends Component {
   constructor(props) {
@@ -176,10 +173,10 @@ class Row extends Component {
             {
               scale: this._active.interpolate({
                 inputRange: [0, 1],
-                outputRange: [1, 1.1]
-              })
-            }
-          ]
+                outputRange: [1, 1.1],
+              }),
+            },
+          ],
         },
 
         android: {
@@ -187,12 +184,12 @@ class Row extends Component {
             {
               scale: this._active.interpolate({
                 inputRange: [0, 1],
-                outputRange: [1, 1.07]
-              })
-            }
-          ]
-        }
-      })
+                outputRange: [1, 1.07],
+              }),
+            },
+          ],
+        },
+      }),
     }
   }
 
@@ -206,7 +203,7 @@ class Row extends Component {
         duration: 300,
         easing: Easing.bounce,
         toValue: Number(this.props.active),
-        useNativeDriver: true
+        useNativeDriver: true,
       }).start()
     }
   }
@@ -230,7 +227,7 @@ class Row extends Component {
 
 const mapStateToProps = ({ publication, settings }) => ({
   publication,
-  settings
+  settings,
 })
 
 export const ManageFeedScreen = connect(mapStateToProps)(ManageFeedScreenComp)
@@ -238,5 +235,5 @@ ManageFeedScreen.navigationOptions = ({ route }) => ({
   title: 'Manage Feed',
   headerRight: () => (
     <Button title={'Save'} onPress={() => route.params.handleSave()} />
-  )
+  ),
 })
