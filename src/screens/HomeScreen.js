@@ -5,7 +5,7 @@ import {
   View,
   Text,
   RefreshControl,
-  AppState
+  AppState,
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -19,24 +19,24 @@ import {
   HorizontalArticleCarousel,
   ArticleList,
   ActivityIndicator,
-  HeaderLine
+  HeaderLine,
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
   GET_HOME_SECTIONS,
   GET_HOME_SECTION_NAME,
-  GET_HOME_QUERIES
+  GET_HOME_QUERIES,
 } from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   text1: {
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 })
 
 const HomeView = ({
@@ -45,13 +45,13 @@ const HomeView = ({
   homeSections,
   data,
   loading,
-  refetch
+  refetch,
 }) => {
   const { centerpiece: centerArticles, top: topArticles } = data
 
   const sectionData = homeSections.map(section => ({
     name: section,
-    articles: data[section]
+    articles: data[section],
   }))
 
   const [offset, setOffset] = useState(0)
@@ -76,11 +76,9 @@ const HomeView = ({
         <TouchableOpacity
           activeOpacity={1}
           onPress={() =>
-            NAVIGATE_TO_ARTICLE_SCREEN(
-              navigation,
-              'HomeArticle',
-              centerArticles[0]
-            )
+            NAVIGATE_TO_ARTICLE_SCREEN(navigation, 'HomeArticle', {
+              article: centerArticles[0],
+            })
           }
         >
           <HeadlineArticle data={centerArticles[0]} publication={publication} />
@@ -213,7 +211,7 @@ const HomeScreenComp = ({ navigation, publication, settings }) => {
 
 const mapStateToProps = ({ publication, settings }) => ({
   publication,
-  settings
+  settings,
 })
 
 export const HomeScreen = connect(mapStateToProps)(HomeScreenComp)

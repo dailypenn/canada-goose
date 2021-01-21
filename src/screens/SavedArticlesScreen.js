@@ -16,39 +16,39 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#fff',
     borderBottomColor: '#c4c4c4',
-    borderBottomWidth: 0.6
+    borderBottomWidth: 0.6,
   },
 
   textContainer: {
     // backgroundColor: 'red',
-    width: '95%'
+    width: '95%',
   },
 
   chevron: {
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 
   spacer: {
-    flex: 1
+    flex: 1,
   },
 
   title: {
     fontFamily: DISPLAY_SERIF_BOLD,
     fontSize: 18,
-    lineHeight: 22
+    lineHeight: 22,
   },
 
   subText: {
     color: '#888',
     fontFamily: GEOMETRIC_REGULAR,
     fontSize: 12,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
 
   rightSwipeItem: {
     justifyContent: 'center',
-    backgroundColor: 'red'
-  }
+    backgroundColor: 'red',
+  },
 })
 
 const SavedArticleCell = ({ title, savedAt, category, publication }) => (
@@ -91,7 +91,7 @@ const SwipeableRow = ({ item, navigationHandler, deleteHandler }) => {
   )
 }
 
-const SavedArticlesScreenComp = ({ navigation, settings, dispatch }) => {
+const SavedArticlesScreenComp = ({ navigation, route, settings, dispatch }) => {
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
 
   // console.log('SAVED ARTICLES SCREEN COMP', savedArticles)
@@ -105,12 +105,10 @@ const SavedArticlesScreenComp = ({ navigation, settings, dispatch }) => {
   }
 
   const navigationHandler = async item => {
-    NAVIGATE_TO_ARTICLE_SCREEN(
-      navigation,
-      'SettingsArticle',
-      item.article,
-      item.publicationState
-    )
+    NAVIGATE_TO_ARTICLE_SCREEN(navigation, 'SettingsArticle', {
+      article: item.article,
+      articlePublication: item.publication,
+    })
   }
 
   const deleteHandler = async item => {
@@ -144,7 +142,7 @@ const SavedArticlesScreenComp = ({ navigation, settings, dispatch }) => {
 
 const mapStateToProps = ({ publication, settings }) => ({
   publication,
-  settings
+  settings,
 })
 
 export const SavedArticlesScreen = connect(mapStateToProps)(
