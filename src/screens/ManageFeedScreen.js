@@ -14,8 +14,7 @@ import { connect } from 'react-redux'
 
 import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
-import { DP_HOME_SECTIONS_TITLE } from '../utils/constants'
-import { REORDER_HOME_SECTIONS } from '../actions'
+import { updateHomeSections } from '../actions'
 import { GET_HOME_SECTIONS } from '../utils/helperFunctions'
 
 const styles = StyleSheet.create({
@@ -64,86 +63,101 @@ const styles = StyleSheet.create({
   },
 })
 
-class ManageFeedScreenComp extends Component {
+class ManageFeedForPublication extends Component {
   constructor(props) {
     super(props)
-    console.log(
-      'manage feed screen comp',
-      props.publication,
-      props.reorderHomeSection
-    )
+    const {
+      navigation,
+      publication,
+      homeSectionPreferences,
+      dispatch,
+    } = this.props
 
-    this.props = props
-    this.state = {
-      currData: GET_HOME_SECTIONS(props.publication),
-    }
+    this.navigation = navigation
+    this.publication = publication
+    this.homeSectionPreferences = homeSectionPreferences
+    this.dispatch = dispatch
+
+    const homeSectionPreference = homeSectionPreferences
+      ? homeSectionPreferences[publication]
+      : null
+
+    this.currData = homeSectionPreference
+      ? homeSectionPreference
+      : GET_HOME_SECTIONS(this.publication)
+
+    // console.log('MANAGE FEED FOR PUBLICATION', publication, this.currData)
+
     this.newOrder = null
     this.instructions =
       'Press down and drag the sections to the order you would like to see them appear on the home page'
   }
 
+  // TODO: componentDidMount is just useEffect(() => {}, [])
+  // the empty dependecy list means things inside this useEffect is only called once
   componentDidMount() {
-    this.orderItems()
-    this.props.navigation.setParams({ handleSave: this._handleSave.bind(this) })
+    this.props.navigation.setParams({ handleSave: this._handleSave })
   }
 
   _handleSave = async () => {
     if (this.newOrder == null) return
     var sorted = []
     this.newOrder.forEach(i => {
-      this.state.currData.forEach((d, j) => {
+      this.currData.forEach((d, j) => {
         if (i == j) {
           sorted.push(d)
         }
       })
     })
     this.newData = sorted
-    if (this.newData == this.state.currData) return
+    if (this.newData == this.currData) return
     // console.log('saving-', this.newData)
-    await Storage.setItem(
+    let savedSuccessfully = await Storage.setItem(
       GET_HOME_FEED_ORDER_KEY(this.props.publication),
       this.newData
     )
 
-    this.props.dispatch({
-      type: REORDER_HOME_SECTIONS,
-      publication: this.props.publication,
-    })
-  }
-
-  orderItems = async () => {
-    let storedOrder = await Storage.getItem(
-      GET_HOME_FEED_ORDER_KEY(this.props.publication)
-    )
-    if (storedOrder != null) {
-      this.setState({ currData: storedOrder })
-    }
-  }
-
-  onReleaseRow = (key, currentOrder) => {
-    this.newOrder = currentOrder
+    if (savedSuccessfully)
+      this.props.dispatch(
+        updateHomeSections(this.props.publication, this.newData)
+      )
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} key={this.publication}>
         <View style={styles.sectionContainer}>
           <SortableList
             style={styles.list}
-            data={this.state.currData}
-            renderRow={this._renderRow}
-            onReleaseRow={this.onReleaseRow}
+            data={this.currData}
+            renderRow={({ data, active }) => {
+              return <Row data={data} active={active} />
+            }}
+            onReleaseRow={(key, currentOrder) => {
+              this.newOrder = currentOrder
+            }}
           />
         </View>
         <Text style={styles.description}>{this.instructions}</Text>
       </View>
     )
   }
-
-  _renderRow = ({ data, active }) => {
-    return <Row data={data} active={active} />
-  }
 }
+
+const ManageFeedScreenComp = ({
+  navigation,
+  publication,
+  settings,
+  dispatch,
+}) => (
+  <ManageFeedForPublication
+    key={publication}
+    navigation={navigation}
+    publication={publication}
+    homeSectionPreferences={settings.homeSectionPreferences}
+    dispatch={dispatch}
+  />
+)
 
 class Row extends Component {
   constructor(props) {
@@ -179,13 +193,17 @@ class Row extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.active !== nextProps.active) {
+  // TODO: can convert this to functional component,
+  // all we are saying is checking if there is change to `active`
+  // so in useEffect, we add `active` to the dependency list
+  // so it becomes useEffect(() => {}, [active])
+  componentDidUpdate(prevProps) {
+    if (this.props.active != prevProps.active) {
       Animated.timing(this._active, {
         duration: 300,
         easing: Easing.bounce,
-        toValue: Number(nextProps.active),
-        useNativeDriver: false,
+        toValue: Number(this.props.active),
+        useNativeDriver: true,
       }).start()
     }
   }
@@ -207,9 +225,9 @@ class Row extends Component {
   }
 }
 
-const mapStateToProps = ({ publication, reorderHomeSection }) => ({
+const mapStateToProps = ({ publication, settings }) => ({
   publication,
-  reorderHomeSection,
+  settings,
 })
 
 export const ManageFeedScreen = connect(mapStateToProps)(ManageFeedScreenComp)

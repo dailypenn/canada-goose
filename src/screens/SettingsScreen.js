@@ -1,12 +1,40 @@
 import React from 'react'
-import { TouchableOpacity, Text, View, StyleSheet } from 'react-native'
-import { Entypo } from '@expo/vector-icons'
+import {
+  TouchableOpacity,
+  Text,
+  View,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
 
-import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
+import { DISPLAY_SERIF_BLACK, GEOMETRIC_REGULAR } from '../utils/fonts'
+import { SETTINGS_SECTIONS } from '../utils/constants'
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
+  },
+
+  title: {
+    fontFamily: DISPLAY_SERIF_BLACK,
+    fontSize: 28,
+    lineHeight: 40,
+  },
+  header_safe_area: {
+    zIndex: 1000,
+  },
+  header: {
+    height: 50,
+    paddingHorizontal: 16,
+  },
+  header_inner: {
+    flex: 1,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'relative',
   },
 
   cell: {
@@ -15,17 +43,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 
+  iconView: {
+    justifyContent: 'center',
+    paddingRight: 15,
+  },
+
+  icon: {
+    backgroundColor: '#68a0af',
+    borderRadius: 3,
+    padding: 4,
+  },
+
   textView: {
     paddingVertical: 10,
-    borderBottomColor: '#d4d4d4',
-    borderBottomWidth: 0.6,
     flexDirection: 'row',
   },
 
   divider: {
-    paddingHorizontal: 15,
-    borderColor: '#fff',
-    borderWidth: 1,
+    height: 0.6,
+    backgroundColor: '#d4d4d4',
   },
 
   spacer: {
@@ -33,139 +69,64 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 
-  sectionHeaderTitle: {
-    fontFamily: GEOMETRIC_BOLD,
-    color: '#a1a1a1',
-    fontSize: 14,
-    paddingVertical: 5,
-    textTransform: 'uppercase',
-  },
-
-  sectionHeaderView: {
-    flexDirection: 'row',
-    paddingHorizontal: 15,
-  },
-
   regText: {
     fontFamily: GEOMETRIC_REGULAR,
   },
 })
 
-const settings_sections = [
-  {
-    id: 'account section',
-    name: 'Account',
-    items: [
-      {
-        id: 'noti cell',
-        name: 'Notifications',
-        screenName: 'Notification',
-        props: {},
-      },
-      {
-        id: 'privacy cell',
-        name: 'Privacy',
-        screenName: 'Privacy',
-        props: {},
-      },
-      {
-        id: 'manage feed cell',
-        name: 'Manage Feed',
-        screenName: 'ManageFeedScreen',
-        props: {},
-      },
-      {
-        id: 'saved article cell',
-        name: 'Saved Article',
-        screenName: 'SavedArticles',
-        props: {},
-      },
-    ],
-  },
-  {
-    id: 'features section',
-    name: 'Features',
-    items: [
-      {
-        id: 'about cell',
-        name: 'About',
-        screenName: 'About',
-        props: {},
-      },
-    ],
-  },
-  {
-    id: 'links section',
-    name: 'Links',
-    items: [
-      {
-        id: 'dp cell',
-        name: 'The Daily Pennsylvanian',
-        screenName: 'WebView',
-        props: { link: 'https://thedp.com' },
-      },
-      {
-        id: 'street cell',
-        name: '34th Street',
-        screenName: 'WebView',
-        props: { link: 'https://34st.com' },
-      },
-      {
-        id: 'utb cell',
-        name: 'Under the Button',
-        screenName: 'WebView',
-        props: { link: 'https://underthebutton.com' },
-      },
-    ],
-  },
-]
-
-const SettingsCell = ({ item }) => {
-  return (
-    <View style={styles.cell}>
-      <View style={styles.textView}>
-        <Text style={styles.regText}>{item.name}</Text>
-        <View style={styles.spacer} />
-        <Entypo name="chevron-right" size={16} color="#c4c4c4" />
+const SettingsCell = ({ item }) => (
+  <View style={styles.cell}>
+    <View style={styles.textView}>
+      <View style={styles.iconView}>
+        <View style={{ ...styles.icon, backgroundColor: item.color }}>
+          <Ionicons name={item.icon} size={14} color="white" />
+        </View>
       </View>
+      <Text style={styles.regText}>{item.name}</Text>
+      <View style={styles.spacer} />
+      <Ionicons name="chevron-forward" size={16} color="#c4c4c4" />
     </View>
-  )
-}
-
-const SettingsSectionHeader = ({ title }) => (
-  <View style={styles.sectionHeaderView}>
-    <Text style={styles.sectionHeaderTitle}>{title}</Text>
   </View>
 )
 
 const SettingsSection = ({ navigateToScreen, name, items }) => (
   <View>
-    <SettingsSectionHeader title={name} />
-    {items.map(el => (
+    <View style={{ ...styles.divider, marginTop: 20 }} />
+    {items.map((el, i) => (
       <TouchableOpacity
         key={el.id}
         activeOpacity={1}
         onPress={() => navigateToScreen(el.screenName, el.props)}
       >
-        <SettingsCell item={el} />
+        <View>
+          <SettingsCell item={el} />
+          <View
+            style={{
+              ...(i != items.length - 1 ? styles.divider : {}),
+              marginLeft: 45,
+            }}
+          />
+        </View>
       </TouchableOpacity>
     ))}
+    <View style={styles.divider} />
   </View>
 )
 
-export const SettingsScreen = ({ navigation }) => {
-  return (
-    <View style={styles.container}>
-      {settings_sections.map((l, i) => (
-        <SettingsSection
-          key={l.id}
-          name={l.name}
-          items={l.items}
-          navigateToScreen={(screen, props) =>
-            navigation.navigate(screen, props)
-          }
-        />
-      ))}
+export const SettingsScreen = ({ navigation }) => (
+  <SafeAreaView style={styles.header_safe_area}>
+    <View style={styles.header}>
+      <View style={styles.header_inner}>
+        <Text style={styles.title}>Account</Text>
+      </View>
     </View>
-  )
-}
+    {SETTINGS_SECTIONS.map((l, i) => (
+      <SettingsSection
+        key={l.id}
+        name={l.name}
+        items={l.items}
+        navigateToScreen={(screen, props) => navigation.navigate(screen, props)}
+      />
+    ))}
+  </SafeAreaView>
+)
