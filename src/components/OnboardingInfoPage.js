@@ -47,6 +47,7 @@ export const OnboardingInfoPage = ({
 }) => {
   const NUM_PAGES = ONBOARDING_CONTENT.length
   const [buttonAnim] = useState(new Animated.Value(0))
+  const [buttonPosY] = useState(new Animated.Value(0))
   const [pageAnim] = useState(new Animated.Value(0))
   const pageVisibilities = [
     ONBOARDING_CONTENT.map(el => {
@@ -101,8 +102,26 @@ export const OnboardingInfoPage = ({
     ]).start()
   }
 
-  const forwardButtonPressed = () => {
-    onNextPage()
+  const forwardButtonPressed = async () => {
+    if (currPage == NUM_PAGES) {
+      await Animated.stagger(200, [
+        Animated.timing(buttonPosY, {
+          toValue: 150,
+          duration: 500,
+          useNativeDriver: false,
+          easing: Easing.in(Easing.cubic),
+        }),
+        Animated.timing(pageAnim, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: false,
+          easing: Easing.in(Easing.cubic),
+        }),
+      ]).start()
+      setTimeout(() => {
+        onNextPage()
+      }, 1500)
+    } else onNextPage()
   }
 
   const backButtonPressed = () => {
@@ -125,7 +144,7 @@ export const OnboardingInfoPage = ({
           styles.navigation,
           {
             opacity: buttonAnim,
-            transform: [{ translateX: buttonPosX }],
+            transform: [{ translateX: buttonPosX }, { translateY: buttonPosY }],
           },
         ]}
       >

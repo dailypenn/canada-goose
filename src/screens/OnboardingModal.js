@@ -316,7 +316,7 @@ export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
     animationIn: 'fadeIn',
     animationInTiming: 500,
     animationOut: 'fadeOut',
-    animationOutTiming: 1000,
+    animationOutTiming: 1500,
   }
 
   const onNextPage = () => {
@@ -331,14 +331,14 @@ export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
           updatePageNumber(1)
         }}
       />
-    ) : (
+    ) : isVisible ? (
       <OnboardingInfoPage
         onNextPage={onNextPage}
         onPrevPage={() => updatePageNumber(pageNumber - 1)}
         currPage={pageNumber}
         ONBOARDING_CONTENT={ONBOARDING_CONTENT}
       />
-    )
+    ) : null
 
   return (
     <Modal
