@@ -1,9 +1,14 @@
 import React from 'react'
-import { TouchableOpacity, Text, View, StyleSheet } from 'react-native'
+import {
+  TouchableOpacity,
+  Text,
+  View,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
 import { DISPLAY_SERIF_BLACK, GEOMETRIC_REGULAR } from '../utils/fonts'
-import { SafeAreaView } from 'react-native'
 import { SETTINGS_SECTIONS } from '../utils/constants'
 
 const styles = StyleSheet.create({
@@ -12,7 +17,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontFamily: DISPLAY_SERIF_BLACK, //GEOMETRIC_BOLD,
+    fontFamily: DISPLAY_SERIF_BLACK,
     fontSize: 28,
     lineHeight: 40,
   },
@@ -69,31 +74,24 @@ const styles = StyleSheet.create({
   },
 })
 
-const SettingsCell = ({ item }) => {
-  return (
-    <View style={styles.cell}>
-      <View style={styles.textView}>
-        <View style={styles.iconView}>
-          <View style={{ ...styles.icon, backgroundColor: item.color }}>
-            <Ionicons name={item.icon} size={14} color="white" />
-          </View>
+const SettingsCell = ({ item }) => (
+  <View style={styles.cell}>
+    <View style={styles.textView}>
+      <View style={styles.iconView}>
+        <View style={{ ...styles.icon, backgroundColor: item.color }}>
+          <Ionicons name={item.icon} size={14} color="white" />
         </View>
-        <Text style={styles.regText}>{item.name}</Text>
-        <View style={styles.spacer} />
-        <Ionicons name="chevron-forward" size={16} color="#c4c4c4" />
       </View>
+      <Text style={styles.regText}>{item.name}</Text>
+      <View style={styles.spacer} />
+      <Ionicons name="chevron-forward" size={16} color="#c4c4c4" />
     </View>
-  )
-}
-
-const SettingsSectionHeader = ({ title }) => (
-  <View style={styles.sectionHeaderView}></View>
+  </View>
 )
 
 const SettingsSection = ({ navigateToScreen, name, items }) => (
   <View>
     <View style={{ ...styles.divider, marginTop: 20 }} />
-    <SettingsSectionHeader title={name} />
     {items.map((el, i) => (
       <TouchableOpacity
         key={el.id}
@@ -115,24 +113,20 @@ const SettingsSection = ({ navigateToScreen, name, items }) => (
   </View>
 )
 
-export const SettingsScreen = ({ navigation }) => {
-  return (
-    <SafeAreaView style={styles.header_safe_area}>
-      <View style={styles.header}>
-        <View style={styles.header_inner}>
-          <Text style={styles.title}>Account</Text>
-        </View>
+export const SettingsScreen = ({ navigation }) => (
+  <SafeAreaView style={styles.header_safe_area}>
+    <View style={styles.header}>
+      <View style={styles.header_inner}>
+        <Text style={styles.title}>Account</Text>
       </View>
-      {SETTINGS_SECTIONS.map((l, i) => (
-        <SettingsSection
-          key={l.id}
-          name={l.name}
-          items={l.items}
-          navigateToScreen={(screen, props) =>
-            navigation.navigate(screen, props)
-          }
-        />
-      ))}
-    </SafeAreaView>
-  )
-}
+    </View>
+    {SETTINGS_SECTIONS.map((l, i) => (
+      <SettingsSection
+        key={l.id}
+        name={l.name}
+        items={l.items}
+        navigateToScreen={(screen, props) => navigation.navigate(screen, props)}
+      />
+    ))}
+  </SafeAreaView>
+)

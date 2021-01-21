@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Text,
-  View,
-  useWindowDimensions,
-  TouchableOpacity,
-  Alert,
-  Button,
-} from 'react-native'
+import { Text, View, TouchableOpacity, Alert } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import HTML from 'react-native-render-html'
 import { connect } from 'react-redux'
@@ -26,7 +19,7 @@ const ArticleScreenComp = ({
   route,
   publication,
   settings,
-  dispatch,
+  dispatch
 }) => {
   const [article, setArticle] = useState(route.params.article)
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
@@ -34,7 +27,7 @@ const ArticleScreenComp = ({
   const [getRandomArticle, { loading, data }] = useLazyQuery(
     UTB_RANDOM_ARTICLE,
     {
-      fetchPolicy: 'cache-and-network',
+      fetchPolicy: 'cache-and-network'
     }
   )
 
@@ -44,24 +37,6 @@ const ArticleScreenComp = ({
   //     variables: { slug: article.slug },
   //   })
   // }
-
-  useEffect(() => {
-    navigation.setParams({
-      handlePress: handlePress,
-      alreadySaved: savedArticles.some(obj => obj.slug == article.slug),
-    })
-  }, [settings.savedArticles])
-
-  const deleteHandler = async article => {
-    console.log('UNSAVEEEE')
-    const slug = article.slug
-    const remainingArticles = savedArticles.filter(item => item.slug !== slug)
-    let saved_successfully = await Storage.setItem(
-      SAVED_ARTICLES_KEY,
-      remainingArticles
-    )
-    if (saved_successfully) dispatch(unsaveArticle({ slug: article.slug }))
-  }
 
   useEffect(() => {
     if (publication === PublicationEnum.utb && !article) {
@@ -75,6 +50,27 @@ const ArticleScreenComp = ({
     }
   }, [data])
 
+  useEffect(() => {
+    if (article) {
+      navigation.setParams({
+        handlePress: handlePress,
+        alreadySaved: savedArticles.some(obj => obj.slug == article.slug),
+        article
+      })
+    }
+  }, [settings.savedArticles, article])
+
+  const deleteHandler = async article => {
+    console.log('UNSAVEEEE')
+    const slug = article.slug
+    const remainingArticles = savedArticles.filter(item => item.slug !== slug)
+    let saved_successfully = await Storage.setItem(
+      SAVED_ARTICLES_KEY,
+      remainingArticles
+    )
+    if (saved_successfully) dispatch(unsaveArticle({ slug: article.slug }))
+  }
+
   const saveHandler = async article => {
     const date = new Date()
 
@@ -82,7 +78,7 @@ const ArticleScreenComp = ({
       slug: article.slug,
       article: article,
       saved_at: date,
-      publication: publication,
+      publication: publication
     }
 
     let newSavedArticles = [...savedArticles]
@@ -98,9 +94,9 @@ const ArticleScreenComp = ({
     else Alert.alert('Oops', 'There was an error saving article :(')
   }
 
-  const handlePress = async alreadySaved => {
-    if (!alreadySaved) saveHandler(article)
-    else deleteHandler(article)
+  const handlePress = (alreadySaved, routeArticle) => {
+    if (!alreadySaved) saveHandler(routeArticle)
+    else deleteHandler(routeArticle)
   }
 
   /* Currently author and image credits are not supported by
@@ -126,13 +122,13 @@ const ArticleScreenComp = ({
       <View
         style={{
           paddingHorizontal: 20,
-          paddingVertical: 10,
+          paddingVertical: 10
         }}
       >
         <Text
           style={{
             fontFamily: GEOMETRIC_BOLD,
-            fontSize: 16,
+            fontSize: 16
           }}
         >{`By: ${AUTHORS(article.authors)}`}</Text>
         {/* <Text
@@ -151,7 +147,7 @@ const ArticleScreenComp = ({
             const PARSED_URL = href.split('thedp.com/article')
             if (PARSED_URL.length == 2) {
               navigation.navigate('', {
-                article: { slug: PARSED_URL[1] },
+                article: { slug: PARSED_URL[1] }
                 // TODO: Fix, for some reason this is not working
               })
             } else navigation.navigate('ArticleBrowser', { link: href })
@@ -163,12 +159,12 @@ const ArticleScreenComp = ({
               fontSize: 18,
               lineHeight: 28,
               paddingBottom: 30,
-              fontFamily: BODY_SERIF,
+              fontFamily: BODY_SERIF
             },
             a: {
-              fontSize: 18,
+              fontSize: 18
             },
-            img: { paddingBottom: 10 },
+            img: { paddingBottom: 10 }
           }}
           ignoredTags={['div']}
         />
@@ -181,26 +177,25 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
   title: '',
   animationEnabled: true,
   headerRight: () => {
+    const {
+      params: { handlePress, alreadySaved, article }
+    } = route
     let icon = 'bookmark-outline'
-    if (route.params.alreadySaved) icon = 'bookmark'
+    if (alreadySaved) icon = 'bookmark'
 
     return (
-      <TouchableOpacity
-        onPress={() => {
-          route.params.handlePress(route.params.alreadySaved)
-        }}
-      >
+      <TouchableOpacity onPress={() => handlePress(alreadySaved, article)}>
         <View style={{ paddingRight: 10 }}>
           <Ionicons name={icon} size={25} color="black" />
         </View>
       </TouchableOpacity>
     )
-  },
+  }
 })
 
 const mapStateToProps = ({ publication, settings }) => ({
   publication,
-  settings,
+  settings
 })
 
 export const ArticleScreen = connect(mapStateToProps)(ArticleScreenComp)
