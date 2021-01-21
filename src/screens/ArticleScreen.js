@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Text,
   View,
@@ -161,15 +161,15 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
     if (route.params.alreadySaved) icon = 'bookmark'
 
     return (
-      <View style={{ padding: 10 }}>
-        <TouchableOpacity
-          onPress={() => {
-            route.params.handlePress(route.params.alreadySaved)
-          }}
-        >
+      <TouchableOpacity
+        onPress={() => {
+          route.params.handlePress(route.params.alreadySaved)
+        }}
+      >
+        <View style={{ paddingRight: 10 }}>
           <Ionicons name={icon} size={25} color="black" />
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     )
   },
 })

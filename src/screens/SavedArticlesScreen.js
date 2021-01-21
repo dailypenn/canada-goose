@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { RightSwipeDeleteRow } from '../components/RightSwipeDeleteRow'
-import { Entypo } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 
 import { DISPLAY_SERIF_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { NAVIGATE_TO_ARTICLE_SCREEN, TIME_AGO } from '../utils/helperFunctions'
 import { connect } from 'react-redux'
 import { unsaveArticle } from '../actions'
-import { CategoryTag } from '../components'
-import { PublicationEnum } from '../utils/constants'
 
 const styles = StyleSheet.create({
   cell: {
@@ -59,8 +57,9 @@ const SavedArticleCell = ({ title, savedAt, category, publication }) => {
     <View style={styles.cell}>
       <View style={{ flexDirection: 'column' }}>
         <View style={{ flexDirection: 'row' }}>
-          <Text style={styles.subText}>
-            {publication} • {category}
+          <Text style={styles.subText}>{publication} • </Text>
+          <Text style={{ ...styles.subText, textTransform: 'uppercase' }}>
+            {category}
           </Text>
           <View style={styles.spacer} />
         </View>
@@ -70,7 +69,7 @@ const SavedArticleCell = ({ title, savedAt, category, publication }) => {
       </View>
       <View style={styles.spacer} />
       <View style={styles.chevron}>
-        <Entypo name="chevron-right" size={20} color="#c4c4c4" />
+        <Ionicons name="chevron-forward" size={20} color="#c4c4c4" />
       </View>
     </View>
   )

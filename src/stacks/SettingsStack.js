@@ -40,8 +40,8 @@ export const SettingsStack = ({ navigation }) => {
         name="Settings"
         component={SettingsScreen}
         options={{
-          title: 'Settings',
-          headerShown: true,
+          title: 'Account',
+          headerShown: false,
         }}
       />
       <Stack.Screen
@@ -64,6 +64,12 @@ export const SettingsStack = ({ navigation }) => {
         component={ManageFeedScreen}
         options={ManageFeedScreen.navigationOptions}
       />
+
+      {/* <Stack.Screen
+        name="ManageFeedScreenSmooth"
+        component={ManageFeedScreenSmooth}
+        options={{ title: '' }}
+      /> */}
       <Stack.Screen
         name="WebView"
         component={WebViewScreen}
@@ -73,7 +79,7 @@ export const SettingsStack = ({ navigation }) => {
       <Stack.Screen
         name="SavedArticles"
         component={SavedArticlesScreen}
-        options={{ title: 'Saved Articles' }}
+        options={{ title: 'Bookmarked Articles' }}
       />
 
       <Stack.Screen

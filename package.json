@@ -27,6 +27,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
+    "react-native-drag-sort": "^2.4.2",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-grid-component": "^2.0.1",
@@ -37,6 +38,7 @@
     "react-native-render-html": "^5.0.1",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "~2.15.0",
+    "react-native-share": "^5.1.0",
     "react-native-sortable-list": "0.0.24",
     "react-native-super-grid": "^4.0.3",
     "react-native-swipe-list-view": "^3.2.5",
@@ -45,6 +47,7 @@
     "react-native-web": "~0.13.12",
     "react-native-webview": "11.0.0",
     "react-redux": "^7.2.2",
+    "recyclerlistview": "^3.0.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"
   },

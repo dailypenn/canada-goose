@@ -53,7 +53,7 @@ export const saveNewArticle = item => {
   return {
     type: SAVE_NEW_ARTICLE,
     updates: {
-      savedArticles: [item],
+      actionArticle: item,
     },
   }
 }
@@ -63,7 +63,7 @@ export const unsaveArticle = item => {
   return {
     type: UNSAVE_NEW_ARTICLE,
     updates: {
-      savedArticles: [item],
+      actionArticle: item,
     },
   }
 }

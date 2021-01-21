@@ -46,10 +46,10 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
     case SAVE_NEW_ARTICLE:
       return {
         ...state,
-        savedArticles: [...state.savedArticles, updates.savedArticles[0]],
+        savedArticles: [...state.savedArticles, updates.actionArticle],
       }
     case UNSAVE_NEW_ARTICLE:
-      const removeSlug = updates.savedArticles[0].slug
+      const removeSlug = updates.actionArticle.slug
       console.log('removeslug', removeSlug)
       const remainingArticles = state.savedArticles.filter(
         item => item.slug !== removeSlug

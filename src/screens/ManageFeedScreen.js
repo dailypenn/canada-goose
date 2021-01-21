@@ -110,14 +110,15 @@ class ManageFeedForPublication extends Component {
     this.newData = sorted
     if (this.newData == this.currData) return
     // console.log('saving-', this.newData)
-    await Storage.setItem(
+    let savedSuccessfully = await Storage.setItem(
       GET_HOME_FEED_ORDER_KEY(this.props.publication),
       this.newData
     )
 
-    this.props.dispatch(
-      updateHomeSections(this.props.publication, this.newData)
-    )
+    if (savedSuccessfully)
+      this.props.dispatch(
+        updateHomeSections(this.props.publication, this.newData)
+      )
   }
 
   render() {
