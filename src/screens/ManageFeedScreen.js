@@ -2,18 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, Button, View, TouchableOpacity, Text } from 'react-native'
 import DraggableFlatList from 'react-native-draggable-flatlist'
-import { DISPLAY_SERIF_BLACK, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
+import { DISPLAY_SERIF_BLACK, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { updateHomeSections } from '../actions'
 import { GET_HOME_SECTIONS } from '../utils/helperFunctions'
 import { PublicationPrimaryColor } from '../utils/branding'
-import { Animated } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
+    flex: 1,
   },
 
   icon: {
@@ -34,44 +33,6 @@ const styles = StyleSheet.create({
     color: '#808080',
   },
 })
-
-const ManageFeedScreenComp = ({
-  navigation,
-  route,
-  publication,
-  settings,
-  dispatch,
-}) => {
-  const instructions =
-    'Press down and drag the sections to the order you would like to see them appear on the home page'
-  const itemHeight = 80
-
-  return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
-      <View
-        style={{
-          height: GET_HOME_SECTIONS(publication).length * itemHeight,
-        }}
-      >
-        <HomeSectionsView
-          key={publication}
-          navigation={navigation}
-          route={route}
-          publication={publication}
-          settings={settings}
-          dispatch={dispatch}
-          itemHeight={itemHeight}
-        />
-      </View>
-
-      <Text style={styles.description}>{instructions}</Text>
-    </View>
-  )
-}
 
 const HomeSectionsView = ({
   navigation,
@@ -111,40 +72,38 @@ const HomeSectionsView = ({
       dispatch(updateHomeSections(publication, newSections))
   }
 
-  const renderItem = ({ item, index, drag, isActive }) => {
-    return (
-      <TouchableOpacity
-        activeOpacity={0.5}
+  const renderItem = ({ item, index, drag, isActive }) => (
+    <TouchableOpacity
+      activeOpacity={0.5}
+      style={{
+        paddingHorizontal: 20,
+        height: itemHeight,
+        flexDirection: 'row',
+        backgroundColor: isActive
+          ? PublicationPrimaryColor(publication)
+          : 'white',
+        alignItems: 'center',
+        borderBottomWidth: 0.6,
+        borderBottomColor: '#d4d4d4',
+      }}
+      onLongPress={drag}
+    >
+      <MaterialCommunityIcons
+        name="drag"
+        size={24}
+        color={isActive ? 'white' : '#b1b1b1'}
+        style={styles.icon}
+      />
+      <Text
         style={{
-          paddingHorizontal: 20,
-          height: itemHeight,
-          flexDirection: 'row',
-          backgroundColor: isActive
-            ? PublicationPrimaryColor(publication)
-            : 'white',
-          alignItems: 'center',
-          borderBottomWidth: 0.6,
-          borderBottomColor: '#d4d4d4',
+          ...styles.regText,
+          color: isActive ? 'white' : 'black',
         }}
-        onLongPress={drag}
       >
-        <MaterialCommunityIcons
-          name="drag"
-          size={24}
-          color={isActive ? 'white' : '#b1b1b1'}
-          style={styles.icon}
-        />
-        <Text
-          style={{
-            ...styles.regText,
-            color: isActive ? 'white' : 'black',
-          }}
-        >
-          {item}
-        </Text>
-      </TouchableOpacity>
-    )
-  }
+        {item}
+      </Text>
+    </TouchableOpacity>
+  )
 
   return (
     <DraggableFlatList
@@ -153,6 +112,40 @@ const HomeSectionsView = ({
       keyExtractor={(_, index) => `draggable-item-${index}`}
       onDragEnd={updateItem}
     />
+  )
+}
+
+const ManageFeedScreenComp = ({
+  navigation,
+  route,
+  publication,
+  settings,
+  dispatch,
+}) => {
+  const instructions =
+    'Press down and drag the sections to the order you would like to see them appear on the home page'
+  const itemHeight = 80
+
+  return (
+    <View style={styles.container}>
+      <View
+        style={{
+          height: GET_HOME_SECTIONS(publication).length * itemHeight,
+        }}
+      >
+        <HomeSectionsView
+          key={publication}
+          navigation={navigation}
+          route={route}
+          publication={publication}
+          settings={settings}
+          dispatch={dispatch}
+          itemHeight={itemHeight}
+        />
+      </View>
+
+      <Text style={styles.description}>{instructions}</Text>
+    </View>
   )
 }
 

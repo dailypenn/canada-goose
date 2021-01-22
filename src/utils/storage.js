@@ -37,7 +37,7 @@ export const Storage = {
 
   clearAll: async function () {
     await AsyncStorage.clear(error => {
-      console.log('clearing error:', error)
+      console.log('clearing error:', error ? error : 'none')
     })
   },
 }

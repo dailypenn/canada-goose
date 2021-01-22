@@ -28,7 +28,6 @@ import {
   GET_HOME_SECTION_NAME,
   GET_HOME_QUERIES,
 } from '../utils/helperFunctions'
-import { Storage } from '../utils/storage'
 
 const styles = StyleSheet.create({
   container: {
@@ -64,9 +63,6 @@ const HomeView = ({
   const onRefresh = useCallback(() => {
     refetch()
   })
-
-  console.log('HOME VIEW', publication)
-  console.log(homeSections)
 
   return (
     <View style={styles.container}>
