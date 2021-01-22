@@ -64,7 +64,7 @@ const ArticleScreenComp = ({
   }, [settings.savedArticles, article])
 
   const deleteHandler = async article => {
-    console.log('UNSAVEEEE')
+    // console.log('UNSAVEEEE')
     const slug = article.slug
     const remainingArticles = savedArticles.filter(item => item.slug !== slug)
     let saved_successfully = await Storage.setItem(
@@ -86,7 +86,6 @@ const ArticleScreenComp = ({
 
     let newSavedArticles = [...savedArticles]
     newSavedArticles.push(newData)
-    console.log('saving', newData.article)
 
     let saved_successfully = await Storage.setItem(
       SAVED_ARTICLES_KEY,

@@ -57,7 +57,7 @@ const HomeSectionsView = ({
   }
 
   useEffect(() => {
-    navigation.setParams({ handleSave: handleSave })
+    navigation.setParams({ handleSave })
   }, [])
 
   const handleSave = async newSections => {
@@ -160,7 +160,7 @@ ManageFeedScreen.navigationOptions = ({ route }) => ({
   title: 'Manage Feed',
   headerRight: () => (
     <Button
-      title={'Save'}
+      title="Save"
       onPress={() => {
         route.params.handleSave(route.params.sections)
       }}
