@@ -1,5 +1,11 @@
 import React from 'react'
-import { Text, View, StyleSheet, ImageBackground } from 'react-native'
+import {
+  Text,
+  View,
+  StyleSheet,
+  ImageBackground,
+  Dimensions,
+} from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 
 import { CategoryTag } from './CategoryTag'
@@ -10,19 +16,20 @@ import {
   GEOMETRIC_REGULAR,
 } from '../utils/fonts'
 
+const { width } = Dimensions.get('window')
+
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: width - 60,
     aspectRatio: 0.8,
-    borderRadius: 10,
+    borderRadius: 3,
+    overflow: 'hidden',
+    backgroundColor: '#000',
   },
 
   imageBackground: {
     flex: 1,
     paddingHorizontal: 15,
-    resizeMode: 'contain',
-    borderRadius: 10,
-    backgroundColor: 'black',
   },
 
   gradient: {
@@ -59,16 +66,19 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#fff',
   },
+
   shadow: {
     shadowColor: '#000',
     shadowOffset: {
       width: 2,
       height: 5,
     },
-    shadowOpacity: 0.45,
+    shadowOpacity: 0.5,
     shadowRadius: 5,
-    elevation: 9,
+    elevation: 10,
+    backgroundColor: 'transparent',
   },
+
   spacer: {
     flex: 1,
   },
@@ -100,7 +110,7 @@ const VerticalArticleCard = ({
             style={styles.gradient}
           />
           <View style={styles.spacer} />
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <CategoryTag name={category} publication={publication} />
             <View style={styles.spacer} />
             <Text style={styles.time}>{time}</Text>
