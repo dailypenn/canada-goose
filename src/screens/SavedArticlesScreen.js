@@ -91,18 +91,8 @@ const SwipeableRow = ({ item, navigationHandler, deleteHandler }) => {
   )
 }
 
-const SavedArticlesScreenComp = ({ navigation, route, settings, dispatch }) => {
+const SavedArticlesScreenComp = ({ navigation, settings, dispatch }) => {
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
-
-  // console.log('SAVED ARTICLES SCREEN COMP', savedArticles)
-
-  if (settings.savedArticles != null) {
-    settings.savedArticles.forEach(element => {
-      console.log(element.article.headline)
-    })
-  } else {
-    console.log('settings. savedarticles is null')
-  }
 
   const navigationHandler = async item => {
     NAVIGATE_TO_ARTICLE_SCREEN(navigation, 'SettingsArticle', {
