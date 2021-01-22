@@ -1,18 +1,35 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
-import { RightSwipeDeleteRow } from '../components/RightSwipeDeleteRow'
+import { connect } from 'react-redux'
 
+import { Ionicons } from '@expo/vector-icons'
 import { DISPLAY_SERIF_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
-import { NAVIGATE_TO_ARTICLE_SCREEN, TIME_AGO } from '../utils/helperFunctions'
+import { NAVIGATE_TO_ARTICLE_SCREEN } from '../utils/helperFunctions'
+import { RightSwipeDeleteRow } from '../components/RightSwipeDeleteRow'
+import { unsaveArticle } from '../actions'
 
 const styles = StyleSheet.create({
   cell: {
     padding: 20,
+    flexDirection: 'row',
     backgroundColor: '#fff',
     borderBottomColor: '#c4c4c4',
     borderBottomWidth: 0.6,
+  },
+
+  textContainer: {
+    // backgroundColor: 'red',
+    width: '95%',
+  },
+
+  chevron: {
+    justifyContent: 'center',
+  },
+
+  spacer: {
+    flex: 1,
   },
 
   title: {
@@ -25,7 +42,7 @@ const styles = StyleSheet.create({
     color: '#888',
     fontFamily: GEOMETRIC_REGULAR,
     fontSize: 12,
-    paddingTop: 10,
+    paddingBottom: 10,
   },
 
   rightSwipeItem: {
@@ -34,56 +51,74 @@ const styles = StyleSheet.create({
   },
 })
 
-const SavedArticleCell = ({ title, savedAt }) => {
-  const timeAgo = 'Saved ' + TIME_AGO(new Date(savedAt))
-  return (
-    <View style={styles.cell}>
+const SavedArticleCell = ({ title, savedAt, category, publication }) => (
+  <View style={styles.cell}>
+    <View style={{ flexDirection: 'column' }}>
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={styles.subText}>{publication} • </Text>
+        <Text style={{ ...styles.subText, textTransform: 'uppercase' }}>
+          {category}
+        </Text>
+        <View style={styles.spacer} />
+      </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subText}>{timeAgo}</Text>
       </View>
     </View>
+    <View style={styles.spacer} />
+    <View style={styles.chevron}>
+      <Ionicons name="chevron-forward" size={20} color="#c4c4c4" />
+    </View>
+  </View>
+)
+
+const SwipeableRow = ({ item, navigationHandler, deleteHandler }) => {
+  const { _, article, saved_at } = item
+  return (
+    <RightSwipeDeleteRow deleteHandler={() => deleteHandler(item)}>
+      <TouchableOpacity
+        onPress={() => navigationHandler(item)}
+        activeOpacity={1}
+      >
+        <SavedArticleCell
+          title={article.headline}
+          savedAt={saved_at}
+          category={article.tag}
+          publication={item.publication}
+        />
+      </TouchableOpacity>
+    </RightSwipeDeleteRow>
   )
 }
 
-const SwipeableRow = ({ item, navigationHandler, deleteHandler }) => (
-  <RightSwipeDeleteRow deleteHandler={() => deleteHandler(item)}>
-    <TouchableOpacity onPress={() => navigationHandler(item)} activeOpacity={1}>
-      <SavedArticleCell title={item.headline} savedAt={item.saved_at} />
-    </TouchableOpacity>
-  </RightSwipeDeleteRow>
-)
+const SavedArticlesScreenComp = ({ navigation, route, settings, dispatch }) => {
+  const savedArticles = settings.savedArticles ? settings.savedArticles : []
 
-export const SavedArticlesScreen = ({ navigation }) => {
-  const [savedArticles, setSavedArticles] = useState([])
+  // console.log('SAVED ARTICLES SCREEN COMP', savedArticles)
 
-  const loadSavedArticles = async () => {
-    let data = await Storage.getItem(SAVED_ARTICLES_KEY)
-    if (data != null) setSavedArticles(data)
+  if (settings.savedArticles != null) {
+    settings.savedArticles.forEach(element => {
+      console.log(element.article.headline)
+    })
+  } else {
+    console.log('settings. savedarticles is null')
   }
 
-  useEffect(() => {
-    loadSavedArticles()
-  }, [])
-
   const navigationHandler = async item => {
-    let article = await Storage.getItem(item.slug)
-    NAVIGATE_TO_ARTICLE_SCREEN(
-      navigation,
-      'SettingsArticle',
-      article,
-      item.publicationState
-    )
+    NAVIGATE_TO_ARTICLE_SCREEN(navigation, 'SettingsArticle', {
+      article: item.article,
+      articlePublication: item.publication,
+    })
   }
 
   const deleteHandler = async item => {
     const slug = item.slug
-    let successful = await Storage.removeItem(item.slug)
-    if (successful) {
-      const remainingArticles = savedArticles.filter(item => item.slug !== slug)
-      await Storage.setItem(SAVED_ARTICLES_KEY, remainingArticles)
-      setSavedArticles(remainingArticles)
-    }
+    const remainingArticles = savedArticles.filter(item => item.slug !== slug)
+    let saved_successfully = await Storage.setItem(
+      SAVED_ARTICLES_KEY,
+      remainingArticles
+    )
+    if (saved_successfully) dispatch(unsaveArticle(item))
   }
 
   return (
@@ -92,13 +127,24 @@ export const SavedArticlesScreen = ({ navigation }) => {
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       keyExtractor={(_, index) => index}
-      renderItem={({ item }) => (
-        <SwipeableRow
-          item={item}
-          navigationHandler={navigationHandler}
-          deleteHandler={deleteHandler}
-        />
-      )}
+      renderItem={({ item }) => {
+        return (
+          <SwipeableRow
+            item={item}
+            navigationHandler={navigationHandler}
+            deleteHandler={deleteHandler}
+          />
+        )
+      }}
     />
   )
 }
+
+const mapStateToProps = ({ publication, settings }) => ({
+  publication,
+  settings,
+})
+
+export const SavedArticlesScreen = connect(mapStateToProps)(
+  SavedArticlesScreenComp
+)

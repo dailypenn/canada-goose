@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 24,
     lineHeight: 24,
-    marginTop: 20,
+    marginTop: 10,
   },
   abstract: {
     color: '#888',
@@ -23,6 +23,15 @@ const styles = StyleSheet.create({
     flex: 100,
     fontSize: 14,
     paddingTop: 10,
+  },
+  byline: {
+    color: '#888',
+    fontFamily: GEOMETRIC_REGULAR,
+    flex: 100,
+    fontSize: 11,
+    marginTop: 10,
+    //textTransform: 'uppercase',
+    textAlign: 'right',
   },
   image: {
     flex: 1,
@@ -32,10 +41,17 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 20,
+    flex: 1,
   },
 })
 
-export const PrimaryHorizontalArticleCell = ({ imageURL, title, abstract }) => {
+export const PrimaryHorizontalArticleCell = ({
+  imageURL,
+  title,
+  abstract,
+  authors,
+  timeAgo,
+}) => {
   const parsedAbstract = parseAbstract(abstract)
 
   if (
@@ -50,6 +66,9 @@ export const PrimaryHorizontalArticleCell = ({ imageURL, title, abstract }) => {
             {title}
           </Text>
           <Text style={styles.abstract}>{parsedAbstract}</Text>
+          <Text style={styles.byline}>
+            By {authors} • {timeAgo}
+          </Text>
         </View>
         <View
           style={{
@@ -65,6 +84,9 @@ export const PrimaryHorizontalArticleCell = ({ imageURL, title, abstract }) => {
       <View>
         <View style={styles.container}>
           <Image style={styles.image} source={{ uri: imageURL }} />
+          <Text style={styles.byline}>
+            By {authors} • {timeAgo}
+          </Text>
           <Text style={styles.title} numberOfLines={5}>
             {title}
           </Text>

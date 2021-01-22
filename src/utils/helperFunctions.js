@@ -7,12 +7,12 @@ import {
   PublicationEnum,
   DP_HOME_SECTIONS_TITLE,
   UTB_HOME_SECTIONS_TITLES,
-  STREET_HOME_SECTIONS_TITLES
+  STREET_HOME_SECTIONS_TITLES,
 } from './constants'
 import {
   DP_HOME_PAGE_QUERY,
   STREET_HOME_PAGE_QUERY,
-  UTB_HOME_PAGE_QUERY
+  UTB_HOME_PAGE_QUERY,
 } from './queries'
 
 export const IMAGE_URL = (attachment_uuid, extension, publication) => {
@@ -43,11 +43,11 @@ export const AUTHORS = authorArr => {
 }
 
 export const PARTIAL_NAVIGATE = (navigation, toScreen, f) => {
-  return article => f(navigation, toScreen, article)
+  return params => f(navigation, toScreen, params)
 }
 
-export const NAVIGATE_TO_ARTICLE_SCREEN = (navigation, toScreen, article) => {
-  navigation.navigate(toScreen, { article })
+export const NAVIGATE_TO_ARTICLE_SCREEN = (navigation, toScreen, params) => {
+  navigation.navigate(toScreen, params)
 }
 
 export const navigateToSectionScreen = section => {

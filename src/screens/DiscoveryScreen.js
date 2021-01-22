@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   StyleSheet,
   SafeAreaView,
   Dimensions,
   TouchableOpacity,
-  Easing,
   Platform,
+  StatusBar,
+  View,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { FlatGrid } from 'react-native-super-grid'
+import { useLazyQuery } from '@apollo/client'
 
 import { PublicationEnum } from '../utils/constants'
 import {
@@ -22,6 +24,8 @@ import { View } from 'react-native'
 import { Text } from 'react-native'
 import { DP_RED } from '../utils/branding'
 import { useIsFocused } from '@react-navigation/native'
+import { UTB_RANDOM_ARTICLE } from '../utils/queries'
+
 const DP_SECTIONS = require('../json/discover/dp.json')
 const STREET_SECTIONS = require('../json/discover/street.json')
 
@@ -46,7 +50,7 @@ const DiscoveryView = ({ navigation, publication }) => {
   }
 
   const onButtonPress = () => {
-    //TODO: Call for random article and transition
+    navigation.navigate('SectionArticle', { article: null })
   }
 
   let SECTIONS = []

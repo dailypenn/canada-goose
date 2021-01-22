@@ -31,8 +31,11 @@ import {
   GET_HOME_SECTION_NAME,
   GET_HOME_QUERIES,
 } from '../utils/helperFunctions'
+<<<<<<< HEAD
 import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { PublicationEnum } from '../utils/constants'
+=======
+>>>>>>> 228e987d1eb7abac743b65888a13237527df1a40
 
 const styles = StyleSheet.create({
   container: {
@@ -45,17 +48,21 @@ const styles = StyleSheet.create({
 })
 
 const HomeView = ({
-  centerArticles,
-  topArticles,
   navigation,
   publication,
-  defaultSections,
+  homeSections,
+  data,
   loading,
   refetch,
-  reorderHomeSection,
 }) => {
+  const { centerpiece: centerArticles, top: topArticles } = data
+
+  const sectionData = homeSections.map(section => ({
+    name: section,
+    articles: data[section],
+  }))
+
   const [offset, setOffset] = useState(0)
-  // const [sections, setSections] = useState(defaultSections)
 
   const handleScroll = scrollData => {
     setOffset(scrollData.nativeEvent.contentOffset.y)
@@ -212,11 +219,9 @@ const HomeView = ({
         <TouchableOpacity
           activeOpacity={1}
           onPress={() =>
-            NAVIGATE_TO_ARTICLE_SCREEN(
-              navigation,
-              'HomeArticle',
-              centerArticles[0]
-            )
+            NAVIGATE_TO_ARTICLE_SCREEN(navigation, 'HomeArticle', {
+              article: centerArticles[0],
+            })
           }
         >
           <HeadlineArticle data={centerArticles[0]} publication={publication} />
@@ -234,7 +239,7 @@ const HomeView = ({
           publication={publication}
         />
 
-        {defaultSections.map((el, i) => {
+        {sectionData.map((el, i) => {
           const { name, articles } = el
           return (
             <View key={i}>
@@ -255,17 +260,27 @@ const HomeView = ({
             </View>
           )
         })}
+<<<<<<< HEAD
       </Animated.ScrollView>
+=======
+      </ScrollView>
+      <CustomHeader publication={publication} contentOffset={offset} />
+>>>>>>> 228e987d1eb7abac743b65888a13237527df1a40
     </View>
   )
 }
 
-const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
-  console.log(`current reorderHomeSection is ${reorderHomeSection}`)
-
+const HomeScreenComp = ({ navigation, publication, settings }) => {
   // const [lastActiveTime, setLastActiveTime] = useState(Date.now())
   const appState = useRef(AppState.currentState)
   const [appStateState, setAppStateState] = useState(appState.current)
+  const { homeSectionPreferences, _ } = settings
+
+  let homeSections =
+    homeSectionPreferences == null ||
+    homeSectionPreferences[publication] == null
+      ? GET_HOME_SECTIONS(publication)
+      : homeSectionPreferences[publication]
 
   const handleAppStateChange = nextAppState => {
     if (
@@ -276,7 +291,6 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
     }
 
     if (appState.current.match(/active/)) {
-      // setLastActiveTime(Date.now())
       console.log('App has come to the background!')
     }
 
@@ -293,22 +307,26 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
     }
   }, [])
 
+<<<<<<< HEAD
+=======
+  // useEffect(() => {
+  //   console.log(
+  //     '@@@@@@@ update homeSection @@@@@@@',
+  //     settings.homeSectionPreferences[publication]
+  //   )
+  //   // console.log(homeSection)
+  //   // homeSections = homeSection[publication]
+  //   // homeSections = settings.homeSectionPreferences[publication]
+  // }, [settings.homeSectionPreferences])
+
+>>>>>>> 228e987d1eb7abac743b65888a13237527df1a40
   const { loading, error, data, refetch } = useQuery(
     GET_HOME_QUERIES(publication)
   )
 
   useFocusEffect(
     useCallback(() => {
-      // if appState === 'active' and last time on home screen is 5 mins ago, do refetch
       console.log('home screen focused')
-      // console.log(lastActiveTime)
-      // const timeElapsed = (Date.now() - lastActiveTime) / 1000
-      // console.log(timeElapsed)
-      // if (data && appState.current === 'active' && timeElapsed >= 5) {
-      //   console.log('refetching')
-      //   refetch()
-      // }
-
       console.log(Boolean(data))
 
       if (data) {
@@ -318,31 +336,9 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
 
       return () => {
         console.log('home screen blurred')
-        // console.log(Date.now())
-        // setLastActiveTime(Date.now())
       }
     }, [data])
   )
-
-  // useFocusEffect(() => {
-  //   const timeElapsed = (Date.now() - lastActiveTime) / 1000
-  //   console.log(timeElapsed)
-
-  //   if (data && appState.current === 'active' && timeElapsed >= 5) {
-  //     console.log('refetching home screen articles')
-  //     refetch()
-  //   }
-
-  //   // if (data) {
-  //   //   console.log(`refetching home screen articles`)
-  //   //   refetch()
-  //   // }
-
-  //   // return () => {
-  //   //   console.log(Date.now())
-  //   //   setLastActiveTime(Date.now())
-  //   // }
-  // }, [])
 
   if (!data) return <ActivityIndicator />
 
@@ -351,6 +347,7 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
     return <Text> Error </Text>
   }
 
+<<<<<<< HEAD
   let HOME_SECTIONS = GET_HOME_SECTIONS(publication)
 
   const { centerpiece: centerArticles, top: topArticles } = data
@@ -360,23 +357,23 @@ const HomeScreenComp = ({ navigation, publication, reorderHomeSection }) => {
     articles: data[section],
   }))
 
+=======
+>>>>>>> 228e987d1eb7abac743b65888a13237527df1a40
   return (
     <HomeView
-      centerArticles={centerArticles}
-      topArticles={topArticles}
       navigation={navigation}
       publication={publication}
-      defaultSections={defaultSections}
+      homeSections={homeSections}
+      data={data}
       loading={loading}
       refetch={refetch}
-      reorderHomeSection={reorderHomeSection}
     />
   )
 }
 
-const mapStateToProps = ({ publication, reorderHomeSection }) => ({
+const mapStateToProps = ({ publication, settings }) => ({
   publication,
-  reorderHomeSection,
+  settings,
 })
 
 export const HomeScreen = connect(mapStateToProps)(HomeScreenComp)
