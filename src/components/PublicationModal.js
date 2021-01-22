@@ -6,35 +6,26 @@ import {
   Dimensions,
   StyleSheet,
   Image,
-  Animated,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native'
 import Modal from 'react-native-modal'
 import * as Haptics from 'expo-haptics'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import * as Font from 'expo-font'
 
 import { PublicationPrimaryColor } from '../utils/branding'
-import {
-  DISPLAY_SERIF_BLACK,
-  GEOMETRIC_BOLD,
-  GEOMETRIC_REGULAR,
-} from '../utils/fonts'
+import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { PublicationEnum } from '../utils/constants'
-import { switchPublication } from '../actions'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
-import { color } from 'react-native-reanimated'
+import { switchPublication, toggleScrollToTop } from '../actions'
+import { StatusBar } from 'react-native'
 
 const SCREEN_DIMENSIONS = Dimensions.get('screen')
 const PUBLICATIONS = [
   PublicationEnum.dp,
   PublicationEnum.street,
-  PublicationEnum.utb,
+  PublicationEnum.utb
 ]
 
 const PublicationOption = ({ publication, isCurrent }) => {
-  const TEXT_COLOR = PublicationPrimaryColor(publication)
-
   const DP_LOGO_RED = require('../static/logos/dp-logo-small-red.png')
   const DP_LOGO_WHITE = require('../static/logos/dp-logo-small-white.png')
 
@@ -49,7 +40,7 @@ const PublicationOption = ({ publication, isCurrent }) => {
       icon: isCurrent ? 'newspaper' : 'push',
       title: pub == PublicationEnum.dp ? 'The DP' : pub,
       color: isCurrent ? 'white' : PublicationPrimaryColor(pub),
-      borderColor: isCurrent ? PublicationPrimaryColor(pub) : 'white',
+      borderColor: isCurrent ? PublicationPrimaryColor(pub) : 'white'
     }
     switch (pub) {
       case PublicationEnum.dp:
@@ -57,8 +48,8 @@ const PublicationOption = ({ publication, isCurrent }) => {
           ...rtrn,
           ...{
             image: isCurrent ? DP_LOGO_WHITE : DP_LOGO_RED,
-            subtitle: 'Student-Run News Since 1885',
-          },
+            subtitle: 'Student-Run News Since 1885'
+          }
         }
         break
       case PublicationEnum.street:
@@ -66,8 +57,8 @@ const PublicationOption = ({ publication, isCurrent }) => {
           ...rtrn,
           ...{
             image: isCurrent ? STREET_LOGO_WHITE : STREET_LOGO_TEAL,
-            subtitle: 'Arts, Culture, and More',
-          },
+            subtitle: 'Arts, Culture, and More'
+          }
         }
         break
       default:
@@ -75,8 +66,8 @@ const PublicationOption = ({ publication, isCurrent }) => {
           ...rtrn,
           ...{
             image: isCurrent ? UTB_LOGO_WHITE : UTB_LOGO_BLUE,
-            subtitle: "Penn's Only Intentionally Satirical Publication",
-          },
+            subtitle: "Penn's Only Intentionally Satirical Publication"
+          }
         }
     }
     return rtrn
@@ -96,27 +87,27 @@ const PublicationOption = ({ publication, isCurrent }) => {
       flexDirection: 'row',
       borderWidth: 3,
       borderColor: CONTENT.borderColor,
-      backgroundColor: CONTENT.borderColor,
+      backgroundColor: CONTENT.borderColor
     },
     border: {
       width: '100%',
-      height: '100%',
+      height: '100%'
     },
     publicationTitle: {
       textTransform: 'uppercase',
       fontFamily: GEOMETRIC_BOLD,
       fontSize: 16,
       lineHeight: 20,
-      color: CONTENT.color,
+      color: CONTENT.color
     },
     subtitle: {
       fontFamily: GEOMETRIC_REGULAR,
       fontSize: 10,
       lineHeight: 14,
-      color: CONTENT.color,
+      color: CONTENT.color
     },
     subContainer: {
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     image: {
       height: 50,
@@ -124,11 +115,11 @@ const PublicationOption = ({ publication, isCurrent }) => {
       resizeMode: 'contain',
       alignSelf: 'center',
       marginRight: 20,
-      borderRadius: 10,
+      borderRadius: 10
     },
     icon: {
-      alignSelf: 'center',
-    },
+      alignSelf: 'center'
+    }
   })
 
   return (
@@ -157,7 +148,9 @@ const PublicationModalComp = ({
   navigation,
   publication,
   dispatchSwitchPublication,
+  dispatchToggleScrollToTop
 }) => {
+  const { currPublication, currNavigation } = publication
   const [isVisible, updateVisibility] = useState(false) // Whether or not the modal is visible
   const [currentlySwiping, updateSwipeStatus] = useState(false) // Flags when swipes have started, but this is not blocking out touchable opacity presses :(
 
@@ -173,9 +166,14 @@ const PublicationModalComp = ({
   // Function called when user selects a new publication
   const selectedPublication = pub => {
     if (!currentlySwiping) {
-      if (pub != publication) {
+      if (pub != currPublication) {
         dispatchSwitchPublication(pub)
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+        if (currNavigation) {
+          console.log('------dismiss all screens------')
+          currNavigation.popToTop()
+        }
+        dispatchToggleScrollToTop()
       }
       updateVisibility(false)
     }
@@ -188,24 +186,24 @@ const PublicationModalComp = ({
       height: 5,
       alignSelf: 'center',
       borderRadius: 10,
-      marginBottom: 20,
+      marginBottom: 20
     },
     container: {
       margin: 0,
-      justifyContent: 'flex-end',
+      justifyContent: 'flex-end'
     },
     label: {
       fontFamily: GEOMETRIC_BOLD,
       fontSize: 20,
       color: '#444',
-      marginBottom: 10,
+      marginBottom: 10
     },
     line: {
       marginVertical: 5,
       marginHorizontal: 0,
       borderRadius: 2,
       backgroundColor: '#DDD',
-      height: 2,
+      height: 2
     },
     view: {
       backgroundColor: 'white',
@@ -216,8 +214,8 @@ const PublicationModalComp = ({
       borderTopRightRadius: 10,
       bottom: -20,
       paddingTop: 10,
-      paddingHorizontal: 10,
-    },
+      paddingHorizontal: 10
+    }
   })
 
   const modalOptions = {
@@ -232,40 +230,45 @@ const PublicationModalComp = ({
     onSwipeCancel: () => setTimeout(() => updateSwipeStatus(false), 100), // Ensures no accidental press
     onSwipeComplete: () => updateVisibility(false),
     onBackButtonPress: () => updateVisibility(false),
-    backdropOpacity: 0.85,
-    styles: styles.container,
+    backdropOpacity: 0.9,
+    styles: styles.container
   }
 
   return (
-    <Modal {...modalOptions}>
-      <View style={{ flex: 1 }}></View>
-      <View style={styles.view}>
-        <View style={styles.bar} />
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() => selectedPublication(publication)}
-        >
-          <PublicationOption publication={publication} isCurrent={true} />
-        </TouchableOpacity>
-        <View style={styles.line} />
-        {PUBLICATIONS.map((el, index) => {
-          return el == publication ? null : (
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => selectedPublication(el)}
-              disabled={currentlySwiping}
-              key={index}
-            >
-              <PublicationOption
-                publication={el}
-                isCurrent={false}
+    <>
+      {isVisible && Platform.OS == 'android' ? (
+        <StatusBar backgroundColor={'rgba(0, 0, 0, 1)'} animated={true} />
+      ) : null}
+      <Modal {...modalOptions}>
+        <View style={{ flex: 1 }}></View>
+        <View style={styles.view}>
+          <View style={styles.bar} />
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => selectedPublication(currPublication)}
+          >
+            <PublicationOption publication={currPublication} isCurrent={true} />
+          </TouchableOpacity>
+          <View style={styles.line} />
+          {PUBLICATIONS.map((el, index) => {
+            return el == currPublication ? null : (
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => selectedPublication(el)}
+                disabled={currentlySwiping}
                 key={index}
-              />
-            </TouchableOpacity>
-          )
-        })}
-      </View>
-    </Modal>
+              >
+                <PublicationOption
+                  publication={el}
+                  isCurrent={false}
+                  key={index}
+                />
+              </TouchableOpacity>
+            )
+          })}
+        </View>
+      </Modal>
+    </>
   )
 }
 
@@ -274,6 +277,7 @@ const mapStateToProps = ({ publication }) => ({ publication })
 const mapDispatchToProps = dispatch => ({
   dispatchSwitchPublication: publication =>
     dispatch(switchPublication(publication)),
+  dispatchToggleScrollToTop: () => dispatch(toggleScrollToTop())
 })
 
 export const PublicationModal = connect(

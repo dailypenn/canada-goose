@@ -11,10 +11,13 @@ import { ActivityIndicator } from './src/components'
 import RootReducer from './src/reducers'
 import {
   GET_HOME_FEED_ORDER_KEY,
+  IS_ONBOARDED_KEY,
   SAVED_ARTICLES_KEY,
+  Storage,
 } from './src/utils/storage'
 import { PublicationEnum } from './src/utils/constants'
 import { setInit } from './src/actions'
+import { OnboardingModal } from './src/screens'
 
 // Initialize Apollo Client
 const client = new ApolloClient({
@@ -41,21 +44,30 @@ store.dispatch(getAsyncStorage())
 
 const App = () => {
   const [assetsLoaded, setAssetsLoaded] = useState(false)
+  const [isOnboarded, hasCompletedOnboarding] = useState(true)
+  const [attachOnboardingModalToDom, updateAttachment] = useState(true)
 
   useEffect(() => {
     const loadAssets = async () => {
       await loadFonts()
+      let onboarded = await Storage.getItem(IS_ONBOARDED_KEY)
+      hasCompletedOnboarding(onboarded == true)
+      updateAttachment(onboarded != true)
+
+      setAssetsLoaded(true)
     }
-
     loadAssets()
-
-    setAssetsLoaded(true)
   }, [])
+
+  console.log('isONboarded' + isOnboarded)
 
   if (assetsLoaded) {
     return (
       <ApolloProvider client={client}>
         <Provider store={store}>
+          {attachOnboardingModalToDom ? (
+            <OnboardingModal {...{ isOnboarded, hasCompletedOnboarding }} />
+          ) : null}
           <TabNavigationController />
         </Provider>
       </ApolloProvider>

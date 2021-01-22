@@ -1,6 +1,6 @@
 import React from 'react'
-import { StyleSheet, ScrollView, View, Dimensions } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { StyleSheet, ScrollView, View, Dimensions, TouchableOpacity} from 'react-native'
+//import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { IMAGE_URL } from '../utils/helperFunctions'
 import VerticalArticleCard from './VerticalArticleCard'
@@ -9,10 +9,9 @@ const { width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   cardContainerView: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 10,
+    marginHorizontal: 10,
   },
 })
 
@@ -26,17 +25,15 @@ export const HorizontalArticleCarousel = ({
       style={{ flex: 1 }}
       horizontal={true}
       decelerationRate={0}
-      snapToInterval={0.9 * width}
-      snapToAlignment={'center'}
+      snapToInterval={width - 60 + 20}
+      snapToAlignment={'start'}
       contentContainerStyle={{
-        width: `${90 * articles.length}%`,
+        paddingTop: 15,
+        paddingBottom: 30,
         paddingHorizontal: 10,
-        paddingTop: 10,
-        paddingBottom: 35,
       }}
       showsHorizontalScrollIndicator={false}
       scrollEventThrottle={100}
-      decelerationRate="fast"
     >
       {articles.map((el, i) => {
         const {

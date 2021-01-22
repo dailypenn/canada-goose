@@ -1,20 +1,17 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   StyleSheet,
   SafeAreaView,
   Dimensions,
   TouchableOpacity,
   Platform,
-  StatusBar,
   View
 } from 'react-native'
 import { connect } from 'react-redux'
 import { FlatGrid } from 'react-native-super-grid'
-import { useLazyQuery } from '@apollo/client'
 
 import { PublicationEnum } from '../utils/constants'
 import { DiscoveryCell, SearchBar, RandomButton } from '../components'
-import { UTB_RANDOM_ARTICLE } from '../utils/queries'
 
 const DP_SECTIONS = require('../json/discover/dp.json')
 const STREET_SECTIONS = require('../json/discover/street.json')
@@ -23,12 +20,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+    paddingTop: Platform.OS == 'android' ? 10 : 0
   }
 })
 
 const width = Dimensions.get('window').width
-const height = Dimensions.get('window').height
 
 const DiscoveryView = ({ navigation, publication }) => {
   const navigateToSectionScreen = (section, slug) => {
@@ -93,13 +89,17 @@ const DiscoveryView = ({ navigation, publication }) => {
   )
 }
 
-const DiscoveryScreenComp = ({ navigation, publication }) => (
+const DiscoveryScreenComp = ({ navigation, currPublication }) => (
   <SafeAreaView style={styles.container}>
-    <SearchBar navigation={navigation} publication={publication} />
-    <DiscoveryView navigation={navigation} publication={publication} />
+    <SearchBar navigation={navigation} publication={currPublication} />
+    <DiscoveryView navigation={navigation} publication={currPublication} />
   </SafeAreaView>
 )
 
-const mapStateToProps = ({ publication }) => ({ publication })
+const mapStateToProps = ({ publication }) => {
+  const { currPublication } = publication
+
+  return { currPublication }
+}
 
 export const DiscoveryScreen = connect(mapStateToProps)(DiscoveryScreenComp)

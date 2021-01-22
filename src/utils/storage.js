@@ -7,6 +7,8 @@ export const GET_HOME_FEED_ORDER_KEY = publication =>
 
 export const SAVED_ARTICLES_KEY = 'saved articles'
 
+export const IS_ONBOARDED_KEY = 'onboarded'
+
 export const Storage = {
   getItem: async function (key) {
     try {

@@ -36,18 +36,18 @@ const styles = StyleSheet.create({
 
 const HomeSectionsView = ({
   navigation,
-  publication,
+  currPublication,
   settings,
   dispatch,
   itemHeight,
 }) => {
   const homeSectionPreference = settings.homeSectionPreferences
-    ? settings.homeSectionPreferences[publication]
+    ? settings.homeSectionPreferences[currPublication]
     : null
 
   const ogData = homeSectionPreference
     ? homeSectionPreference
-    : GET_HOME_SECTIONS(publication)
+    : GET_HOME_SECTIONS(currPublication)
 
   const [sections, setSections] = useState(ogData)
 
@@ -64,12 +64,12 @@ const HomeSectionsView = ({
     if (newSections == ogData) return
     console.log('saving-', newSections)
     let savedSuccessfully = await Storage.setItem(
-      GET_HOME_FEED_ORDER_KEY(publication),
+      GET_HOME_FEED_ORDER_KEY(currPublication),
       newSections
     )
 
     if (savedSuccessfully)
-      dispatch(updateHomeSections(publication, newSections))
+      dispatch(updateHomeSections(currPublication, newSections))
   }
 
   const renderItem = ({ item, index, drag, isActive }) => (
@@ -80,7 +80,7 @@ const HomeSectionsView = ({
         height: itemHeight,
         flexDirection: 'row',
         backgroundColor: isActive
-          ? PublicationPrimaryColor(publication)
+          ? PublicationPrimaryColor(currPublication)
           : 'white',
         alignItems: 'center',
         borderBottomWidth: 0.6,
@@ -118,10 +118,11 @@ const HomeSectionsView = ({
 const ManageFeedScreenComp = ({
   navigation,
   route,
-  publication,
+  currPublication,
   settings,
   dispatch,
 }) => {
+  console.log('MANAGE FEED SCREEN COMP', currPublication)
   const instructions =
     'Press down and drag the sections to the order you would like to see them appear on the home page'
   const itemHeight = 80
@@ -130,14 +131,14 @@ const ManageFeedScreenComp = ({
     <View style={styles.container}>
       <View
         style={{
-          height: GET_HOME_SECTIONS(publication).length * itemHeight,
+          height: GET_HOME_SECTIONS(currPublication).length * itemHeight,
         }}
       >
         <HomeSectionsView
-          key={publication}
+          key={currPublication}
           navigation={navigation}
           route={route}
-          publication={publication}
+          currPublication={currPublication}
           settings={settings}
           dispatch={dispatch}
           itemHeight={itemHeight}
@@ -149,10 +150,11 @@ const ManageFeedScreenComp = ({
   )
 }
 
-const mapStateToProps = ({ publication, settings }) => ({
-  publication,
-  settings,
-})
+const mapStateToProps = ({ publication, settings }) => {
+  const { currPublication } = publication
+
+  return { currPublication, settings }
+}
 
 export const ManageFeedScreen = connect(mapStateToProps)(ManageFeedScreenComp)
 

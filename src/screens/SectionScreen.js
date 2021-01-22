@@ -1,30 +1,44 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { StyleSheet, Text, ScrollView, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
 import { useQuery } from '@apollo/client'
-import { useFocusEffect } from '@react-navigation/core'
+import { useFocusEffect } from '@react-navigation/native'
 
-import { ActivityIndicator, ArticleList } from '../components'
+import { ActivityIndicator, ArticleList, DefaultStatusBar } from '../components'
 import { SECTIONS_QUERY } from '../utils/queries'
 import {
   PARTIAL_NAVIGATE,
-  NAVIGATE_TO_ARTICLE_SCREEN,
+  NAVIGATE_TO_ARTICLE_SCREEN
 } from '../utils/helperFunctions'
+import { updateNavigation } from '../actions'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
+    backgroundColor: '#fff'
+  }
 })
 
-const SectionScreenComp = ({ route, navigation, publication }) => {
+const SectionScreenComp = ({
+  route,
+  navigation,
+  currPublication,
+  dispatchUpdateNavigation
+}) => {
   const { slug } = route.params
 
   const { loading, error, data, refetch } = useQuery(SECTIONS_QUERY, {
-    variables: { section: slug, publication },
-    notifyOnNetworkStatusChange: true,
+    variables: { section: slug, publication: currPublication },
+    notifyOnNetworkStatusChange: true
   })
+
+  useEffect(() => {
+    dispatchUpdateNavigation(navigation)
+
+    return () => {
+      dispatchUpdateNavigation(null)
+    }
+  }, [])
 
   useFocusEffect(
     useCallback(() => {
@@ -62,12 +76,23 @@ const SectionScreenComp = ({ route, navigation, publication }) => {
           'SectionArticle',
           NAVIGATE_TO_ARTICLE_SCREEN
         )}
-        publication={publication}
+        publication={currPublication}
       />
     </ScrollView>
   )
 }
 
-const mapStateToProps = ({ publication }) => ({ publication })
+const mapStateToProps = ({ publication }) => {
+  const { currPublication } = publication
 
-export const SectionScreen = connect(mapStateToProps)(SectionScreenComp)
+  return { currPublication }
+}
+
+const mapDispatchToProps = dispatch => ({
+  dispatchUpdateNavigation: navigation => dispatch(updateNavigation(navigation))
+})
+
+export const SectionScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SectionScreenComp)
