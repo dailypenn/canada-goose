@@ -4,37 +4,76 @@ import { View, SafeAreaView, Animated } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { GradientButton, InverseGradientButton } from '.'
-import { Easing } from 'react-native'
-import { Platform, StyleSheet } from 'react-native'
-import { HeaderLine } from './HeaderLine'
-import { Text } from 'react-native'
-import { Dimensions } from 'react-native'
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  Dimensions,
+  Easing,
+  Image,
+} from 'react-native'
+import {
+  BODY_SERIF,
+  DISPLAY_SERIF_BLACK,
+  GEOMETRIC_BOLD,
+  GEOMETRIC_REGULAR,
+} from '../utils/fonts'
 
 const InfoPageContents = ({ content: { mediaUrl, text, title }, style }) => {
+  console.log(mediaUrl)
+
+  const [opacity] = useState(new Animated.Value(0))
+  useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 100,
+      useNativeDriver: false,
+    }).start()
+  })
   return (
     <Animated.View
       style={[
         {
           width: '100%',
-          height:
-            Dimensions.get('window').height -
-            (Platform.OS == 'ios' ? 180 : 120),
-          justifyContent: 'center',
+          height: Dimensions.get('screen').height - 200,
+          justifyContent: 'flex-end',
+          paddingBottom: 60,
+          marginVertical: 30,
+          paddingHorizontal: 30,
         },
         style,
       ]}
     >
       <View
         style={{
-          width: '80%',
+          width: Dimensions.get('screen').width * 0.55,
           aspectRatio: 2 / 3,
           backgroundColor: '#BBB',
-          borderRadius: 30,
+          borderRadius: 20,
           borderColor: '#DDD',
-          borderWidth: 30,
+          borderWidth: 15,
           alignSelf: 'center',
+          padding: 0,
         }}
-      />
+      >
+        <Image source={mediaUrl} style={{ width: '100%', height: '100%' }} />
+      </View>
+      <Text
+        style={{
+          paddingTop: 50,
+          fontFamily: GEOMETRIC_BOLD,
+          fontSize: 28,
+          lineHeight: 34,
+          paddingBottom: 10,
+        }}
+      >
+        {title}
+      </Text>
+      <Text
+        style={{ fontSize: 15, fontFamily: GEOMETRIC_REGULAR, color: 'grey' }}
+      >
+        {text}
+      </Text>
     </Animated.View>
   )
 }
@@ -102,9 +141,9 @@ export const OnboardingInfoPage = ({
     ]).start()
   }
 
-  const forwardButtonPressed = async () => {
+  const forwardButtonPressed = () => {
     if (currPage == NUM_PAGES) {
-      await Animated.stagger(200, [
+      Animated.stagger(200, [
         Animated.timing(buttonPosY, {
           toValue: 150,
           duration: 500,
@@ -120,7 +159,7 @@ export const OnboardingInfoPage = ({
       ]).start()
       setTimeout(() => {
         onNextPage()
-      }, 1500)
+      }, 1000)
     } else onNextPage()
   }
 

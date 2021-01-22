@@ -294,14 +294,22 @@ const styles = StyleSheet.create({
 
 const ONBOARDING_CONTENT = [
   {
-    text: 'This is the commentary for part one!',
-    mediaUrl: 'tbd',
+    text:
+      'The most up-to-date content across The Daily Pennsylvanian, Under the Button, and 34th Street.',
+    mediaUrl: require('../static/onboarding/feed.jpg'),
     title: 'Home Feed',
   },
   {
-    text: 'This is the commentary of part 2!',
-    mediaUrl: 'tbd',
-    title: 'Switching Publications',
+    text:
+      'Browse recent content by category, or start a search for any article.\n',
+    mediaUrl: require('../static/onboarding/discover.jpg'),
+    title: 'Discover',
+  },
+  {
+    text:
+      'Browse recent content by category, or start a search for any article.\n',
+    mediaUrl: require('../static/onboarding/done.jpg'),
+    title: "You're Ready!",
   },
 ]
 
