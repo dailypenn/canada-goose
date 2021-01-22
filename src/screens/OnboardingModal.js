@@ -294,8 +294,9 @@ const styles = StyleSheet.create({
 
 const ONBOARDING_CONTENT = [
   {
-    text:
-      'The most up-to-date content across The Daily Pennsylvanian, Under the Button, and 34th Street.',
+    text: 'Breaking content from your currently selected publication.\n',
+    boldText:
+      'To switch publications, LONG-PRESS the home feed icon in the tab bar. You can also do this under the Account Page.',
     mediaUrl: require('../static/onboarding/feed.jpg'),
     title: 'Home Feed',
   },
@@ -307,7 +308,13 @@ const ONBOARDING_CONTENT = [
   },
   {
     text:
-      'Browse recent content by category, or start a search for any article.\n',
+      'Manage bookmarks, switch publications, and customize your home feed ordering.',
+    mediaUrl: require('../static/onboarding/account.jpg'),
+    title: 'Account',
+  },
+  {
+    text:
+      "You're all set! Enjoy all of your favorite content from The Daily Pennsylvanian, 34th Street, and Under the Button all in one place.",
     mediaUrl: require('../static/onboarding/done.jpg'),
     title: "You're Ready!",
   },

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Modal from 'react-native-modal'
 import { View, SafeAreaView, Animated } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import * as Haptics from 'expo-haptics'
 
 import { GradientButton, InverseGradientButton } from '.'
 import {
@@ -19,7 +20,10 @@ import {
   GEOMETRIC_REGULAR,
 } from '../utils/fonts'
 
-const InfoPageContents = ({ content: { mediaUrl, text, title }, style }) => {
+const InfoPageContents = ({
+  content: { mediaUrl, text, title, boldText },
+  style,
+}) => {
   console.log(mediaUrl)
 
   const [opacity] = useState(new Animated.Value(0))
@@ -36,44 +40,45 @@ const InfoPageContents = ({ content: { mediaUrl, text, title }, style }) => {
         {
           width: '100%',
           height: Dimensions.get('screen').height - 200,
-          justifyContent: 'flex-end',
-          paddingBottom: 60,
+
+          justifyContent: 'flex-start',
+          paddingBottom: 40,
           marginVertical: 30,
           paddingHorizontal: 30,
+          paddingBottom: 0,
         },
         style,
       ]}
     >
       <View
         style={{
-          width: Dimensions.get('screen').width * 0.55,
+          height: Dimensions.get('screen').height * 0.4,
+          minHeight: Dimensions.get('screen').height * 0.3,
+          maxHeight: Dimensions.get('screen').height * 0.4,
+          flex: 1,
           aspectRatio: 2 / 3,
           backgroundColor: '#BBB',
           borderRadius: 20,
           borderColor: '#DDD',
           borderWidth: 15,
           alignSelf: 'center',
-          padding: 0,
         }}
       >
         <Image source={mediaUrl} style={{ width: '100%', height: '100%' }} />
       </View>
-      <Text
-        style={{
-          paddingTop: 50,
-          fontFamily: GEOMETRIC_BOLD,
-          fontSize: 28,
-          lineHeight: 34,
-          paddingBottom: 10,
-        }}
-      >
-        {title}
-      </Text>
+      <Text style={styles.text}>{title}</Text>
       <Text
         style={{ fontSize: 15, fontFamily: GEOMETRIC_REGULAR, color: 'grey' }}
       >
         {text}
       </Text>
+      {boldText ? (
+        <Text
+          style={{ fontSize: 15, color: 'black', fontFamily: GEOMETRIC_BOLD }}
+        >
+          {boldText}
+        </Text>
+      ) : null}
     </Animated.View>
   )
 }
@@ -105,7 +110,6 @@ export const OnboardingInfoPage = ({
   })
 
   const content = ONBOARDING_CONTENT
-  console.log(content)
 
   useEffect(() => {
     Animated.stagger(200, [
@@ -143,6 +147,7 @@ export const OnboardingInfoPage = ({
 
   const forwardButtonPressed = () => {
     if (currPage == NUM_PAGES) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
       Animated.stagger(200, [
         Animated.timing(buttonPosY, {
           toValue: 150,
@@ -160,7 +165,16 @@ export const OnboardingInfoPage = ({
       setTimeout(() => {
         onNextPage()
       }, 1000)
-    } else onNextPage()
+    } else {
+      Animated.timing(pageAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: false,
+        easing: Easing.out(Easing.cubic),
+      }).start()
+
+      setTimeout(() => onNextPage(), 300)
+    }
   }
 
   const backButtonPressed = () => {
@@ -168,7 +182,14 @@ export const OnboardingInfoPage = ({
       backToStart()
       setTimeout(() => onPrevPage(), 700)
     } else {
-      onPrevPage()
+      Animated.timing(pageAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: false,
+        easing: Easing.out(Easing.cubic),
+      }).start()
+
+      setTimeout(() => onPrevPage(), 300)
     }
   }
 
@@ -220,5 +241,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     alignContent: 'space-between',
     width: '100%',
+  },
+
+  text: {
+    paddingTop: 50,
+    fontFamily: GEOMETRIC_BOLD,
+    fontSize: 28,
+    lineHeight: 34,
+    paddingBottom: 10,
   },
 })

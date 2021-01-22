@@ -19,8 +19,6 @@ import {
   RandomButton,
   DefaultStatusBar,
 } from '../components'
-import { StatusBar } from 'react-native'
-import { View } from 'react-native'
 import { Text } from 'react-native'
 import { DP_RED } from '../utils/branding'
 import { useIsFocused } from '@react-navigation/native'

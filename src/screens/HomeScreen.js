@@ -31,11 +31,8 @@ import {
   GET_HOME_SECTION_NAME,
   GET_HOME_QUERIES,
 } from '../utils/helperFunctions'
-<<<<<<< HEAD
 import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { PublicationEnum } from '../utils/constants'
-=======
->>>>>>> 228e987d1eb7abac743b65888a13237527df1a40
 
 const styles = StyleSheet.create({
   container: {
@@ -260,12 +257,7 @@ const HomeView = ({
             </View>
           )
         })}
-<<<<<<< HEAD
       </Animated.ScrollView>
-=======
-      </ScrollView>
-      <CustomHeader publication={publication} contentOffset={offset} />
->>>>>>> 228e987d1eb7abac743b65888a13237527df1a40
     </View>
   )
 }
@@ -307,19 +299,6 @@ const HomeScreenComp = ({ navigation, publication, settings }) => {
     }
   }, [])
 
-<<<<<<< HEAD
-=======
-  // useEffect(() => {
-  //   console.log(
-  //     '@@@@@@@ update homeSection @@@@@@@',
-  //     settings.homeSectionPreferences[publication]
-  //   )
-  //   // console.log(homeSection)
-  //   // homeSections = homeSection[publication]
-  //   // homeSections = settings.homeSectionPreferences[publication]
-  // }, [settings.homeSectionPreferences])
-
->>>>>>> 228e987d1eb7abac743b65888a13237527df1a40
   const { loading, error, data, refetch } = useQuery(
     GET_HOME_QUERIES(publication)
   )
@@ -347,7 +326,6 @@ const HomeScreenComp = ({ navigation, publication, settings }) => {
     return <Text> Error </Text>
   }
 
-<<<<<<< HEAD
   let HOME_SECTIONS = GET_HOME_SECTIONS(publication)
 
   const { centerpiece: centerArticles, top: topArticles } = data
@@ -357,8 +335,6 @@ const HomeScreenComp = ({ navigation, publication, settings }) => {
     articles: data[section],
   }))
 
-=======
->>>>>>> 228e987d1eb7abac743b65888a13237527df1a40
   return (
     <HomeView
       navigation={navigation}
