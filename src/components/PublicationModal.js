@@ -15,7 +15,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { PublicationPrimaryColor } from '../utils/branding'
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { PublicationEnum } from '../utils/constants'
-import { switchPublication } from '../actions'
+import { switchPublication, toggleScrollToTop } from '../actions'
 import { StatusBar } from 'react-native'
 
 const SCREEN_DIMENSIONS = Dimensions.get('screen')
@@ -147,7 +147,8 @@ const PublicationOption = ({ publication, isCurrent }) => {
 const PublicationModalComp = ({
   navigation,
   publication,
-  dispatchSwitchPublication
+  dispatchSwitchPublication,
+  dispatchToggleScrollToTop
 }) => {
   const { currPublication, currNavigation } = publication
   const [isVisible, updateVisibility] = useState(false) // Whether or not the modal is visible
@@ -172,6 +173,7 @@ const PublicationModalComp = ({
           console.log('------dismiss all screens------')
           currNavigation.popToTop()
         }
+        dispatchToggleScrollToTop()
       }
       updateVisibility(false)
     }
@@ -274,7 +276,8 @@ const mapStateToProps = ({ publication }) => ({ publication })
 
 const mapDispatchToProps = dispatch => ({
   dispatchSwitchPublication: publication =>
-    dispatch(switchPublication(publication))
+    dispatch(switchPublication(publication)),
+  dispatchToggleScrollToTop: () => dispatch(toggleScrollToTop())
 })
 
 export const PublicationModal = connect(

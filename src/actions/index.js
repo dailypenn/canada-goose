@@ -6,7 +6,7 @@ export const SWITCH_PUBLICATION = 'SWITCH_PUBLICATION'
 
 export const switchPublication = currPublication => ({
   type: SWITCH_PUBLICATION,
-  currPublication,
+  currPublication
 })
 
 export const UPDATE_NAVIGATION = 'UPDATE_NAVIGATION'
@@ -16,6 +16,10 @@ export const updateNavigation = currNavigation => ({
   currNavigation
 })
 
+export const TOGGLE_SCROLL_TO_TOP = 'TOGGLE_SCROLL_TO_TOP'
+
+export const toggleScrollToTop = () => ({ type: TOGGLE_SCROLL_TO_TOP })
+
 export const SET_INIT = 'SET_INIT'
 export const setInit = result => {
   return {
@@ -24,19 +28,19 @@ export const setInit = result => {
       homeSectionPreferences: [
         {
           publication: PublicationEnum.dp,
-          newSections: JSON.parse(result[0][1]),
+          newSections: JSON.parse(result[0][1])
         },
         {
           publication: PublicationEnum.street,
-          newSections: JSON.parse(result[1][1]),
+          newSections: JSON.parse(result[1][1])
         },
         {
           publication: PublicationEnum.utb,
-          newSections: JSON.parse(result[2][1]),
-        },
+          newSections: JSON.parse(result[2][1])
+        }
       ],
-      savedArticles: JSON.parse(result[3][1]),
-    },
+      savedArticles: JSON.parse(result[3][1])
+    }
   }
 }
 
@@ -48,10 +52,10 @@ export const updateHomeSections = (publication, newSections) => {
       homeSectionPreferences: [
         {
           publication: publication,
-          newSections: newSections,
-        },
-      ],
-    },
+          newSections: newSections
+        }
+      ]
+    }
   }
 }
 
@@ -60,8 +64,8 @@ export const saveNewArticle = item => {
   return {
     type: SAVE_NEW_ARTICLE,
     updates: {
-      actionArticle: item,
-    },
+      actionArticle: item
+    }
   }
 }
 
@@ -70,7 +74,7 @@ export const unsaveArticle = item => {
   return {
     type: UNSAVE_NEW_ARTICLE,
     updates: {
-      actionArticle: item,
-    },
+      actionArticle: item
+    }
   }
 }

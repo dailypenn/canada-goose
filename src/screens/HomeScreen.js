@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
 import {
   StyleSheet,
-  ScrollView,
   View,
   Text,
   RefreshControl,
   AppState,
   Animated,
-  Image,
+  Image
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -16,32 +15,32 @@ import { useFocusEffect } from '@react-navigation/native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
 import {
-  CustomHeader,
   SectionHeader,
   HeadlineArticle,
   HorizontalArticleCarousel,
   ArticleList,
   ActivityIndicator,
-  HeaderLine,
+  HeaderLine
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
   GET_HOME_SECTIONS,
   GET_HOME_SECTION_NAME,
-  GET_HOME_QUERIES,
+  GET_HOME_QUERIES
 } from '../utils/helperFunctions'
 import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { PublicationEnum } from '../utils/constants'
+import { toggleScrollToTop } from '../actions'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   text1: {
-    color: '#fff',
-  },
+    color: '#fff'
+  }
 })
 
 const HomeView = ({
@@ -51,21 +50,16 @@ const HomeView = ({
   data,
   loading,
   refetch,
+  scrollToTop,
+  dispatchToggleScrollToTop
 }) => {
+  const scrollViewRef = useRef(null)
   const { centerpiece: centerArticles, top: topArticles } = data
 
   const sectionData = homeSections.map(section => ({
     name: section,
-    articles: data[section],
+    articles: data[section]
   }))
-
-  const [offset, setOffset] = useState(0)
-
-  const handleScroll = scrollData => {
-    setOffset(scrollData.nativeEvent.contentOffset.y)
-    //setY(scrollData.nativeEvent.contentOffset.y)
-    console.log(scrollData.nativeEvent.contentOffset.y)
-  }
 
   // TODO (liz): defaultSections cannot be stored inside useState
   // otherwise, redux won't update it for some reasons
@@ -111,14 +105,14 @@ const HomeView = ({
   const clampedScrollY = scrollY.interpolate({
     inputRange: [minScroll, minScroll + 1],
     outputRange: [0, 1],
-    extrapolateLeft: 'clamp',
+    extrapolateLeft: 'clamp'
   })
   const minusScrollY = Animated.multiply(clampedScrollY, -1)
   const translateY = Animated.diffClamp(minusScrollY, negativeHeaderHeight, 0)
   const opacity = translateY.interpolate({
     inputRange: [negativeHeaderHeight, 0],
     outputRange: [0, 1],
-    extrapolate: 'clamp',
+    extrapolate: 'clamp'
   })
   const DP_HEADER_LOGO = require('../static/logos/dp-header.png')
   const ST_HEADER_LOGO = require('../static/logos/34st-header.png')
@@ -135,6 +129,16 @@ const HomeView = ({
     }
   }
 
+  useFocusEffect(
+    useCallback(() => {
+      if (scrollToTop && scrollViewRef) {
+        scrollViewRef.current.scrollTo({ x: 0, y: 0 })
+        dispatchToggleScrollToTop()
+        refetch()
+      }
+    }, [scrollToTop])
+  )
+
   return (
     <View style={styles.container}>
       <Animated.View
@@ -146,9 +150,9 @@ const HomeView = ({
             zIndex: 2,
             backgroundColor: '#fff',
             borderBottomColor: '#AAA',
-            borderBottomWidth: 1,
+            borderBottomWidth: 1
           },
-          { transform: [{ translateY: translateY }] },
+          { transform: [{ translateY: translateY }] }
         ]}
       ></Animated.View>
       <Animated.View
@@ -167,14 +171,14 @@ const HomeView = ({
             //paddingTop: getStatusBarHeight(true) + 12,
             ...Platform.select({
               ios: {
-                paddingTop: getStatusBarHeight(true) + 10,
+                paddingTop: getStatusBarHeight(true) + 10
               },
               android: {
-                paddingTop: getStatusBarHeight(true),
-              },
-            }),
+                paddingTop: getStatusBarHeight(true)
+              }
+            })
           },
-          { transform: [{ translateY: translateY }] },
+          { transform: [{ translateY: translateY }] }
         ]}
       >
         <View style={{ height: 28 }}>
@@ -186,20 +190,18 @@ const HomeView = ({
       </Animated.View>
 
       <Animated.ScrollView
-        //onScroll={event => handleScroll(event)}
         style={{
           paddingTop: Platform.select({
             android: AnimatedHeaderHeight,
-            ios: 0,
-          }),
+            ios: 0
+          })
         }}
         contentInset={{ top: AnimatedHeaderHeight }}
         contentOffset={{
           x: 0,
-          y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight }),
+          y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight })
         }}
         automaticallyAdjustContentInsets={false}
-        //
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
           { useNativeDriver: false }
@@ -212,12 +214,13 @@ const HomeView = ({
             progressViewOffset={AnimatedHeaderHeight}
           />
         }
+        ref={scrollViewRef}
       >
         <TouchableOpacity
           activeOpacity={1}
           onPress={() =>
             NAVIGATE_TO_ARTICLE_SCREEN(navigation, 'HomeArticle', {
-              article: centerArticles[0],
+              article: centerArticles[0]
             })
           }
         >
@@ -262,7 +265,13 @@ const HomeView = ({
   )
 }
 
-const HomeScreenComp = ({ navigation, currPublication, settings }) => {
+const HomeScreenComp = ({
+  navigation,
+  currPublication,
+  scrollToTop,
+  settings,
+  dispatchToggleScrollToTop
+}) => {
   // const [lastActiveTime, setLastActiveTime] = useState(Date.now())
   const appState = useRef(AppState.currentState)
   const [appStateState, setAppStateState] = useState(appState.current)
@@ -332,7 +341,7 @@ const HomeScreenComp = ({ navigation, currPublication, settings }) => {
 
   const defaultSections = HOME_SECTIONS.map(section => ({
     name: section,
-    articles: data[section],
+    articles: data[section]
   }))
 
   return (
@@ -343,14 +352,23 @@ const HomeScreenComp = ({ navigation, currPublication, settings }) => {
       data={data}
       loading={loading}
       refetch={refetch}
+      scrollToTop={scrollToTop}
+      dispatchToggleScrollToTop={dispatchToggleScrollToTop}
     />
   )
 }
 
 const mapStateToProps = ({ publication, settings }) => {
-  const { currPublication } = publication
+  const { currPublication, scrollToTop } = publication
 
-  return { currPublication, settings }
+  return { currPublication, scrollToTop, settings }
 }
 
-export const HomeScreen = connect(mapStateToProps)(HomeScreenComp)
+const mapDispatchToProps = dispatch => ({
+  dispatchToggleScrollToTop: () => dispatch(toggleScrollToTop())
+})
+
+export const HomeScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeScreenComp)

@@ -28,7 +28,7 @@ const SectionScreenComp = ({
   const { slug } = route.params
 
   const { loading, error, data, refetch } = useQuery(SECTIONS_QUERY, {
-    variables: { section: slug, currPublication },
+    variables: { section: slug, publication: currPublication },
     notifyOnNetworkStatusChange: true
   })
 
