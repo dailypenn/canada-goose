@@ -326,7 +326,7 @@ const HomeScreenComp = ({ navigation, currPublication, settings }) => {
     return <Text> Error </Text>
   }
 
-  let HOME_SECTIONS = GET_HOME_SECTIONS(publication)
+  let HOME_SECTIONS = GET_HOME_SECTIONS(currPublication)
 
   const { centerpiece: centerArticles, top: topArticles } = data
 

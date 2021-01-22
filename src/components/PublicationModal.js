@@ -6,26 +6,17 @@ import {
   Dimensions,
   StyleSheet,
   Image,
-  Animated,
   TouchableOpacity
 } from 'react-native'
 import Modal from 'react-native-modal'
 import * as Haptics from 'expo-haptics'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import * as Font from 'expo-font'
 
 import { PublicationPrimaryColor } from '../utils/branding'
-import {
-  DISPLAY_SERIF_BLACK,
-  GEOMETRIC_BOLD,
-  GEOMETRIC_REGULAR
-} from '../utils/fonts'
+import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { PublicationEnum } from '../utils/constants'
 import { switchPublication } from '../actions'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
-import { color } from 'react-native-reanimated'
 import { StatusBar } from 'react-native'
-import { useIsFocused } from '@react-navigation/native'
 
 const SCREEN_DIMENSIONS = Dimensions.get('screen')
 const PUBLICATIONS = [
@@ -34,7 +25,7 @@ const PUBLICATIONS = [
   PublicationEnum.utb
 ]
 
-const PublicationOption = ({ currPublication, isCurrent }) => {
+const PublicationOption = ({ publication, isCurrent }) => {
   const DP_LOGO_RED = require('../static/logos/dp-logo-small-red.png')
   const DP_LOGO_WHITE = require('../static/logos/dp-logo-small-white.png')
 
@@ -82,7 +73,7 @@ const PublicationOption = ({ currPublication, isCurrent }) => {
     return rtrn
   }
 
-  const CONTENT = PUB_CONTENTS(currPublication)
+  const CONTENT = PUB_CONTENTS(publication)
 
   const styles = StyleSheet.create({
     container: {
