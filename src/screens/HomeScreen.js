@@ -6,11 +6,14 @@ import {
   Text,
   RefreshControl,
   AppState,
+  Animated,
+  Image,
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
+import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
 import {
   CustomHeader,
@@ -28,6 +31,8 @@ import {
   GET_HOME_SECTION_NAME,
   GET_HOME_QUERIES,
 } from '../utils/helperFunctions'
+import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
+import { PublicationEnum } from '../utils/constants'
 
 const styles = StyleSheet.create({
   container: {
@@ -58,19 +63,154 @@ const HomeView = ({
 
   const handleScroll = scrollData => {
     setOffset(scrollData.nativeEvent.contentOffset.y)
+    //setY(scrollData.nativeEvent.contentOffset.y)
+    console.log(scrollData.nativeEvent.contentOffset.y)
   }
+
+  // TODO (liz): defaultSections cannot be stored inside useState
+  // otherwise, redux won't update it for some reasons
+  // a quick fix I can think of is to put this function inside HomeScreenComp
+  // and pass the ordered sections to this component
+  const loadHomeSectionOrder = async () => {
+    let order = await Storage.getItem(GET_HOME_FEED_ORDER_KEY(publication))
+    if (order == null) return defaultSections
+    if (order == GET_HOME_SECTIONS(publication)) return defaultSections
+
+    let newSections = []
+    order.forEach(section => {
+      defaultSections.forEach(item => {
+        if (section == item.name) {
+          newSections.push(item)
+        }
+      })
+    })
+
+    return newSections
+  }
+
+  // const sections = await loadHomeSectionOrder()
+
+  // console.log(sections.length)
+
+  // useEffect(() => {
+  //   loadHomeSectionOrder()
+  // }, [reorderHomeSection])
 
   const onRefresh = useCallback(() => {
     refetch()
   })
 
+  //Header consts
+  const [scrollY, setScrollY] = useState(new Animated.Value(0))
+  const minScroll = 10
+  const AnimatedHeaderHeight = getStatusBarHeight(true) + 50
+  const negativeHeaderHeight =
+    Platform.OS === 'android'
+      ? -AnimatedHeaderHeight
+      : -(AnimatedHeaderHeight - getStatusBarHeight(true))
+  const clampedScrollY = scrollY.interpolate({
+    inputRange: [minScroll, minScroll + 1],
+    outputRange: [0, 1],
+    extrapolateLeft: 'clamp',
+  })
+  const minusScrollY = Animated.multiply(clampedScrollY, -1)
+  const translateY = Animated.diffClamp(minusScrollY, negativeHeaderHeight, 0)
+  const opacity = translateY.interpolate({
+    inputRange: [negativeHeaderHeight, 0],
+    outputRange: [0, 1],
+    extrapolate: 'clamp',
+  })
+  const DP_HEADER_LOGO = require('../static/logos/dp-header.png')
+  const ST_HEADER_LOGO = require('../static/logos/34st-header.png')
+  const UTB_HEADER_LOGO = require('../static/logos/utb-header2.png')
+
+  const GET_HEADER_LOGO = () => {
+    switch (publication) {
+      case PublicationEnum.dp:
+        return DP_HEADER_LOGO
+      case PublicationEnum.street:
+        return ST_HEADER_LOGO
+      default:
+        return UTB_HEADER_LOGO
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <ScrollView
-        onScroll={event => handleScroll(event)}
+      <Animated.View
+        style={[
+          {
+            height: AnimatedHeaderHeight,
+            position: 'absolute',
+            width: '100%',
+            zIndex: 2,
+            backgroundColor: '#fff',
+            borderBottomColor: '#AAA',
+            borderBottomWidth: 1,
+          },
+          { transform: [{ translateY: translateY }] },
+        ]}
+      ></Animated.View>
+      <Animated.View
+        style={[
+          {
+            height: AnimatedHeaderHeight,
+            position: 'absolute',
+            width: '100%',
+            zIndex: 3,
+            backgroundColor: '#fff',
+            alignItems: 'center',
+            //justifyContent: "center",
+            borderBottomColor: '#DDD',
+            borderBottomWidth: 1,
+            opacity: opacity,
+            //paddingTop: getStatusBarHeight(true) + 12,
+            ...Platform.select({
+              ios: {
+                paddingTop: getStatusBarHeight(true) + 10,
+              },
+              android: {
+                paddingTop: getStatusBarHeight(true),
+              },
+            }),
+          },
+          { transform: [{ translateY: translateY }] },
+        ]}
+      >
+        <View style={{ height: 28 }}>
+          <Image
+            source={GET_HEADER_LOGO()}
+            style={{ flex: 1, resizeMode: 'contain' }}
+          />
+        </View>
+      </Animated.View>
+
+      <Animated.ScrollView
+        //onScroll={event => handleScroll(event)}
+        style={{
+          paddingTop: Platform.select({
+            android: AnimatedHeaderHeight,
+            ios: 0,
+          }),
+        }}
+        contentInset={{ top: AnimatedHeaderHeight }}
+        contentOffset={{
+          x: 0,
+          y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight }),
+        }}
+        automaticallyAdjustContentInsets={false}
+        //
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )}
         scrollEventThrottle={16}
         refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={onRefresh} />
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={onRefresh}
+            progressViewOffset={AnimatedHeaderHeight}
+          />
         }
       >
         <TouchableOpacity
@@ -117,8 +257,7 @@ const HomeView = ({
             </View>
           )
         })}
-      </ScrollView>
-      <CustomHeader publication={publication} contentOffset={offset} />
+      </Animated.ScrollView>
     </View>
   )
 }
@@ -160,16 +299,6 @@ const HomeScreenComp = ({ navigation, currPublication, settings }) => {
     }
   }, [])
 
-  // useEffect(() => {
-  //   console.log(
-  //     '@@@@@@@ update homeSection @@@@@@@',
-  //     settings.homeSectionPreferences[publication]
-  //   )
-  //   // console.log(homeSection)
-  //   // homeSections = homeSection[publication]
-  //   // homeSections = settings.homeSectionPreferences[publication]
-  // }, [settings.homeSectionPreferences])
-
   const { loading, error, data, refetch } = useQuery(
     GET_HOME_QUERIES(currPublication)
   )
@@ -196,6 +325,15 @@ const HomeScreenComp = ({ navigation, currPublication, settings }) => {
     console.log(error)
     return <Text> Error </Text>
   }
+
+  let HOME_SECTIONS = GET_HOME_SECTIONS(publication)
+
+  const { centerpiece: centerArticles, top: topArticles } = data
+
+  const defaultSections = HOME_SECTIONS.map(section => ({
+    name: section,
+    articles: data[section],
+  }))
 
   return (
     <HomeView

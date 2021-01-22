@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { useQuery } from '@apollo/client'
 import { useFocusEffect } from '@react-navigation/native'
 
-import { ActivityIndicator, ArticleList } from '../components'
+import { ActivityIndicator, ArticleList, DefaultStatusBar } from '../components'
 import { SECTIONS_QUERY } from '../utils/queries'
 import {
   PARTIAL_NAVIGATE,

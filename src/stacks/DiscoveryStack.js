@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import * as Haptics from 'expo-haptics'
 
 import { ArticleScreen, DiscoveryScreen, SectionScreen } from '../screens'
+import { DefaultStatusBar } from '../components'
 const Stack = createStackNavigator()
 
 export const DiscoveryStack = ({ navigation }) => {
@@ -17,33 +18,36 @@ export const DiscoveryStack = ({ navigation }) => {
     })
   })
   return (
-    <Stack.Navigator
-      initialRouteName="Discovery"
-      screenOptions={{
-        headerStyle: { backgroundColor: '#fff' },
-        headerTintColor: '#000',
-        headerTitleStyle: { fontWeight: 'bold' },
-        headerBackTitleVisible: false,
-      }}
-    >
-      <Stack.Screen
-        name="Discovery"
-        component={DiscoveryScreen}
-        options={{ title: 'Discover', headerShown: false }}
-      />
-      <Stack.Screen
-        name="Section"
-        component={SectionScreen}
-        options={({ route }) => ({
-          title: route.params.sectionName,
-          animationEnabled: true,
-        })}
-      />
-      <Stack.Screen
-        name="SectionArticle"
-        component={ArticleScreen}
-        options={ArticleScreen.navigationOptions}
-      />
-    </Stack.Navigator>
+    <>
+      <DefaultStatusBar />
+      <Stack.Navigator
+        initialRouteName="Discovery"
+        screenOptions={{
+          headerStyle: { backgroundColor: '#fff' },
+          headerTintColor: '#000',
+          headerTitleStyle: { fontWeight: 'bold' },
+          headerBackTitleVisible: false,
+        }}
+      >
+        <Stack.Screen
+          name="Discovery"
+          component={DiscoveryScreen}
+          options={{ title: 'Discover', headerShown: false }}
+        />
+        <Stack.Screen
+          name="Section"
+          component={SectionScreen}
+          options={({ route }) => ({
+            title: route.params.sectionName,
+            animationEnabled: true,
+          })}
+        />
+        <Stack.Screen
+          name="SectionArticle"
+          component={ArticleScreen}
+          options={ArticleScreen.navigationOptions}
+        />
+      </Stack.Navigator>
+    </>
   )
 }
