@@ -225,10 +225,11 @@ class Row extends Component {
   }
 }
 
-const mapStateToProps = ({ publication, settings }) => ({
-  publication,
-  settings,
-})
+const mapStateToProps = ({ publication, settings }) => {
+  const { currPublication } = publication
+
+  return { currPublication, settings }
+}
 
 export const ManageFeedScreen = connect(mapStateToProps)(ManageFeedScreenComp)
 ManageFeedScreen.navigationOptions = ({ route }) => ({

@@ -32,9 +32,7 @@ const PUBLICATIONS = [
   PublicationEnum.utb,
 ]
 
-const PublicationOption = ({ publication, isCurrent }) => {
-  const TEXT_COLOR = PublicationPrimaryColor(publication)
-
+const PublicationOption = ({ currPublication, isCurrent }) => {
   const DP_LOGO_RED = require('../static/logos/dp-logo-small-red.png')
   const DP_LOGO_WHITE = require('../static/logos/dp-logo-small-white.png')
 
@@ -82,7 +80,7 @@ const PublicationOption = ({ publication, isCurrent }) => {
     return rtrn
   }
 
-  const CONTENT = PUB_CONTENTS(publication)
+  const CONTENT = PUB_CONTENTS(currPublication)
 
   const styles = StyleSheet.create({
     container: {
@@ -158,6 +156,7 @@ const PublicationModalComp = ({
   publication,
   dispatchSwitchPublication,
 }) => {
+  const { currPublication, currNavigation } = publication
   const [isVisible, updateVisibility] = useState(false) // Whether or not the modal is visible
   const [currentlySwiping, updateSwipeStatus] = useState(false) // Flags when swipes have started, but this is not blocking out touchable opacity presses :(
 
@@ -173,9 +172,13 @@ const PublicationModalComp = ({
   // Function called when user selects a new publication
   const selectedPublication = pub => {
     if (!currentlySwiping) {
-      if (pub != publication) {
+      if (pub != currPublication) {
         dispatchSwitchPublication(pub)
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+        if (currNavigation) {
+          console.log('------dismiss all screens------')
+          currNavigation.popToTop()
+        }
       }
       updateVisibility(false)
     }
@@ -243,13 +246,13 @@ const PublicationModalComp = ({
         <View style={styles.bar} />
         <TouchableOpacity
           activeOpacity={1}
-          onPress={() => selectedPublication(publication)}
+          onPress={() => selectedPublication(currPublication)}
         >
-          <PublicationOption publication={publication} isCurrent={true} />
+          <PublicationOption currPublication={currPublication} isCurrent={true} />
         </TouchableOpacity>
         <View style={styles.line} />
         {PUBLICATIONS.map((el, index) => {
-          return el == publication ? null : (
+          return el == currPublication ? null : (
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={() => selectedPublication(el)}
@@ -257,7 +260,7 @@ const PublicationModalComp = ({
               key={index}
             >
               <PublicationOption
-                publication={el}
+                currPublication={el}
                 isCurrent={false}
                 key={index}
               />

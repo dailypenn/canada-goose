@@ -10,7 +10,7 @@ import {
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
-import { useFocusEffect } from '@react-navigation/core'
+import { useFocusEffect } from '@react-navigation/native'
 
 import {
   CustomHeader,
@@ -123,7 +123,7 @@ const HomeView = ({
   )
 }
 
-const HomeScreenComp = ({ navigation, publication, settings }) => {
+const HomeScreenComp = ({ navigation, currPublication, settings }) => {
   // const [lastActiveTime, setLastActiveTime] = useState(Date.now())
   const appState = useRef(AppState.currentState)
   const [appStateState, setAppStateState] = useState(appState.current)
@@ -131,9 +131,9 @@ const HomeScreenComp = ({ navigation, publication, settings }) => {
 
   let homeSections =
     homeSectionPreferences == null ||
-    homeSectionPreferences[publication] == null
-      ? GET_HOME_SECTIONS(publication)
-      : homeSectionPreferences[publication]
+    homeSectionPreferences[currPublication] == null
+      ? GET_HOME_SECTIONS(currPublication)
+      : homeSectionPreferences[currPublication]
 
   const handleAppStateChange = nextAppState => {
     if (
@@ -171,7 +171,7 @@ const HomeScreenComp = ({ navigation, publication, settings }) => {
   // }, [settings.homeSectionPreferences])
 
   const { loading, error, data, refetch } = useQuery(
-    GET_HOME_QUERIES(publication)
+    GET_HOME_QUERIES(currPublication)
   )
 
   useFocusEffect(
@@ -200,7 +200,7 @@ const HomeScreenComp = ({ navigation, publication, settings }) => {
   return (
     <HomeView
       navigation={navigation}
-      publication={publication}
+      publication={currPublication}
       homeSections={homeSections}
       data={data}
       loading={loading}
@@ -209,9 +209,10 @@ const HomeScreenComp = ({ navigation, publication, settings }) => {
   )
 }
 
-const mapStateToProps = ({ publication, settings }) => ({
-  publication,
-  settings,
-})
+const mapStateToProps = ({ publication, settings }) => {
+  const { currPublication } = publication
+
+  return { currPublication, settings }
+}
 
 export const HomeScreen = connect(mapStateToProps)(HomeScreenComp)

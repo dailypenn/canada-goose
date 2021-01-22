@@ -93,13 +93,17 @@ const DiscoveryView = ({ navigation, publication }) => {
   )
 }
 
-const DiscoveryScreenComp = ({ navigation, publication }) => (
+const DiscoveryScreenComp = ({ navigation, currPublication }) => (
   <SafeAreaView style={styles.container}>
-    <SearchBar navigation={navigation} publication={publication} />
-    <DiscoveryView navigation={navigation} publication={publication} />
+    <SearchBar navigation={navigation} publication={currPublication} />
+    <DiscoveryView navigation={navigation} publication={currPublication} />
   </SafeAreaView>
 )
 
-const mapStateToProps = ({ publication }) => ({ publication })
+const mapStateToProps = ({ publication }) => {
+  const { currPublication } = publication
+
+  return { currPublication }
+}
 
 export const DiscoveryScreen = connect(mapStateToProps)(DiscoveryScreenComp)

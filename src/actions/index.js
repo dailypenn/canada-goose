@@ -4,9 +4,16 @@ import { PublicationEnum } from '../utils/constants'
 
 export const SWITCH_PUBLICATION = 'SWITCH_PUBLICATION'
 
-export const switchPublication = publication => ({
+export const switchPublication = currPublication => ({
   type: SWITCH_PUBLICATION,
-  publication,
+  currPublication,
+})
+
+export const UPDATE_NAVIGATION = 'UPDATE_NAVIGATION'
+
+export const updateNavigation = currNavigation => ({
+  type: UPDATE_NAVIGATION,
+  currNavigation
 })
 
 export const SET_INIT = 'SET_INIT'

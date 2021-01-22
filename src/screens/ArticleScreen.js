@@ -11,26 +11,26 @@ import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
 import { PublicationEnum } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
-import { saveNewArticle, unsaveArticle } from '../actions'
+import { saveNewArticle, unsaveArticle, updateNavigation } from '../actions'
 import { UTB_RANDOM_ARTICLE } from '../utils/queries'
 
 const ArticleScreenComp = ({
   navigation,
   route,
-  publication,
+  currPublication,
   settings,
-  dispatch,
+  dispatch
 }) => {
   const [article, setArticle] = useState(route.params.article)
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
   const articlePublication = route.params.articlePublication
     ? route.params.articlePublication
-    : publication
+    : currPublication
 
   const [getRandomArticle, { loading, data }] = useLazyQuery(
     UTB_RANDOM_ARTICLE,
     {
-      fetchPolicy: 'cache-and-network',
+      fetchPolicy: 'cache-and-network'
     }
   )
 
@@ -42,8 +42,13 @@ const ArticleScreenComp = ({
   // }
 
   useEffect(() => {
+    dispatch(updateNavigation(navigation))
     if (articlePublication === PublicationEnum.utb && !article) {
       getRandomArticle()
+    }
+
+    return () => {
+      dispatch(updateNavigation(null))
     }
   }, [])
 
@@ -58,7 +63,7 @@ const ArticleScreenComp = ({
       navigation.setParams({
         handlePress: handlePress,
         alreadySaved: savedArticles.some(obj => obj.slug == article.slug),
-        article: article,
+        article: article
       })
     }
   }, [settings.savedArticles, article])
@@ -81,7 +86,7 @@ const ArticleScreenComp = ({
       slug: article.slug,
       article: article,
       saved_at: date,
-      publication: articlePublication,
+      publication: articlePublication
     }
 
     let newSavedArticles = [...savedArticles]
@@ -125,13 +130,13 @@ const ArticleScreenComp = ({
       <View
         style={{
           paddingHorizontal: 20,
-          paddingVertical: 10,
+          paddingVertical: 10
         }}
       >
         <Text
           style={{
             fontFamily: GEOMETRIC_BOLD,
-            fontSize: 16,
+            fontSize: 16
           }}
         >{`By: ${AUTHORS(article.authors)}`}</Text>
         {/* <Text
@@ -150,7 +155,7 @@ const ArticleScreenComp = ({
             const PARSED_URL = href.split('thedp.com/article')
             if (PARSED_URL.length == 2) {
               navigation.navigate('', {
-                article: { slug: PARSED_URL[1] },
+                article: { slug: PARSED_URL[1] }
                 // TODO: Fix, for some reason this is not working
               })
             } else navigation.navigate('ArticleBrowser', { link: href })
@@ -162,12 +167,12 @@ const ArticleScreenComp = ({
               fontSize: 18,
               lineHeight: 28,
               paddingBottom: 30,
-              fontFamily: BODY_SERIF,
+              fontFamily: BODY_SERIF
             },
             a: {
-              fontSize: 18,
+              fontSize: 18
             },
-            img: { paddingBottom: 10 },
+            img: { paddingBottom: 10 }
           }}
           ignoredTags={['div']}
         />
@@ -181,7 +186,7 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
   animationEnabled: true,
   headerRight: () => {
     const {
-      params: { handlePress, alreadySaved, article },
+      params: { handlePress, alreadySaved, article }
     } = route
     let icon = 'bookmark-outline'
     if (alreadySaved) icon = 'bookmark'
@@ -193,12 +198,13 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
         </View>
       </TouchableOpacity>
     )
-  },
+  }
 })
 
-const mapStateToProps = ({ publication, settings }) => ({
-  publication,
-  settings,
-})
+const mapStateToProps = ({ publication, settings }) => {
+  const { currPublication } = publication
+
+  return { currPublication, settings }
+}
 
 export const ArticleScreen = connect(mapStateToProps)(ArticleScreenComp)
