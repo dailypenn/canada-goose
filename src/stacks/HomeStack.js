@@ -21,27 +21,17 @@ export const HomeStack = ({ navigation }) => {
   // Haptic feedback when tab bar is pressed
   useEffect(() => {
     // Haptic feedback on tab presses
+
     const unsubscribe = navigation.addListener('tabPress', e => {
-      if (!navigation.isFocused())
+      if (!navigation.isFocused()) {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-
-      hasCompletedOnboarding(false)
+      }
     })
-
-    async function getOnboardingStatus() {
-      let onboarded = await Storage.getItem(IS_ONBOARDED_KEY)
-      console.log('out of storage!: ' + onboarded)
-      hasCompletedOnboarding(onboarded != null)
-    }
-
-    getOnboardingStatus()
-
     return unsubscribe
   }, [navigation, hasCompletedOnboarding])
   console.log('isonboarded ' + isOnboarded)
   return (
     <>
-      <OnboardingModal {...{ hasCompletedOnboarding, isOnboarded }} />
       <DefaultStatusBar />
       <PublicationModal navigation={navigation} />
       <Stack.Navigator

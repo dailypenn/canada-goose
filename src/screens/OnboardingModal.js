@@ -357,7 +357,9 @@ export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
         currPage={pageNumber}
         ONBOARDING_CONTENT={ONBOARDING_CONTENT}
       />
-    ) : null
+    ) : (
+      <View />
+    )
 
   return (
     <Modal
@@ -369,9 +371,7 @@ export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
         margin: 0,
         backgroundColor: 'white',
       }}
-    >
-      {currPage}
-      <DefaultStatusBar />
-    </Modal>
+      children={currPage}
+    ></Modal>
   )
 }
