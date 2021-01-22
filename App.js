@@ -45,23 +45,29 @@ store.dispatch(getAsyncStorage())
 const App = () => {
   const [assetsLoaded, setAssetsLoaded] = useState(false)
   const [isOnboarded, hasCompletedOnboarding] = useState(true)
+  const [attachOnboardingModalToDom, updateAttachment] = useState(true)
 
   useEffect(() => {
     const loadAssets = async () => {
       await loadFonts()
       let onboarded = await Storage.getItem(IS_ONBOARDED_KEY)
       hasCompletedOnboarding(onboarded == true)
+      updateAttachment(onboarded != true)
 
       setAssetsLoaded(true)
     }
     loadAssets()
   }, [])
 
+  console.log('isONboarded' + isOnboarded)
+
   if (assetsLoaded) {
     return (
       <ApolloProvider client={client}>
         <Provider store={store}>
-          <OnboardingModal {...{ isOnboarded, hasCompletedOnboarding }} />
+          {attachOnboardingModalToDom ? (
+            <OnboardingModal {...{ isOnboarded, hasCompletedOnboarding }} />
+          ) : null}
           <TabNavigationController />
         </Provider>
       </ApolloProvider>
