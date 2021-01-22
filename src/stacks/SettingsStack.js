@@ -10,10 +10,10 @@ import {
   AboutScreen,
   NotificationScreen,
   PrivacyScreen,
-  ManageFeedScreen,
   WebViewScreen,
   SavedArticlesScreen,
   ArticleScreen,
+  ManageFeedScreen,
 } from '../screens'
 
 const Stack = createStackNavigator()
@@ -59,17 +59,12 @@ export const SettingsStack = ({ navigation }) => {
         component={PrivacyScreen}
         options={{ title: 'Privacy' }}
       />
+
       <Stack.Screen
         name="ManageFeedScreen"
         component={ManageFeedScreen}
         options={ManageFeedScreen.navigationOptions}
       />
-
-      {/* <Stack.Screen
-        name="ManageFeedScreenSmooth"
-        component={ManageFeedScreenSmooth}
-        options={{ title: '' }}
-      /> */}
       <Stack.Screen
         name="WebView"
         component={WebViewScreen}
