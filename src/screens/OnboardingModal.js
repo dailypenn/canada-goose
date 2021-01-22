@@ -16,6 +16,7 @@ import {
   GradientButton,
   OnboardingInfoPage,
 } from '../components'
+import { IS_ONBOARDED_KEY, Storage } from '../utils/storage'
 
 const MAX_GRADIENT_BUTTON_SIZE = Dimensions.get('screen').width * 0.9
 const MIN_GRAIDENT_BUTTON_SIZE = Dimensions.get('screen').width * 0.2
@@ -323,20 +324,23 @@ const ONBOARDING_CONTENT = [
 const NUM_PAGES = ONBOARDING_CONTENT.length
 
 export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
-  const [isVisible, updateVisibility] = useState(isOnboarded)
   const [pageNumber, updatePageNumber] = useState(0)
 
   const MODAL_OPTIONS = {
-    isVisible: isVisible,
+    isVisible: !isOnboarded,
     animationIn: 'fadeIn',
     animationInTiming: 500,
     animationOut: 'fadeOut',
     animationOutTiming: 1500,
   }
 
-  const onNextPage = () => {
-    if (pageNumber == NUM_PAGES) updateVisibility(false)
-    else updatePageNumber(pageNumber + 1)
+  const onNextPage = async () => {
+    if (pageNumber == NUM_PAGES) {
+      hasCompletedOnboarding(true)
+      await Storage.setItem(IS_ONBOARDED_KEY, true)
+      let x = await Storage.getItem(IS_ONBOARDED_KEY)
+      console.log(x)
+    } else updatePageNumber(pageNumber + 1)
   }
 
   let currPage =
@@ -346,9 +350,9 @@ export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
           updatePageNumber(1)
         }}
       />
-    ) : isVisible ? (
+    ) : !isOnboarded ? (
       <OnboardingInfoPage
-        onNextPage={onNextPage}
+        onNextPage={() => onNextPage()}
         onPrevPage={() => updatePageNumber(pageNumber - 1)}
         currPage={pageNumber}
         ONBOARDING_CONTENT={ONBOARDING_CONTENT}

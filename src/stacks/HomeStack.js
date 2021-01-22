@@ -29,16 +29,16 @@ export const HomeStack = ({ navigation }) => {
     })
 
     async function getOnboardingStatus() {
-      await Storage.getItem(IS_ONBOARDED_KEY).then(onboarded => {
-        hasCompletedOnboarding(isOnboarded)
-      })
+      let onboarded = await Storage.getItem(IS_ONBOARDED_KEY)
+      console.log('out of storage!: ' + onboarded)
+      hasCompletedOnboarding(onboarded != null)
     }
 
     getOnboardingStatus()
 
     return unsubscribe
   }, [navigation, hasCompletedOnboarding])
-
+  console.log('isonboarded ' + isOnboarded)
   return (
     <>
       <OnboardingModal {...{ hasCompletedOnboarding, isOnboarded }} />
