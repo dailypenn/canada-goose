@@ -1,5 +1,11 @@
 import React from 'react'
-import { Text, View, StyleSheet, ImageBackground, Dimensions } from 'react-native'
+import {
+  Text,
+  View,
+  StyleSheet,
+  ImageBackground,
+  Dimensions,
+} from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 
 import { CategoryTag } from './CategoryTag'
@@ -18,7 +24,7 @@ const styles = StyleSheet.create({
     aspectRatio: 0.8,
     borderRadius: 3,
     overflow: 'hidden',
-    backgroundColor: '#000'
+    backgroundColor: '#000',
   },
 
   imageBackground: {

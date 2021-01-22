@@ -5,6 +5,7 @@ import HTML from 'react-native-render-html'
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 import { useLazyQuery } from '@apollo/client'
+import * as Haptics from 'expo-haptics'
 
 import { PictureHeadline, ActivityIndicator } from '../components'
 import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
@@ -75,6 +76,7 @@ const ArticleScreenComp = ({
   }
 
   const saveHandler = async article => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
     const date = new Date()
 
     const newData = {

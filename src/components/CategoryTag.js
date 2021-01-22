@@ -8,12 +8,12 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: GEOMETRIC_BOLD,
     textTransform: 'uppercase',
-    fontSize: 14,
+    fontSize: 12,
     color: '#fff',
   },
   view: {
-    paddingHorizontal: 8,
-    paddingVertical: 5,
+    paddingHorizontal: 5,
+    paddingVertical: 3,
     borderRadius: 5,
   },
 })

@@ -6,14 +6,22 @@ import {
   TouchableOpacity,
   Platform,
   StatusBar,
-  View
+  View,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { FlatGrid } from 'react-native-super-grid'
 import { useLazyQuery } from '@apollo/client'
 
 import { PublicationEnum } from '../utils/constants'
-import { DiscoveryCell, SearchBar, RandomButton } from '../components'
+import {
+  DiscoveryCell,
+  SearchBar,
+  RandomButton,
+  DefaultStatusBar,
+} from '../components'
+import { Text } from 'react-native'
+import { DP_RED } from '../utils/branding'
+import { useIsFocused } from '@react-navigation/native'
 import { UTB_RANDOM_ARTICLE } from '../utils/queries'
 
 const DP_SECTIONS = require('../json/discover/dp.json')
@@ -23,8 +31,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
-  }
+    //paddingBottom: 20,
+    paddingTop: Platform.OS == 'android' ? 10 : 0,
+  },
 })
 
 const width = Dimensions.get('window').width
@@ -34,7 +43,7 @@ const DiscoveryView = ({ navigation, publication }) => {
   const navigateToSectionScreen = (section, slug) => {
     navigation.navigate('Section', {
       sectionName: section,
-      slug
+      slug,
     })
   }
 
@@ -85,7 +94,7 @@ const DiscoveryView = ({ navigation, publication }) => {
         width: '100%',
         height: '100%',
         justifyContent: 'center',
-        alignContent: 'center'
+        alignContent: 'center',
       }}
     >
       <RandomButton onButtonPress={onButtonPress} />
@@ -93,12 +102,14 @@ const DiscoveryView = ({ navigation, publication }) => {
   )
 }
 
-const DiscoveryScreenComp = ({ navigation, publication }) => (
-  <SafeAreaView style={styles.container}>
-    <SearchBar navigation={navigation} publication={publication} />
-    <DiscoveryView navigation={navigation} publication={publication} />
-  </SafeAreaView>
-)
+const DiscoveryScreenComp = ({ navigation, publication }) => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <SearchBar navigation={navigation} publication={publication} />
+      <DiscoveryView navigation={navigation} publication={publication} />
+    </SafeAreaView>
+  )
+}
 
 const mapStateToProps = ({ publication }) => ({ publication })
 

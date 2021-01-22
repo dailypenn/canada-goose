@@ -1,3 +1,4 @@
+import { useIsFocused } from '@react-navigation/native'
 import React from 'react'
 import {
   View,
@@ -58,10 +59,10 @@ export const CustomHeader = ({ publication, contentOffset }) => {
   const FADE_END = 175
   const FADE_DIST = FADE_END - FADE_START
 
+  const isFocused = useIsFocused()
+
   const addOpacity = (rgbString, opacity) => {
-    return (
-      rgbString.split(')')[0] + ',' + String(Math.min(opacity, 1) * 0.9) + ')'
-    )
+    return rgbString.split(')')[0] + ',' + String(Math.min(opacity, 1)) + ')'
   }
 
   const getLogo = (publication, contentOffset) => {
@@ -106,11 +107,15 @@ export const CustomHeader = ({ publication, contentOffset }) => {
       }}
     >
       <TouchableOpacity onPress={animateMenu} opacity={1}>
-        <StatusBar
-          barStyle={
-            contentOffset >= FADE_END ? 'dark-content' : 'light-content'
-          }
-        />
+        {isFocused ? (
+          <StatusBar
+            barStyle={
+              contentOffset >= FADE_END ? 'dark-content' : 'light-content'
+            }
+            backgroundColor={contentOffset >= FADE_END ? '#EEE' : 'black'}
+            animated={false}
+          />
+        ) : null}
         <SafeAreaView
           style={{
             ...styles.safeAreaView,
