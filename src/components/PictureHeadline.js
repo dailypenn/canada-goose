@@ -123,7 +123,7 @@ export const PictureHeadline = ({
             style={styles.gradient}
           />
           <View style={styles.spacer} />
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <CategoryTag name={category} publication={publication} />
             <View style={styles.spacer} />
             <Text style={styles.time}>{time}</Text>
