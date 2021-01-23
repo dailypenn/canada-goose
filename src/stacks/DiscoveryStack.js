@@ -6,6 +6,10 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import * as Haptics from 'expo-haptics'
 
+import {
+  BODY_SERIF,
+} from '../utils/fonts'
+
 import { ArticleScreen, DiscoveryScreen, SectionScreen } from '../screens'
 import { DefaultStatusBar } from '../components'
 const Stack = createStackNavigator()
@@ -25,7 +29,8 @@ export const DiscoveryStack = ({ navigation }) => {
         screenOptions={{
           headerStyle: { backgroundColor: '#fff' },
           headerTintColor: '#000',
-          headerTitleStyle: { fontWeight: 'bold' },
+          //headerTitleStyle: { fontWeight: 'bold' },
+          headerTitleStyle: { fontFamily: BODY_SERIF, fontSize: 20, },
           headerBackTitleVisible: false,
         }}
       >

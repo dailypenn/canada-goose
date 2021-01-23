@@ -43,7 +43,7 @@ const TabNavigationController = ({ currPublication }) => {
                 <Image
                   source={GET_PUB_LOGO(focused)}
                   style={{
-                    height: 28,
+                    height: 26,
                     width: 45,
                     resizeMode: 'contain',
                     alignSelf: 'center'
@@ -53,7 +53,7 @@ const TabNavigationController = ({ currPublication }) => {
             } else if (route.name == 'DiscoveryStack') iconName = 'search'
             else if (route.name === 'SettingsStack') iconName = 'cog'
 
-            return <Ionicons name={iconName} size={30} color={color} />
+            return <Ionicons name={iconName} size={26} color={color} />
           }
         })}
         tabBarOptions={{
