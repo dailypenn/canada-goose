@@ -34,7 +34,7 @@ export const DP_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    news: homeArticles(first: 3, section: "app-front-news") {
+    news: homeArticles(first: 5, section: "app-front-news") {
       slug
       headline
       abstract
@@ -50,7 +50,7 @@ export const DP_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    opinion: homeArticles(first: 3, section: "app-front-opinion") {
+    opinion: homeArticles(first: 5, section: "app-front-opinion") {
       slug
       headline
       abstract
@@ -66,7 +66,7 @@ export const DP_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    sports: homeArticles(first: 3, section: "app-front-sports") {
+    sports: homeArticles(first: 5, section: "app-front-sports") {
       slug
       headline
       abstract
@@ -82,7 +82,7 @@ export const DP_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    multimedia: homeArticles(first: 3, section: "app-front-multimedia") {
+    multimedia: homeArticles(first: 5, section: "app-front-multimedia") {
       slug
       headline
       abstract
@@ -134,7 +134,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    focus: homeArticles(first: 3, section: "focus", publication: "34th Street") {
+    focus: homeArticles(first: 5, section: "focus", publication: "34th Street") {
       slug
       headline
       abstract
@@ -150,7 +150,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    features: homeArticles(first: 3, section: "features", publication: "34th Street") {
+    features: homeArticles(first: 5, section: "features", publication: "34th Street") {
       slug
       headline
       abstract
@@ -166,7 +166,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    ego: homeArticles(first: 3, section: "ego", publication: "34th Street") {
+    ego: homeArticles(first: 5, section: "ego", publication: "34th Street") {
       slug
       headline
       abstract
@@ -182,7 +182,7 @@ export const STREET_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    style: homeArticles(first: 3, section: "style", publication: "34th Street") {
+    style: homeArticles(first: 5, section: "style", publication: "34th Street") {
       slug
       headline
       abstract
@@ -234,7 +234,7 @@ export const UTB_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    interactive: homeArticles(first: 3, section: "choose-your-own-adventure", publication: "Under the Button") {
+    interactive: homeArticles(first: 5, section: "choose-your-own-adventure", publication: "Under the Button") {
       slug
       headline
       abstract
@@ -250,7 +250,7 @@ export const UTB_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    news: homeArticles(first: 3, section: "news", publication: "Under the Button") {
+    news: homeArticles(first: 5, section: "news", publication: "Under the Button") {
       slug
       headline
       abstract
@@ -266,7 +266,7 @@ export const UTB_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    opinion: homeArticles(first: 3, section: "opinion", publication: "Under the Button") {
+    opinion: homeArticles(first: 5, section: "opinion", publication: "Under the Button") {
       slug
       headline
       abstract

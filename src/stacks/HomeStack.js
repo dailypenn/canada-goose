@@ -11,7 +11,12 @@ import {
   WebViewScreen,
   OnboardingModal,
 } from '../screens'
+
 import { DefaultStatusBar, PublicationModal } from '../components'
+
+import {
+  BODY_SERIF,
+} from '../utils/fonts'
 
 const Stack = createStackNavigator()
 
@@ -39,7 +44,8 @@ export const HomeStack = ({ navigation }) => {
         screenOptions={{
           headerStyle: { backgroundColor: '#fff' },
           headerTintColor: '#000',
-          headerTitleStyle: { fontWeight: 'bold' },
+          headerTitleStyle: { fontFamily: BODY_SERIF, fontSize: 20, },
+          headerBackTitleVisible: false,
         }}
       >
         <Stack.Screen
@@ -60,6 +66,7 @@ export const HomeStack = ({ navigation }) => {
           component={WebViewScreen}
           options={({ route }) => ({
             link: route.params.link,
+            title: '',
           })}
         />
       </Stack.Navigator>

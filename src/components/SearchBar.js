@@ -174,6 +174,16 @@ export const SearchBar = ({ navigation, publication }) => {
   return (
     <>
       <SafeAreaView style={styles.header_safe_area}>
+        <View style={{ //permanent bottomBorder
+          position: 'absolute',
+          height: 6,
+          width: '100%',
+          backgroundColor: '#fff',
+          borderBottomWidth: 1,
+          borderBottomColor: '#e4e6eb',
+          top: 50
+        }}
+        />
         <View style={styles.header}>
           <View style={styles.header_inner} >
             <Animated.View style={{ opacity: title_opacity }}>

@@ -52,13 +52,9 @@ const DiscoveryView = ({ navigation, publication }) => {
   if (publication != PublicationEnum.utb) {
     return (
       <FlatGrid
-        // ListHeaderComponent={
-        //   <SectionHeader
-        //     title="Top Sections"
-        //     publication={publicationState.currPublication}
-        //   />
-        // }
-        // ListHeaderComponentStyle={styles.container}
+        contentContainerStyle= {{
+          top: 5,
+        }}
         itemDimension={width / 2 - 40}
         spacing={13}
         data={SECTIONS}
