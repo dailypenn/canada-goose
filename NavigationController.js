@@ -43,7 +43,7 @@ const TabNavigationController = ({ currPublication }) => {
                 <Image
                   source={GET_PUB_LOGO(focused)}
                   style={{
-                    height: 25,
+                    height: 26,
                     width: 45,
                     resizeMode: 'contain',
                     alignSelf: 'center'
