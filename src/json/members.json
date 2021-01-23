@@ -1,33 +1,34 @@
 [
   {
     "name": "Peter Baile Chen",
-    "pic": "../static/logos/default_profile_pic.png"
+    "pic": "https://storage.googleapis.com/mobile-team/peter.jpg"
   },
   {
     "name": "Elizabeth Powell",
-    "pic": "../static/logos/default_profile_pic.png"
+    "pic": "https://storage.googleapis.com/mobile-team/liz.jpeg"
   },
   {
     "name": "Justin Lieb",
-    "pic": "../static/logos/default_profile_pic.png"
+    "pic": "https://storage.googleapis.com/mobile-team/lieb.jpeg"
   },
   {
     "name": "Raunaq Singh",
-    "pic": "../static/logos/default_profile_pic.png"
+    "pic": "https://storage.googleapis.com/mobile-team/raunaq.jpg"
   },
   {
     "name": "Daniel Tao",
-    "pic": "../static/logos/default_profile_pic.png"
-  },{
+    "pic": "https://storage.googleapis.com/mobile-team/dtao.jpg"
+  },
+  {
     "name": "Isabel Liang",
-    "pic": "../static/logos/default_profile_pic.png"
+    "pic": "https://storage.googleapis.com/mobile-team/isabel.png"
   },
   {
     "name": "Felicity Yick",
-    "pic": "../static/logos/default_profile_pic.png"
+    "pic": "https://storage.googleapis.com/mobile-team/felicity.jpg"
   },
   {
     "name": "Alana Kelly",
-    "pic": "../static/logos/default_profile_pic.png"
+    "pic": "https://storage.googleapis.com/mobile-team/alana.jpg"
   }
 ]
