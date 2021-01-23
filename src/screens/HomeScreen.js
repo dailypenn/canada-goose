@@ -134,7 +134,7 @@ const HomeView = ({
       if (scrollToTop && scrollViewRef) {
         scrollViewRef.current.scrollTo({ x: 0, y: 0 })
         dispatchToggleScrollToTop()
-        refetch()
+        // refetch()
       }
     }, [scrollToTop])
   )
