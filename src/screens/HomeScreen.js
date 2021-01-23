@@ -192,7 +192,7 @@ const HomeView = ({
       <Animated.ScrollView
         style={{
           paddingTop: Platform.select({
-            android: AnimatedHeaderHeight,
+            android: 0,//AnimatedHeaderHeight,
             ios: 0,
           }),
         }}
@@ -200,6 +200,9 @@ const HomeView = ({
         contentOffset={{
           x: 0,
           y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight }),
+        }}
+        contentContainerStyle={{
+          paddingTop: Platform.select({ android: AnimatedHeaderHeight, ios: 0 }),
         }}
         automaticallyAdjustContentInsets={false}
         onScroll={Animated.event(
