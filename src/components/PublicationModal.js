@@ -25,15 +25,27 @@ const PUBLICATIONS = [
   PublicationEnum.utb
 ]
 
+const DP_LOGO_RED = require('../static/logos/dp-logo-small-red.png')
+const DP_LOGO_WHITE = require('../static/logos/dp-logo-small-white.png')
+
+const STREET_LOGO_TEAL = require('../static/logos/street-logo-small-teal.png')
+const STREET_LOGO_WHITE = require('../static/logos/street-logo-small-white.png')
+
+const UTB_LOGO_BLUE = require('../static/logos/utb-logo-small-blue.png')
+const UTB_LOGO_WHITE = require('../static/logos/utb-logo-small-white.png')
+
+const GET_SMALL_LOGO = (publication) => {
+  switch (publication) {
+    case PublicationEnum.dp:
+      return DP_LOGO_WHITE
+    case PublicationEnum.street:
+      return STREET_LOGO_WHITE
+    default:
+      return UTB_LOGO_WHITE
+  }
+}
+
 const PublicationOption = ({ publication, isCurrent }) => {
-  const DP_LOGO_RED = require('../static/logos/dp-logo-small-red.png')
-  const DP_LOGO_WHITE = require('../static/logos/dp-logo-small-white.png')
-
-  const STREET_LOGO_TEAL = require('../static/logos/street-logo-small-teal.png')
-  const STREET_LOGO_WHITE = require('../static/logos/street-logo-small-white.png')
-
-  const UTB_LOGO_BLUE = require('../static/logos/utb-logo-small-blue.png')
-  const UTB_LOGO_WHITE = require('../static/logos/utb-logo-small-white.png')
 
   const PUB_CONTENTS = pub => {
     let rtrn = {
@@ -154,10 +166,15 @@ const PublicationModalComp = ({
   const [isVisible, updateVisibility] = useState(false) // Whether or not the modal is visible
   const [currentlySwiping, updateSwipeStatus] = useState(false) // Flags when swipes have started, but this is not blocking out touchable opacity presses :(
 
+  const [loadingPublication, updateLoadingStatus] = useState(false) // whether or not currently loading publication.
+  const [switchPublicationLogo, updateSwitchLogo] = useState(DP_LOGO_WHITE)
+  const [switchPublicationColor, updateSwitchColor] = useState('#000')
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabLongPress', e => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
       updateVisibility(true)
+      updateLoadingStatus(false)
     })
 
     return unsubscribe
@@ -167,15 +184,25 @@ const PublicationModalComp = ({
   const selectedPublication = pub => {
     if (!currentlySwiping) {
       if (pub != currPublication) {
-        dispatchSwitchPublication(pub)
+
+        updateSwitchLogo(GET_SMALL_LOGO(pub))
+        updateSwitchColor(PublicationPrimaryColor(pub))
+
+        setTimeout(() => updateLoadingStatus(true), 50)
+        setTimeout(() => updateVisibility(false), 1000)
+        setTimeout(() => updateLoadingStatus(false), 1100)
+        
+        setTimeout(() => dispatchSwitchPublication(pub), 400)
+
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
         if (currNavigation) {
           console.log('------dismiss all screens------')
           currNavigation.popToTop()
         }
-        dispatchToggleScrollToTop()
+        setTimeout(() => dispatchToggleScrollToTop(), 500)
+      } else {
+        setTimeout(() => updateVisibility(false), 0)
       }
-      updateVisibility(false)
     }
   }
 
@@ -220,7 +247,9 @@ const PublicationModalComp = ({
 
   const modalOptions = {
     isVisible: isVisible,
-    hideModalContentWhileAnimating: true,
+    //hideModalContentWhileAnimating: true,
+    useNativeDriverForBackdrop: true,
+    useNativeDriver: true,
     deviceWidth: SCREEN_DIMENSIONS.width,
     deviceHeight: SCREEN_DIMENSIONS.height,
     swipeDirection: ['down'],
@@ -234,12 +263,25 @@ const PublicationModalComp = ({
     styles: styles.container
   }
 
+  const loadingModalOptions = {
+    isVisible: loadingPublication,
+    //hideModalContentWhileAnimating: true,
+    useNativeDriverForBackdrop: true,
+    useNativeDriver: true,
+    deviceWidth: SCREEN_DIMENSIONS.width,
+    deviceHeight: SCREEN_DIMENSIONS.height,
+    animationIn: 'fadeIn',
+    animationInTiming: 300,
+    animationOut: 'fadeOut',
+    animationOutTiming: 200,
+  }
+
   return (
     <>
       {isVisible && Platform.OS == 'android' ? (
         <StatusBar backgroundColor={'rgba(0, 0, 0, 1)'} animated={true} />
       ) : null}
-      <Modal {...modalOptions}>
+      <Modal {...modalOptions} backdropTransitionOutTiming={0}>
         <View style={{ flex: 1 }}></View>
         <View style={styles.view}>
           <View style={styles.bar} />
@@ -267,6 +309,28 @@ const PublicationModalComp = ({
             )
           })}
         </View>
+        <Modal
+          {...loadingModalOptions}
+          style={{
+            width: '100%',
+            height: '100%',
+            justifyContent: 'center',
+            margin: 0,
+            backgroundColor: switchPublicationColor,
+          }}
+          backdropTransitionOutTiming={0}
+        >
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Image
+              source={switchPublicationLogo}
+              style={{
+                width: '30%',
+                resizeMode: 'contain',
+                marginTop: '-40%',
+              }}
+            />
+          </View>
+        </Modal>
       </Modal>
     </>
   )
