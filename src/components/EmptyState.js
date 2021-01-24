@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column-reverse',
   },
   caption: {
-    width: '150%',
+    width: '180%',
     marginTop: 20,
     fontSize: 16,
     fontFamily: BODY_SERIF,
