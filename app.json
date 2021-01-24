@@ -4,11 +4,11 @@
     "slug": "goose-from-canada",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/static/icon.png",
+    "icon": "./src/static/icon.jpg",
     "splash": {
       "image": "./src/static/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,12 +17,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/static/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#00000"
       }
     }
   }

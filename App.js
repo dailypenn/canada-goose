@@ -25,7 +25,7 @@ const client = new ApolloClient({
   uri: 'https://graphql-295919.ue.r.appspot.com/graphql',
   cache: new InMemoryCache(),
 })
-
+Storage.clearAll()
 const store = createStore(RootReducer, applyMiddleware(thunk))
 
 const getAsyncStorage = () => {

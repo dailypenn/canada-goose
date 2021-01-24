@@ -26,6 +26,7 @@ const PageZero = ({ onNextPage }) => {
   const DP_LOGO = require('../static/logos/dp-logo-small-grey.png')
   const UTB_LOGO = require('../static/logos/utb-logo-small-grey.png')
   const STREET_LOGO = require('../static/logos/street-logo-small-grey.png')
+  const ICON = require('../static/icon.jpg')
   const [buttonWidth] = useState(new Animated.Value(0))
   const [buttonOpacity] = useState(new Animated.Value(0))
   const [buttonPosY] = useState(new Animated.Value(100))
@@ -204,37 +205,27 @@ const PageZero = ({ onNextPage }) => {
           style={{
             width: '100%',
             aspectRatio: 1,
-            backgroundColor: '#DDD',
-            borderRadius: 20, // TODO: Remove later
+            borderRadius: Platform.OS == 'ios' ? '30%' : 15, // TODO: Remove later
             alignSelf: 'center',
+            flexDirection: 'row',
             transform: [
               { translateY: logoPosY },
               { translateX: logoPosX },
               { rotate: logoSkew },
             ],
             opacity: logoOpacity,
+            overflow: 'hidden',
           }}
         >
-          <View
+          <Image
+            source={ICON}
             style={{
-              width: '100%',
-              height: '100%',
+              flex: 1,
               resizeMode: 'contain',
-              borderRadius: 20,
-              justifyContent: 'center',
+              alignSelf: 'center',
+              overflow: 'hidden',
             }}
-          >
-            <Image
-              source={require('../static/logos/dp-logo-small-white.png')}
-              style={{
-                width: '60%',
-                height: '80%',
-                resizeMode: 'contain',
-                alignSelf: 'center',
-                marginTop: 10,
-              }}
-            />
-          </View>
+          />
         </Animated.View>
         <View
           style={{
