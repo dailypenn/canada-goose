@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Image, Dimensions, StyleSheet } from 'react-native'
 import { PublicationEnum } from '../utils/constants'
-import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
+import { BODY_SERIF, GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 
 export const EmptyStateEnum = Object.freeze({
   error: 'error',
@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
   caption: {
     width: '150%',
     marginTop: 20,
-    fontSize: 14,
-    fontFamily: GEOMETRIC_REGULAR,
+    fontSize: 16,
+    fontFamily: BODY_SERIF,
     color: 'grey',
     textAlign: 'center',
   },
