@@ -197,7 +197,7 @@ const PublicationModalComp = ({
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
         if (currNavigation) {
           console.log('------dismiss all screens------')
-          currNavigation.popToTop()
+          setTimeout(() => currNavigation.popToTop(), 800)
         }
         setTimeout(() => dispatchToggleScrollToTop(), 1700)
       } else {
