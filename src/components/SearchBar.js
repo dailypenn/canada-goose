@@ -11,21 +11,52 @@ import {
   Button,
   Animated,
   Platform,
+  Image,
 } from 'react-native'
-// import Animated, { Easing } from 'react-native-reanimated'
+
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { getStatusBarHeight, getBottomSpace, ifIphoneX } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight, getBottomSpace, ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper'
 import { useQuery } from '@apollo/client'
 
-import { SectionHeader } from './SectionHeader'
 import { ActivityIndicator } from './ActivityIndicator'
 import { ARTICLES_SEARCH } from '../utils/queries'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
 } from '../utils/helperFunctions'
-import { GEOMETRIC_BOLD, DISPLAY_SERIF_BLACK } from '../utils/fonts'
+import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
 import { SearchArticleList } from './ArticleList'
+import { PublicationEnum } from '../utils/constants'
+
+const DP_SEARCH_IMG = require('../static/logos/search-dp.png')
+const ST_SEARCH_IMG = require('../static/logos/search-st.png')
+const UTB_SEARCH_IMG = require('../static/logos/search-utb.png')
+
+const GET_SEARCH_IMG = (publication) => {
+  switch (publication) {
+    case PublicationEnum.dp:
+      return DP_SEARCH_IMG
+    case PublicationEnum.street:
+      return ST_SEARCH_IMG
+    default:
+      return UTB_SEARCH_IMG
+  }
+}
+
+const DP_NORESULTS_IMG = require('../static/logos/noresults-dp.png')
+const ST_NORESULTS_IMG = require('../static/logos/noresults-st.png')
+const UTB_NORESULTS_IMG = require('../static/logos/noresults-utb.png')
+
+const GET_NORESULTS_IMG = (publication) => {
+  switch (publication) {
+    case PublicationEnum.dp:
+      return DP_NORESULTS_IMG
+    case PublicationEnum.street:
+      return ST_NORESULTS_IMG
+    default:
+      return UTB_NORESULTS_IMG
+  }
+}
 
 const { Value, timing, Clock } = Animated
 
@@ -37,6 +68,11 @@ const topInset = getStatusBarHeight(true)
 const bottomInset = getBottomSpace()
 const bottomBar = Platform.OS === "android" ? (screenHeight - height - topInset) : 0 //black bar on android
 
+var contentHeight = Platform.OS === "android" ? height - (49 + 50 + bottomInset) + 14 : height - (49 + 50 + topInset + bottomInset)
+if (isIphoneX()) {
+  contentHeight = height - (49 + 50 + topInset + bottomInset) + 4
+}
+
 const SearchView = ({ filter, navigation, publication }) => {
 
   const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
@@ -46,6 +82,8 @@ const SearchView = ({ filter, navigation, publication }) => {
 
   if (!data) return <ActivityIndicator />
 
+  const noResultsImg = GET_NORESULTS_IMG(publication)
+
   const { searchArticles: results } = data
 
   return (
@@ -53,16 +91,29 @@ const SearchView = ({ filter, navigation, publication }) => {
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
     >
-      {/* <SectionHeader title="Articles" /> */}
-      <SearchArticleList
-        articles={results}
-        publication={publication}
-        navigateToArticleScreen={PARTIAL_NAVIGATE(
-          navigation,
-          'SectionArticle',
-          NAVIGATE_TO_ARTICLE_SCREEN
+      {results.length === 0 ? (
+        <View style={{ height: contentHeight }}>
+          <View style={styles.image_placeholder_container}>
+            <Image
+              source={noResultsImg}
+              style={styles.image_placeholder}
+            />
+            <Text style={styles.image_placeholder_text}>
+              No results found
+            </Text>
+          </View>
+        </View>
+      ) : (
+          <SearchArticleList
+            articles={results}
+            publication={publication}
+            navigateToArticleScreen={PARTIAL_NAVIGATE(
+              navigation,
+              'SectionArticle',
+              NAVIGATE_TO_ARTICLE_SCREEN
+            )}
+          />
         )}
-      />
     </ScrollView>
   )
 }
@@ -79,6 +130,8 @@ export const SearchBar = ({ navigation, publication }) => {
 
   const input = useRef()
 
+  const searchImg = GET_SEARCH_IMG(publication)
+
   const _onFocus = () => {
     const input_x_pos_anim = {
       duration: 200,
@@ -94,7 +147,7 @@ export const SearchBar = ({ navigation, publication }) => {
     }
     const content_y_pos_anim = {
       duration: 0,
-      toValue: topInset + 50,
+      toValue: Platform.OS === "android" ? topInset + 36 : topInset + 50, //topInset + 50
       // easing: Easing.inOut(Easing.ease),
       useNativeDriver: false,
     }
@@ -181,7 +234,7 @@ export const SearchBar = ({ navigation, publication }) => {
           backgroundColor: '#fff',
           borderBottomWidth: 1,
           borderBottomColor: '#e4e6eb',
-          top: 50
+          top: 50,
         }}
         />
         <View style={styles.header}>
@@ -264,6 +317,10 @@ export const SearchBar = ({ navigation, publication }) => {
             <View style={styles.separator} />
             {keyword === '' ? (
               <View style={styles.image_placeholder_container}>
+                <Image
+                  source={searchImg}
+                  style={styles.image_placeholder}
+                />
                 <Text style={styles.image_placeholder_text}>
                   Try searching for articles
                 </Text>
@@ -356,28 +413,27 @@ const styles = StyleSheet.create({
   },
   content: {
     width: width,
-    height: height - (49 + 50 + topInset + bottomInset + bottomBar),
+    height: contentHeight, //height - (49 + 50 + topInset + bottomInset + bottomBar),
     position: 'absolute',
-    // left: 0,
-    // bottom: 0,
     zIndex: 999,
-    ...Platform.select({
-      ios: {
-        ...ifIphoneX({
-          height: height - (49 + 50 + topInset + bottomInset) + 4,
-        }, {
-          height: height - (49 + 50 + topInset + bottomInset),
-        }),
-      },
-      android: {
-        height: height - (49 + 50 + bottomInset), // + bottomBar
-      },
-    }),
-    //backgroundColor: '#f0f',
+    //backgroundColor: '#ff0',
+    // ...Platform.select({
+    //   ios: {
+    //     ...ifIphoneX({
+    //       height: height - (49 + 50 + topInset + bottomInset) + 4,
+    //     }, {
+    //       height: height - (49 + 50 + topInset + bottomInset),
+    //     }),
+    //   },
+    //   android: {
+    //     height: height - (49 + 50 + bottomInset), // + bottomBar
+    //   },
+    // }),
   },
   content_safe_area: {
     flex: 1,
     backgroundColor: 'white',
+    //backgroundColor: '#ff0',
   },
   content_inner: {
     flex: 1,
@@ -396,14 +452,15 @@ const styles = StyleSheet.create({
     marginTop: '-50%',
   },
   image_placeholder: {
-    width: 150,
-    height: 113,
+    height: 160,
+    resizeMode: 'contain',
     alignSelf: 'center',
   },
   image_placeholder_text: {
     textAlign: 'center',
     color: 'gray',
-    marginTop: 5,
+    marginTop: 10,
+    fontSize: 18,
   },
   search_item: {
     flexDirection: 'row',
