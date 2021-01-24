@@ -111,6 +111,7 @@ const HomeSectionsView = ({
       renderItem={renderItem}
       keyExtractor={(_, index) => `draggable-item-${index}`}
       onDragEnd={updateItem}
+      scrollEnabled={false}
     />
   )
 }
