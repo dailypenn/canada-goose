@@ -21,6 +21,7 @@ import {
   ArticleList,
   ActivityIndicator,
   HeaderLine,
+  EmptyState,
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
@@ -32,6 +33,7 @@ import {
 import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { PublicationEnum } from '../utils/constants'
 import { toggleScrollToTop } from '../actions'
+import { EmptyStateEnum } from '../components/EmptyState'
 
 const styles = StyleSheet.create({
   container: {
@@ -167,6 +169,7 @@ const HomeView = ({
             //justifyContent: "center",
             borderBottomColor: '#DDD',
             borderBottomWidth: 1,
+            paddingVertical: 4,
             opacity: opacity,
             //paddingTop: getStatusBarHeight(true) + 12,
             ...Platform.select({
@@ -192,7 +195,7 @@ const HomeView = ({
       <Animated.ScrollView
         style={{
           paddingTop: Platform.select({
-            android: 0,//AnimatedHeaderHeight,
+            android: 0, //AnimatedHeaderHeight,
             ios: 0,
           }),
         }}
@@ -202,7 +205,10 @@ const HomeView = ({
           y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight }),
         }}
         contentContainerStyle={{
-          paddingTop: Platform.select({ android: AnimatedHeaderHeight, ios: 0 }),
+          paddingTop: Platform.select({
+            android: AnimatedHeaderHeight,
+            ios: 0,
+          }),
         }}
         automaticallyAdjustContentInsets={false}
         onScroll={Animated.event(
@@ -332,10 +338,23 @@ const HomeScreenComp = ({
   )
 
   if (!data) return <ActivityIndicator />
-
   if (error) {
     console.log(error)
-    return <Text> Error </Text>
+    return (
+      <View
+        style={{ backgroundColor: 'white', flex: 1, justifyContent: 'center' }}
+      >
+        <EmptyState
+          {...{
+            publication: currPublication,
+            type: EmptyStateEnum.error,
+            caption:
+              'Uh oh! We are unable to load your content. Please check your connection and try again.',
+          }}
+        />
+        {/* TODO: Add a button to refresh */}
+      </View>
+    )
   }
 
   let HOME_SECTIONS = GET_HOME_SECTIONS(currPublication)
