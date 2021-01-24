@@ -15,7 +15,12 @@ import {
 } from 'react-native'
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { getStatusBarHeight, getBottomSpace, ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper'
+import {
+  getStatusBarHeight,
+  getBottomSpace,
+  ifIphoneX,
+  isIphoneX,
+} from 'react-native-iphone-x-helper'
 import { useQuery } from '@apollo/client'
 
 import { ActivityIndicator } from './ActivityIndicator'
@@ -28,11 +33,11 @@ import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
 import { SearchArticleList } from './ArticleList'
 import { PublicationEnum } from '../utils/constants'
 
-const DP_SEARCH_IMG = require('../static/logos/search-dp.png')
-const ST_SEARCH_IMG = require('../static/logos/search-st.png')
-const UTB_SEARCH_IMG = require('../static/logos/search-utb.png')
+const DP_SEARCH_IMG = require('../static/empty-states/search/dp.png')
+const ST_SEARCH_IMG = require('../static/empty-states/search/street.png')
+const UTB_SEARCH_IMG = require('../static/empty-states/search/utb.png')
 
-const GET_SEARCH_IMG = (publication) => {
+const GET_SEARCH_IMG = publication => {
   switch (publication) {
     case PublicationEnum.dp:
       return DP_SEARCH_IMG
@@ -43,11 +48,11 @@ const GET_SEARCH_IMG = (publication) => {
   }
 }
 
-const DP_NORESULTS_IMG = require('../static/logos/noresults-dp.png')
-const ST_NORESULTS_IMG = require('../static/logos/noresults-st.png')
-const UTB_NORESULTS_IMG = require('../static/logos/noresults-utb.png')
+const DP_NORESULTS_IMG = require('../static/empty-states/error/dp.png')
+const ST_NORESULTS_IMG = require('../static/empty-states/error/street.png')
+const UTB_NORESULTS_IMG = require('../static/empty-states/error/utb.png')
 
-const GET_NORESULTS_IMG = (publication) => {
+const GET_NORESULTS_IMG = publication => {
   switch (publication) {
     case PublicationEnum.dp:
       return DP_NORESULTS_IMG
@@ -66,15 +71,18 @@ const screenHeight = Dimensions.get('screen').height
 
 const topInset = getStatusBarHeight(true)
 const bottomInset = getBottomSpace()
-const bottomBar = Platform.OS === "android" ? (screenHeight - height - topInset) : 0 //black bar on android
+const bottomBar =
+  Platform.OS === 'android' ? screenHeight - height - topInset : 0 //black bar on android
 
-var contentHeight = Platform.OS === "android" ? height - (49 + 50 + bottomInset) + 14 : height - (49 + 50 + topInset + bottomInset)
+var contentHeight =
+  Platform.OS === 'android'
+    ? height - (49 + 50 + bottomInset) + 14
+    : height - (49 + 50 + topInset + bottomInset)
 if (isIphoneX()) {
   contentHeight = height - (49 + 50 + topInset + bottomInset) + 4
 }
 
 const SearchView = ({ filter, navigation, publication }) => {
-
   const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
     variables: { filter, publication },
     fetchPolicy: 'cache-and-network',
@@ -94,26 +102,21 @@ const SearchView = ({ filter, navigation, publication }) => {
       {results.length === 0 ? (
         <View style={{ height: contentHeight }}>
           <View style={styles.image_placeholder_container}>
-            <Image
-              source={noResultsImg}
-              style={styles.image_placeholder}
-            />
-            <Text style={styles.image_placeholder_text}>
-              No results found
-            </Text>
+            <Image source={noResultsImg} style={styles.image_placeholder} />
+            <Text style={styles.image_placeholder_text}>No results found</Text>
           </View>
         </View>
       ) : (
-          <SearchArticleList
-            articles={results}
-            publication={publication}
-            navigateToArticleScreen={PARTIAL_NAVIGATE(
-              navigation,
-              'SectionArticle',
-              NAVIGATE_TO_ARTICLE_SCREEN
-            )}
-          />
-        )}
+        <SearchArticleList
+          articles={results}
+          publication={publication}
+          navigateToArticleScreen={PARTIAL_NAVIGATE(
+            navigation,
+            'SectionArticle',
+            NAVIGATE_TO_ARTICLE_SCREEN
+          )}
+        />
+      )}
     </ScrollView>
   )
 }
@@ -147,7 +150,7 @@ export const SearchBar = ({ navigation, publication }) => {
     }
     const content_y_pos_anim = {
       duration: 0,
-      toValue: Platform.OS === "android" ? topInset + 36 : topInset + 50, //topInset + 50
+      toValue: Platform.OS === 'android' ? topInset + 36 : topInset + 50, //topInset + 50
       // easing: Easing.inOut(Easing.ease),
       useNativeDriver: false,
     }
@@ -179,7 +182,6 @@ export const SearchBar = ({ navigation, publication }) => {
   }
 
   const _onBlur = () => {
-
     const input_x_pos_anim = {
       duration: 200,
       toValue: width,
@@ -227,18 +229,20 @@ export const SearchBar = ({ navigation, publication }) => {
   return (
     <>
       <SafeAreaView style={styles.header_safe_area}>
-        <View style={{ //permanent bottomBorder
-          position: 'absolute',
-          height: 6,
-          width: '100%',
-          backgroundColor: '#fff',
-          borderBottomWidth: 1,
-          borderBottomColor: '#e4e6eb',
-          top: 50,
-        }}
+        <View
+          style={{
+            //permanent bottomBorder
+            position: 'absolute',
+            height: 6,
+            width: '100%',
+            backgroundColor: '#fff',
+            borderBottomWidth: 1,
+            borderBottomColor: '#e4e6eb',
+            top: 50,
+          }}
         />
         <View style={styles.header}>
-          <View style={styles.header_inner} >
+          <View style={styles.header_inner}>
             <Animated.View style={{ opacity: title_opacity }}>
               <Text style={styles.title}>Discover</Text>
             </Animated.View>
@@ -256,16 +260,20 @@ export const SearchBar = ({ navigation, publication }) => {
                 { transform: [{ translateX: input_x_pos }] },
               ]}
             >
-              {Platform.OS === "android" ? (
+              {Platform.OS === 'android' ? (
                 <>
                   <Animated.View style={{ opacity: cancel_opacity }}>
                     <TouchableHighlight
                       activeOpacity={1}
-                      underlayColor={"#ccd0d5"}
+                      underlayColor={'#ccd0d5'}
                       onPress={_onBlur}
                       style={styles.back_icon_box}
                     >
-                      <Ionicons name="chevron-back-outline" size={22} color="#666" />
+                      <Ionicons
+                        name="chevron-back-outline"
+                        size={22}
+                        color="#666"
+                      />
                     </TouchableHighlight>
                   </Animated.View>
                   <TextInput
@@ -276,28 +284,28 @@ export const SearchBar = ({ navigation, publication }) => {
                     onChangeText={value => setKeyword(value)}
                     style={styles.input}
                     returnKeyType="search"
-                    autoCapitalize='none'
+                    autoCapitalize="none"
                     autoCorrect={false}
                   />
                 </>
               ) : (
-                  <>
-                    <TextInput
-                      ref={input}
-                      placeholder="Search"
-                      clearButtonMode="always"
-                      value={keyword}
-                      onChangeText={value => setKeyword(value)}
-                      style={styles.input}
-                      returnKeyType="search"
-                      autoCapitalize='none'
-                      autoCorrect={false}
-                    />
-                    <Animated.View style={{ opacity: cancel_opacity }}>
-                      <Button title="Cancel" onPress={_onBlur} color="#333" />
-                    </Animated.View>
-                  </>
-                )}
+                <>
+                  <TextInput
+                    ref={input}
+                    placeholder="Search"
+                    clearButtonMode="always"
+                    value={keyword}
+                    onChangeText={value => setKeyword(value)}
+                    style={styles.input}
+                    returnKeyType="search"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                  />
+                  <Animated.View style={{ opacity: cancel_opacity }}>
+                    <Button title="Cancel" onPress={_onBlur} color="#333" />
+                  </Animated.View>
+                </>
+              )}
             </Animated.View>
           </View>
         </View>
@@ -317,17 +325,18 @@ export const SearchBar = ({ navigation, publication }) => {
             <View style={styles.separator} />
             {keyword === '' ? (
               <View style={styles.image_placeholder_container}>
-                <Image
-                  source={searchImg}
-                  style={styles.image_placeholder}
-                />
+                <Image source={searchImg} style={styles.image_placeholder} />
                 <Text style={styles.image_placeholder_text}>
                   Try searching for articles
                 </Text>
               </View>
             ) : (
-                <SearchView filter={keyword} navigation={navigation} publication={publication} />
-              )}
+              <SearchView
+                filter={keyword}
+                navigation={navigation}
+                publication={publication}
+              />
+            )}
           </View>
         </SafeAreaView>
       </Animated.View>
@@ -348,7 +357,7 @@ const styles = StyleSheet.create({
   //   zIndex: 1200,
   // },
   title: {
-    fontFamily: DISPLAY_SERIF_BLACK,//GEOMETRIC_BOLD,
+    fontFamily: DISPLAY_SERIF_BLACK, //GEOMETRIC_BOLD,
     fontSize: 28,
     lineHeight: 40,
   },
