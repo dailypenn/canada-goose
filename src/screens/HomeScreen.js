@@ -34,6 +34,8 @@ import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { PublicationEnum } from '../utils/constants'
 import { toggleScrollToTop } from '../actions'
 import { EmptyStateEnum } from '../components/EmptyState'
+import { PublicationPrimaryColor } from '../utils/branding'
+import { GEOMETRIC_BOLD } from '../utils/fonts'
 
 const styles = StyleSheet.create({
   container: {
@@ -337,12 +339,16 @@ const HomeScreenComp = ({
     }, [data])
   )
 
-  if (!data) return <ActivityIndicator />
   if (error) {
     console.log(error)
     return (
       <View
-        style={{ backgroundColor: 'white', flex: 1, justifyContent: 'center' }}
+        style={{
+          backgroundColor: 'white',
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
       >
         <EmptyState
           {...{
@@ -352,10 +358,36 @@ const HomeScreenComp = ({
               'Uh oh! We are unable to load your content. Please check your connection and try again.',
           }}
         />
-        {/* TODO: Add a button to refresh */}
+        <TouchableOpacity
+          onPress={() => {
+            refetch()
+          }}
+          style={{
+            activeOpacity: 0.8,
+            width: 100,
+            height: 50,
+            backgroundColor: PublicationPrimaryColor(currPublication),
+            marginTop: 30,
+            borderRadius: 10,
+            justifyContent: 'center',
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+              alignSelf: 'center',
+              fontSize: 18,
+              fontFamily: GEOMETRIC_BOLD,
+              color: 'white',
+            }}
+          >
+            Refresh
+          </Text>
+        </TouchableOpacity>
       </View>
     )
   }
+  if (!data) return <ActivityIndicator />
 
   let HOME_SECTIONS = GET_HOME_SECTIONS(currPublication)
 

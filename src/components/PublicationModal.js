@@ -6,7 +6,7 @@ import {
   Dimensions,
   StyleSheet,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native'
 import Modal from 'react-native-modal'
 import * as Haptics from 'expo-haptics'
@@ -22,7 +22,7 @@ const SCREEN_DIMENSIONS = Dimensions.get('screen')
 const PUBLICATIONS = [
   PublicationEnum.dp,
   PublicationEnum.street,
-  PublicationEnum.utb
+  PublicationEnum.utb,
 ]
 
 const DP_LOGO_RED = require('../static/logos/dp-logo-small-red.png')
@@ -34,7 +34,7 @@ const STREET_LOGO_WHITE = require('../static/logos/street-logo-small-white.png')
 const UTB_LOGO_BLUE = require('../static/logos/utb-logo-small-blue.png')
 const UTB_LOGO_WHITE = require('../static/logos/utb-logo-small-white.png')
 
-const GET_SMALL_LOGO = (publication) => {
+const GET_SMALL_LOGO = publication => {
   switch (publication) {
     case PublicationEnum.dp:
       return DP_LOGO_WHITE
@@ -46,13 +46,12 @@ const GET_SMALL_LOGO = (publication) => {
 }
 
 const PublicationOption = ({ publication, isCurrent }) => {
-
   const PUB_CONTENTS = pub => {
     let rtrn = {
       icon: isCurrent ? 'newspaper' : 'push',
       title: pub == PublicationEnum.dp ? 'The DP' : pub,
       color: isCurrent ? 'white' : PublicationPrimaryColor(pub),
-      borderColor: isCurrent ? PublicationPrimaryColor(pub) : 'white'
+      borderColor: isCurrent ? PublicationPrimaryColor(pub) : 'white',
     }
     switch (pub) {
       case PublicationEnum.dp:
@@ -60,8 +59,8 @@ const PublicationOption = ({ publication, isCurrent }) => {
           ...rtrn,
           ...{
             image: isCurrent ? DP_LOGO_WHITE : DP_LOGO_RED,
-            subtitle: 'Student-Run News Since 1885'
-          }
+            subtitle: 'Student-Run News Since 1885',
+          },
         }
         break
       case PublicationEnum.street:
@@ -69,8 +68,8 @@ const PublicationOption = ({ publication, isCurrent }) => {
           ...rtrn,
           ...{
             image: isCurrent ? STREET_LOGO_WHITE : STREET_LOGO_TEAL,
-            subtitle: 'Arts, Culture, and More'
-          }
+            subtitle: 'Arts, Culture, and More',
+          },
         }
         break
       default:
@@ -78,8 +77,8 @@ const PublicationOption = ({ publication, isCurrent }) => {
           ...rtrn,
           ...{
             image: isCurrent ? UTB_LOGO_WHITE : UTB_LOGO_BLUE,
-            subtitle: "Penn's Only Intentionally Satirical Publication"
-          }
+            subtitle: "Penn's Only Intentionally Satirical Publication",
+          },
         }
     }
     return rtrn
@@ -99,27 +98,27 @@ const PublicationOption = ({ publication, isCurrent }) => {
       flexDirection: 'row',
       borderWidth: 3,
       borderColor: CONTENT.borderColor,
-      backgroundColor: CONTENT.borderColor
+      backgroundColor: CONTENT.borderColor,
     },
     border: {
       width: '100%',
-      height: '100%'
+      height: '100%',
     },
     publicationTitle: {
       textTransform: 'uppercase',
       fontFamily: GEOMETRIC_BOLD,
       fontSize: 16,
       lineHeight: 20,
-      color: CONTENT.color
+      color: CONTENT.color,
     },
     subtitle: {
       fontFamily: GEOMETRIC_REGULAR,
       fontSize: 10,
       lineHeight: 14,
-      color: CONTENT.color
+      color: CONTENT.color,
     },
     subContainer: {
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     image: {
       height: 50,
@@ -127,11 +126,11 @@ const PublicationOption = ({ publication, isCurrent }) => {
       resizeMode: 'contain',
       alignSelf: 'center',
       marginRight: 20,
-      borderRadius: 10
+      borderRadius: 10,
     },
     icon: {
-      alignSelf: 'center'
-    }
+      alignSelf: 'center',
+    },
   })
 
   return (
@@ -160,7 +159,7 @@ const PublicationModalComp = ({
   navigation,
   publication,
   dispatchSwitchPublication,
-  dispatchToggleScrollToTop
+  dispatchToggleScrollToTop,
 }) => {
   const { currPublication, currNavigation } = publication
   const [isVisible, updateVisibility] = useState(false) // Whether or not the modal is visible
@@ -184,7 +183,6 @@ const PublicationModalComp = ({
   const selectedPublication = pub => {
     if (!currentlySwiping) {
       if (pub != currPublication) {
-
         updateSwitchLogo(GET_SMALL_LOGO(pub))
         updateSwitchColor(PublicationPrimaryColor(pub))
 
@@ -197,9 +195,9 @@ const PublicationModalComp = ({
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
         if (currNavigation) {
           console.log('------dismiss all screens------')
-          currNavigation.popToTop()
+          setTimeout(() => currNavigation.popToTop(), 1000)
         }
-        setTimeout(() => dispatchToggleScrollToTop(), 1700)
+        setTimeout(() => dispatchToggleScrollToTop(), 1500)
       } else {
         setTimeout(() => updateVisibility(false), 0)
       }
@@ -213,24 +211,24 @@ const PublicationModalComp = ({
       height: 5,
       alignSelf: 'center',
       borderRadius: 10,
-      marginBottom: 20
+      marginBottom: 20,
     },
     container: {
       margin: 0,
-      justifyContent: 'flex-end'
+      justifyContent: 'flex-end',
     },
     label: {
       fontFamily: GEOMETRIC_BOLD,
       fontSize: 20,
       color: '#444',
-      marginBottom: 10
+      marginBottom: 10,
     },
     line: {
       marginVertical: 5,
       marginHorizontal: 0,
       borderRadius: 2,
       backgroundColor: '#DDD',
-      height: 2
+      height: 2,
     },
     view: {
       backgroundColor: 'white',
@@ -241,8 +239,8 @@ const PublicationModalComp = ({
       borderTopRightRadius: 10,
       bottom: -20,
       paddingTop: 10,
-      paddingHorizontal: 10
-    }
+      paddingHorizontal: 10,
+    },
   })
 
   const modalOptions = {
@@ -343,7 +341,9 @@ const PublicationModalComp = ({
         }}
         backdropTransitionOutTiming={0}
       >
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
           <Image
             source={switchPublicationLogo}
             style={{
@@ -363,11 +363,10 @@ const mapStateToProps = ({ publication }) => ({ publication })
 const mapDispatchToProps = dispatch => ({
   dispatchSwitchPublication: publication =>
     dispatch(switchPublication(publication)),
-  dispatchToggleScrollToTop: () => dispatch(toggleScrollToTop())
+  dispatchToggleScrollToTop: () => dispatch(toggleScrollToTop()),
 })
 
 export const PublicationModal = connect(
   mapStateToProps,
   mapDispatchToProps
 )(PublicationModalComp)
-

@@ -14,9 +14,7 @@ import {
 
 import { DefaultStatusBar, PublicationModal } from '../components'
 
-import {
-  BODY_SERIF,
-} from '../utils/fonts'
+import { BODY_SERIF } from '../utils/fonts'
 
 const Stack = createStackNavigator()
 
@@ -34,7 +32,6 @@ export const HomeStack = ({ navigation }) => {
     })
     return unsubscribe
   }, [navigation, hasCompletedOnboarding])
-  console.log('isonboarded ' + isOnboarded)
   return (
     <>
       <DefaultStatusBar />
@@ -44,7 +41,7 @@ export const HomeStack = ({ navigation }) => {
         screenOptions={{
           headerStyle: { backgroundColor: '#fff' },
           headerTintColor: '#000',
-          headerTitleStyle: { fontFamily: BODY_SERIF, fontSize: 20, },
+          headerTitleStyle: { fontFamily: BODY_SERIF, fontSize: 20 },
           headerBackTitleVisible: false,
         }}
       >
