@@ -84,19 +84,20 @@ export const EmptyState = ({ publication, type, caption }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('screen').width * 0.6,
+    width: Dimensions.get('screen').width * 0.35,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
   },
   image: {
     width: '100%',
-    height: 300,
+    height: 150,
     resizeMode: 'contain',
     flexDirection: 'column-reverse',
   },
   caption: {
-    width: '130%',
+    width: '200%',
+    marginTop: 20,
     fontSize: 14,
     fontFamily: GEOMETRIC_REGULAR,
     color: 'grey',

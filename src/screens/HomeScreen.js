@@ -337,8 +337,7 @@ const HomeScreenComp = ({
     }, [data])
   )
 
-  if (!data) return <ActivityIndicator />
-  if (error) {
+  if (true) {
     console.log(error)
     return (
       <View
@@ -356,6 +355,7 @@ const HomeScreenComp = ({
       </View>
     )
   }
+  if (!data) return <ActivityIndicator />
 
   let HOME_SECTIONS = GET_HOME_SECTIONS(currPublication)
 
