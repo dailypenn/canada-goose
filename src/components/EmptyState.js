@@ -84,7 +84,7 @@ export const EmptyState = ({ publication, type, caption }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('screen').width * 0.35,
+    width: Dimensions.get('screen').width * 0.45,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column-reverse',
   },
   caption: {
-    width: '200%',
+    width: '150%',
     marginTop: 20,
     fontSize: 14,
     fontFamily: GEOMETRIC_REGULAR,

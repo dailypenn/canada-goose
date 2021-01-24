@@ -17,9 +17,7 @@ import {
 } from '../screens'
 import { DefaultStatusBar } from '../components'
 
-import {
-  BODY_SERIF,
-} from '../utils/fonts'
+import { BODY_SERIF, DISPLAY_SERIF_BLACK, GEOMETRIC_BOLD } from '../utils/fonts'
 
 const Stack = createStackNavigator()
 
@@ -40,7 +38,10 @@ export const SettingsStack = ({ navigation }) => {
       <Stack.Navigator
         initialRouteName="Settings"
         screenOptions={{
-          headerTitleStyle: { fontFamily: BODY_SERIF, fontSize: 20, },
+          headerTitleStyle: {
+            fontFamily: DISPLAY_SERIF_BLACK,
+            fontSize: 20,
+          },
           headerBackTitleVisible: false,
         }}
       >

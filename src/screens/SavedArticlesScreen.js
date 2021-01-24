@@ -9,6 +9,8 @@ import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { NAVIGATE_TO_ARTICLE_SCREEN } from '../utils/helperFunctions'
 import { RightSwipeDeleteRow } from '../components/RightSwipeDeleteRow'
 import { unsaveArticle } from '../actions'
+import { EmptyState } from '../components'
+import { EmptyStateEnum } from '../components/EmptyState'
 
 const styles = StyleSheet.create({
   cell: {
@@ -91,7 +93,12 @@ const SwipeableRow = ({ item, navigationHandler, deleteHandler }) => {
   )
 }
 
-const SavedArticlesScreenComp = ({ navigation, settings, dispatch }) => {
+const SavedArticlesScreenComp = ({
+  navigation,
+  settings,
+  dispatch,
+  publication,
+}) => {
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
 
   const navigationHandler = async item => {
@@ -110,6 +117,24 @@ const SavedArticlesScreenComp = ({ navigation, settings, dispatch }) => {
     )
     if (saved_successfully) dispatch(unsaveArticle(item))
   }
+
+  console.log(publication)
+
+  if (savedArticles.length == 0)
+    return (
+      <View
+        style={{ flex: 1, justifyContent: 'center', backgroundColor: 'white' }}
+      >
+        <EmptyState
+          {...{
+            publication: publication.currPublication,
+            type: EmptyStateEnum.empty,
+            caption:
+              "You don't have any bookmarks! Bookmark any article and it will appear here.",
+          }}
+        />
+      </View>
+    )
 
   return (
     <FlatList
