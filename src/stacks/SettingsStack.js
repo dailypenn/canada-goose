@@ -56,7 +56,7 @@ export const SettingsStack = ({ navigation }) => {
         <Stack.Screen
           name="About"
           component={AboutScreen}
-          options={{ title: 'About' }}
+          options={{ title: 'Operation Canada Goose' }}
         />
         <Stack.Screen
           name="Notification"

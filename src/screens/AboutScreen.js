@@ -1,21 +1,32 @@
 // About Screen: Bios of developers and information about the app
 import React from 'react'
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
-import { FlatGrid } from 'react-native-super-grid'
+import {
+  Dimensions,
+  Image,
+  PickerIOSItem,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
+import { SectionGrid } from 'react-native-super-grid'
 
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 
-const PEOPLE = require('../json/members.json')
-const GOOSE_LOGO = require('../static/logos/goose_from_canada_logo.png')
+const GOOSE_LOGO = require('../static/logos/dp-tech.png')
 
-const { width, height } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 const PROFILE_PIC_SIZE = width / 5
 const PROFILE_PIC_CELL_SIZE = width / 4
 
 const TEAM_INTRO =
   "Hi, we're the tech department at the DP: a team of student software engineers!"
+
 const MISSION =
-  'Our MISSION statement is xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx \n\nOur ultimate goal is xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx'
+  "Our name originates from migrating the DP to a mobile platform. After looking around campus, we decided the Canada Goose, a bird that flies south over winter and repped by everyone's winter jackets, was the perfect symbol for our operation"
+
+const DESIGNERS = require('../json/designers.json')
+
+const DEVELOPERS = require('../json/developers.json')
 
 const styles = StyleSheet.create({
   container: {
@@ -24,8 +35,8 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 300,
-    height: 300,
+    width: 270,
+    height: 80,
   },
 
   sectionContainer: {
@@ -72,27 +83,39 @@ const styles = StyleSheet.create({
 
 const ProfileCell = ({ name, pic }) => (
   <View style={styles.profilePicCell}>
-    <Image
-      source={require('../static/logos/default_profile_pic.png')}
-      style={styles.profilePicImage}
-    />
+    <Image style={styles.profilePicImage} source={{ uri: pic }} />
     <Text style={styles.profileName}>{name}</Text>
   </View>
 )
 
+const people_sections = [
+  { title: 'Developers', data: DEVELOPERS },
+  { title: 'Designers', data: DESIGNERS },
+]
+
 export const AboutScreen = () => (
-  <FlatGrid
+  <SectionGrid
     ListHeaderComponent={
       <>
-        <Image source={GOOSE_LOGO} style={styles.logo} />
+        <View style={{ paddingVertical: 40 }}>
+          <Image style={styles.logo} source={GOOSE_LOGO} />
+        </View>
         <Text style={styles.intro}>{TEAM_INTRO}</Text>
         <Text style={styles.mission}>{MISSION}</Text>
-        <Text style={styles.meetTeam}>Meet the Team</Text>
       </>
     }
+    showsVerticalScrollIndicator={false}
     ListHeaderComponentStyle={styles.container}
     itemDimension={PROFILE_PIC_CELL_SIZE}
-    data={PEOPLE}
-    renderItem={({ item }) => <ProfileCell name={item.name} image={item.pic} />}
+    sections={people_sections}
+    renderItem={({ item }) => {
+      console.log(item)
+      return <ProfileCell name={item.name} pic={item.pic} />
+    }}
+    renderSectionHeader={({ section }) => (
+      <View style={{ alignItems: 'center', backgroundColor: '#eee' }}>
+        <Text style={styles.meetTeam}>Meet the {section.title}</Text>
+      </View>
+    )}
   />
 )

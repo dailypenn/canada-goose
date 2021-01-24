@@ -65,6 +65,8 @@ const HomeView = ({
     articles: data[section],
   }))
 
+  // Storage.clearAll()
+
   // TODO (liz): defaultSections cannot be stored inside useState
   // otherwise, redux won't update it for some reasons
   // a quick fix I can think of is to put this function inside HomeScreenComp

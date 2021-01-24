@@ -88,7 +88,7 @@ export const SETTINGS_SECTIONS = [
         id: 'about cell',
         icon: 'people',
         color: '#c4c4c4',
-        name: 'Operation Canada Goose x Jay',
+        name: 'Operation Canada Goose',
         screenName: 'About',
         props: {},
       },
