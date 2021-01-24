@@ -35,7 +35,7 @@ const DiscoveryView = ({ navigation, publication }) => {
   }
 
   const onButtonPress = () => {
-    navigation.navigate('SectionArticle', { article: null })
+    navigation.navigate('SectionArticle', { article: null, isUTBRandom: true })
   }
 
   let SECTIONS = []

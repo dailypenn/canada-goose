@@ -3,13 +3,17 @@
 
 import React, { useEffect } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { NavigationContainer } from '@react-navigation/native'
 import * as Haptics from 'expo-haptics'
 
-import { BODY_SERIF, DISPLAY_SERIF_BLACK } from '../utils/fonts'
-
-import { ArticleScreen, DiscoveryScreen, SectionScreen } from '../screens'
+import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
+import {
+  ArticleScreen,
+  DiscoveryScreen,
+  SectionScreen,
+  WebViewScreen
+} from '../screens'
 import { DefaultStatusBar } from '../components'
+
 const Stack = createStackNavigator()
 
 export const DiscoveryStack = ({ navigation }) => {
@@ -29,7 +33,7 @@ export const DiscoveryStack = ({ navigation }) => {
           headerTintColor: '#000',
           //headerTitleStyle: { fontWeight: 'bold' },
           headerTitleStyle: { fontFamily: DISPLAY_SERIF_BLACK, fontSize: 20 },
-          headerBackTitleVisible: false,
+          headerBackTitleVisible: false
         }}
       >
         <Stack.Screen
@@ -42,13 +46,21 @@ export const DiscoveryStack = ({ navigation }) => {
           component={SectionScreen}
           options={({ route }) => ({
             title: route.params.sectionName,
-            animationEnabled: true,
+            animationEnabled: true
           })}
         />
         <Stack.Screen
           name="SectionArticle"
           component={ArticleScreen}
           options={ArticleScreen.navigationOptions}
+        />
+        <Stack.Screen
+          name="SectionBrowser"
+          component={WebViewScreen}
+          options={({ route }) => ({
+            link: route.params.link,
+            title: ''
+          })}
         />
       </Stack.Navigator>
     </>

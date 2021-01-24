@@ -8,12 +8,12 @@ import { useLazyQuery } from '@apollo/client'
 import * as Haptics from 'expo-haptics'
 
 import { PictureHeadline, ActivityIndicator } from '../components'
-import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
+import { IMAGE_URL, AUTHORS, getArticlePubSlug, isValidURL } from '../utils/helperFunctions'
 import { PublicationEnum } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { saveNewArticle, unsaveArticle, updateNavigation } from '../actions'
-import { UTB_RANDOM_ARTICLE } from '../utils/queries'
+import { ARTICLE_QUERY } from '../utils/queries'
 
 const ArticleScreenComp = ({
   navigation,
@@ -23,17 +23,15 @@ const ArticleScreenComp = ({
   dispatch
 }) => {
   const [article, setArticle] = useState(route.params.article)
+  const [utbFetched, setUTBFetched] = useState(false)
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
   const articlePublication = route.params.articlePublication
     ? route.params.articlePublication
     : currPublication
 
-  const [getRandomArticle, { loading, data }] = useLazyQuery(
-    UTB_RANDOM_ARTICLE,
-    {
-      fetchPolicy: 'cache-and-network'
-    }
-  )
+  const [fetchArticle, { loading, data }] = useLazyQuery(ARTICLE_QUERY, {
+    fetchPolicy: 'cache-and-network'
+  })
 
   // if (!article) {
   //   // TODO: Check that article is already fetched
@@ -44,8 +42,24 @@ const ArticleScreenComp = ({
 
   useEffect(() => {
     dispatch(updateNavigation(navigation))
-    if (articlePublication === PublicationEnum.utb && !article) {
-      getRandomArticle()
+
+    const { isUTBRandom } = route.params
+
+    if (!article && route.params.articleSlug) {
+      console.log('---this being called---')
+      console.log(route.params.articleSlug)
+      fetchArticle({
+        variables: {
+          publication: articlePublication,
+          slug: route.params.articleSlug
+        }
+      })
+    } else if (isUTBRandom && !utbFetched) {
+      console.log('---fetching utb random article---')
+      fetchArticle({
+        variables: { publication: PublicationEnum.utb, isRandom: true }
+      })
+      setUTBFetched(true)
     }
 
     return () => {
@@ -55,14 +69,14 @@ const ArticleScreenComp = ({
 
   useEffect(() => {
     if (data) {
-      setArticle(data.utbRandomArticle)
+      setArticle(data.article)
     }
   }, [data])
 
   useEffect(() => {
     if (article) {
       navigation.setParams({
-        handlePress: handlePress,
+        handlePress,
         alreadySaved: savedArticles.some(obj => obj.slug == article.slug),
         article: article
       })
@@ -115,6 +129,8 @@ const ArticleScreenComp = ({
 
   if (loading || !article) return <ActivityIndicator />
 
+  console.log(`${article.slug} is being rendered`)
+
   return (
     <ScrollView>
       <PictureHeadline
@@ -151,15 +167,23 @@ const ArticleScreenComp = ({
       </View>
       <View style={{ padding: 20 }}>
         <HTML
-          onLinkPress={(e, href, _) => {
-            // TODO: Find a better way to do this
-            const PARSED_URL = href.split('thedp.com/article')
-            if (PARSED_URL.length == 2) {
-              navigation.navigate('', {
-                article: { slug: PARSED_URL[1] }
-                // TODO: Fix, for some reason this is not working
+          onLinkPress={(_, href) => {
+            const { publication, slug } = getArticlePubSlug(href)
+            const { name } = route
+
+            const browserScreenName =
+              name === 'HomeArticle' ? 'HomeBrowser' : 'SectionBrowser'
+            const ArticleScreenName =
+              name === 'HomeArticle' ? 'HomeArticle' : 'SectionArticle'
+
+            if (!slug && isValidURL(href)) {
+              navigation.navigate(browserScreenName, { link: href })
+            } else if (slug && publication) {
+              navigation.push(ArticleScreenName, {
+                articleSlug: slug,
+                articlePublication: publication
               })
-            } else navigation.navigate('ArticleBrowser', { link: href })
+            }
           }}
           source={{ html: article.content }}
           // contentWidth={useWindowDimensions().width}

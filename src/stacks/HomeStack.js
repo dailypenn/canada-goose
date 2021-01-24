@@ -1,26 +1,16 @@
 // Navigation stack within the Home tab
 // Includes routes to the home and article screens
-import React, { useEffect, useState, forwardRef, createRef } from 'react'
+import React, { useEffect } from 'react'
 import * as Haptics from 'expo-haptics'
 import { createStackNavigator } from '@react-navigation/stack'
-import { IS_ONBOARDED_KEY, Storage } from '../utils/storage'
 
-import {
-  HomeScreen,
-  ArticleScreen,
-  WebViewScreen,
-  OnboardingModal,
-} from '../screens'
-
+import { HomeScreen, ArticleScreen, WebViewScreen } from '../screens'
 import { DefaultStatusBar, PublicationModal } from '../components'
-
 import { BODY_SERIF } from '../utils/fonts'
 
 const Stack = createStackNavigator()
 
 export const HomeStack = ({ navigation }) => {
-  const [isOnboarded, hasCompletedOnboarding] = useState(true)
-
   // Haptic feedback when tab bar is pressed
   useEffect(() => {
     // Haptic feedback on tab presses
@@ -31,7 +21,8 @@ export const HomeStack = ({ navigation }) => {
       }
     })
     return unsubscribe
-  }, [navigation, hasCompletedOnboarding])
+  }, [navigation])
+
   return (
     <>
       <DefaultStatusBar />
@@ -42,7 +33,7 @@ export const HomeStack = ({ navigation }) => {
           headerStyle: { backgroundColor: '#fff' },
           headerTintColor: '#000',
           headerTitleStyle: { fontFamily: BODY_SERIF, fontSize: 20 },
-          headerBackTitleVisible: false,
+          headerBackTitleVisible: false
         }}
       >
         <Stack.Screen
@@ -50,7 +41,7 @@ export const HomeStack = ({ navigation }) => {
           component={HomeScreen}
           options={{
             title: 'Home',
-            headerShown: false,
+            headerShown: false
           }}
         />
         <Stack.Screen
@@ -59,11 +50,11 @@ export const HomeStack = ({ navigation }) => {
           options={ArticleScreen.navigationOptions}
         />
         <Stack.Screen
-          name="ArticleBrowser"
+          name="HomeBrowser"
           component={WebViewScreen}
           options={({ route }) => ({
             link: route.params.link,
-            title: '',
+            title: ''
           })}
         />
       </Stack.Navigator>

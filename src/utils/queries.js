@@ -324,9 +324,9 @@ export const ARTICLES_SEARCH = gql`
   }
 `
 
-export const UTB_RANDOM_ARTICLE = gql`
-  query {
-    utbRandomArticle {
+export const ARTICLE_QUERY = gql`
+  query($publication: String!, $slug: String, $isRandom: Boolean) {
+    article(publication: $publication, slug: $slug, isRandom: $isRandom) {
       slug
       headline
       abstract
