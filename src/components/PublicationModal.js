@@ -188,18 +188,18 @@ const PublicationModalComp = ({
         updateSwitchLogo(GET_SMALL_LOGO(pub))
         updateSwitchColor(PublicationPrimaryColor(pub))
 
-        setTimeout(() => updateLoadingStatus(true), 50)
-        setTimeout(() => updateVisibility(false), 1000)
-        setTimeout(() => updateLoadingStatus(false), 1100)
-        
-        setTimeout(() => dispatchSwitchPublication(pub), 400)
+        setTimeout(() => updateVisibility(false), 0)
+        setTimeout(() => updateLoadingStatus(true), 500)
+        setTimeout(() => updateLoadingStatus(false), 1800)
+
+        setTimeout(() => dispatchSwitchPublication(pub), 800)
 
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
         if (currNavigation) {
           console.log('------dismiss all screens------')
           currNavigation.popToTop()
         }
-        setTimeout(() => dispatchToggleScrollToTop(), 500)
+        setTimeout(() => dispatchToggleScrollToTop(), 1700)
       } else {
         setTimeout(() => updateVisibility(false), 0)
       }
@@ -247,7 +247,7 @@ const PublicationModalComp = ({
 
   const modalOptions = {
     isVisible: isVisible,
-    //hideModalContentWhileAnimating: true,
+    hideModalContentWhileAnimating: true,
     useNativeDriverForBackdrop: true,
     useNativeDriver: true,
     deviceWidth: SCREEN_DIMENSIONS.width,
@@ -260,12 +260,12 @@ const PublicationModalComp = ({
     onSwipeComplete: () => updateVisibility(false),
     onBackButtonPress: () => updateVisibility(false),
     backdropOpacity: 0.9,
-    styles: styles.container
+    styles: styles.container,
   }
 
   const loadingModalOptions = {
     isVisible: loadingPublication,
-    //hideModalContentWhileAnimating: true,
+    hideModalContentWhileAnimating: true,
     useNativeDriverForBackdrop: true,
     useNativeDriver: true,
     deviceWidth: SCREEN_DIMENSIONS.width,
@@ -309,7 +309,7 @@ const PublicationModalComp = ({
             )
           })}
         </View>
-        <Modal
+        {/* <Modal
           {...loadingModalOptions}
           style={{
             width: '100%',
@@ -330,7 +330,29 @@ const PublicationModalComp = ({
               }}
             />
           </View>
-        </Modal>
+        </Modal> */}
+      </Modal>
+      <Modal
+        {...loadingModalOptions}
+        style={{
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+          margin: 0,
+          backgroundColor: switchPublicationColor,
+        }}
+        backdropTransitionOutTiming={0}
+      >
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Image
+            source={switchPublicationLogo}
+            style={{
+              width: '30%',
+              resizeMode: 'contain',
+              marginTop: '-40%',
+            }}
+          />
+        </View>
       </Modal>
     </>
   )
@@ -348,3 +370,4 @@ export const PublicationModal = connect(
   mapStateToProps,
   mapDispatchToProps
 )(PublicationModalComp)
+
