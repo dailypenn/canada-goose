@@ -5,11 +5,17 @@ import {
   View,
   StyleSheet,
   SafeAreaView,
+  Image,
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
 import { DISPLAY_SERIF_BLACK, GEOMETRIC_REGULAR } from '../utils/fonts'
-import { SETTINGS_SECTIONS } from '../utils/constants'
+import { PublicationEnum, SETTINGS_SECTIONS } from '../utils/constants'
+import { connect } from 'react-redux'
+
+const DP_LOGO_GREY = require('../static/logos/dp-logo-small-white.png')
+const STREET_LOGO_GREY = require('../static/logos/street-logo-small-white.png')
+const UTB_LOGO_GREY = require('../static/logos/utb-logo-small-white.png')
 
 const styles = StyleSheet.create({
   container: {
@@ -21,13 +27,16 @@ const styles = StyleSheet.create({
     fontSize: 28,
     lineHeight: 40,
   },
+
   header_safe_area: {
     zIndex: 1000,
   },
+
   header: {
     height: 50,
     paddingHorizontal: 16,
   },
+
   header_inner: {
     flex: 1,
     overflow: 'hidden',
@@ -35,6 +44,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     position: 'relative',
+  },
+
+  pubCell: {
+    marginTop: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    backgroundColor: '#fff',
+    borderTopWidth: 0.6,
+    borderBottomWidth: 0.6,
+    borderColor: '#d4d4d4',
   },
 
   cell: {
@@ -52,6 +71,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#68a0af',
     borderRadius: 3,
     padding: 4,
+  },
+
+  pubImg: {
+    flex: 1,
+    width: 30,
+    height: 30,
+    resizeMode: 'contain',
+  },
+
+  pubView: {
+    width: 60,
+    height: 60,
+    borderRadius: 40,
+    backgroundColor: '#c4c4c4',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   textView: {
@@ -72,7 +107,51 @@ const styles = StyleSheet.create({
   regText: {
     fontFamily: GEOMETRIC_REGULAR,
   },
+
+  pubText: {
+    fontSize: 18,
+    fontFamily: GEOMETRIC_REGULAR,
+  },
+
+  switchText: {
+    fontSize: 12,
+    fontFamily: GEOMETRIC_REGULAR,
+    flexShrink: 1,
+  },
+
+  pubTextView: {
+    paddingHorizontal: 15,
+    justifyContent: 'center',
+  },
 })
+
+const GET_LOGO = publication => {
+  switch (publication) {
+    case PublicationEnum.dp:
+      return DP_LOGO_GREY
+    case PublicationEnum.street:
+      return STREET_LOGO_GREY
+    case PublicationEnum.utb:
+      return UTB_LOGO_GREY
+  }
+}
+
+const PublicationCell = ({ currPublication }) => (
+  <View style={styles.pubCell}>
+    <View style={{ flexDirection: 'row' }}>
+      <View style={styles.pubView}>
+        <Image style={styles.pubImg} source={GET_LOGO(currPublication)} />
+      </View>
+      <View style={styles.pubTextView}>
+        <Text style={styles.pubText}>{currPublication}</Text>
+        <View style={{ height: 2 }} />
+        <Text style={styles.switchText}>
+          {`Long press on bottom tab logo to switch`}
+        </Text>
+      </View>
+    </View>
+  </View>
+)
 
 const SettingsCell = ({ item }) => (
   <View style={styles.cell}>
@@ -89,7 +168,7 @@ const SettingsCell = ({ item }) => (
   </View>
 )
 
-const SettingsSection = ({ navigateToScreen, name, items }) => (
+const SettingsSection = ({ navigateToScreen, items }) => (
   <View>
     <View style={{ ...styles.divider, marginTop: 20 }} />
     {items.map((el, i) => (
@@ -113,20 +192,31 @@ const SettingsSection = ({ navigateToScreen, name, items }) => (
   </View>
 )
 
-export const SettingsScreen = ({ navigation }) => (
-  <SafeAreaView style={styles.header_safe_area}>
-    <View style={styles.header}>
-      <View style={styles.header_inner}>
-        <Text style={styles.title}>Account</Text>
+const SettingsScreenComp = ({ navigation, currPublication }) => {
+  return (
+    <SafeAreaView style={styles.header_safe_area}>
+      <View style={styles.header}>
+        <View style={styles.header_inner}>
+          <Text style={styles.title}>Account</Text>
+        </View>
       </View>
-    </View>
-    {SETTINGS_SECTIONS.map((l, i) => (
-      <SettingsSection
-        key={l.id}
-        name={l.name}
-        items={l.items}
-        navigateToScreen={(screen, props) => navigation.navigate(screen, props)}
-      />
-    ))}
-  </SafeAreaView>
-)
+      <PublicationCell currPublication={currPublication} />
+      {SETTINGS_SECTIONS.map((l, i) => (
+        <SettingsSection
+          key={l.id}
+          items={l.items}
+          navigateToScreen={(screen, props) =>
+            navigation.navigate(screen, props)
+          }
+        />
+      ))}
+    </SafeAreaView>
+  )
+}
+
+const mapStateToProps = ({ publication, settings }) => {
+  const { currPublication } = publication
+  return { currPublication, settings }
+}
+
+export const SettingsScreen = connect(mapStateToProps)(SettingsScreenComp)

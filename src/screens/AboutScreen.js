@@ -22,7 +22,7 @@ const TEAM_INTRO =
   "Hi, we're the tech department at the DP: a team of student software engineers!"
 
 const MISSION =
-  "Our name originates from migrating the DP to a mobile platform. After looking around campus, we decided the Canada Goose, a bird that flies south over winter and repped by everyone's winter jackets, was the perfect symbol for our operation"
+  "Tasked with migrating content from the harsh winter envrionment of print publication to the temperate oasis of mobile communication, DP Tech faced a challenge like no other: what do we name our objective? It wasn't until we passed the hundreth person with a overpriced winter jacket that we found an animal which so accurately captured the migratory nature of our mission and Penn culture as a whole. And so, equipped with a fitting name, we hatched our plan.\n\nOperation Canada Goose is here to bring you the best of the Daily Pennyslvanian straight to your down-lined pockets."
 
 const DESIGNERS = require('../json/designers.json')
 
@@ -31,12 +31,13 @@ const DEVELOPERS = require('../json/developers.json')
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: '#eee',
+    backgroundColor: '#fff',
   },
 
   logo: {
-    width: 270,
-    height: 80,
+    width: 200,
+    height: 60,
+    resizeMode: 'contain',
   },
 
   sectionContainer: {
@@ -45,13 +46,13 @@ const styles = StyleSheet.create({
   },
 
   intro: {
-    paddingHorizontal: 45,
+    paddingHorizontal: 40,
     paddingBottom: 30,
     fontFamily: GEOMETRIC_BOLD,
   },
 
   mission: {
-    paddingHorizontal: 60,
+    paddingHorizontal: 40,
     fontSize: 12,
     fontFamily: GEOMETRIC_REGULAR,
   },
@@ -67,10 +68,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: PROFILE_PIC_SIZE,
     height: PROFILE_PIC_SIZE,
-    borderRadius: 10,
+    borderRadius: 1000,
   },
 
   profilePicCell: {
+    paddingBottom: 5,
     alignItems: 'center',
   },
 
@@ -84,7 +86,9 @@ const styles = StyleSheet.create({
 const ProfileCell = ({ name, pic }) => (
   <View style={styles.profilePicCell}>
     <Image style={styles.profilePicImage} source={{ uri: pic }} />
-    <Text style={styles.profileName}>{name}</Text>
+    <View style={{ paddingVertical: 4 }}>
+      <Text style={styles.profileName}>{name}</Text>
+    </View>
   </View>
 )
 
@@ -95,9 +99,10 @@ const people_sections = [
 
 export const AboutScreen = () => (
   <SectionGrid
+    backgroundColor="white"
     ListHeaderComponent={
       <>
-        <View style={{ paddingVertical: 40 }}>
+        <View style={{ paddingVertical: 50 }}>
           <Image style={styles.logo} source={GOOSE_LOGO} />
         </View>
         <Text style={styles.intro}>{TEAM_INTRO}</Text>
@@ -109,11 +114,10 @@ export const AboutScreen = () => (
     itemDimension={PROFILE_PIC_CELL_SIZE}
     sections={people_sections}
     renderItem={({ item }) => {
-      console.log(item)
       return <ProfileCell name={item.name} pic={item.pic} />
     }}
     renderSectionHeader={({ section }) => (
-      <View style={{ alignItems: 'center', backgroundColor: '#eee' }}>
+      <View style={{ alignItems: 'center', backgroundColor: 'white' }}>
         <Text style={styles.meetTeam}>Meet the {section.title}</Text>
       </View>
     )}
