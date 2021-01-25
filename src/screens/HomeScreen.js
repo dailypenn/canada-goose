@@ -13,7 +13,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
-import * as Analytics from 'expo-firebase-analytics'
 
 import {
   SectionHeader,
@@ -37,6 +36,7 @@ import { toggleScrollToTop } from '../actions'
 import { EmptyStateEnum } from '../components/EmptyState'
 import { PublicationPrimaryColor } from '../utils/branding'
 import { GEOMETRIC_BOLD } from '../utils/fonts'
+import { publicationAnalytics } from '../utils/analytics'
 
 const styles = StyleSheet.create({
   container: {
@@ -281,13 +281,6 @@ const HomeScreenComp = ({
     appState.current = nextAppState
     setAppStateState(appState.current)
     console.log('AppState', appState.current)
-  }
-
-  const publicationAnalytics = async pub => {
-    await Analytics.logEvent('PublicationRead', {
-      publication: pub,
-      purpose: 'user is reading content from this publication',
-    })
   }
 
   useEffect(() => {

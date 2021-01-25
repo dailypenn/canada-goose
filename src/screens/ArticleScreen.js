@@ -13,7 +13,6 @@ import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 import { useLazyQuery } from '@apollo/client'
 import * as Haptics from 'expo-haptics'
-import * as Analytics from 'expo-firebase-analytics'
 
 import { PictureHeadline, ActivityIndicator, ArticleList } from '../components'
 import {
@@ -31,6 +30,7 @@ import {
   PublicationPrimaryColor,
   PublicationPrimaryColorRgba,
 } from '../utils/branding'
+import { userViewedArticleAnalytics } from '../utils/analytics'
 
 const ArticleScreenComp = ({
   navigation,
@@ -57,18 +57,9 @@ const ArticleScreenComp = ({
   //   })
   // }
 
-  const userViewedArticleAnalytics = async () => {
-    if (route.params.articlePublication == null) {
-      await Analytics.logEvent('ArticleViewd', {
-        headline: article.headline,
-        slug: article.slug,
-        purpose: 'user clicked on headline to read article',
-      })
-    }
-  }
-
   useEffect(() => {
-    userViewedArticleAnalytics()
+    if (route.params.articlePublication == null)
+      userViewedArticleAnalytics(article)
 
     dispatch(updateNavigation(navigation))
 
