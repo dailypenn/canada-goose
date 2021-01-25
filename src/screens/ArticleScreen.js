@@ -188,7 +188,7 @@ const ArticleScreenComp = ({
   console.log(`${article.slug} is being rendered`)
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: 'white' }}>
       <PictureHeadline
         headline={article.headline}
         time={article.published_at}

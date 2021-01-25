@@ -33,7 +33,7 @@ export const HomeStack = ({ navigation }) => {
           headerStyle: { backgroundColor: '#fff' },
           headerTintColor: '#000',
           headerTitleStyle: { fontFamily: BODY_SERIF, fontSize: 20 },
-          headerBackTitleVisible: false
+          headerBackTitleVisible: false,
         }}
       >
         <Stack.Screen
@@ -41,7 +41,7 @@ export const HomeStack = ({ navigation }) => {
           component={HomeScreen}
           options={{
             title: 'Home',
-            headerShown: false
+            headerShown: false,
           }}
         />
         <Stack.Screen
@@ -54,7 +54,7 @@ export const HomeStack = ({ navigation }) => {
           component={WebViewScreen}
           options={({ route }) => ({
             link: route.params.link,
-            title: ''
+            title: '',
           })}
         />
       </Stack.Navigator>
