@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>240168290884-h2n6is2o8ru1mqifdjf4duoiflk1mqvn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.240168290884-h2n6is2o8ru1mqifdjf4duoiflk1mqvn</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC0_DUcELou1I3145kiUtj4Rk-n0TQIXQg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>240168290884</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.thedailypennsylvanian.mobileapp</string>
+	<key>PROJECT_ID</key>
+	<string>the-daily-pennsylvanian</string>
+	<key>STORAGE_BUCKET</key>
+	<string>the-daily-pennsylvanian.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:240168290884:ios:232cab43d319dcff748a11</string>
+</dict>
+</plist>

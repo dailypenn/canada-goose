@@ -35,6 +35,7 @@ import {
   PublicationPrimaryColor,
   PublicationPrimaryColorRgba,
 } from '../utils/branding'
+import { userViewedArticleAnalytics } from '../utils/analytics'
 
 const ArticleScreenComp = ({
   navigation,
@@ -62,6 +63,9 @@ const ArticleScreenComp = ({
   // }
 
   useEffect(() => {
+    if (route.params.articlePublication == null)
+      userViewedArticleAnalytics(article.headline, article.slug)
+
     dispatch(updateNavigation(navigation))
 
     const { isUTBRandom } = route.params

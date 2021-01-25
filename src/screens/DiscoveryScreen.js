@@ -5,7 +5,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Platform,
-  View
+  View,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { FlatGrid } from 'react-native-super-grid'
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: Platform.OS == 'android' ? 10 : 0
-  }
+    paddingTop: Platform.OS == 'android' ? 10 : 0,
+  },
 })
 
 const width = Dimensions.get('window').width
@@ -30,7 +30,7 @@ const DiscoveryView = ({ navigation, publication }) => {
   const navigateToSectionScreen = (section, slug) => {
     navigation.navigate('Section', {
       sectionName: section,
-      slug
+      slug,
     })
   }
 
@@ -52,7 +52,7 @@ const DiscoveryView = ({ navigation, publication }) => {
   if (publication != PublicationEnum.utb) {
     return (
       <FlatGrid
-        contentContainerStyle= {{
+        contentContainerStyle={{
           top: 5,
         }}
         itemDimension={width / 2 - 40}
@@ -77,7 +77,7 @@ const DiscoveryView = ({ navigation, publication }) => {
         width: '100%',
         height: '100%',
         justifyContent: 'center',
-        alignContent: 'center'
+        alignContent: 'center',
       }}
     >
       <RandomButton onButtonPress={onButtonPress} />
