@@ -17,6 +17,7 @@ import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { PublicationEnum } from '../utils/constants'
 import { switchPublication, toggleScrollToTop } from '../actions'
 import { StatusBar } from 'react-native'
+import { publicationSwitchAnalytics } from '../utils/analytics'
 
 const SCREEN_DIMENSIONS = Dimensions.get('screen')
 const PUBLICATIONS = [
@@ -183,6 +184,8 @@ const PublicationModalComp = ({
   const selectedPublication = pub => {
     if (!currentlySwiping) {
       if (pub != currPublication) {
+        publicationSwitchAnalytics(currPublication, pub)
+
         updateSwitchLogo(GET_SMALL_LOGO(pub))
         updateSwitchColor(PublicationPrimaryColor(pub))
 

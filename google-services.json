@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "240168290884",
+    "project_id": "the-daily-pennsylvanian",
+    "storage_bucket": "the-daily-pennsylvanian.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240168290884:android:62adbd9833deafdb748a11",
+        "android_client_info": {
+          "package_name": "com.thedailypennsylvanian.mobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "240168290884-bnne13iags480is9u64th8ls9nr69kgq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBTv0VGsYh_fIUMe_YcOryuDHy77uEad8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "240168290884-bnne13iags480is9u64th8ls9nr69kgq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

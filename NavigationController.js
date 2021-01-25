@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
+import * as Analytics from 'expo-firebase-analytics'
 import { connect } from 'react-redux'
 import { Image } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
@@ -20,6 +21,9 @@ const UTB_LOGO_GREY = require('./src/static/logos/utb-logo-small-grey.png')
 const Tab = createBottomTabNavigator()
 
 const TabNavigationController = ({ currPublication }) => {
+  const routeNameRef = React.useRef()
+  const navigationRef = React.useRef()
+
   const GET_PUB_LOGO = focused => {
     switch (currPublication) {
       case PublicationEnum.dp:
@@ -32,7 +36,23 @@ const TabNavigationController = ({ currPublication }) => {
   }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() =>
+        (routeNameRef.current = navigationRef.current.getCurrentRoute().name)
+      }
+      onStateChange={() => {
+        console.log('on state change')
+        const previousRouteName = routeNameRef.current
+        const currentRouteName = navigationRef.current.getCurrentRoute().name
+
+        if (previousRouteName !== currentRouteName) {
+          Analytics.setCurrentScreen(currentRouteName)
+        }
+
+        routeNameRef.current = currentRouteName
+      }}
+    >
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color, focused }) => {
@@ -46,7 +66,7 @@ const TabNavigationController = ({ currPublication }) => {
                     height: 26,
                     width: 45,
                     resizeMode: 'contain',
-                    alignSelf: 'center'
+                    alignSelf: 'center',
                   }}
                 />
               )
@@ -54,7 +74,7 @@ const TabNavigationController = ({ currPublication }) => {
             else if (route.name === 'SettingsStack') iconName = 'cog'
 
             return <Ionicons name={iconName} size={26} color={color} />
-          }
+          },
         })}
         tabBarOptions={{
           activeTintColor: PublicationPrimaryColor(currPublication),
@@ -63,11 +83,11 @@ const TabNavigationController = ({ currPublication }) => {
           style: {
             shadowColor: 'black',
             shadowOpacity: 0.1,
-            shadowRadius: 3
+            shadowRadius: 3,
           },
           onPress: () => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-          }
+          },
         }}
       >
         <Tab.Screen name="HomeStack" component={HomeStack} />
