@@ -203,6 +203,7 @@ const ArticleScreenComp = ({
         )}
         category={article.tag}
         publication={articlePublication}
+        isArticleView={true}
       />
       <View
         style={{

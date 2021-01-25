@@ -84,6 +84,7 @@ export const PictureHeadline = ({
   time,
   imageUrl,
   publication,
+  isArticleView,
 }) => {
   if (
     imageUrl ==
@@ -99,7 +100,10 @@ export const PictureHeadline = ({
             <View style={styles.spacer} />
             <Text style={styles.blackTime}>{time}</Text>
           </View>
-          <Text style={styles.blackHeadline} numberOfLines={4}>
+          <Text
+            style={styles.blackHeadline}
+            numberOfLines={isArticleView ? 10 : 4}
+          >
             {headline}
           </Text>
           <View
@@ -128,7 +132,7 @@ export const PictureHeadline = ({
             <View style={styles.spacer} />
             <Text style={styles.time}>{time}</Text>
           </View>
-          <Text style={styles.headline} numberOfLines={4}>
+          <Text style={styles.headline} numberOfLines={isArticleView ? 10 : 4}>
             {headline}
           </Text>
         </ImageBackground>

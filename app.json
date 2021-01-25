@@ -17,7 +17,7 @@
       "**/*"
     ],
     "ios": {
-      "package": "com.thedailypennsylvanian.mobileapp",
+      "bundleIdentifier": "com.thedailypennsylvanian.mobileapp",
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": false,
       "requireFullScreen": true
