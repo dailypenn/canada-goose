@@ -6,7 +6,7 @@ import {
   Alert,
   Share,
   Platform,
-  ScrollView,
+  ScrollView
 } from 'react-native'
 import HTML from 'react-native-render-html'
 import { connect } from 'react-redux'
@@ -14,27 +14,18 @@ import { Ionicons } from '@expo/vector-icons'
 import { useLazyQuery } from '@apollo/client'
 import * as Haptics from 'expo-haptics'
 
-import {
-  PictureHeadline,
-  ActivityIndicator,
-  ArticleList,
-  LogoActivityIndicator,
-} from '../components'
+import { PictureHeadline, LogoActivityIndicator } from '../components'
 import {
   IMAGE_URL,
   AUTHORS,
   getArticlePubSlug,
-  isValidURL,
+  isValidURL
 } from '../utils/helperFunctions'
 import { PublicationEnum } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { saveNewArticle, unsaveArticle, updateNavigation } from '../actions'
 import { ARTICLE_QUERY } from '../utils/queries'
-import {
-  PublicationPrimaryColor,
-  PublicationPrimaryColorRgba,
-} from '../utils/branding'
 import { userViewedArticleAnalytics } from '../utils/analytics'
 
 const ArticleScreenComp = ({
@@ -42,7 +33,7 @@ const ArticleScreenComp = ({
   route,
   currPublication,
   settings,
-  dispatch,
+  dispatch
 }) => {
   const [article, setArticle] = useState(route.params.article)
   const [utbFetched, setUTBFetched] = useState(false)
@@ -52,15 +43,8 @@ const ArticleScreenComp = ({
     : currPublication
 
   const [fetchArticle, { loading, data }] = useLazyQuery(ARTICLE_QUERY, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'cache-and-network'
   })
-
-  // if (!article) {
-  //   // TODO: Check that article is already fetched
-  //   const { loading, error, data } = useQuery(QUERY_ARTICLE_BY_SLUG, {
-  //     variables: { slug: article.slug },
-  //   })
-  // }
 
   useEffect(() => {
     if (route.params.articlePublication == null && article != null)
@@ -76,13 +60,13 @@ const ArticleScreenComp = ({
       fetchArticle({
         variables: {
           publication: articlePublication,
-          slug: route.params.articleSlug,
-        },
+          slug: route.params.articleSlug
+        }
       })
     } else if (isUTBRandom && !utbFetched) {
       console.log('---fetching utb random article---')
       fetchArticle({
-        variables: { publication: PublicationEnum.utb, isRandom: true },
+        variables: { publication: PublicationEnum.utb, isRandom: true }
       })
       setUTBFetched(true)
     }
@@ -105,7 +89,7 @@ const ArticleScreenComp = ({
         handlePress,
         handleShare,
         alreadySaved: savedArticles.some(obj => obj.slug == article.slug),
-        article: article,
+        article: article
       })
     }
   }, [settings.savedArticles, article])
@@ -129,7 +113,7 @@ const ArticleScreenComp = ({
       slug: article.slug,
       article: article,
       saved_at: date,
-      publication: articlePublication,
+      publication: articlePublication
     }
 
     let newSavedArticles = [...savedArticles]
@@ -167,7 +151,7 @@ const ArticleScreenComp = ({
     try {
       const result = await Share.share({
         message: Platform.OS == 'ios' ? null : URL,
-        url: Platform.OS == 'ios' ? URL : null,
+        url: Platform.OS == 'ios' ? URL : null
       })
 
       if (result.action == Share.sharedAction) {
@@ -208,13 +192,13 @@ const ArticleScreenComp = ({
       <View
         style={{
           paddingHorizontal: 20,
-          paddingVertical: 10,
+          paddingVertical: 10
         }}
       >
         <Text
           style={{
             fontFamily: GEOMETRIC_BOLD,
-            fontSize: 16,
+            fontSize: 16
           }}
         >{`By: ${AUTHORS(article.authors)}`}</Text>
         {/* <Text
@@ -242,7 +226,7 @@ const ArticleScreenComp = ({
             } else if (slug && publication) {
               navigation.push(ArticleScreenName, {
                 articleSlug: slug,
-                articlePublication: publication,
+                articlePublication: publication
               })
             }
           }}
@@ -253,12 +237,12 @@ const ArticleScreenComp = ({
               fontSize: 18,
               lineHeight: 28,
               paddingBottom: 30,
-              fontFamily: BODY_SERIF,
+              fontFamily: BODY_SERIF
             },
             a: {
-              fontSize: 18,
+              fontSize: 18
             },
-            img: { paddingBottom: 10 },
+            img: { paddingBottom: 10 }
           }}
           ignoredTags={['div']}
         />
@@ -272,7 +256,7 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
   animationEnabled: true,
   headerRight: () => {
     const {
-      params: { handlePress, handleShare, alreadySaved, article, articleSlug },
+      params: { handlePress, handleShare, alreadySaved, article, articleSlug }
     } = route
 
     let icon = alreadySaved ? 'bookmark' : 'bookmark-outline'
@@ -290,7 +274,7 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
         </TouchableOpacity>
       </View>
     )
-  },
+  }
 })
 
 const mapStateToProps = ({ publication, settings }) => {

@@ -303,16 +303,9 @@ const HomeScreenComp = ({
 
   useFocusEffect(
     useCallback(() => {
-      console.log('home screen focused')
-      console.log(Boolean(data))
-
       if (data) {
-        console.log('refetching home screen articles')
+        console.log('---refetching home screen articles---')
         refetch()
-      }
-
-      return () => {
-        console.log('home screen blurred')
       }
     }, [data])
   )
