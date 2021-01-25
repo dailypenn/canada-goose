@@ -21,7 +21,7 @@ const WebViewContainer = ({ link }) => {
             width: 10,
             position: 'absolute',
             top: height / 2 - 60,
-            left: width / 2 - 5
+            left: width / 2 - 5,
           }}
         />
       )}

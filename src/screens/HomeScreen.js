@@ -22,6 +22,7 @@ import {
   ActivityIndicator,
   HeaderLine,
   EmptyState,
+  LogoActivityIndicator,
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
@@ -389,7 +390,7 @@ const HomeScreenComp = ({
       </View>
     )
   }
-  if (!data) return <ActivityIndicator />
+  if (!data) return <LogoActivityIndicator />
 
   let HOME_SECTIONS = GET_HOME_SECTIONS(currPublication)
 

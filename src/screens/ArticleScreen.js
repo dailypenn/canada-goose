@@ -14,7 +14,12 @@ import { Ionicons } from '@expo/vector-icons'
 import { useLazyQuery } from '@apollo/client'
 import * as Haptics from 'expo-haptics'
 
-import { PictureHeadline, ActivityIndicator, ArticleList } from '../components'
+import {
+  PictureHeadline,
+  ActivityIndicator,
+  ArticleList,
+  LogoActivityIndicator,
+} from '../components'
 import {
   IMAGE_URL,
   AUTHORS,
@@ -178,7 +183,7 @@ const ArticleScreenComp = ({
   // TODO: Fetch from CEO
   const photographer = 'Pitt Shure'
 
-  if (loading || !article) return <ActivityIndicator />
+  if (loading || !article) return <LogoActivityIndicator />
 
   console.log(`${article.slug} is being rendered`)
 

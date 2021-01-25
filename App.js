@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 
 import TabNavigationController from './NavigationController'
 import { loadFonts } from './src/utils/fonts'
-import { ActivityIndicator } from './src/components'
+import { ActivityIndicator, LogoActivityIndicator } from './src/components'
 import RootReducer from './src/reducers'
 import {
   GET_HOME_FEED_ORDER_KEY,
@@ -72,7 +72,7 @@ const App = () => {
       </ApolloProvider>
     )
   } else {
-    return <ActivityIndicator />
+    return <LogoActivityIndicator />
   }
 }
 
