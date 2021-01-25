@@ -50,7 +50,8 @@
     "react-redux": "^7.2.2",
     "recyclerlistview": "^3.0.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "expo-screen-orientation": "~2.1.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
