@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
 
   header_safe_area: {
     zIndex: 1000,
+    flex: 1,
   },
 
   header: {
@@ -201,18 +202,20 @@ const SettingsScreenComp = ({ navigation, currPublication }) => {
           <Text style={styles.title}>Account</Text>
         </View>
       </View>
-      <ScrollView>
-        <PublicationCell currPublication={currPublication} />
-        {SETTINGS_SECTIONS.map((l, i) => (
-          <SettingsSection
-            key={l.id}
-            items={l.items}
-            navigateToScreen={(screen, props) =>
-              navigation.navigate(screen, props)
-            }
-          />
-        ))}
-      </ScrollView>
+      <View style={{ flex: 1 }}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <PublicationCell currPublication={currPublication} />
+          {SETTINGS_SECTIONS.map((l, i) => (
+            <SettingsSection
+              key={l.id}
+              items={l.items}
+              navigateToScreen={(screen, props) =>
+                navigation.navigate(screen, props)
+              }
+            />
+          ))}
+        </ScrollView>
+      </View>
     </SafeAreaView>
   )
 }
