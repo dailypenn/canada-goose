@@ -8,10 +8,10 @@ import {
   Image,
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import { connect } from 'react-redux'
 
 import { DISPLAY_SERIF_BLACK, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { PublicationEnum, SETTINGS_SECTIONS } from '../utils/constants'
-import { connect } from 'react-redux'
 
 const DP_LOGO_GREY = require('../static/logos/dp-logo-small-white.png')
 const STREET_LOGO_GREY = require('../static/logos/street-logo-small-white.png')

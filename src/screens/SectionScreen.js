@@ -4,37 +4,32 @@ import { connect } from 'react-redux'
 import { useQuery } from '@apollo/client'
 import { useFocusEffect } from '@react-navigation/native'
 
-import {
-  ActivityIndicator,
-  ArticleList,
-  DefaultStatusBar,
-  LogoActivityIndicator,
-} from '../components'
+import { ArticleList, LogoActivityIndicator } from '../components'
 import { SECTIONS_QUERY } from '../utils/queries'
 import {
   PARTIAL_NAVIGATE,
-  NAVIGATE_TO_ARTICLE_SCREEN,
+  NAVIGATE_TO_ARTICLE_SCREEN
 } from '../utils/helperFunctions'
 import { updateNavigation } from '../actions'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
+    backgroundColor: '#fff'
+  }
 })
 
 const SectionScreenComp = ({
   route,
   navigation,
   currPublication,
-  dispatchUpdateNavigation,
+  dispatchUpdateNavigation
 }) => {
   const { slug } = route.params
 
   const { loading, error, data, refetch } = useQuery(SECTIONS_QUERY, {
     variables: { section: slug, publication: currPublication },
-    notifyOnNetworkStatusChange: true,
+    notifyOnNetworkStatusChange: true
   })
 
   useEffect(() => {
@@ -94,8 +89,7 @@ const mapStateToProps = ({ publication }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  dispatchUpdateNavigation: navigation =>
-    dispatch(updateNavigation(navigation)),
+  dispatchUpdateNavigation: navigation => dispatch(updateNavigation(navigation))
 })
 
 export const SectionScreen = connect(

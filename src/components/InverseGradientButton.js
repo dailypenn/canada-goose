@@ -1,34 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import Modal from 'react-native-modal'
 import {
   View,
-  Button,
-  StatusBar,
   Text,
   TouchableOpacity,
-  SafeAreaView,
   Animated,
-  StyleSheet,
+  StyleSheet
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
+import { GEOMETRIC_BOLD } from '../utils/fonts'
 import { Easing } from 'react-native'
-import MaskedView from '@react-native-community/masked-view'
 
 export const InverseGradientButton = ({
   title,
   iconName,
   iconInFront,
   style,
-  onButtonPress,
+  onButtonPress
 }) => {
   const GET_STARTED_BACKGROUND = require('../static/get-started-button-background.jpg')
   const [spinValue] = useState(new Animated.Value(0))
 
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
+    outputRange: ['0deg', '360deg']
   })
 
   useEffect(() => {
@@ -37,7 +32,7 @@ export const InverseGradientButton = ({
         toValue: 1,
         duration: 10000,
         easing: Easing.linear,
-        useNativeDriver: false,
+        useNativeDriver: false
       }),
       {}
     ).start()
@@ -50,7 +45,7 @@ export const InverseGradientButton = ({
           height: '100%',
           width: '100%',
           justifyContent: 'center',
-          alignContent: 'center',
+          alignContent: 'center'
         }}
         activeOpacity={0.8}
         onPress={onButtonPress}
@@ -61,7 +56,7 @@ export const InverseGradientButton = ({
             alignContent: 'center',
             flexDirection: 'row-reverse',
             width: '100%',
-            height: '100%',
+            height: '100%'
           }}
         >
           <Text style={styles.text}>{title}</Text>
@@ -72,7 +67,7 @@ export const InverseGradientButton = ({
             style={{
               alignSelf: 'center',
               paddingLeft: iconInFront ? 0 : 10,
-              paddingRight: iconInFront ? 10 : 0,
+              paddingRight: iconInFront ? 10 : 0
             }}
           />
         </View>
@@ -86,6 +81,6 @@ const styles = StyleSheet.create({
     fontFamily: GEOMETRIC_BOLD,
     fontSize: 24,
     color: '#AAA',
-    alignSelf: 'center',
-  },
+    alignSelf: 'center'
+  }
 })

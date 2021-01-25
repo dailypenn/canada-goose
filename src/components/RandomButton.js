@@ -1,16 +1,9 @@
 import React, { useState } from 'react'
-import {
-  View,
-  Text,
-  Animated,
-  Easing,
-  Dimensions,
-  Pressable,
-} from 'react-native'
+import { View, Text, Animated, Dimensions, Pressable } from 'react-native'
 import * as Haptics from 'expo-haptics'
+
 import { DP_RED } from '../utils/branding'
-import { Platform } from 'react-native'
-import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
+import { GEOMETRIC_BOLD } from '../utils/fonts'
 
 export const RandomButton = ({ onButtonPress }) => {
   const MAX_HEIGHT = 80
@@ -25,13 +18,13 @@ export const RandomButton = ({ onButtonPress }) => {
     const anim = Animated.timing(pressOffset, {
       toValue: 0,
       duration: OUT_DURATION,
-      useNativeDriver: false,
+      useNativeDriver: false
     })
 
     const negAnim = Animated.timing(negPressOffset, {
       toValue: MAX_HEIGHT,
       duration: OUT_DURATION,
-      useNativeDriver: false,
+      useNativeDriver: false
     })
 
     Animated.parallel([anim, negAnim]).start()
@@ -46,13 +39,13 @@ export const RandomButton = ({ onButtonPress }) => {
     const anim = Animated.timing(pressOffset, {
       toValue: MAX_HEIGHT - MIN_HEIGHT,
       duration: IN_DURATION,
-      useNativeDriver: false,
+      useNativeDriver: false
     })
 
     const negAnim = Animated.timing(negPressOffset, {
       toValue: MIN_HEIGHT,
       duration: IN_DURATION,
-      useNativeDriver: false,
+      useNativeDriver: false
     })
 
     Animated.parallel([anim, negAnim]).start()
@@ -67,7 +60,7 @@ export const RandomButton = ({ onButtonPress }) => {
         position: 'absolute',
         transform: [{ rotateX: '45deg' }],
         backgroundColor: 'grey',
-        alignSelf: 'center',
+        alignSelf: 'center'
       }}
     >
       <Animated.View
@@ -77,7 +70,7 @@ export const RandomButton = ({ onButtonPress }) => {
           aspectRatio: 1,
           top: 40,
           borderRadius: Dimensions.get('window').height,
-          backgroundColor: '#831A15',
+          backgroundColor: '#831A15'
         }}
       />
       <Animated.View
@@ -89,7 +82,7 @@ export const RandomButton = ({ onButtonPress }) => {
           position: 'absolute',
           backgroundColor: '#831A15',
           transform: [{ translateY: pressOffset }],
-          alignSelf: 'center',
+          alignSelf: 'center'
         }}
       />
       <Animated.View
@@ -103,7 +96,7 @@ export const RandomButton = ({ onButtonPress }) => {
           top: -40,
           transform: [{ translateY: pressOffset }],
           borderRadius: Dimensions.get('window').height,
-          backgroundColor: DP_RED,
+          backgroundColor: DP_RED
         }}
       >
         <Text
@@ -114,7 +107,7 @@ export const RandomButton = ({ onButtonPress }) => {
             padding: 25,
             textAlign: 'center',
             color: 'white',
-            transform: [{ rotate: '20deg' }],
+            transform: [{ rotate: '20deg' }]
           }}
         >
           Random Content Generator 3000
@@ -129,7 +122,7 @@ export const RandomButton = ({ onButtonPress }) => {
       onPress={onPress}
       style={{
         height: Dimensions.get('window').width * 0.6,
-        width: '100%',
+        width: '100%'
       }}
     >
       {UI}

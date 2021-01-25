@@ -18,12 +18,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
   getStatusBarHeight,
   getBottomSpace,
-  ifIphoneX,
   isIphoneX,
 } from 'react-native-iphone-x-helper'
 import { useQuery } from '@apollo/client'
 
-import { ActivityIndicator } from './ActivityIndicator'
 import { ARTICLES_SEARCH } from '../utils/queries'
 import {
   PARTIAL_NAVIGATE,

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Modal from 'react-native-modal'
 import { View, SafeAreaView, Animated } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import * as Haptics from 'expo-haptics'
 
 import { GradientButton, InverseGradientButton } from '.'
@@ -11,18 +9,13 @@ import {
   Text,
   Dimensions,
   Easing,
-  Image,
+  Image
 } from 'react-native'
-import {
-  BODY_SERIF,
-  DISPLAY_SERIF_BLACK,
-  GEOMETRIC_BOLD,
-  GEOMETRIC_REGULAR,
-} from '../utils/fonts'
+import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 
 const InfoPageContents = ({
   content: { mediaUrl, text, title, boldText },
-  style,
+  style
 }) => {
   console.log(mediaUrl)
 
@@ -31,7 +24,7 @@ const InfoPageContents = ({
     Animated.timing(opacity, {
       toValue: 1,
       duration: 100,
-      useNativeDriver: false,
+      useNativeDriver: false
     }).start()
   })
   return (
@@ -45,9 +38,9 @@ const InfoPageContents = ({
           paddingBottom: 40,
           marginVertical: 30,
           paddingHorizontal: 30,
-          paddingBottom: 0,
+          paddingBottom: 0
         },
-        style,
+        style
       ]}
     >
       <View
@@ -61,7 +54,7 @@ const InfoPageContents = ({
           borderRadius: 20,
           borderColor: '#DDD',
           borderWidth: 15,
-          alignSelf: 'center',
+          alignSelf: 'center'
         }}
       >
         <Image source={mediaUrl} style={{ width: '100%', height: '100%' }} />
@@ -87,7 +80,7 @@ export const OnboardingInfoPage = ({
   onNextPage,
   onPrevPage,
   currPage,
-  ONBOARDING_CONTENT,
+  ONBOARDING_CONTENT
 }) => {
   const NUM_PAGES = ONBOARDING_CONTENT.length
   const [buttonAnim] = useState(new Animated.Value(0))
@@ -97,16 +90,16 @@ export const OnboardingInfoPage = ({
     ONBOARDING_CONTENT.map(el => {
       const [state] = useState(new Animated.Value(0))
       return state
-    }),
+    })
   ]
 
   const pagePosY = pageAnim.interpolate({
     inputRange: [0, 0.3, 1],
-    outputRange: [200, 100, 0],
+    outputRange: [200, 100, 0]
   })
   const buttonPosX = buttonAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: [200, 0],
+    outputRange: [200, 0]
   })
 
   const content = ONBOARDING_CONTENT
@@ -117,14 +110,14 @@ export const OnboardingInfoPage = ({
         toValue: 1,
         duration: 500,
         useNativeDriver: false,
-        easing: Easing.out(Easing.exp),
+        easing: Easing.out(Easing.exp)
       }),
       Animated.timing(pageAnim, {
         toValue: 1,
         duration: 1000,
         useNativeDriver: false,
-        easing: Easing.out(Easing.exp),
-      }),
+        easing: Easing.out(Easing.exp)
+      })
     ]).start()
   })
 
@@ -134,14 +127,14 @@ export const OnboardingInfoPage = ({
         toValue: 0,
         duration: 500,
         useNativeDriver: false,
-        easing: Easing.in(Easing.cubic),
+        easing: Easing.in(Easing.cubic)
       }),
       Animated.timing(pageAnim, {
         toValue: 0,
         duration: 500,
         useNativeDriver: false,
-        easing: Easing.in(Easing.cubic),
-      }),
+        easing: Easing.in(Easing.cubic)
+      })
     ]).start()
   }
 
@@ -153,14 +146,14 @@ export const OnboardingInfoPage = ({
           toValue: 150,
           duration: 500,
           useNativeDriver: false,
-          easing: Easing.in(Easing.cubic),
+          easing: Easing.in(Easing.cubic)
         }),
         Animated.timing(pageAnim, {
           toValue: 0,
           duration: 500,
           useNativeDriver: false,
-          easing: Easing.in(Easing.cubic),
-        }),
+          easing: Easing.in(Easing.cubic)
+        })
       ]).start()
       setTimeout(() => {
         onNextPage()
@@ -170,7 +163,7 @@ export const OnboardingInfoPage = ({
         toValue: 0,
         duration: 300,
         useNativeDriver: false,
-        easing: Easing.out(Easing.cubic),
+        easing: Easing.out(Easing.cubic)
       }).start()
 
       setTimeout(() => onNextPage(), 300)
@@ -186,7 +179,7 @@ export const OnboardingInfoPage = ({
         toValue: 0,
         duration: 300,
         useNativeDriver: false,
-        easing: Easing.out(Easing.cubic),
+        easing: Easing.out(Easing.cubic)
       }).start()
 
       setTimeout(() => onPrevPage(), 300)
@@ -204,8 +197,8 @@ export const OnboardingInfoPage = ({
           styles.navigation,
           {
             opacity: buttonAnim,
-            transform: [{ translateX: buttonPosX }, { translateY: buttonPosY }],
-          },
+            transform: [{ translateX: buttonPosX }, { translateY: buttonPosY }]
+          }
         ]}
       >
         <InverseGradientButton
@@ -240,7 +233,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 15,
     alignContent: 'space-between',
-    width: '100%',
+    width: '100%'
   },
 
   text: {
@@ -248,6 +241,6 @@ const styles = StyleSheet.create({
     fontFamily: GEOMETRIC_BOLD,
     fontSize: 28,
     lineHeight: 34,
-    paddingBottom: 10,
-  },
+    paddingBottom: 10
+  }
 })

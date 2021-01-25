@@ -8,7 +8,7 @@ import * as ScreenOrientation from 'expo-screen-orientation'
 
 import TabNavigationController from './NavigationController'
 import { loadFonts } from './src/utils/fonts'
-import { ActivityIndicator, LogoActivityIndicator } from './src/components'
+import { LogoActivityIndicator } from './src/components'
 import RootReducer from './src/reducers'
 import {
   GET_HOME_FEED_ORDER_KEY,

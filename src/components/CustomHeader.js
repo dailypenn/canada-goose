@@ -11,8 +11,6 @@ import {
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { PublicationEnum } from '../utils/constants'
-
 const DP_LOGO_WHITE = require('../static/logos/dp-logo-small-white.png')
 const DP_LOGO_RED = require('../static/logos/dp-logo-small-red.png')
 

@@ -1,24 +1,13 @@
 import React from 'react'
 import { View, Text, Image, Dimensions, StyleSheet } from 'react-native'
 import { PublicationEnum } from '../utils/constants'
-import { BODY_SERIF, GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
+import { BODY_SERIF } from '../utils/fonts'
 
 export const EmptyStateEnum = Object.freeze({
   error: 'error',
   search: 'search',
   empty: 'empty',
 })
-
-const enumToString = pub => {
-  switch (pub) {
-    case PublicationEnum.dp:
-      return 'dp'
-    case PublicationEnum.street:
-      return 'street'
-    default:
-      return 'utb'
-  }
-}
 
 export const EmptyState = ({ publication, type, caption }) => {
   let image

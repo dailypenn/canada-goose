@@ -1,34 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import Modal from 'react-native-modal'
 import {
   View,
-  Button,
-  StatusBar,
   Text,
   TouchableOpacity,
-  SafeAreaView,
   Animated,
-  StyleSheet,
+  StyleSheet
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
-import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { Easing } from 'react-native'
 import MaskedView from '@react-native-community/masked-view'
+
+import { GEOMETRIC_BOLD } from '../utils/fonts'
 
 export const GradientButton = ({
   title,
   iconName,
   iconInFront,
   style,
-  onButtonPress,
+  onButtonPress
 }) => {
   const GET_STARTED_BACKGROUND = require('../static/get-started-button-background.jpg')
   const [spinValue] = useState(new Animated.Value(0))
 
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
+    outputRange: ['0deg', '360deg']
   })
 
   useEffect(() => {
@@ -37,7 +33,7 @@ export const GradientButton = ({
         toValue: 1,
         duration: 10000,
         easing: Easing.linear,
-        useNativeDriver: false,
+        useNativeDriver: false
       }),
       {}
     ).start()
@@ -50,7 +46,7 @@ export const GradientButton = ({
           height: 60,
           width: '100%',
           flexDirection: iconInFront ? 'row-reverse' : 'row',
-          justifyContent: 'center',
+          justifyContent: 'center'
         }}
         activeOpacity={0.8}
         onPress={onButtonPress}
@@ -73,7 +69,7 @@ export const GradientButton = ({
           style={{
             alignSelf: 'center',
             paddingLeft: iconInFront ? 0 : 10,
-            paddingRight: iconInFront ? 10 : 0,
+            paddingRight: iconInFront ? 10 : 0
           }}
         />
       </TouchableOpacity>
@@ -86,7 +82,7 @@ const styles = StyleSheet.create({
     fontFamily: GEOMETRIC_BOLD,
     fontSize: 24,
     color: 'white',
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   image: {
     width: '100%',
@@ -95,18 +91,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     position: 'absolute',
     borderRadius: 10000,
-    paddingHorizontal: 5,
+    paddingHorizontal: 5
   },
   maskingView: {
     width: '100%',
     height: '100%',
     backgroundColor: 'black',
-    borderRadius: 20,
+    borderRadius: 20
   },
   maskContainer: {
     width: '100%',
     height: '100%',
     position: 'absolute',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 })

@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { ActivityIndicator, Dimensions, View } from 'react-native'
+import { View } from 'react-native'
 import WebView from 'react-native-webview'
-import { LogoActivityIndicator } from '../components'
 
-const { width, height } = Dimensions.get('window')
+import { LogoActivityIndicator } from '../components'
 
 const WebViewContainer = ({ link }) => {
   const [visible, setIsVisible] = useState(true)

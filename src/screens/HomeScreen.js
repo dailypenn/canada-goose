@@ -19,7 +19,6 @@ import {
   HeadlineArticle,
   HorizontalArticleCarousel,
   ArticleList,
-  ActivityIndicator,
   HeaderLine,
   EmptyState,
   LogoActivityIndicator,
