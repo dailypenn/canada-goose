@@ -74,6 +74,6 @@ export const NotificationScreen = () => {
     //     <NotificationCell key={i} info={l} />
     //   ))}
     // </View>
-    <ComingSoonView />
+    <ComingSoonView blurb="Notification options coming soon!" />
   )
 }
