@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     color: '#888',
     fontFamily: GEOMETRIC_REGULAR,
     flex: 100,
+    alignSelf: 'flex-start',
     fontSize: 11,
     marginTop: 10,
     //textTransform: 'uppercase',
@@ -66,9 +67,6 @@ export const PrimaryHorizontalArticleCell = ({
             {title}
           </Text>
           <Text style={styles.abstract}>{parsedAbstract}</Text>
-          <Text style={styles.byline}>
-            By {authors} • {timeAgo}
-          </Text>
         </View>
         <View
           style={{
@@ -84,13 +82,14 @@ export const PrimaryHorizontalArticleCell = ({
       <View>
         <View style={styles.container}>
           <Image style={styles.image} source={{ uri: imageURL }} />
-          <Text style={styles.byline}>
-            By {authors} • {timeAgo}
-          </Text>
+
           <Text style={styles.title} numberOfLines={5}>
             {title}
           </Text>
           <Text style={styles.abstract}>{parsedAbstract}</Text>
+          <Text style={styles.byline}>
+            By {authors} • {timeAgo}
+          </Text>
         </View>
         <View
           style={{

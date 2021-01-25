@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, TouchableOpacity, Alert } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  Share,
+  Platform,
+  ScrollView,
+} from 'react-native'
 import HTML from 'react-native-render-html'
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
@@ -8,7 +15,7 @@ import { useLazyQuery } from '@apollo/client'
 import * as Haptics from 'expo-haptics'
 import * as Analytics from 'expo-firebase-analytics'
 
-import { PictureHeadline, ActivityIndicator } from '../components'
+import { PictureHeadline, ActivityIndicator, ArticleList } from '../components'
 import {
   IMAGE_URL,
   AUTHORS,
@@ -20,6 +27,10 @@ import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { saveNewArticle, unsaveArticle, updateNavigation } from '../actions'
 import { ARTICLE_QUERY } from '../utils/queries'
+import {
+  PublicationPrimaryColor,
+  PublicationPrimaryColorRgba,
+} from '../utils/branding'
 
 const ArticleScreenComp = ({
   navigation,
@@ -94,7 +105,9 @@ const ArticleScreenComp = ({
   useEffect(() => {
     if (article) {
       navigation.setParams({
+        currPublication,
         handlePress,
+        handleShare,
         alreadySaved: savedArticles.some(obj => obj.slug == article.slug),
         article: article,
       })
@@ -138,6 +151,39 @@ const ArticleScreenComp = ({
   const handlePress = (alreadySaved, routeArticle) => {
     if (!alreadySaved) saveHandler(routeArticle)
     else deleteHandler(routeArticle)
+  }
+
+  const handleShare = async () => {
+    let domain
+    switch (currPublication) {
+      case PublicationEnum.dp:
+        domain = 'thedp'
+        break
+      case PublicationEnum.street:
+        domain = '34st'
+        break
+      default:
+        domain = 'underthebutton'
+        break
+    }
+
+    const URL = `https://${domain}.com/article/${article.slug}`
+    try {
+      const result = await Share.share({
+        message: Platform.OS == 'ios' ? null : URL,
+        url: Platform.OS == 'ios' ? URL : null,
+      })
+
+      if (result.action == Share.sharedAction) {
+        // TODO: Analytics on shares
+        console.log('Shared!')
+      } else {
+        // TODO: Analysics
+        console.log('Dismissed Share!')
+      }
+    } catch (error) {
+      alert(error)
+    }
   }
 
   /* Currently author and image credits are not supported by
@@ -229,17 +275,23 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
   animationEnabled: true,
   headerRight: () => {
     const {
-      params: { handlePress, alreadySaved, article },
+      params: { handlePress, handleShare, alreadySaved, article, articleSlug },
     } = route
-    let icon = 'bookmark-outline'
-    if (alreadySaved) icon = 'bookmark'
+
+    let icon = alreadySaved ? 'bookmark' : 'bookmark-outline'
+    let shareIcon =
+      Platform.OS == 'ios' ? 'share-outline' : 'share-social-outline'
 
     return (
-      <TouchableOpacity onPress={() => handlePress(alreadySaved, article)}>
-        <View style={{ paddingRight: 10 }}>
-          <Ionicons name={icon} size={25} color="black" />
-        </View>
-      </TouchableOpacity>
+      <View style={{ flexDirection: 'row', width: 90, marginRight: 15 }}>
+        <TouchableOpacity onPress={() => handleShare()}>
+          <Ionicons name={shareIcon} size={30} color="black" />
+        </TouchableOpacity>
+        <View style={{ flex: 1 }} />
+        <TouchableOpacity onPress={() => handlePress(alreadySaved, article)}>
+          <Ionicons name={icon} size={30} color="black" />
+        </TouchableOpacity>
+      </View>
     )
   },
 })
