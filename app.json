@@ -4,7 +4,7 @@
     "slug": "goose-from-canada",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/static/icon.jpg",
+    "icon": "./src/static/icon.png",
     "splash": {
       "image": "./src/static/splash.png",
       "resizeMode": "contain",

@@ -8,19 +8,25 @@ import { useLazyQuery } from '@apollo/client'
 import * as Haptics from 'expo-haptics'
 
 import { PictureHeadline, ActivityIndicator } from '../components'
-import { IMAGE_URL, AUTHORS, getArticlePubSlug, isValidURL } from '../utils/helperFunctions'
+import {
+  IMAGE_URL,
+  AUTHORS,
+  getArticlePubSlug,
+  isValidURL,
+} from '../utils/helperFunctions'
 import { PublicationEnum } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { saveNewArticle, unsaveArticle, updateNavigation } from '../actions'
 import { ARTICLE_QUERY } from '../utils/queries'
+import { Platform } from 'react-native'
 
 const ArticleScreenComp = ({
   navigation,
   route,
   currPublication,
   settings,
-  dispatch
+  dispatch,
 }) => {
   const [article, setArticle] = useState(route.params.article)
   const [utbFetched, setUTBFetched] = useState(false)
@@ -30,7 +36,7 @@ const ArticleScreenComp = ({
     : currPublication
 
   const [fetchArticle, { loading, data }] = useLazyQuery(ARTICLE_QUERY, {
-    fetchPolicy: 'cache-and-network'
+    fetchPolicy: 'cache-and-network',
   })
 
   // if (!article) {
@@ -51,13 +57,13 @@ const ArticleScreenComp = ({
       fetchArticle({
         variables: {
           publication: articlePublication,
-          slug: route.params.articleSlug
-        }
+          slug: route.params.articleSlug,
+        },
       })
     } else if (isUTBRandom && !utbFetched) {
       console.log('---fetching utb random article---')
       fetchArticle({
-        variables: { publication: PublicationEnum.utb, isRandom: true }
+        variables: { publication: PublicationEnum.utb, isRandom: true },
       })
       setUTBFetched(true)
     }
@@ -76,9 +82,11 @@ const ArticleScreenComp = ({
   useEffect(() => {
     if (article) {
       navigation.setParams({
+        currPublication,
         handlePress,
+        handleShare,
         alreadySaved: savedArticles.some(obj => obj.slug == article.slug),
-        article: article
+        article: article,
       })
     }
   }, [settings.savedArticles, article])
@@ -102,7 +110,7 @@ const ArticleScreenComp = ({
       slug: article.slug,
       article: article,
       saved_at: date,
-      publication: articlePublication
+      publication: articlePublication,
     }
 
     let newSavedArticles = [...savedArticles]
@@ -120,6 +128,24 @@ const ArticleScreenComp = ({
   const handlePress = (alreadySaved, routeArticle) => {
     if (!alreadySaved) saveHandler(routeArticle)
     else deleteHandler(routeArticle)
+  }
+
+  const handleShare = () => {
+    let domain
+    switch (currPublication) {
+      case PublicationEnum.dp:
+        domain = 'thedp'
+        break
+      case PublicationEnum.street:
+        domain = '34st'
+        break
+      default:
+        domain = 'underthebutton'
+        break
+    }
+
+    const URL = `https://${domain}.com/article/${article.slug}`
+    console.log(URL)
   }
 
   /* Currently author and image credits are not supported by
@@ -147,13 +173,13 @@ const ArticleScreenComp = ({
       <View
         style={{
           paddingHorizontal: 20,
-          paddingVertical: 10
+          paddingVertical: 10,
         }}
       >
         <Text
           style={{
             fontFamily: GEOMETRIC_BOLD,
-            fontSize: 16
+            fontSize: 16,
           }}
         >{`By: ${AUTHORS(article.authors)}`}</Text>
         {/* <Text
@@ -181,7 +207,7 @@ const ArticleScreenComp = ({
             } else if (slug && publication) {
               navigation.push(ArticleScreenName, {
                 articleSlug: slug,
-                articlePublication: publication
+                articlePublication: publication,
               })
             }
           }}
@@ -192,12 +218,12 @@ const ArticleScreenComp = ({
               fontSize: 18,
               lineHeight: 28,
               paddingBottom: 30,
-              fontFamily: BODY_SERIF
+              fontFamily: BODY_SERIF,
             },
             a: {
-              fontSize: 18
+              fontSize: 18,
             },
-            img: { paddingBottom: 10 }
+            img: { paddingBottom: 10 },
           }}
           ignoredTags={['div']}
         />
@@ -211,19 +237,25 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
   animationEnabled: true,
   headerRight: () => {
     const {
-      params: { handlePress, alreadySaved, article }
+      params: { handlePress, handleShare, alreadySaved, article, articleSlug },
     } = route
-    let icon = 'bookmark-outline'
-    if (alreadySaved) icon = 'bookmark'
+
+    let icon = alreadySaved ? 'bookmark' : 'bookmark-outline'
+    let shareIcon =
+      Platform.OS == 'ios' ? 'share-outline' : 'share-social-outline'
 
     return (
-      <TouchableOpacity onPress={() => handlePress(alreadySaved, article)}>
-        <View style={{ paddingRight: 10 }}>
-          <Ionicons name={icon} size={25} color="black" />
-        </View>
-      </TouchableOpacity>
+      <View style={{ flexDirection: 'row', width: 90, marginRight: 15 }}>
+        <TouchableOpacity onPress={() => handleShare()}>
+          <Ionicons name={shareIcon} size={30} color="black" />
+        </TouchableOpacity>
+        <View style={{ flex: 1 }} />
+        <TouchableOpacity onPress={() => handlePress(alreadySaved, article)}>
+          <Ionicons name={icon} size={30} color="black" />
+        </TouchableOpacity>
+      </View>
     )
-  }
+  },
 })
 
 const mapStateToProps = ({ publication, settings }) => {
