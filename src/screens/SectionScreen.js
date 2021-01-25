@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from 'react'
 import { StyleSheet, Text, ScrollView, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
 import { useQuery } from '@apollo/client'
-import { useFocusEffect } from '@react-navigation/native'
 
 import { ArticleList, LogoActivityIndicator } from '../components'
 import { SECTIONS_QUERY } from '../utils/queries'
@@ -40,14 +39,18 @@ const SectionScreenComp = ({
     }
   }, [])
 
-  useFocusEffect(
-    useCallback(() => {
-      if (data) {
-        console.log(`refetching ${slug} screen article`)
-        refetch()
-      }
-    }, [])
-  )
+  useEffect(() => {
+    if (data) {
+      console.log(`refetching ${slug} screen article`)
+      refetch()
+    }
+  }, [])
+
+  // useFocusEffect(
+  //   useCallback(() => {
+
+  //   }, [])
+  // )
 
   const onRefresh = useCallback(() => {
     refetch()
