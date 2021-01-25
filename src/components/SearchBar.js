@@ -32,6 +32,7 @@ import {
 import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
 import { SearchArticleList } from './ArticleList'
 import { PublicationEnum } from '../utils/constants'
+import { LogoActivityIndicator } from './LogoActivityIndicator'
 
 const DP_SEARCH_IMG = require('../static/empty-states/search/dp.png')
 const ST_SEARCH_IMG = require('../static/empty-states/search/street.png')
@@ -88,7 +89,7 @@ const SearchView = ({ filter, navigation, publication }) => {
     fetchPolicy: 'cache-and-network',
   })
 
-  if (!data) return <ActivityIndicator />
+  if (!data) return <LogoActivityIndicator />
 
   const noResultsImg = GET_NORESULTS_IMG(publication)
 

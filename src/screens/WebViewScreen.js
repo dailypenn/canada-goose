@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ActivityIndicator, Dimensions, View } from 'react-native'
 import WebView from 'react-native-webview'
+import { LogoActivityIndicator } from '../components'
 
 const { width, height } = Dimensions.get('window')
 
@@ -14,17 +15,7 @@ const WebViewContainer = ({ link }) => {
         style={{ flex: 1, backgroundColor: '#333333' }}
         source={{ uri: link }}
       />
-      {visible && (
-        <ActivityIndicator
-          style={{
-            height: 10,
-            width: 10,
-            position: 'absolute',
-            top: height / 2 - 60,
-            left: width / 2 - 5
-          }}
-        />
-      )}
+      {visible && <LogoActivityIndicator />}
     </View>
   )
 }
