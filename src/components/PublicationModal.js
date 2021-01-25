@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import Modal from 'react-native-modal'
 import * as Haptics from 'expo-haptics'
+import * as Analytics from 'expo-firebase-analytics'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { PublicationPrimaryColor } from '../utils/branding'
@@ -179,10 +180,21 @@ const PublicationModalComp = ({
     return unsubscribe
   }, [navigation])
 
+  const publicationSwitchAnalytics = async (from, to) => {
+    console.log('LOGGING EVENT: PUBLICATION SWITCHED')
+    await Analytics.logEvent('PublicationSwitched', {
+      from: from,
+      to: to,
+      purpose: 'user switched the publication',
+    })
+  }
+
   // Function called when user selects a new publication
   const selectedPublication = pub => {
     if (!currentlySwiping) {
       if (pub != currPublication) {
+        publicationSwitchAnalytics(currPublication, pub)
+
         updateSwitchLogo(GET_SMALL_LOGO(pub))
         updateSwitchColor(PublicationPrimaryColor(pub))
 

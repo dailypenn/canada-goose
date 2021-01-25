@@ -6,9 +6,15 @@ import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 import { useLazyQuery } from '@apollo/client'
 import * as Haptics from 'expo-haptics'
+import * as Analytics from 'expo-firebase-analytics'
 
 import { PictureHeadline, ActivityIndicator } from '../components'
-import { IMAGE_URL, AUTHORS, getArticlePubSlug, isValidURL } from '../utils/helperFunctions'
+import {
+  IMAGE_URL,
+  AUTHORS,
+  getArticlePubSlug,
+  isValidURL,
+} from '../utils/helperFunctions'
 import { PublicationEnum } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
@@ -20,7 +26,7 @@ const ArticleScreenComp = ({
   route,
   currPublication,
   settings,
-  dispatch
+  dispatch,
 }) => {
   const [article, setArticle] = useState(route.params.article)
   const [utbFetched, setUTBFetched] = useState(false)
@@ -30,7 +36,7 @@ const ArticleScreenComp = ({
     : currPublication
 
   const [fetchArticle, { loading, data }] = useLazyQuery(ARTICLE_QUERY, {
-    fetchPolicy: 'cache-and-network'
+    fetchPolicy: 'cache-and-network',
   })
 
   // if (!article) {
@@ -40,7 +46,19 @@ const ArticleScreenComp = ({
   //   })
   // }
 
+  const userViewedArticleAnalytics = async () => {
+    if (route.params.articlePublication == null) {
+      await Analytics.logEvent('ArticleViewd', {
+        headline: article.headline,
+        slug: article.slug,
+        purpose: 'user clicked on headline to read article',
+      })
+    }
+  }
+
   useEffect(() => {
+    userViewedArticleAnalytics()
+
     dispatch(updateNavigation(navigation))
 
     const { isUTBRandom } = route.params
@@ -51,13 +69,13 @@ const ArticleScreenComp = ({
       fetchArticle({
         variables: {
           publication: articlePublication,
-          slug: route.params.articleSlug
-        }
+          slug: route.params.articleSlug,
+        },
       })
     } else if (isUTBRandom && !utbFetched) {
       console.log('---fetching utb random article---')
       fetchArticle({
-        variables: { publication: PublicationEnum.utb, isRandom: true }
+        variables: { publication: PublicationEnum.utb, isRandom: true },
       })
       setUTBFetched(true)
     }
@@ -78,7 +96,7 @@ const ArticleScreenComp = ({
       navigation.setParams({
         handlePress,
         alreadySaved: savedArticles.some(obj => obj.slug == article.slug),
-        article: article
+        article: article,
       })
     }
   }, [settings.savedArticles, article])
@@ -102,7 +120,7 @@ const ArticleScreenComp = ({
       slug: article.slug,
       article: article,
       saved_at: date,
-      publication: articlePublication
+      publication: articlePublication,
     }
 
     let newSavedArticles = [...savedArticles]
@@ -147,13 +165,13 @@ const ArticleScreenComp = ({
       <View
         style={{
           paddingHorizontal: 20,
-          paddingVertical: 10
+          paddingVertical: 10,
         }}
       >
         <Text
           style={{
             fontFamily: GEOMETRIC_BOLD,
-            fontSize: 16
+            fontSize: 16,
           }}
         >{`By: ${AUTHORS(article.authors)}`}</Text>
         {/* <Text
@@ -181,7 +199,7 @@ const ArticleScreenComp = ({
             } else if (slug && publication) {
               navigation.push(ArticleScreenName, {
                 articleSlug: slug,
-                articlePublication: publication
+                articlePublication: publication,
               })
             }
           }}
@@ -192,12 +210,12 @@ const ArticleScreenComp = ({
               fontSize: 18,
               lineHeight: 28,
               paddingBottom: 30,
-              fontFamily: BODY_SERIF
+              fontFamily: BODY_SERIF,
             },
             a: {
-              fontSize: 18
+              fontSize: 18,
             },
-            img: { paddingBottom: 10 }
+            img: { paddingBottom: 10 },
           }}
           ignoredTags={['div']}
         />
@@ -211,7 +229,7 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
   animationEnabled: true,
   headerRight: () => {
     const {
-      params: { handlePress, alreadySaved, article }
+      params: { handlePress, alreadySaved, article },
     } = route
     let icon = 'bookmark-outline'
     if (alreadySaved) icon = 'bookmark'
@@ -223,7 +241,7 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
         </View>
       </TouchableOpacity>
     )
-  }
+  },
 })
 
 const mapStateToProps = ({ publication, settings }) => {

@@ -13,6 +13,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
+import * as Analytics from 'expo-firebase-analytics'
 
 import {
   SectionHeader,
@@ -64,37 +65,6 @@ const HomeView = ({
     name: section,
     articles: data[section],
   }))
-
-  // Storage.clearAll()
-
-  // TODO (liz): defaultSections cannot be stored inside useState
-  // otherwise, redux won't update it for some reasons
-  // a quick fix I can think of is to put this function inside HomeScreenComp
-  // and pass the ordered sections to this component
-  const loadHomeSectionOrder = async () => {
-    let order = await Storage.getItem(GET_HOME_FEED_ORDER_KEY(publication))
-    if (order == null) return defaultSections
-    if (order == GET_HOME_SECTIONS(publication)) return defaultSections
-
-    let newSections = []
-    order.forEach(section => {
-      defaultSections.forEach(item => {
-        if (section == item.name) {
-          newSections.push(item)
-        }
-      })
-    })
-
-    return newSections
-  }
-
-  // const sections = await loadHomeSectionOrder()
-
-  // console.log(sections.length)
-
-  // useEffect(() => {
-  //   loadHomeSectionOrder()
-  // }, [reorderHomeSection])
 
   const onRefresh = useCallback(() => {
     refetch()
@@ -312,6 +282,18 @@ const HomeScreenComp = ({
     setAppStateState(appState.current)
     console.log('AppState', appState.current)
   }
+
+  const publicationAnalytics = async pub => {
+    await Analytics.logEvent('PublicationRead', {
+      publication: pub,
+      purpose: 'user is reading content from this publication',
+    })
+  }
+
+  useEffect(() => {
+    console.log('LOGGING EVENT: PUBLICATION READ', currPublication)
+    publicationAnalytics(currPublication)
+  }, [currPublication])
 
   useEffect(() => {
     AppState.addEventListener('change', handleAppStateChange)
