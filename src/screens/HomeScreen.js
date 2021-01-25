@@ -6,7 +6,7 @@ import {
   RefreshControl,
   AppState,
   Animated,
-  Image,
+  Image
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -21,16 +21,15 @@ import {
   ArticleList,
   HeaderLine,
   EmptyState,
-  LogoActivityIndicator,
+  LogoActivityIndicator
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
   GET_HOME_SECTIONS,
   GET_HOME_SECTION_NAME,
-  GET_HOME_QUERIES,
+  GET_HOME_QUERIES
 } from '../utils/helperFunctions'
-import { GET_HOME_FEED_ORDER_KEY, Storage } from '../utils/storage'
 import { PublicationEnum } from '../utils/constants'
 import { toggleScrollToTop } from '../actions'
 import { EmptyStateEnum } from '../components/EmptyState'
@@ -38,14 +37,18 @@ import { PublicationPrimaryColor } from '../utils/branding'
 import { GEOMETRIC_BOLD } from '../utils/fonts'
 import { publicationAnalytics } from '../utils/analytics'
 
+const DP_HEADER_LOGO = require('../static/logos/dp-logo-large-black.png')
+const ST_HEADER_LOGO = require('../static/logos/34st-header.png')
+const UTB_HEADER_LOGO = require('../static/logos/utb-logo-large-black.png')
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   text1: {
-    color: '#fff',
-  },
+    color: '#fff'
+  }
 })
 
 const HomeView = ({
@@ -56,21 +59,22 @@ const HomeView = ({
   loading,
   refetch,
   scrollToTop,
-  dispatchToggleScrollToTop,
+  dispatchToggleScrollToTop
 }) => {
   const scrollViewRef = useRef(null)
   const { centerpiece: centerArticles, top: topArticles } = data
 
   const sectionData = homeSections.map(section => ({
     name: section,
-    articles: data[section],
+    articles: data[section]
   }))
 
   const onRefresh = useCallback(() => {
+    console.log('---manually refreshing home articles---')
     refetch()
   })
 
-  //Header consts
+  // Header consts
   const [scrollY, setScrollY] = useState(new Animated.Value(0))
   const minScroll = 10
   const AnimatedHeaderHeight = getStatusBarHeight(true) + 50
@@ -81,18 +85,15 @@ const HomeView = ({
   const clampedScrollY = scrollY.interpolate({
     inputRange: [minScroll, minScroll + 1],
     outputRange: [0, 1],
-    extrapolateLeft: 'clamp',
+    extrapolateLeft: 'clamp'
   })
   const minusScrollY = Animated.multiply(clampedScrollY, -1)
   const translateY = Animated.diffClamp(minusScrollY, negativeHeaderHeight, 0)
   const opacity = translateY.interpolate({
     inputRange: [negativeHeaderHeight, 0],
     outputRange: [0, 1],
-    extrapolate: 'clamp',
+    extrapolate: 'clamp'
   })
-  const DP_HEADER_LOGO = require('../static/logos/dp-logo-large-black.png')
-  const ST_HEADER_LOGO = require('../static/logos/34st-header.png')
-  const UTB_HEADER_LOGO = require('../static/logos/utb-logo-large-black.png')
 
   const GET_HEADER_LOGO = () => {
     switch (publication) {
@@ -110,7 +111,6 @@ const HomeView = ({
       if (scrollToTop && scrollViewRef) {
         scrollViewRef.current.scrollTo({ x: 0, y: 0 })
         dispatchToggleScrollToTop()
-        // refetch()
       }
     }, [scrollToTop])
   )
@@ -126,9 +126,9 @@ const HomeView = ({
             zIndex: 2,
             backgroundColor: '#fff',
             borderBottomColor: '#AAA',
-            borderBottomWidth: 1,
+            borderBottomWidth: 1
           },
-          { transform: [{ translateY: translateY }] },
+          { transform: [{ translateY: translateY }] }
         ]}
       ></Animated.View>
       <Animated.View
@@ -148,14 +148,14 @@ const HomeView = ({
             //paddingTop: getStatusBarHeight(true) + 12,
             ...Platform.select({
               ios: {
-                paddingTop: getStatusBarHeight(true) + 10,
+                paddingTop: getStatusBarHeight(true) + 10
               },
               android: {
-                paddingTop: getStatusBarHeight(true),
-              },
-            }),
+                paddingTop: getStatusBarHeight(true)
+              }
+            })
           },
-          { transform: [{ translateY: translateY }] },
+          { transform: [{ translateY: translateY }] }
         ]}
       >
         <View style={{ height: 28 }}>
@@ -170,19 +170,19 @@ const HomeView = ({
         style={{
           paddingTop: Platform.select({
             android: 0, //AnimatedHeaderHeight,
-            ios: 0,
-          }),
+            ios: 0
+          })
         }}
         contentInset={{ top: AnimatedHeaderHeight }}
         contentOffset={{
           x: 0,
-          y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight }),
+          y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight })
         }}
         contentContainerStyle={{
           paddingTop: Platform.select({
             android: AnimatedHeaderHeight,
-            ios: 0,
-          }),
+            ios: 0
+          })
         }}
         automaticallyAdjustContentInsets={false}
         onScroll={Animated.event(
@@ -203,7 +203,7 @@ const HomeView = ({
           activeOpacity={1}
           onPress={() =>
             NAVIGATE_TO_ARTICLE_SCREEN(navigation, 'HomeArticle', {
-              article: centerArticles[0],
+              article: centerArticles[0]
             })
           }
         >
@@ -253,11 +253,11 @@ const HomeScreenComp = ({
   currPublication,
   scrollToTop,
   settings,
-  dispatchToggleScrollToTop,
+  dispatchToggleScrollToTop
 }) => {
   // const [lastActiveTime, setLastActiveTime] = useState(Date.now())
-  const appState = useRef(AppState.currentState)
-  const [appStateState, setAppStateState] = useState(appState.current)
+  // const appState = useRef(AppState.currentState)
+  // const [appStateState, setAppStateState] = useState(appState.current)
   const { homeSectionPreferences, _ } = settings
 
   let homeSections =
@@ -266,48 +266,48 @@ const HomeScreenComp = ({
       ? GET_HOME_SECTIONS(currPublication)
       : homeSectionPreferences[currPublication]
 
-  const handleAppStateChange = nextAppState => {
-    if (
-      appState.current.match(/inactive|background/) &&
-      nextAppState === 'active'
-    ) {
-      console.log('App has come to the foreground!')
-    }
+  // const handleAppStateChange = nextAppState => {
+  //   if (
+  //     appState.current.match(/inactive|background/) &&
+  //     nextAppState === 'active'
+  //   ) {
+  //     console.log('App has come to the foreground!')
+  //   }
 
-    if (appState.current.match(/active/)) {
-      console.log('App has come to the background!')
-    }
+  //   if (appState.current.match(/active/)) {
+  //     console.log('App has come to the background!')
+  //   }
 
-    appState.current = nextAppState
-    setAppStateState(appState.current)
-    console.log('AppState', appState.current)
-  }
+  //   appState.current = nextAppState
+  //   setAppStateState(appState.current)
+  //   console.log('AppState', appState.current)
+  // }
 
   useEffect(() => {
     console.log('LOGGING EVENT: PUBLICATION READ', currPublication)
     publicationAnalytics(currPublication)
   }, [currPublication])
 
-  useEffect(() => {
-    AppState.addEventListener('change', handleAppStateChange)
+  // useEffect(() => {
+  //   AppState.addEventListener('change', handleAppStateChange)
 
-    return () => {
-      AppState.removeEventListener('change', handleAppStateChange)
-    }
-  }, [])
+  //   return () => {
+  //     AppState.removeEventListener('change', handleAppStateChange)
+  //   }
+  // }, [])
 
   const { loading, error, data, refetch } = useQuery(
     GET_HOME_QUERIES(currPublication)
   )
 
-  useFocusEffect(
-    useCallback(() => {
-      if (data) {
-        console.log('---refetching home screen articles---')
-        refetch()
-      }
-    }, [data])
-  )
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     if (data) {
+  //       console.log('---refetching home screen articles---')
+  //       refetch()
+  //     }
+  //   }, [data])
+  // )
 
   if (error) {
     console.log(error)
@@ -317,7 +317,7 @@ const HomeScreenComp = ({
           backgroundColor: 'white',
           flex: 1,
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'center'
         }}
       >
         <EmptyState
@@ -325,13 +325,11 @@ const HomeScreenComp = ({
             publication: currPublication,
             type: EmptyStateEnum.error,
             caption:
-              'Uh oh! We are unable to load your content. Please check your connection and try again.',
+              'Uh oh! We are unable to load your content. Please check your connection and try again.'
           }}
         />
         <TouchableOpacity
-          onPress={() => {
-            refetch()
-          }}
+          onPress={() => refetch()}
           style={{
             activeOpacity: 0.8,
             width: 100,
@@ -339,7 +337,7 @@ const HomeScreenComp = ({
             backgroundColor: PublicationPrimaryColor(currPublication),
             marginTop: 30,
             borderRadius: 10,
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}
         >
           <Text
@@ -348,7 +346,7 @@ const HomeScreenComp = ({
               alignSelf: 'center',
               fontSize: 18,
               fontFamily: GEOMETRIC_BOLD,
-              color: 'white',
+              color: 'white'
             }}
           >
             Refresh
@@ -360,13 +358,6 @@ const HomeScreenComp = ({
   if (!data) return <LogoActivityIndicator />
 
   let HOME_SECTIONS = GET_HOME_SECTIONS(currPublication)
-
-  const { centerpiece: centerArticles, top: topArticles } = data
-
-  const defaultSections = HOME_SECTIONS.map(section => ({
-    name: section,
-    articles: data[section],
-  }))
 
   return (
     <HomeView
@@ -389,7 +380,7 @@ const mapStateToProps = ({ publication, settings }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  dispatchToggleScrollToTop: () => dispatch(toggleScrollToTop()),
+  dispatchToggleScrollToTop: () => dispatch(toggleScrollToTop())
 })
 
 export const HomeScreen = connect(
