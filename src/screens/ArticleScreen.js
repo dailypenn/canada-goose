@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, TouchableOpacity, Alert } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  Share,
+  Platform,
+  ScrollView,
+} from 'react-native'
 import HTML from 'react-native-render-html'
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 import { useLazyQuery } from '@apollo/client'
 import * as Haptics from 'expo-haptics'
 
-import { PictureHeadline, ActivityIndicator } from '../components'
+import { PictureHeadline, ActivityIndicator, ArticleList } from '../components'
 import {
   IMAGE_URL,
   AUTHORS,
@@ -19,7 +26,10 @@ import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { saveNewArticle, unsaveArticle, updateNavigation } from '../actions'
 import { ARTICLE_QUERY } from '../utils/queries'
-import { Platform } from 'react-native'
+import {
+  PublicationPrimaryColor,
+  PublicationPrimaryColorRgba,
+} from '../utils/branding'
 
 const ArticleScreenComp = ({
   navigation,
@@ -130,7 +140,7 @@ const ArticleScreenComp = ({
     else deleteHandler(routeArticle)
   }
 
-  const handleShare = () => {
+  const handleShare = async () => {
     let domain
     switch (currPublication) {
       case PublicationEnum.dp:
@@ -145,7 +155,22 @@ const ArticleScreenComp = ({
     }
 
     const URL = `https://${domain}.com/article/${article.slug}`
-    console.log(URL)
+    try {
+      const result = await Share.share({
+        message: Platform.OS == 'ios' ? null : URL,
+        url: Platform.OS == 'ios' ? URL : null,
+      })
+
+      if (result.action == Share.sharedAction) {
+        // TODO: Analytics on shares
+        console.log('Shared!')
+      } else {
+        // TODO: Analysics
+        console.log('Dismissed Share!')
+      }
+    } catch (error) {
+      alert(error)
+    }
   }
 
   /* Currently author and image credits are not supported by
