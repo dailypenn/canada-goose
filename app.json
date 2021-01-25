@@ -19,7 +19,8 @@
     "ios": {
       "package": "com.thedailypennsylvanian.mobileapp",
       "googleServicesFile": "./GoogleService-Info.plist",
-      "supportsTablet": false
+      "supportsTablet": false,
+      "requireFullScreen": true
     },
     "android": {
       "package": "com.thedailypennsylvanian.mobileapp",

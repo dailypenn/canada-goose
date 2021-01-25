@@ -4,6 +4,7 @@ import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import AsyncStorage from '@react-native-community/async-storage'
 import { Provider } from 'react-redux'
+import * as ScreenOrientation from 'expo-screen-orientation'
 
 import TabNavigationController from './NavigationController'
 import { loadFonts } from './src/utils/fonts'
@@ -49,6 +50,10 @@ const App = () => {
   useEffect(() => {
     const loadAssets = async () => {
       await loadFonts()
+      await ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP
+      )
+
       let onboarded = await Storage.getItem(IS_ONBOARDED_KEY)
       hasCompletedOnboarding(onboarded == true)
       updateAttachment(onboarded != true)
