@@ -85,6 +85,14 @@ export const SETTINGS_SECTIONS = [
     name: 'Features',
     items: [
       {
+        id: 'recruiting cell',
+        icon: 'happy',
+        color: '#c4c4c4',
+        name: 'DP Tech & Design are Recruiting',
+        screenName: 'WebView',
+        props: { link: 'https://projects.thedp.com/2021/join/' },
+      },
+      {
         id: 'about cell',
         icon: 'people',
         color: '#c4c4c4',
@@ -95,7 +103,6 @@ export const SETTINGS_SECTIONS = [
       {
         id: 'dp cell',
         icon: 'newspaper',
-        color: '#4d49de',
         color: PublicationPrimaryColor(PublicationEnum.dp),
 
         name: 'The Daily Pennsylvanian',

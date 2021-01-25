@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Switch } from 'react-native-gesture-handler'
+import { ComingSoonView } from '../components/ComingSoon'
 
 import { GEOMETRIC_REGULAR } from '../utils/fonts'
 
@@ -68,10 +69,11 @@ const NotificationCell = ({ info }) => {
 
 export const NotificationScreen = () => {
   return (
-    <View style={styles.container}>
-      {NOTIFICATIONS.map((l, i) => (
-        <NotificationCell key={i} info={l} />
-      ))}
-    </View>
+    // <View style={styles.container}>
+    //   {NOTIFICATIONS.map((l, i) => (
+    //     <NotificationCell key={i} info={l} />
+    //   ))}
+    // </View>
+    <ComingSoonView />
   )
 }

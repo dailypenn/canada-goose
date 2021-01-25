@@ -19,7 +19,7 @@ const PROFILE_PIC_SIZE = width / 5
 const PROFILE_PIC_CELL_SIZE = width / 4
 
 const TEAM_INTRO =
-  "Hi, we're the tech department at the DP: a team of student software engineers!"
+  "Hi, we're the tech department at the DP: a team of student developers and designers!"
 
 const MISSION =
   "Tasked with migrating content from the harsh winter envrionment of print publication to the temperate oasis of mobile communication, DP Tech faced a challenge like no other: what do we name our objective? It wasn't until we passed the hundreth person with a overpriced winter jacket that we found an animal which so accurately captured the migratory nature of our mission and Penn culture as a whole. And so, equipped with a fitting name, we hatched our plan.\n\nOperation Canada Goose is here to bring you the best of the Daily Pennyslvanian straight to your down-lined pockets."

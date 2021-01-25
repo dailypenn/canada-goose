@@ -12,6 +12,7 @@ import { connect } from 'react-redux'
 
 import { DISPLAY_SERIF_BLACK, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { PublicationEnum, SETTINGS_SECTIONS } from '../utils/constants'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const DP_LOGO_GREY = require('../static/logos/dp-logo-small-white.png')
 const STREET_LOGO_GREY = require('../static/logos/street-logo-small-white.png')
@@ -200,16 +201,18 @@ const SettingsScreenComp = ({ navigation, currPublication }) => {
           <Text style={styles.title}>Account</Text>
         </View>
       </View>
-      <PublicationCell currPublication={currPublication} />
-      {SETTINGS_SECTIONS.map((l, i) => (
-        <SettingsSection
-          key={l.id}
-          items={l.items}
-          navigateToScreen={(screen, props) =>
-            navigation.navigate(screen, props)
-          }
-        />
-      ))}
+      <ScrollView>
+        <PublicationCell currPublication={currPublication} />
+        {SETTINGS_SECTIONS.map((l, i) => (
+          <SettingsSection
+            key={l.id}
+            items={l.items}
+            navigateToScreen={(screen, props) =>
+              navigation.navigate(screen, props)
+            }
+          />
+        ))}
+      </ScrollView>
     </SafeAreaView>
   )
 }
