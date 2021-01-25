@@ -64,7 +64,7 @@ const ArticleScreenComp = ({
 
   useEffect(() => {
     if (route.params.articlePublication == null)
-      userViewedArticleAnalytics(article)
+      userViewedArticleAnalytics(article.headline, article.slug)
 
     dispatch(updateNavigation(navigation))
 
