@@ -1,5 +1,3 @@
-import moment from 'moment'
-
 import {
   DP_HOME_SECTIONS,
   STREET_HOME_SECTIONS,
@@ -30,9 +28,6 @@ export const IMAGE_URL = (attachment_uuid, extension, publication) => {
 
   return `https://snworksceo.imgix.net/${ceo_prefix}/${attachment_uuid}.sized-1000x1000.${extension}?w=1000`
 }
-
-export const TIME_AGO = published_at =>
-  moment(published_at, 'YYYY-MM-DD HH:mm:ss').fromNow()
 
 export const AUTHORS = authorArr => {
   const authorNames = authorArr.map(({ name }) => name)
