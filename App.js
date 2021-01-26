@@ -49,6 +49,7 @@ const App = () => {
 
   useEffect(() => {
     const loadAssets = async () => {
+      // await AsyncStorage.clear()
       await loadFonts()
       await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.PORTRAIT_UP
