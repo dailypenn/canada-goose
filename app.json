@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "goose-from-canada",
-    "slug": "goose-from-canada",
+    "name": "DP+",
+    "slug": "dp-plus",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/static/icon.png",
@@ -17,18 +17,20 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.thedailypennsylvanian.mobileapp",
+      "bundleIdentifier": "com.thedailypennsylvanian.dp-plus",
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": false,
-      "requireFullScreen": true
+      "requireFullScreen": true,
+      "buildNumber": "1.0.0"
     },
     "android": {
-      "package": "com.thedailypennsylvanian.mobileapp",
+      "package": "com.thedailypennsylvanian.dp-plus",
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./src/static/adaptive-icon.png",
         "backgroundColor": "#00000"
-      }
+      },
+      "versionCode": 1
     },
     "web": {
       "config": {
