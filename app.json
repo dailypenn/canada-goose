@@ -17,14 +17,14 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.thedailypennsylvanian.dp-plus",
+      "bundleIdentifier": "com.thedailypennsylvanian.mobileapp",
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": false,
       "requireFullScreen": true,
       "buildNumber": "1.0.0"
     },
     "android": {
-      "package": "com.thedailypennsylvanian.dp-plus",
+      "package": "com.thedailypennsylvanian.mobileapp",
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./src/static/adaptive-icon.png",
