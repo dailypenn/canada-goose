@@ -78,6 +78,14 @@ export const SETTINGS_SECTIONS = [
         screenName: 'WebView',
         props: { link: 'https://www.thedp.com/page/app-privacy' },
       },
+      {
+        id: 'library cell',
+        icon: 'library',
+        color: '#66d464',
+        name: '3rd party libraries',
+        screenName: 'WebView',
+        props: { link: 'https://www.thedp.com/page/third-party-library' },
+      },
     ],
   },
   {
