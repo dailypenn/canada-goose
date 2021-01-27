@@ -21,7 +21,7 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": false,
       "requireFullScreen": true,
-      "buildNumber": "1.0.1"
+      "buildNumber": "1"
     },
     "android": {
       "package": "com.thedailypennsylvanian.mobileapp",
