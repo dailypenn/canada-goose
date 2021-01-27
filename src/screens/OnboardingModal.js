@@ -8,7 +8,7 @@ import {
   Image,
   Easing,
   Dimensions,
-  Platform
+  Platform,
 } from 'react-native'
 
 import { GradientButton, OnboardingInfoPage } from '../components'
@@ -22,7 +22,7 @@ const PageZero = ({ onNextPage }) => {
   const DP_LOGO = require('../static/logos/dp-logo-small-grey.png')
   const UTB_LOGO = require('../static/logos/utb-logo-small-grey.png')
   const STREET_LOGO = require('../static/logos/street-logo-small-grey.png')
-  const ICON = require('../static/icon.jpg')
+  const ICON = require('../static/icon.png')
   const [buttonWidth] = useState(new Animated.Value(0))
   const [buttonOpacity] = useState(new Animated.Value(0))
   const [buttonPosY] = useState(new Animated.Value(100))
@@ -32,7 +32,7 @@ const PageZero = ({ onNextPage }) => {
   const [logoOpacity] = useState(new Animated.Value(0))
   const logoSkew = logoPosY.interpolate({
     inputRange: [0, 150],
-    outputRange: ['0deg', '20deg']
+    outputRange: ['0deg', '20deg'],
   })
 
   const [dpOpacity] = useState(new Animated.Value(0))
@@ -46,60 +46,60 @@ const PageZero = ({ onNextPage }) => {
       toValue: MAX_GRADIENT_BUTTON_SIZE,
       duration: 1000,
       useNativeDriver: false,
-      easing: Easing.out(Easing.exp)
+      easing: Easing.out(Easing.exp),
     })
 
     const fadeInButton = Animated.timing(buttonOpacity, {
       toValue: 1,
       duration: 1500,
-      useNativeDriver: false
+      useNativeDriver: false,
     })
 
     const yMoveButton = Animated.timing(buttonPosY, {
       toValue: 0,
       duration: 1000,
       useNativeDriver: false,
-      easing: Easing.out(Easing.exp)
+      easing: Easing.out(Easing.exp),
     })
 
     const fadeInLogo = Animated.timing(logoOpacity, {
       toValue: 1,
       duration: 1000,
-      useNativeDriver: false
+      useNativeDriver: false,
     })
 
     const yMoveLogo = Animated.timing(logoPosY, {
       toValue: 0,
       duration: 1000,
       useNativeDriver: false,
-      easing: Easing.out(Easing.exp)
+      easing: Easing.out(Easing.exp),
     })
 
     const dpFade = Animated.timing(dpOpacity, {
       toValue: MAX_PUB_OPACITY,
       duration: 1500,
       useNativeDriver: false,
-      easing: Easing.out(Easing.cubic)
+      easing: Easing.out(Easing.cubic),
     })
 
     const streetFade = Animated.timing(streetOpacity, {
       toValue: MAX_PUB_OPACITY,
       duration: 1500,
       useNativeDriver: false,
-      easing: Easing.out(Easing.cubic)
+      easing: Easing.out(Easing.cubic),
     })
 
     const utbFade = Animated.timing(utbOpacity, {
       toValue: MAX_PUB_OPACITY,
       duration: 1500,
       useNativeDriver: false,
-      easing: Easing.out(Easing.cubic)
+      easing: Easing.out(Easing.cubic),
     })
 
     Animated.sequence(
       [
         Animated.delay(200),
-        Animated.stagger(100, [dpFade, streetFade, utbFade])
+        Animated.stagger(100, [dpFade, streetFade, utbFade]),
       ],
       {}
     ).start()
@@ -118,55 +118,55 @@ const PageZero = ({ onNextPage }) => {
       toValue: MIN_GRAIDENT_BUTTON_SIZE,
       duration: EXIT_ANIM_TIME,
       useNativeDriver: false,
-      easing: Easing.in(Easing.cubic)
+      easing: Easing.in(Easing.cubic),
     }).start()
 
     await Animated.timing(buttonOpacity, {
       toValue: 0,
       duration: EXIT_ANIM_TIME,
       useNativeDriver: false,
-      easing: Easing.in(Easing.cubic)
+      easing: Easing.in(Easing.cubic),
     }).start()
 
     await Animated.timing(buttonPosX, {
       toValue: -200,
       duration: EXIT_ANIM_TIME,
       useNativeDriver: false,
-      easing: Easing.in(Easing.cubic)
+      easing: Easing.in(Easing.cubic),
     }).start()
 
     const fadeOutLogo = Animated.timing(logoOpacity, {
       toValue: 0,
       duration: EXIT_ANIM_TIME,
       useNativeDriver: false,
-      easing: Easing.out(Easing.cubic)
+      easing: Easing.out(Easing.cubic),
     })
 
     const logoXMove = Animated.timing(logoPosX, {
       toValue: -200,
       duration: EXIT_ANIM_TIME,
       useNativeDriver: false,
-      easing: Easing.in(Easing.cubic)
+      easing: Easing.in(Easing.cubic),
     })
 
     const dpFadeOut = Animated.timing(dpOpacity, {
       toValue: 0,
       duration: EXIT_ANIM_TIME,
       useNativeDriver: false,
-      easing: Easing.out(Easing.cubic)
+      easing: Easing.out(Easing.cubic),
     })
 
     const streetFadeOut = Animated.timing(streetOpacity, {
       toValue: 0,
       duration: EXIT_ANIM_TIME,
       useNativeDriver: false,
-      easing: Easing.out(Easing.cubic)
+      easing: Easing.out(Easing.cubic),
     })
     const utbFadeOut = Animated.timing(utbOpacity, {
       toValue: 0,
       duration: EXIT_ANIM_TIME,
       useNativeDriver: false,
-      easing: Easing.out(Easing.cubic)
+      easing: Easing.out(Easing.cubic),
     })
 
     Animated.stagger(100, [dpFadeOut, streetFadeOut, utbFadeOut]).start()
@@ -184,7 +184,7 @@ const PageZero = ({ onNextPage }) => {
       style={{
         width: '100%',
         height: '100%',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
       }}
     >
       <View
@@ -194,7 +194,7 @@ const PageZero = ({ onNextPage }) => {
           position: 'absolute',
           top:
             Dimensions.get('screen').height *
-            (Platform.OS == 'ios' ? 0.15 : 0.05)
+            (Platform.OS == 'ios' ? 0.15 : 0.05),
         }}
       >
         <Animated.View
@@ -207,10 +207,10 @@ const PageZero = ({ onNextPage }) => {
             transform: [
               { translateY: logoPosY },
               { translateX: logoPosX },
-              { rotate: logoSkew }
+              { rotate: logoSkew },
             ],
             opacity: logoOpacity,
-            overflow: 'hidden'
+            overflow: 'hidden',
           }}
         >
           <Image
@@ -219,7 +219,7 @@ const PageZero = ({ onNextPage }) => {
               flex: 1,
               resizeMode: 'contain',
               alignSelf: 'center',
-              overflow: 'hidden'
+              overflow: 'hidden',
             }}
           />
         </Animated.View>
@@ -230,7 +230,7 @@ const PageZero = ({ onNextPage }) => {
             marginTop: 30,
             alignSelf: 'center',
             flexDirection: 'row',
-            alignContent: 'space-between'
+            alignContent: 'space-between',
           }}
         >
           <Animated.Image
@@ -259,7 +259,7 @@ const PageZero = ({ onNextPage }) => {
           bottom: Platform.OS == 'ios' ? 50 : 30,
           alignSelf: 'center',
           justifySelf: 'center',
-          transform: [{ translateY: buttonPosY }, { translateX: buttonPosX }]
+          transform: [{ translateY: buttonPosY }, { translateX: buttonPosX }],
         }}
         onButtonPress={() => {
           exitZero()
@@ -276,8 +276,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     height: 50,
     aspectRatio: 1,
-    marginHorizontal: 15
-  }
+    marginHorizontal: 15,
+  },
 })
 
 const ONBOARDING_CONTENT = [
@@ -286,26 +286,26 @@ const ONBOARDING_CONTENT = [
     boldText:
       'To switch publications, LONG-PRESS the home feed icon in the tab bar. You can also do this under the Account Page.',
     mediaUrl: require('../static/onboarding/feed.jpg'),
-    title: 'Home Feed'
+    title: 'Home Feed',
   },
   {
     text:
       'Browse recent content by category, or start a search for any article.\n',
     mediaUrl: require('../static/onboarding/discover.jpg'),
-    title: 'Discover'
+    title: 'Discover',
   },
   {
     text:
       'Manage bookmarks, switch publications, and customize your home feed ordering.',
     mediaUrl: require('../static/onboarding/account.jpg'),
-    title: 'Account'
+    title: 'Account',
   },
   {
     text:
       "You're all set! Enjoy all of your favorite content from The Daily Pennsylvanian, 34th Street, and Under the Button all in one place.",
     mediaUrl: require('../static/onboarding/done.jpg'),
-    title: "You're Ready!"
-  }
+    title: "You're Ready!",
+  },
 ]
 
 const NUM_PAGES = ONBOARDING_CONTENT.length
@@ -318,7 +318,7 @@ export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
     animationIn: 'fadeIn',
     animationInTiming: 500,
     animationOut: 'fadeOut',
-    animationOutTiming: 1500
+    animationOutTiming: 1500,
   }
 
   const onNextPage = async () => {
@@ -356,7 +356,7 @@ export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
         height: '100%',
         justifyContent: 'center',
         margin: 0,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
       }}
       children={currPage}
     ></Modal>
