@@ -28,7 +28,7 @@
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./src/static/adaptive-icon.png",
-        "backgroundColor": "#00000"
+        "backgroundColor": "#000000"
       },
       "versionCode": 2
     },
