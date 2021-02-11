@@ -21,7 +21,8 @@ import {
   ArticleList,
   HeaderLine,
   EmptyState,
-  LogoActivityIndicator
+  LogoActivityIndicator,
+  PublicationModal
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
@@ -140,12 +141,10 @@ const HomeView = ({
             zIndex: 3,
             backgroundColor: '#fff',
             alignItems: 'center',
-            //justifyContent: "center",
             borderBottomColor: '#DDD',
             borderBottomWidth: 1,
             paddingVertical: 4,
             opacity: opacity,
-            //paddingTop: getStatusBarHeight(true) + 12,
             ...Platform.select({
               ios: {
                 paddingTop: getStatusBarHeight(true) + 10
@@ -159,10 +158,10 @@ const HomeView = ({
         ]}
       >
         <View style={{ height: 28 }}>
-          <Image
-            source={GET_HEADER_LOGO()}
-            style={{ flex: 1, resizeMode: 'contain' }}
-          />
+            <Image
+              source={GET_HEADER_LOGO()}
+              style={{ flex: 1, resizeMode: 'contain' }}
+            />
         </View>
       </Animated.View>
 

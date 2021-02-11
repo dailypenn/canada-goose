@@ -6,7 +6,8 @@ import {
   Alert,
   Share,
   Platform,
-  ScrollView
+  ScrollView,
+  Linking
 } from 'react-native'
 import HTML from 'react-native-render-html'
 import { connect } from 'react-redux'
@@ -224,7 +225,8 @@ const ArticleScreenComp = ({
               name === 'HomeArticle' ? 'HomeArticle' : 'SectionArticle'
 
             if (!slug && isValidURL(href)) {
-              navigation.navigate(browserScreenName, { link: href })
+              Linking.openURL(href)
+              //navigation.navigate(browserScreenName, { link: href })
             } else if (slug && publication) {
               navigation.push(ArticleScreenName, {
                 articleSlug: slug,
