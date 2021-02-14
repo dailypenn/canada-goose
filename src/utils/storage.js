@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
 const HOME_FEED_ORDER_KEY = 'home feed order'
+export const LAST_VIEWED_PUBLICATION_KEY = 'last viewed publication'
 
 export const GET_HOME_FEED_ORDER_KEY = publication =>
   HOME_FEED_ORDER_KEY + publication
