@@ -14,6 +14,7 @@ import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 import { useLazyQuery } from '@apollo/client'
 import * as Haptics from 'expo-haptics'
+import ImageView from 'react-native-image-viewing'
 
 import { PictureHeadline, LogoActivityIndicator } from '../components'
 import {
