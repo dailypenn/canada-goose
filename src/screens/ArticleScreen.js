@@ -2,19 +2,21 @@ import React, { useEffect, useState } from 'react'
 import {
   Text,
   View,
+  Image,
   TouchableOpacity,
   Alert,
   Share,
   Platform,
   ScrollView,
   Linking,
+  useWindowDimensions,
 } from 'react-native'
+import ImageView from 'react-native-image-viewing'
 import HTML from 'react-native-render-html'
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 import { useLazyQuery } from '@apollo/client'
 import * as Haptics from 'expo-haptics'
-import ImageView from 'react-native-image-viewing'
 
 import { PictureHeadline, LogoActivityIndicator } from '../components'
 import {
@@ -38,6 +40,8 @@ import {
   PublicationPrimaryColor,
   PublicationPrimaryColorRgba,
 } from '../utils/branding'
+import { Touchable } from 'react-native'
+import { Dimensions } from 'react-native'
 
 const ArticleScreenComp = ({
   navigation,
@@ -47,6 +51,9 @@ const ArticleScreenComp = ({
   dispatch,
 }) => {
   const [article, setArticle] = useState(route.params.article)
+  const [modalVisible, isModalVisible] = useState(false)
+  const [imgURI, updateimgURI] = useState(null)
+
   const [utbFetched, setUTBFetched] = useState(false)
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
   const articlePublication = route.params.articlePublication
@@ -178,9 +185,14 @@ const ArticleScreenComp = ({
   }
 
   if (loading || !article) return <LogoActivityIndicator />
-
   return (
     <ScrollView style={{ backgroundColor: 'white' }}>
+      <ImageView
+        visible={modalVisible}
+        onRequestClose={() => isModalVisible(false)}
+        imageIndex={0}
+        images={[{ uri: imgURI }]}
+      />
       <PictureHeadline
         headline={article.headline}
         time={article.published_at}
@@ -270,9 +282,49 @@ const ArticleScreenComp = ({
               fontFamily: GEOMETRIC_BOLD,
               color: PublicationPrimaryColor(currPublication),
             },
-            img: { marginBottom: 15 },
           }}
+          contentWidth={useWindowDimensions().width}
           allowWhitespaceNodes={false}
+          renderers={{
+            img: (htmlAttribs, passProps) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    updateimgURI(htmlAttribs.src)
+                    isModalVisible(true)
+                  }}
+                  key={passProps.key}
+                  style={{
+                    width: '100%',
+                    marginBottom: 15,
+                    justifyContent: 'center',
+                    alignContent: 'center',
+                    alignSelf: 'center',
+                    aspectRatio:
+                      htmlAttribs['data-width'] / htmlAttribs['data-height'] ??
+                      1,
+                  }}
+                  activeOpacity={0.9}
+                >
+                  <Image
+                    source={{ uri: htmlAttribs.uri }}
+                    style={{
+                      flex: 1,
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: 'blue',
+                      resizeMode: 'center',
+                      top: 0,
+                      position: 'absolute',
+                      alignSelf: 'center',
+                      borderRadius: 2,
+                    }}
+                  />
+                  <Text>Hello</Text>
+                </TouchableOpacity>
+              )
+            },
+          }}
         />
       </View>
     </ScrollView>
