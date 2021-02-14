@@ -7,7 +7,7 @@ import {
   Share,
   Platform,
   ScrollView,
-  Linking
+  Linking,
 } from 'react-native'
 import HTML from 'react-native-render-html'
 import { connect } from 'react-redux'
@@ -20,21 +20,30 @@ import {
   IMAGE_URL,
   getArticlePubSlug,
   isValidURL,
-  PREFIXED_AUTHORS
+  PREFIXED_AUTHORS,
 } from '../utils/helperFunctions'
 import { PublicationEnum } from '../utils/constants'
-import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
+import {
+  BODY_SERIF,
+  BODY_SERIF_BOLD,
+  BODY_SERIF_ITALIC,
+  GEOMETRIC_BOLD,
+} from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { saveNewArticle, unsaveArticle, updateNavigation } from '../actions'
 import { ARTICLE_QUERY } from '../utils/queries'
 import { userViewedArticleAnalytics } from '../utils/analytics'
+import {
+  PublicationPrimaryColor,
+  PublicationPrimaryColorRgba,
+} from '../utils/branding'
 
 const ArticleScreenComp = ({
   navigation,
   route,
   currPublication,
   settings,
-  dispatch
+  dispatch,
 }) => {
   const [article, setArticle] = useState(route.params.article)
   const [utbFetched, setUTBFetched] = useState(false)
@@ -44,7 +53,7 @@ const ArticleScreenComp = ({
     : currPublication
 
   const [fetchArticle, { loading, data }] = useLazyQuery(ARTICLE_QUERY, {
-    fetchPolicy: 'cache-and-network'
+    fetchPolicy: 'cache-and-network',
   })
 
   useEffect(() => {
@@ -61,13 +70,13 @@ const ArticleScreenComp = ({
       fetchArticle({
         variables: {
           publication: articlePublication,
-          slug: route.params.articleSlug
-        }
+          slug: route.params.articleSlug,
+        },
       })
     } else if (isUTBRandom && !utbFetched) {
       console.log('---fetching utb random article---')
       fetchArticle({
-        variables: { publication: PublicationEnum.utb, isRandom: true }
+        variables: { publication: PublicationEnum.utb, isRandom: true },
       })
       setUTBFetched(true)
     }
@@ -90,7 +99,7 @@ const ArticleScreenComp = ({
         handlePress,
         handleShare,
         alreadySaved: savedArticles.some(obj => obj.slug == article.slug),
-        article: article
+        article: article,
       })
     }
   }, [settings.savedArticles, article])
@@ -114,7 +123,7 @@ const ArticleScreenComp = ({
       slug: article.slug,
       article: article,
       saved_at: date,
-      publication: articlePublication
+      publication: articlePublication,
     }
 
     let newSavedArticles = [...savedArticles]
@@ -152,7 +161,7 @@ const ArticleScreenComp = ({
     try {
       const result = await Share.share({
         message: Platform.OS == 'ios' ? null : URL,
-        url: Platform.OS == 'ios' ? URL : null
+        url: Platform.OS == 'ios' ? URL : null,
       })
 
       if (result.action == Share.sharedAction) {
@@ -168,9 +177,6 @@ const ArticleScreenComp = ({
   }
 
   if (loading || !article) return <LogoActivityIndicator />
-
-  // console.log(article.dominantMedia.authors)
-  // console.log(`${article.slug} is being rendered`)
 
   return (
     <ScrollView style={{ backgroundColor: 'white' }}>
@@ -189,14 +195,14 @@ const ArticleScreenComp = ({
       <View
         style={{
           paddingHorizontal: 20,
-          paddingVertical: 10
+          paddingVertical: 10,
         }}
       >
         {Boolean(article.authors.length) && (
           <Text
             style={{
               fontFamily: GEOMETRIC_BOLD,
-              fontSize: 16
+              fontSize: 16,
             }}
           >
             {PREFIXED_AUTHORS('By:', article.authors)}
@@ -206,7 +212,7 @@ const ArticleScreenComp = ({
           <Text
             style={{
               fontFamily: GEOMETRIC_BOLD,
-              fontSize: 16
+              fontSize: 16,
             }}
           >
             {PREFIXED_AUTHORS('Photo Credit:', article.dominantMedia.authors)}
@@ -230,25 +236,42 @@ const ArticleScreenComp = ({
             } else if (slug && publication) {
               navigation.push(ArticleScreenName, {
                 articleSlug: slug,
-                articlePublication: publication
+                articlePublication: publication,
               })
             }
           }}
-          source={{ html: article.content }}
-          // contentWidth={useWindowDimensions().width}
+          source={{
+            html: article.content,
+          }}
           tagsStyles={{
             p: {
               fontSize: 18,
               lineHeight: 28,
-              paddingBottom: 30,
-              fontFamily: BODY_SERIF
+              marginBottom: 20,
+              fontFamily: BODY_SERIF,
             },
             a: {
-              fontSize: 18
+              fontSize: 18,
             },
-            img: { paddingBottom: 10 }
+            i: {
+              fontSize: 18,
+              lineHeight: 28,
+              fontFamily: BODY_SERIF_ITALIC,
+            },
+            b: {
+              fontSize: 18,
+              lineHeight: 28,
+              fontFamily: BODY_SERIF_BOLD,
+            },
+            strong: {
+              fontSize: 18,
+              lineHeight: 28,
+              fontFamily: GEOMETRIC_BOLD,
+              color: PublicationPrimaryColor(currPublication),
+            },
+            img: { marginBottom: 15 },
           }}
-          ignoredTags={['div']}
+          allowWhitespaceNodes={false}
         />
       </View>
     </ScrollView>
@@ -260,7 +283,7 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
   animationEnabled: true,
   headerRight: () => {
     const {
-      params: { handlePress, handleShare, alreadySaved, article, articleSlug }
+      params: { handlePress, handleShare, alreadySaved, article, articleSlug },
     } = route
 
     let icon = alreadySaved ? 'bookmark' : 'bookmark-outline'
@@ -278,7 +301,7 @@ ArticleScreenComp.navigationOptions = ({ route }) => ({
         </TouchableOpacity>
       </View>
     )
-  }
+  },
 })
 
 const mapStateToProps = ({ publication, settings }) => {
