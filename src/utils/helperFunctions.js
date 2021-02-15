@@ -37,6 +37,14 @@ export const AUTHORS = authorArr => {
   return authorNames.join(', ')
 }
 
+export const PREFIXED_AUTHORS = (prefix, authorArr) => {
+  if (!authorArr.length) {
+    return ''
+  }
+
+  return `${prefix} ${AUTHORS(authorArr)}`
+}
+
 export const PARTIAL_NAVIGATE = (navigation, toScreen, f) => {
   return params => f(navigation, toScreen, params)
 }

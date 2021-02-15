@@ -3,7 +3,11 @@ import { View } from 'react-native'
 
 import { Tagline } from './Tagline'
 import { PictureHeadline } from './PictureHeadline'
-import { IMAGE_URL, parseAbstract } from '../utils/helperFunctions'
+import {
+  IMAGE_URL,
+  parseAbstract,
+  PREFIXED_AUTHORS,
+} from '../utils/helperFunctions'
 
 export const HeadlineArticle = ({ data, publication }) => {
   const {
@@ -11,7 +15,7 @@ export const HeadlineArticle = ({ data, publication }) => {
     published_at,
     abstract,
     dominantMedia: { attachment_uuid, extension },
-    tag
+    tag,
   } = data
 
   // TODO: CLEAN UP -- A LOT
@@ -25,6 +29,7 @@ export const HeadlineArticle = ({ data, publication }) => {
         imageUrl={IMAGE_URL(attachment_uuid, extension, publication)}
         category={tag}
         publication={publication}
+        photoCred={PREFIXED_AUTHORS('Credit: ', data.dominantMedia.authors)}
       />
       <Tagline tagline={parsedAbstract} publication={publication} />
     </View>
