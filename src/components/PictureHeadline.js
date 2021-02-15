@@ -15,6 +15,7 @@ import {
   GEOMETRIC_BOLD,
   GEOMETRIC_REGULAR,
 } from '../utils/fonts'
+import { SafeAreaView } from 'react-native'
 const styles = StyleSheet.create({
   imageBackground: {
     flex: 1,
@@ -92,6 +93,7 @@ export const PictureHeadline = ({
   imageUrl,
   publication,
   isArticleView,
+  photoCred,
 }) => {
   const [visible, setIsVisible] = useState(false)
 
@@ -155,7 +157,24 @@ export const PictureHeadline = ({
           images={[{ uri: imageUrl }]}
           visible={visible}
           imageIndex={0}
-          onRequestClose={() => setIsVisible(false)}
+          onRequestClose={() => {
+            if (imageUrl) setIsVisible(false)
+          }}
+          FooterComponent={() => (
+            <SafeAreaView>
+              <Text
+                style={{
+                  color: 'white',
+                  padding: 20,
+                  fontFamily: GEOMETRIC_BOLD,
+                  shadowRadius: 5,
+                  fontSize: 16,
+                }}
+              >
+                {photoCred}
+              </Text>
+            </SafeAreaView>
+          )}
         />
       </TouchableOpacity>
     )
