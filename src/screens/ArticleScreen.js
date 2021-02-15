@@ -9,16 +9,19 @@ import {
   Platform,
   ScrollView,
   Linking,
-  useWindowDimensions,
 } from 'react-native'
-import ImageView from 'react-native-image-viewing'
-import HTML from 'react-native-render-html'
+
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 import { useLazyQuery } from '@apollo/client'
 import * as Haptics from 'expo-haptics'
 
-import { PictureHeadline, LogoActivityIndicator } from '../components'
+import {
+  PictureHeadline,
+  LogoActivityIndicator,
+  HeadlineArticle,
+  CustomHTML,
+} from '../components'
 import {
   IMAGE_URL,
   getArticlePubSlug,
@@ -36,13 +39,6 @@ import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { saveNewArticle, unsaveArticle, updateNavigation } from '../actions'
 import { ARTICLE_QUERY } from '../utils/queries'
 import { userViewedArticleAnalytics } from '../utils/analytics'
-import {
-  PublicationPrimaryColor,
-  PublicationPrimaryColorRgba,
-} from '../utils/branding'
-import { Touchable } from 'react-native'
-import { Dimensions } from 'react-native'
-
 const ArticleScreenComp = ({
   navigation,
   route,
@@ -51,9 +47,6 @@ const ArticleScreenComp = ({
   dispatch,
 }) => {
   const [article, setArticle] = useState(route.params.article)
-  const [modalVisible, isModalVisible] = useState(false)
-  const [imgURI, updateimgURI] = useState(null)
-
   const [utbFetched, setUTBFetched] = useState(false)
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
   const articlePublication = route.params.articlePublication
@@ -187,24 +180,7 @@ const ArticleScreenComp = ({
   if (loading || !article) return <LogoActivityIndicator />
   return (
     <ScrollView style={{ backgroundColor: 'white' }}>
-      <ImageView
-        visible={modalVisible}
-        onRequestClose={() => isModalVisible(false)}
-        imageIndex={0}
-        images={[{ uri: imgURI }]}
-      />
-      <PictureHeadline
-        headline={article.headline}
-        time={article.published_at}
-        imageUrl={IMAGE_URL(
-          article.dominantMedia.attachment_uuid,
-          article.dominantMedia.extension,
-          articlePublication
-        )}
-        category={article.tag}
-        publication={articlePublication}
-        isArticleView={true}
-      />
+      <HeadlineArticle data={article} publication={articlePublication} />
       <View
         style={{
           paddingHorizontal: 20,
@@ -232,93 +208,7 @@ const ArticleScreenComp = ({
           </Text>
         )}
       </View>
-      <View style={{ padding: 20 }}>
-        <HTML
-          onLinkPress={(_, href) => {
-            const { publication, slug } = getArticlePubSlug(href)
-            const { name } = route
-
-            const browserScreenName =
-              name === 'HomeArticle' ? 'HomeBrowser' : 'SectionBrowser'
-            const ArticleScreenName =
-              name === 'HomeArticle' ? 'HomeArticle' : 'SectionArticle'
-
-            if (!slug && isValidURL(href)) {
-              Linking.openURL(href)
-              //navigation.navigate(browserScreenName, { link: href })
-            } else if (slug && publication) {
-              navigation.push(ArticleScreenName, {
-                articleSlug: slug,
-                articlePublication: publication,
-              })
-            }
-          }}
-          source={{
-            html: article.content,
-          }}
-          tagsStyles={{
-            p: {
-              fontSize: 18,
-              lineHeight: 28,
-              marginBottom: 20,
-              fontFamily: BODY_SERIF,
-            },
-            a: {
-              fontSize: 18,
-            },
-            i: {
-              fontSize: 18,
-              lineHeight: 28,
-              fontFamily: BODY_SERIF_ITALIC,
-            },
-            b: {
-              fontSize: 18,
-              lineHeight: 28,
-              fontFamily: BODY_SERIF_BOLD,
-            },
-            strong: {
-              fontSize: 18,
-              lineHeight: 28,
-              fontFamily: GEOMETRIC_BOLD,
-              color: PublicationPrimaryColor(currPublication),
-            },
-          }}
-          contentWidth={useWindowDimensions().width}
-          allowWhitespaceNodes={false}
-          renderers={{
-            img: (htmlAttribs, passProps) => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    updateimgURI(htmlAttribs.src)
-                    isModalVisible(true)
-                  }}
-                  key={passProps.key}
-                  style={{
-                    width: '100%',
-                    minHeight: 100,
-                    marginBottom: 15,
-                  }}
-                  activeOpacity={0.9}
-                >
-                  <Image
-                    source={{ uri: htmlAttribs.src }}
-                    style={{
-                      flex: 1,
-                      backgroundColor: 'blue',
-                      resizeMode: 'center',
-                      aspectRatio:
-                        htmlAttribs['data-width'] / htmlAttribs['data-height'],
-                      borderRadius: 2,
-                    }}
-                  />
-                  <Ionicons icon="expand-outline" size={30} color={'white'} />
-                </TouchableOpacity>
-              )
-            },
-          }}
-        />
-      </View>
+      <CustomHTML {...{ article: article, currPublication: currPublication }} />
     </ScrollView>
   )
 }
