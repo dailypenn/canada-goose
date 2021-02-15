@@ -176,6 +176,25 @@ const ArticleScreenComp = ({
       alert(error)
     }
   }
+  const onLinkPress = (_, href) => {
+    const { publication, slug } = getArticlePubSlug(href)
+    const { name } = route
+
+    const browserScreenName =
+      name === 'HomeArticle' ? 'HomeBrowser' : 'SectionBrowser'
+    const ArticleScreenName =
+      name === 'HomeArticle' ? 'HomeArticle' : 'SectionArticle'
+
+    if (!slug && isValidURL(href)) {
+      Linking.openURL(href)
+      //navigation.navigate(browserScreenName, { link: href })
+    } else if (slug && publication) {
+      navigation.push(ArticleScreenName, {
+        articleSlug: slug,
+        articlePublication: publication,
+      })
+    }
+  }
 
   if (loading || !article) return <LogoActivityIndicator />
   return (

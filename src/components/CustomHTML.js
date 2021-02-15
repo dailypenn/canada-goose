@@ -11,10 +11,16 @@ import {
   GEOMETRIC_BOLD,
   GEOMETRIC_REGULAR,
 } from '../utils/fonts'
+import {
+  IMAGE_URL,
+  getArticlePubSlug,
+  isValidURL,
+  PREFIXED_AUTHORS,
+} from '../utils/helperFunctions'
 import { PublicationPrimaryColor } from '../utils/branding'
 import { Text } from 'react-native'
 
-export const CustomHTML = ({ article, currPublication }) => {
+export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
   const [modalVisible, isModalVisible] = useState(false)
   const [imgURI, updateimgURI] = useState(null)
 
@@ -44,26 +50,6 @@ export const CustomHTML = ({ article, currPublication }) => {
       fontFamily: GEOMETRIC_BOLD,
       color: PublicationPrimaryColor(currPublication),
     },
-  }
-
-  const onLinkPress = (_, href) => {
-    const { publication, slug } = getArticlePubSlug(href)
-    const { name } = route
-
-    const browserScreenName =
-      name === 'HomeArticle' ? 'HomeBrowser' : 'SectionBrowser'
-    const ArticleScreenName =
-      name === 'HomeArticle' ? 'HomeArticle' : 'SectionArticle'
-
-    if (!slug && isValidURL(href)) {
-      Linking.openURL(href)
-      //navigation.navigate(browserScreenName, { link: href })
-    } else if (slug && publication) {
-      navigation.push(ArticleScreenName, {
-        articleSlug: slug,
-        articlePublication: publication,
-      })
-    }
   }
 
   const IMGRenderer = (htmlAttribs, passProps) => {
