@@ -1,13 +1,6 @@
-import React, { useState } from 'react'
-import {
-  View,
-  StyleSheet,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-} from 'react-native'
+import React from 'react'
+import { View, StyleSheet, ImageBackground, Text } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import ImageView from 'react-native-image-viewing'
 
 import { CategoryTag } from './CategoryTag'
 import {
@@ -15,12 +8,11 @@ import {
   GEOMETRIC_BOLD,
   GEOMETRIC_REGULAR,
 } from '../utils/fonts'
-import { SafeAreaView } from 'react-native'
+
 const styles = StyleSheet.create({
   imageBackground: {
     flex: 1,
     paddingHorizontal: 15,
-    backgroundColor: 'black',
   },
 
   headline: {
@@ -93,10 +85,7 @@ export const PictureHeadline = ({
   imageUrl,
   publication,
   isArticleView,
-  photoCred,
 }) => {
-  const [visible, setIsVisible] = useState(false)
-
   if (
     imageUrl ==
       'https://snworksceo.imgix.net/dpn/null.sized-1000x1000.null?w=1000' ||
@@ -128,13 +117,7 @@ export const PictureHeadline = ({
     )
   } else {
     return (
-      <TouchableOpacity
-        style={styles.view}
-        onPress={() => {
-          setIsVisible(true)
-        }}
-        activeOpacity={0.9}
-      >
+      <View style={styles.view}>
         <ImageBackground
           style={styles.imageBackground}
           source={{ uri: imageUrl }}
@@ -153,30 +136,7 @@ export const PictureHeadline = ({
             {headline}
           </Text>
         </ImageBackground>
-        <ImageView
-          images={[{ uri: imageUrl }]}
-          visible={visible}
-          imageIndex={0}
-          onRequestClose={() => {
-            if (imageUrl) setIsVisible(false)
-          }}
-          FooterComponent={() => (
-            <SafeAreaView>
-              <Text
-                style={{
-                  color: 'white',
-                  padding: 20,
-                  fontFamily: GEOMETRIC_BOLD,
-                  shadowRadius: 5,
-                  fontSize: 16,
-                }}
-              >
-                {photoCred}
-              </Text>
-            </SafeAreaView>
-          )}
-        />
-      </TouchableOpacity>
+      </View>
     )
   }
 }
