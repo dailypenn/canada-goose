@@ -199,16 +199,16 @@ const HomeView = ({
         }
         ref={scrollViewRef}
       >
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() =>
+        <HeadlineArticle
+          data={centerArticles[0]}
+          publication={publication}
+          afterPress={() =>
             NAVIGATE_TO_ARTICLE_SCREEN(navigation, 'HomeArticle', {
               article: centerArticles[0],
             })
           }
-        >
-          <HeadlineArticle data={centerArticles[0]} publication={publication} />
-        </TouchableOpacity>
+          inArticleView={false}
+        />
 
         <HeaderLine publication={publication} />
         <SectionHeader title="Top Stories" publication={publication} />

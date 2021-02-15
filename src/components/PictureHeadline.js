@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import {
   View,
   StyleSheet,
-  ImageBackground,
   Text,
   TouchableOpacity,
+  Easing,
+  Animated,
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import ImageView from 'react-native-image-viewing'
@@ -16,11 +17,11 @@ import {
   GEOMETRIC_REGULAR,
 } from '../utils/fonts'
 import { SafeAreaView } from 'react-native'
+import MaskedView from '@react-native-community/masked-view'
 const styles = StyleSheet.create({
-  imageBackground: {
+  background: {
     flex: 1,
     paddingHorizontal: 15,
-    backgroundColor: 'black',
   },
 
   headline: {
@@ -84,6 +85,14 @@ const styles = StyleSheet.create({
     aspectRatio: 0.9,
     backgroundColor: '#fff',
   },
+  imageMask: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    alignSelf: 'center',
+    backgroundColor: 'black',
+  },
+  image: { width: '100%', height: '100%' },
 })
 
 export const PictureHeadline = ({
@@ -92,10 +101,29 @@ export const PictureHeadline = ({
   time,
   imageUrl,
   publication,
-  isArticleView,
   photoCred,
+  afterPress,
+  inArticleView,
 }) => {
   const [visible, setIsVisible] = useState(false)
+  const [zoom] = useState(new Animated.Value(1.05))
+
+  const onPressIn = () => {
+    Animated.timing(zoom, {
+      toValue: 1,
+      duration: 400,
+      easing: Easing.out(Easing.exp),
+      useNativeDriver: true,
+    }).start()
+  }
+
+  const onPressOut = () =>
+    Animated.timing(zoom, {
+      toValue: 1.05,
+      duration: 400,
+      easing: Easing.out(Easing.exp),
+      useNativeDriver: true,
+    }).start()
 
   if (
     imageUrl ==
@@ -113,7 +141,7 @@ export const PictureHeadline = ({
           </View>
           <Text
             style={styles.blackHeadline}
-            numberOfLines={isArticleView ? 10 : 4}
+            numberOfLines={inArticleView ? 10 : 4}
           >
             {headline}
           </Text>
@@ -131,14 +159,28 @@ export const PictureHeadline = ({
       <TouchableOpacity
         style={styles.view}
         onPress={() => {
-          setIsVisible(true)
+          if (inArticleView) setIsVisible(true)
+          else if (afterPress) afterPress()
         }}
-        activeOpacity={0.9}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        activeOpacity={1}
       >
-        <ImageBackground
-          style={styles.imageBackground}
-          source={{ uri: imageUrl }}
+        <MaskedView
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+          }}
+          maskElement={<View style={styles.imageMask} />}
         >
+          <Animated.Image
+            style={{ ...styles.image, transform: [{ scale: zoom }] }}
+            source={{ url: imageUrl }}
+          />
+        </MaskedView>
+
+        <View style={styles.background} source={{ uri: imageUrl }}>
           <LinearGradient
             colors={['transparent', 'rgba(0,0,0,0.8)']}
             style={styles.gradient}
@@ -149,10 +191,10 @@ export const PictureHeadline = ({
             <View style={styles.spacer} />
             <Text style={styles.time}>{time}</Text>
           </View>
-          <Text style={styles.headline} numberOfLines={isArticleView ? 10 : 4}>
+          <Text style={styles.headline} numberOfLines={inArticleView ? 10 : 4}>
             {headline}
           </Text>
-        </ImageBackground>
+        </View>
         <ImageView
           images={[{ uri: imageUrl }]}
           visible={visible}

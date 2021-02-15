@@ -199,7 +199,11 @@ const ArticleScreenComp = ({
   if (loading || !article) return <LogoActivityIndicator />
   return (
     <ScrollView style={{ backgroundColor: 'white' }}>
-      <HeadlineArticle data={article} publication={articlePublication} />
+      <HeadlineArticle
+        data={article}
+        publication={articlePublication}
+        inArticleView={true}
+      />
       <View
         style={{
           marginHorizontal: 20,

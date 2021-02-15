@@ -9,7 +9,12 @@ import {
   PREFIXED_AUTHORS,
 } from '../utils/helperFunctions'
 
-export const HeadlineArticle = ({ data, publication }) => {
+export const HeadlineArticle = ({
+  data,
+  publication,
+  afterPress,
+  inArticleView,
+}) => {
   const {
     headline,
     published_at,
@@ -30,6 +35,8 @@ export const HeadlineArticle = ({ data, publication }) => {
         category={tag}
         publication={publication}
         photoCred={PREFIXED_AUTHORS('Credit: ', data.dominantMedia.authors)}
+        afterPress={afterPress}
+        inArticleView={inArticleView}
       />
       <Tagline tagline={parsedAbstract} publication={publication} />
     </View>
