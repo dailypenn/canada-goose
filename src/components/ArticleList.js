@@ -41,10 +41,12 @@ export const ArticleList = ({
         )
       } else if (i == articlesLength - 1) {
         return (
-          <TouchableOpacity
+          <InteractiveHomeComponent
             key={i}
-            activeOpacity={1}
-            onPress={() => navigateToArticleScreen({ article: el })}
+            touchOpacProps={{
+              activeOpacity: 1,
+              onPress: () => navigateToArticleScreen({ article: el }),
+            }}
           >
             <HorizontalArticleCell
               title={headline}
@@ -52,14 +54,16 @@ export const ArticleList = ({
               timeAgo={published_at}
               authors={AUTHORS(authors)}
             />
-          </TouchableOpacity>
+          </InteractiveHomeComponent>
         )
       } else {
         return (
-          <TouchableOpacity
+          <InteractiveHomeComponent
             key={i}
-            activeOpacity={1}
-            onPress={() => navigateToArticleScreen({ article: el })}
+            touchOpacProps={{
+              activeOpacity: 1,
+              onPress: () => navigateToArticleScreen({ article: el }),
+            }}
           >
             <HorizontalArticleCell
               title={headline}
@@ -74,7 +78,7 @@ export const ArticleList = ({
                 marginHorizontal: 20,
               }}
             />
-          </TouchableOpacity>
+          </InteractiveHomeComponent>
         )
       }
     })}
