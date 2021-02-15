@@ -183,29 +183,55 @@ const ArticleScreenComp = ({
       <HeadlineArticle data={article} publication={articlePublication} />
       <View
         style={{
+          marginHorizontal: 20,
           paddingHorizontal: 20,
-          paddingVertical: 10,
+          paddingVertical: 20,
+          backgroundColor: '#EEE',
+          borderRadius: 5,
         }}
       >
         {Boolean(article.authors.length) && (
-          <Text
+          <View
             style={{
-              fontFamily: GEOMETRIC_BOLD,
-              fontSize: 16,
+              flexDirection: 'row',
+              alignContent: 'center',
+              paddingBottom: 10,
             }}
           >
-            {PREFIXED_AUTHORS('By:', article.authors)}
-          </Text>
+            <Ionicons name={'newspaper'} size={18} />
+            <Text
+              style={{
+                fontFamily: GEOMETRIC_BOLD,
+                fontSize: 16,
+                paddingLeft: 8,
+              }}
+            >
+              {PREFIXED_AUTHORS('', article.authors)}
+            </Text>
+          </View>
         )}
         {Boolean(article.dominantMedia.authors.length) && (
-          <Text
+          <View
             style={{
-              fontFamily: GEOMETRIC_BOLD,
-              fontSize: 16,
+              flexDirection: 'row',
+              alignContent: 'center',
             }}
           >
-            {PREFIXED_AUTHORS('Photo Credit:', article.dominantMedia.authors)}
-          </Text>
+            <Ionicons
+              name={'camera'}
+              size={18}
+              style={{ alignSelf: 'center' }}
+            />
+            <Text
+              style={{
+                fontFamily: GEOMETRIC_BOLD,
+                fontSize: 16,
+                paddingLeft: 8,
+              }}
+            >
+              {PREFIXED_AUTHORS('', article.dominantMedia.authors)}
+            </Text>
+          </View>
         )}
       </View>
       <CustomHTML {...{ article: article, currPublication: currPublication }} />
