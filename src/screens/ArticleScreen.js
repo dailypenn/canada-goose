@@ -6,8 +6,7 @@ import {
   Alert,
   Share,
   Platform,
-  ScrollView,
-  Linking
+  ScrollView
 } from 'react-native'
 import HTML from 'react-native-render-html'
 import { connect } from 'react-redux'
@@ -18,9 +17,9 @@ import * as Haptics from 'expo-haptics'
 import { PictureHeadline, LogoActivityIndicator } from '../components'
 import {
   IMAGE_URL,
+  AUTHORS,
   getArticlePubSlug,
-  isValidURL,
-  PREFIXED_AUTHORS
+  isValidURL
 } from '../utils/helperFunctions'
 import { PublicationEnum } from '../utils/constants'
 import { BODY_SERIF, GEOMETRIC_BOLD } from '../utils/fonts'
@@ -167,10 +166,14 @@ const ArticleScreenComp = ({
     }
   }
 
+  /* Currently author and image credits are not supported by
+  GraphQL queries, so hard coding right now */
+  // TODO: Fetch from CEO
+  const photographer = 'Pitt Shure'
+
   if (loading || !article) return <LogoActivityIndicator />
 
-  // console.log(article.dominantMedia.authors)
-  // console.log(`${article.slug} is being rendered`)
+  console.log(`${article.slug} is being rendered`)
 
   return (
     <ScrollView style={{ backgroundColor: 'white' }}>
@@ -192,26 +195,20 @@ const ArticleScreenComp = ({
           paddingVertical: 10
         }}
       >
-        {Boolean(article.authors.length) && (
-          <Text
-            style={{
-              fontFamily: GEOMETRIC_BOLD,
-              fontSize: 16
-            }}
-          >
-            {PREFIXED_AUTHORS('By:', article.authors)}
-          </Text>
-        )}
-        {Boolean(article.dominantMedia.authors.length) && (
-          <Text
-            style={{
-              fontFamily: GEOMETRIC_BOLD,
-              fontSize: 16
-            }}
-          >
-            {PREFIXED_AUTHORS('Photo Credit:', article.dominantMedia.authors)}
-          </Text>
-        )}
+        <Text
+          style={{
+            fontFamily: GEOMETRIC_BOLD,
+            fontSize: 16
+          }}
+        >{`By: ${AUTHORS(article.authors)}`}</Text>
+        {/* <Text
+          style={{
+            fontFamily: GEOMETRIC_BOLD,
+            fontSize: 16,
+          }}
+        >
+          {'Photo Credit: ' + photographer}
+        </Text> */}
       </View>
       <View style={{ padding: 20 }}>
         <HTML
@@ -225,8 +222,7 @@ const ArticleScreenComp = ({
               name === 'HomeArticle' ? 'HomeArticle' : 'SectionArticle'
 
             if (!slug && isValidURL(href)) {
-              Linking.openURL(href)
-              //navigation.navigate(browserScreenName, { link: href })
+              navigation.navigate(browserScreenName, { link: href })
             } else if (slug && publication) {
               navigation.push(ArticleScreenName, {
                 articleSlug: slug,
