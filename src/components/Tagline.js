@@ -35,6 +35,7 @@ const circleStyle = publication => {
 
 export const Tagline = ({ tagline, publication }) => (
   <View style={styles.view}>
+    <View style={circleStyle(publication)} />
     <Text style={styles.tagline}>{tagline}</Text>
   </View>
 )
