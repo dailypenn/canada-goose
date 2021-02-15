@@ -296,31 +296,23 @@ const ArticleScreenComp = ({
                   key={passProps.key}
                   style={{
                     width: '100%',
+                    minHeight: 100,
                     marginBottom: 15,
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    alignSelf: 'center',
-                    aspectRatio:
-                      htmlAttribs['data-width'] / htmlAttribs['data-height'] ??
-                      1,
                   }}
                   activeOpacity={0.9}
                 >
                   <Image
-                    source={{ uri: htmlAttribs.uri }}
+                    source={{ uri: htmlAttribs.src }}
                     style={{
                       flex: 1,
-                      width: '100%',
-                      height: '100%',
                       backgroundColor: 'blue',
                       resizeMode: 'center',
-                      top: 0,
-                      position: 'absolute',
-                      alignSelf: 'center',
+                      aspectRatio:
+                        htmlAttribs['data-width'] / htmlAttribs['data-height'],
                       borderRadius: 2,
                     }}
                   />
-                  <Text>Hello</Text>
+                  <Ionicons icon="expand-outline" size={30} color={'white'} />
                 </TouchableOpacity>
               )
             },
