@@ -45,7 +45,7 @@ const TabNavigationController = ({ currPublication }) => {
         console.log('on state change')
         const previousRouteName = routeNameRef.current
         const currentRouteName = navigationRef.current.getCurrentRoute().name
-
+        
         if (previousRouteName !== currentRouteName) {
           Analytics.setCurrentScreen(currentRouteName)
         }
