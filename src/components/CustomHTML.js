@@ -101,8 +101,11 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
                   flex: 1,
                   backgroundColor: '#DDD',
                   resizeMode: 'center',
-                  aspectRatio:
-                    htmlAttribs['data-width'] / htmlAttribs['data-height'],
+                  aspectRatio: () => {
+                    const ratio =
+                      htmlAttribs['data-width'] / htmlAttribs['data-height']
+                    return ratio ? ratio : 1
+                  },
                   borderRadius: 2,
                   backgroundColor: 'black',
                 }}
@@ -154,7 +157,7 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
       />
       <View style={{ padding: 20 }}>
         <HTML
-          onLinkPress={onLinkPress}
+          onLinkPress={() => onLinkPress()}
           source={{
             html: article.content,
           }}

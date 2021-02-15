@@ -177,6 +177,7 @@ const ArticleScreenComp = ({
     }
   }
   const onLinkPress = (_, href) => {
+    if (!href) return
     const { publication, slug } = getArticlePubSlug(href)
     const { name } = route
 
@@ -186,7 +187,6 @@ const ArticleScreenComp = ({
       name === 'HomeArticle' ? 'HomeArticle' : 'SectionArticle'
 
     if (!slug && isValidURL(href)) {
-      Linking.openURL(href)
       //navigation.navigate(browserScreenName, { link: href })
     } else if (slug && publication) {
       navigation.push(ArticleScreenName, {
@@ -195,6 +195,7 @@ const ArticleScreenComp = ({
       })
     }
   }
+  console.log(article.content)
 
   if (loading || !article) return <LogoActivityIndicator />
   return (
@@ -207,8 +208,8 @@ const ArticleScreenComp = ({
       <View
         style={{
           marginHorizontal: 20,
-          paddingHorizontal: 20,
-          paddingVertical: 20,
+          paddingHorizontal: 15,
+          paddingVertical: 15,
           backgroundColor: '#EEE',
           borderRadius: 5,
         }}
@@ -218,15 +219,20 @@ const ArticleScreenComp = ({
             style={{
               flexDirection: 'row',
               alignContent: 'center',
-              paddingBottom: 10,
+              paddingBottom: article.dominantMedia.authors.length ? 10 : 0,
             }}
           >
-            <Ionicons name={'newspaper'} size={18} />
+            <Ionicons
+              name={'newspaper'}
+              size={18}
+              style={{ paddingRight: 8 }}
+              color="#444"
+            />
             <Text
               style={{
                 fontFamily: GEOMETRIC_BOLD,
-                fontSize: 16,
-                paddingLeft: 8,
+                fontSize: 12,
+                color: '#444',
               }}
             >
               {PREFIXED_AUTHORS('', article.authors)}
@@ -244,12 +250,14 @@ const ArticleScreenComp = ({
               name={'camera'}
               size={18}
               style={{ alignSelf: 'center' }}
+              color="#444"
             />
             <Text
               style={{
                 fontFamily: GEOMETRIC_BOLD,
-                fontSize: 16,
+                fontSize: 12,
                 paddingLeft: 8,
+                color: '#444',
               }}
             >
               {PREFIXED_AUTHORS('', article.dominantMedia.authors)}
