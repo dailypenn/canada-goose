@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   Easing,
   Animated,
+  SafeAreaView,
 } from 'react-native'
+import MaskedView from '@react-native-community/masked-view'
 import { LinearGradient } from 'expo-linear-gradient'
 import ImageView from 'react-native-image-viewing'
 
@@ -16,8 +18,7 @@ import {
   GEOMETRIC_BOLD,
   GEOMETRIC_REGULAR,
 } from '../utils/fonts'
-import { SafeAreaView } from 'react-native'
-import MaskedView from '@react-native-community/masked-view'
+import { ImageBackground } from 'react-native'
 const styles = StyleSheet.create({
   background: {
     flex: 1,
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: '75%',
+    height: '100%',
   },
 
   spacer: {
@@ -82,7 +83,6 @@ const styles = StyleSheet.create({
 
   view: {
     width: '100%',
-    aspectRatio: 0.9,
     backgroundColor: '#fff',
   },
   imageMask: {
@@ -155,46 +155,58 @@ export const PictureHeadline = ({
       </View>
     )
   } else {
+    const child = (
+      <>
+        <LinearGradient
+          colors={['transparent', 'rgba(0,0,0,0.8)']}
+          style={styles.gradient}
+        />
+        <View style={styles.spacer} />
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <CategoryTag name={category} publication={publication} />
+          <View style={styles.spacer} />
+          <Text style={styles.time}>{time}</Text>
+        </View>
+        <Text style={styles.headline} numberOfLines={inArticleView ? 10 : 4}>
+          {headline}
+        </Text>
+      </>
+    )
+
     return (
       <TouchableOpacity
-        style={styles.view}
+        style={[styles.view, { aspectRatio: inArticleView ? 1.2 : 0.9 }]}
         onPress={() => {
           if (inArticleView) setIsVisible(true)
-          else if (afterPress) afterPress()
+          else afterPress()
         }}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
         activeOpacity={1}
       >
-        <MaskedView
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-          }}
-          maskElement={<View style={styles.imageMask} />}
-        >
-          <Animated.Image
-            style={{ ...styles.image, transform: [{ scale: zoom }] }}
-            source={{ url: imageUrl }}
-          />
-        </MaskedView>
+        {Platform.OS == 'ios' ? (
+          <>
+            <MaskedView
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+              }}
+              maskElement={<View style={styles.imageMask} />}
+            >
+              <Animated.Image
+                style={{ ...styles.image, transform: [{ scale: zoom }] }}
+                source={{ url: imageUrl }}
+              />
+            </MaskedView>
+            <View style={styles.background}>{child}</View>
+          </>
+        ) : (
+          <ImageBackground style={styles.background} source={{ uri: imageUrl }}>
+            {child}
+          </ImageBackground>
+        )}
 
-        <View style={styles.background} source={{ uri: imageUrl }}>
-          <LinearGradient
-            colors={['transparent', 'rgba(0,0,0,0.8)']}
-            style={styles.gradient}
-          />
-          <View style={styles.spacer} />
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <CategoryTag name={category} publication={publication} />
-            <View style={styles.spacer} />
-            <Text style={styles.time}>{time}</Text>
-          </View>
-          <Text style={styles.headline} numberOfLines={inArticleView ? 10 : 4}>
-            {headline}
-          </Text>
-        </View>
         <ImageView
           images={[{ uri: imageUrl }]}
           visible={visible}
