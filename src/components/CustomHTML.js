@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, TouchableOpacity, Image } from 'react-native'
+import { View, TouchableOpacity, Image, Animated, Easing } from 'react-native'
 import ImageView from 'react-native-image-viewing'
 import HTML from 'react-native-render-html'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -18,7 +18,7 @@ import {
   PREFIXED_AUTHORS,
 } from '../utils/helperFunctions'
 import { PublicationPrimaryColor } from '../utils/branding'
-import { Text } from 'react-native'
+import MaskedView from '@react-native-community/masked-view'
 
 export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
   const [modalVisible, isModalVisible] = useState(false)
@@ -52,7 +52,32 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
     },
   }
 
-  const IMGRenderer = (htmlAttribs, passProps) => {
+  const IMGRenderer = (htmlAttribs, passProps, props) => {
+    return (
+      <InLineImage htmlAttribs={htmlAttribs} key={passProps.key}></InLineImage>
+    )
+  }
+
+  const InLineImage = ({ htmlAttribs }) => {
+    const [zoom] = useState(new Animated.Value(1.05))
+
+    const onPressIn = () => {
+      Animated.timing(zoom, {
+        toValue: 1.0,
+        useNativeDriver: false,
+        duration: 400,
+        easing: Easing.out(Easing.exp),
+      }).start()
+    }
+
+    const onPressOut = () => {
+      Animated.timing(zoom, {
+        toValue: 1.05,
+        duration: 300,
+        useNativeDriver: false,
+        easing: Easing.out(Easing.exp),
+      }).start()
+    }
     return (
       <>
         <TouchableOpacity
@@ -60,25 +85,45 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
             updateimgURI(htmlAttribs.src)
             isModalVisible(true)
           }}
-          key={passProps.key}
+          onPressIn={onPressIn}
+          onPressOut={onPressOut}
           style={{
             width: '100%',
             minHeight: 100,
             marginBottom: 15,
           }}
-          activeOpacity={0.9}
+          activeOpacity={1}
         >
-          <Image
-            source={{ uri: htmlAttribs.src }}
-            style={{
-              flex: 1,
-              backgroundColor: '#DDD',
-              resizeMode: 'center',
-              aspectRatio:
-                htmlAttribs['data-width'] / htmlAttribs['data-height'],
-              borderRadius: 2,
-            }}
-          />
+          <MaskedView
+            maskElement={
+              <View
+                style={{
+                  flex: 1,
+                  backgroundColor: '#DDD',
+                  resizeMode: 'center',
+                  aspectRatio:
+                    htmlAttribs['data-width'] / htmlAttribs['data-height'],
+                  borderRadius: 2,
+                  backgroundColor: 'black',
+                }}
+              />
+            }
+          >
+            <Animated.Image
+              source={{ uri: htmlAttribs.src }}
+              style={{
+                flex: 1,
+                resizeMode: 'center',
+                borderRadius: 2,
+                transform: [{ scale: zoom }],
+                width: '100%',
+                aspectRatio:
+                  htmlAttribs['data-width'] / htmlAttribs['data-height'],
+                backgroundColor: '#EEE',
+              }}
+            />
+          </MaskedView>
+
           <View
             style={{
               flexDirection: 'row',
