@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from 'react-native'
 
 import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
 import { HorizontalArticleCell } from './HorizontalArticleCell'
+import { InteractiveHomeComponent } from './InteractiveHomeComponent'
 import { PrimaryHorizontalArticleCell } from './PrimaryHorizontalArticleCell'
 
 export const ArticleList = ({
@@ -22,10 +23,12 @@ export const ArticleList = ({
       const articlesLength = articles.length
       if (i == 0) {
         return (
-          <TouchableOpacity
+          <InteractiveHomeComponent
             key={i}
-            activeOpacity={1}
-            onPress={() => navigateToArticleScreen({ article: el })}
+            touchOpacProps={{
+              activeOpacity: 1,
+              onPress: () => navigateToArticleScreen({ article: el }),
+            }}
           >
             <PrimaryHorizontalArticleCell
               title={headline}
@@ -34,7 +37,7 @@ export const ArticleList = ({
               timeAgo={published_at}
               authors={AUTHORS(authors)}
             />
-          </TouchableOpacity>
+          </InteractiveHomeComponent>
         )
       } else if (i == articlesLength - 1) {
         return (
