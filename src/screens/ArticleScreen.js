@@ -253,7 +253,13 @@ const ArticleScreenComp = ({
           </View>
         )}
       </View>
-      <CustomHTML {...{ article: article, currPublication: currPublication }} />
+      <CustomHTML
+        {...{
+          article: article,
+          currPublication: currPublication,
+          onLinkPress: onLinkPress,
+        }}
+      />
     </ScrollView>
   )
 }

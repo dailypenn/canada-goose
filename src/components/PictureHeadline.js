@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 
   blackTime: {
     color: '#000',
-    fontFamily: GEOMETRIC_BOLD,
+    fontFamily: GEOMETRIC_REGULAR,
     textTransform: 'uppercase',
     fontSize: 14,
     opacity: 0.75,
