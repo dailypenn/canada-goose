@@ -262,7 +262,6 @@ const HomeScreenComp = ({
   // const appState = useRef(AppState.currentState)
   // const [appStateState, setAppStateState] = useState(appState.current)
   const { homeSectionPreferences, _ } = settings
-  const [deepURL, setDeepURL] = useState(null)
 
   let homeSections =
     homeSectionPreferences == null ||
