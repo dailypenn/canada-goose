@@ -19,7 +19,12 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": false,
       "requireFullScreen": true,
-      "buildNumber": "2"
+      "buildNumber": "2",
+      "associatedDomains": [
+        "applinks:thedp.com",
+        "applinks:34st.com",
+        "applinks:underthebutton.com"
+      ]
     },
     "android": {
       "package": "com.thedailypennsylvanian.mobileapp",
