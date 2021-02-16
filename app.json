@@ -41,7 +41,29 @@
             {
               "scheme": "https",
               "host": "thedp.com",
-              "pathPrefix": "/articles"
+              "pathPrefix": "/article"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        },
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "https",
+              "host": "34st.com",
+              "pathPrefix": "/article"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        },
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "https",
+              "host": "underthebutton.com",
+              "pathPrefix": "/article"
             }
           ],
           "category": ["BROWSABLE", "DEFAULT"]
