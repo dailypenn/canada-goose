@@ -14,7 +14,7 @@ import {
   GET_HOME_FEED_ORDER_KEY,
   IS_ONBOARDED_KEY,
   SAVED_ARTICLES_KEY,
-  Storage,
+  Storage
 } from './src/utils/storage'
 import { PublicationEnum } from './src/utils/constants'
 import { setInit } from './src/actions'
@@ -24,7 +24,7 @@ import { OnboardingModal } from './src/screens'
 const client = new ApolloClient({
   // uri: 'http://localhost:5000/graphql',
   uri: 'https://graphql-295919.ue.r.appspot.com/graphql',
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache()
 })
 const store = createStore(RootReducer, applyMiddleware(thunk))
 
@@ -34,7 +34,7 @@ const getAsyncStorage = () => {
       GET_HOME_FEED_ORDER_KEY(PublicationEnum.dp),
       GET_HOME_FEED_ORDER_KEY(PublicationEnum.street),
       GET_HOME_FEED_ORDER_KEY(PublicationEnum.utb),
-      SAVED_ARTICLES_KEY,
+      SAVED_ARTICLES_KEY
     ]).then(result => {
       dispatch(setInit(result))
     })
