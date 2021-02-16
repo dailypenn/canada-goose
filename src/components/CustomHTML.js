@@ -169,7 +169,7 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
       />
       <View style={{ padding: 20 }}>
         <HTML
-          onLinkPress={() => onLinkPress()}
+          onLinkPress={onLinkPress}
           source={{
             html: article.content,
           }}

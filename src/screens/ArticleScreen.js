@@ -177,7 +177,8 @@ const ArticleScreenComp = ({
     }
   }
   const onLinkPress = (_, href) => {
-    if (!href) return
+    console.log(href)
+
     const { publication, slug } = getArticlePubSlug(href)
     const { name } = route
 
@@ -187,6 +188,7 @@ const ArticleScreenComp = ({
       name === 'HomeArticle' ? 'HomeArticle' : 'SectionArticle'
 
     if (!slug && isValidURL(href)) {
+      Linking.openURL(href)
       //navigation.navigate(browserScreenName, { link: href })
     } else if (slug && publication) {
       navigation.push(ArticleScreenName, {
@@ -195,7 +197,6 @@ const ArticleScreenComp = ({
       })
     }
   }
-  console.log(article.content)
 
   if (loading || !article) return <LogoActivityIndicator />
   return (
