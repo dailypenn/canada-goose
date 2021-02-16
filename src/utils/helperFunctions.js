@@ -103,9 +103,9 @@ export const parseAbstract = abstract => {
 
 export const getArticlePubSlug = href => {
   const URL_TO_PUB = {
-    "https://www.thedp.com/article/": PublicationEnum.dp,
-    "https://www.34st.com/article/": PublicationEnum.street,
-    "https://www.underthebutton.com/article/": PublicationEnum.utb
+    "thedp.com/article/": PublicationEnum.dp,
+    "34st.com/article/": PublicationEnum.street,
+    "underthebutton.com/article/": PublicationEnum.utb
   }
   
   const URLs = Object.keys(URL_TO_PUB)
