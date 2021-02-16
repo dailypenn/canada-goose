@@ -19,6 +19,7 @@ import {
 } from '../utils/helperFunctions'
 import { PublicationPrimaryColor } from '../utils/branding'
 import MaskedView from '@react-native-community/masked-view'
+import WebView from 'react-native-webview'
 
 export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
   const [modalVisible, isModalVisible] = useState(false)
@@ -50,6 +51,17 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
       fontFamily: GEOMETRIC_BOLD,
       color: PublicationPrimaryColor(currPublication),
     },
+    em: {
+      fontSize: 18,
+      lineHeight: 28,
+      fontFamily: GEOMETRIC_BOLD,
+      color: PublicationPrimaryColor(currPublication),
+    },
+    small: {
+      fontSize: 12,
+      lineHeight: 20,
+      fontFamily: BODY_SERIF,
+    },
   }
 
   const IMGRenderer = (htmlAttribs, passProps, props) => {
@@ -60,6 +72,7 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
 
   const InLineImage = ({ htmlAttribs }) => {
     const [zoom] = useState(new Animated.Value(1.05))
+    const ASPECT_RATIO = htmlAttribs['data-width'] / htmlAttribs['data-height']
 
     const onPressIn = () => {
       Animated.timing(zoom, {
@@ -120,8 +133,7 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
                 borderRadius: 2,
                 transform: [{ scale: zoom }],
                 width: '100%',
-                aspectRatio:
-                  htmlAttribs['data-width'] / htmlAttribs['data-height'],
+                aspectRatio: ASPECT_RATIO ? ASPECT_RATIO : 1,
                 backgroundColor: '#EEE',
               }}
             />
