@@ -19,7 +19,7 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": false,
       "requireFullScreen": true,
-      "buildNumber": "2",
+      "buildNumber": "3",
       "associatedDomains": [
         "applinks:thedp.com",
         "applinks:34st.com",
@@ -33,7 +33,7 @@
         "foregroundImage": "./src/static/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
-      "versionCode": 2,
+      "versionCode": 3,
       "intentFilters": [
         {
           "action": "VIEW",
