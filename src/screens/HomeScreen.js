@@ -293,7 +293,7 @@ const HomeScreenComp = ({
   }, [currPublication])
 
   navigate = url => {
-    if (url) {
+    if (url && url.includes('article')) {
       deepLinkingAnalytics()
       const { publication, slug } = getArticlePubSlug(url)
       navigation.push('HomeArticle', {
