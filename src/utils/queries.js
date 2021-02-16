@@ -276,7 +276,7 @@ export const UTB_HOME_PAGE_QUERY = gql`
       tag
     }
 
-    interactive: homeArticles(first: 5, section: "choose-your-own-adventure", publication: "Under the Button") {
+    interactive: homeArticles(first: 5, section: "adventure-start", publication: "Under the Button") {
       slug
       headline
       abstract
