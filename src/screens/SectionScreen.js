@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect } from 'react'
-import { StyleSheet, Text, ScrollView, RefreshControl } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  ScrollView,
+  RefreshControl,
+  FlatList
+} from 'react-native'
 import { connect } from 'react-redux'
 import { useQuery } from '@apollo/client'
 
@@ -39,12 +45,12 @@ const SectionScreenComp = ({
     }
   }, [])
 
-  useEffect(() => {
-    if (data) {
-      console.log(`refetching ${slug} screen article`)
-      refetch()
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (data) {
+  //     console.log(`refetching ${slug} screen article`)
+  //     refetch()
+  //   }
+  // }, [])
 
   // useFocusEffect(
   //   useCallback(() => {
@@ -52,9 +58,9 @@ const SectionScreenComp = ({
   //   }, [])
   // )
 
-  const onRefresh = useCallback(() => {
-    refetch()
-  })
+  // const onRefresh = useCallback(() => {
+  //   refetch()
+  // })
 
   if (!data) return <LogoActivityIndicator />
 
@@ -69,7 +75,7 @@ const SectionScreenComp = ({
     <ScrollView
       style={styles.container}
       refreshControl={
-        <RefreshControl refreshing={loading} onRefresh={onRefresh} />
+        <RefreshControl refreshing={loading} onRefresh={() => refetch()} />
       }
     >
       <ArticleList
