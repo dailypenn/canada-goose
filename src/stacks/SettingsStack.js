@@ -42,6 +42,7 @@ export const SettingsStack = ({ navigation }) => {
             fontFamily: DISPLAY_SERIF_BLACK,
             fontSize: 20,
           },
+          headerTintColor: '#000',
           headerBackTitleVisible: false,
         }}
       >
