@@ -6,7 +6,7 @@ import { HorizontalArticleCell } from './HorizontalArticleCell'
 import { InteractiveHomeComponent } from './InteractiveHomeComponent'
 import { PrimaryHorizontalArticleCell } from './PrimaryHorizontalArticleCell'
 
-export const RenderArticle = ({
+export const RenderArticleListItem = ({
   el,
   i,
   articlesLength,
@@ -65,7 +65,7 @@ export const ArticleList = ({
   return (
     <View style={{ marginBottom: 5 }}>
       {articles.map((el, i) =>
-        RenderArticle({
+        RenderArticleListItem({
           el,
           i,
           articlesLength,
