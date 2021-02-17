@@ -76,7 +76,7 @@ const SectionScreenComp = ({
 
   const { sectionArticles: articles } = data
 
-  const articlesLength = articles.length - 1
+  const articlesLength = articles.length
 
   let newData = []
   articles.forEach((el, index) => {
