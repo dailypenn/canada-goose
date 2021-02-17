@@ -10,7 +10,7 @@ import {
   ArticleScreen,
   DiscoveryScreen,
   SectionScreen,
-  WebViewScreen
+  WebViewScreen,
 } from '../screens'
 import { DefaultStatusBar } from '../components'
 
@@ -31,9 +31,8 @@ export const DiscoveryStack = ({ navigation }) => {
         screenOptions={{
           headerStyle: { backgroundColor: '#fff' },
           headerTintColor: '#000',
-          //headerTitleStyle: { fontWeight: 'bold' },
           headerTitleStyle: { fontFamily: DISPLAY_SERIF_BLACK, fontSize: 20 },
-          headerBackTitleVisible: false
+          headerBackTitleVisible: false,
         }}
       >
         <Stack.Screen
@@ -46,7 +45,7 @@ export const DiscoveryStack = ({ navigation }) => {
           component={SectionScreen}
           options={({ route }) => ({
             title: route.params.sectionName,
-            animationEnabled: true
+            animationEnabled: true,
           })}
         />
         <Stack.Screen
@@ -59,7 +58,7 @@ export const DiscoveryStack = ({ navigation }) => {
           component={WebViewScreen}
           options={({ route }) => ({
             link: route.params.link,
-            title: ''
+            title: '',
           })}
         />
       </Stack.Navigator>

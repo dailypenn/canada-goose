@@ -18,6 +18,8 @@ import { PublicationEnum } from '../utils/constants'
 import { switchPublication, toggleScrollToTop } from '../actions'
 import { StatusBar } from 'react-native'
 import { publicationSwitchAnalytics } from '../utils/analytics'
+import { Storage, LAST_VIEWED_PUBLICATION_KEY } from '../utils/storage'
+import { InteractiveHomeComponent } from './InteractiveHomeComponent'
 
 const SCREEN_DIMENSIONS = Dimensions.get('screen')
 const PUBLICATIONS = [
@@ -185,6 +187,7 @@ const PublicationModalComp = ({
     if (!currentlySwiping) {
       if (pub != currPublication) {
         publicationSwitchAnalytics(currPublication, pub)
+        Storage.setItem(LAST_VIEWED_PUBLICATION_KEY, pub)
 
         updateSwitchLogo(GET_SMALL_LOGO(pub))
         updateSwitchColor(PublicationPrimaryColor(pub))
@@ -292,6 +295,7 @@ const PublicationModalComp = ({
           >
             <PublicationOption publication={currPublication} isCurrent={true} />
           </TouchableOpacity>
+
           <View style={styles.line} />
           {PUBLICATIONS.map((el, index) => {
             return el == currPublication ? null : (

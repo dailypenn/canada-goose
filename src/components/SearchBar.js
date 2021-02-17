@@ -27,7 +27,12 @@ import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
 } from '../utils/helperFunctions'
-import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
+import {
+  BODY_SERIF,
+  DISPLAY_SERIF_BLACK,
+  GEOMETRIC_BOLD,
+  GEOMETRIC_REGULAR,
+} from '../utils/fonts'
 import { SearchArticleList } from './ArticleList'
 import { PublicationEnum } from '../utils/constants'
 import { LogoActivityIndicator } from './LogoActivityIndicator'
@@ -301,7 +306,12 @@ export const SearchBar = ({ navigation, publication }) => {
                     autoCorrect={false}
                   />
                   <Animated.View style={{ opacity: cancel_opacity }}>
-                    <Button title="Cancel" onPress={_onBlur} color="#333" />
+                    <Button
+                      title="Cancel"
+                      onPress={_onBlur}
+                      color="#333"
+                      style={{ fontFamily: GEOMETRIC_BOLD }}
+                    />
                   </Animated.View>
                 </>
               )}
@@ -412,12 +422,13 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   input: {
+    fontFamily: BODY_SERIF,
     flex: 1,
     height: 40,
     backgroundColor: '#e4e6eb',
     borderRadius: 16,
     paddingHorizontal: 16,
-    fontSize: 18,
+    fontSize: 20,
   },
   content: {
     width: width,

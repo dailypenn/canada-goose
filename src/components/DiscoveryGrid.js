@@ -6,14 +6,16 @@ import { DiscoveryCell } from './DiscoveryCell'
 import { SECTIONS } from '../utils/constants'
 
 const _renderItem = (data, i) => (
-  <TouchableOpacity
-    activeOpacity={1}
-    onPress={() => navigate(data.name, data.slug)}
-    style={styles.item}
+  <InteractiveHomeComponent
     key={i}
+    touchOpacProps={{
+      activeOpacity: 1,
+      onPress: () => navigate(data.name, data.slug),
+    }}
+    style={styles.item}
   >
     <DiscoveryCell category={data.name} imageURL={data.image} />
-  </TouchableOpacity>
+  </InteractiveHomeComponent>
 )
 
 const _renderPlaceholder = i => <View style={styles.item} key={i} />

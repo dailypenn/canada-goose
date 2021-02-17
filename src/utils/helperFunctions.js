@@ -5,12 +5,12 @@ import {
   PublicationEnum,
   DP_HOME_SECTIONS_TITLE,
   UTB_HOME_SECTIONS_TITLES,
-  STREET_HOME_SECTIONS_TITLES
+  STREET_HOME_SECTIONS_TITLES,
 } from './constants'
 import {
   DP_HOME_PAGE_QUERY,
   STREET_HOME_PAGE_QUERY,
-  UTB_HOME_PAGE_QUERY
+  UTB_HOME_PAGE_QUERY,
 } from './queries'
 
 export const IMAGE_URL = (attachment_uuid, extension, publication) => {
@@ -37,6 +37,14 @@ export const AUTHORS = authorArr => {
   return authorNames.join(', ')
 }
 
+export const PREFIXED_AUTHORS = (prefix, authorArr) => {
+  if (!authorArr.length) {
+    return ''
+  }
+
+  return `${prefix} ${AUTHORS(authorArr)}`
+}
+
 export const PARTIAL_NAVIGATE = (navigation, toScreen, f) => {
   return params => f(navigation, toScreen, params)
 }
@@ -61,10 +69,13 @@ export const GET_HOME_QUERIES = publication => {
 }
 
 export const GET_HOME_SECTIONS = publication => {
+  console.log(publication, 'vs', PublicationEnum.street)
+
   switch (publication) {
     case PublicationEnum.dp:
       return DP_HOME_SECTIONS
     case PublicationEnum.street:
+      console.log('street')
       return STREET_HOME_SECTIONS
     case PublicationEnum.utb:
       return UTB_HOME_SECTIONS
@@ -87,19 +98,16 @@ export const parseAbstract = abstract => {
     return ''
   }
 
-  return abstract
-    .split('<p>')[1]
-    .split('</p>')[0]
-    .replace('&nbsp;', '')
+  return abstract.split('<p>')[1].split('</p>')[0].replace('&nbsp;', '')
 }
 
 export const getArticlePubSlug = href => {
   const URL_TO_PUB = {
-    "https://www.thedp.com/article/": PublicationEnum.dp,
-    "https://www.34st.com/article/": PublicationEnum.street,
-    "https://www.underthebutton.com/article/": PublicationEnum.utb
+    'thedp.com/article/': PublicationEnum.dp,
+    '34st.com/article/': PublicationEnum.street,
+    'underthebutton.com/article/': PublicationEnum.utb,
   }
-  
+
   const URLs = Object.keys(URL_TO_PUB)
 
   for (let i = 0; i < URLs.length; i++) {
@@ -116,11 +124,14 @@ export const getArticlePubSlug = href => {
 }
 
 export const isValidURL = url => {
-  const pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  const pattern = new RegExp(
+    '^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
+    'i'
+  ) // fragment locator
   return pattern.test(url)
 }
