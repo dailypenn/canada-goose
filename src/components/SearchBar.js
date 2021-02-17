@@ -27,11 +27,15 @@ import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
 } from '../utils/helperFunctions'
-import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
+import {
+  BODY_SERIF,
+  DISPLAY_SERIF_BLACK,
+  GEOMETRIC_BOLD,
+  GEOMETRIC_REGULAR,
+} from '../utils/fonts'
 import { SearchArticleList } from './ArticleList'
 import { PublicationEnum } from '../utils/constants'
 import { LogoActivityIndicator } from './LogoActivityIndicator'
-import { InteractiveHomeComponent } from './InteractiveHomeComponent'
 
 const DP_SEARCH_IMG = require('../static/empty-states/search/dp.png')
 const ST_SEARCH_IMG = require('../static/empty-states/search/street.png')
@@ -236,7 +240,8 @@ export const SearchBar = ({ navigation, publication }) => {
             height: 6,
             width: '100%',
             backgroundColor: '#fff',
-
+            borderBottomWidth: 1,
+            borderBottomColor: '#e4e6eb',
             top: 50,
           }}
         />
@@ -245,16 +250,14 @@ export const SearchBar = ({ navigation, publication }) => {
             <Animated.View style={{ opacity: title_opacity }}>
               <Text style={styles.title}>Discover</Text>
             </Animated.View>
-            <InteractiveHomeComponent
-              touchOpacProps={{
-                activeOpacity: 1,
-                onPress: _onFocus,
-                style: styles.search_icon_box,
-              }}
+            <TouchableHighlight
+              activeOpacity={1}
+              underlayColor={'#ccd0d5'}
+              onPress={_onFocus}
+              style={styles.search_icon_box}
             >
               <Ionicons name="search" size={20} color="#000" />
-            </InteractiveHomeComponent>
-
+            </TouchableHighlight>
             <Animated.View
               style={[
                 styles.input_box,
@@ -303,7 +306,12 @@ export const SearchBar = ({ navigation, publication }) => {
                     autoCorrect={false}
                   />
                   <Animated.View style={{ opacity: cancel_opacity }}>
-                    <Button title="Cancel" onPress={_onBlur} color="#333" />
+                    <Button
+                      title="Cancel"
+                      onPress={_onBlur}
+                      color="#333"
+                      style={{ fontFamily: GEOMETRIC_BOLD }}
+                    />
                   </Animated.View>
                 </>
               )}
@@ -414,12 +422,13 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   input: {
+    fontFamily: BODY_SERIF,
     flex: 1,
     height: 40,
     backgroundColor: '#e4e6eb',
     borderRadius: 16,
     paddingHorizontal: 16,
-    fontSize: 18,
+    fontSize: 20,
   },
   content: {
     width: width,

@@ -289,32 +289,28 @@ const PublicationModalComp = ({
         <View style={{ flex: 1 }}></View>
         <View style={styles.view}>
           <View style={styles.bar} />
-          <InteractiveHomeComponent
-            touchOpacProps={{
-              activeOpacity: 1,
-              onPress: () => selectedPublication(currPublication),
-            }}
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => selectedPublication(currPublication)}
           >
             <PublicationOption publication={currPublication} isCurrent={true} />
-          </InteractiveHomeComponent>
+          </TouchableOpacity>
 
           <View style={styles.line} />
           {PUBLICATIONS.map((el, index) => {
             return el == currPublication ? null : (
-              <InteractiveHomeComponent
-                touchOpacProps={{
-                  activeOpacity: 1,
-                  onPress: () => selectedPublication(currPublication),
-                  key: index,
-                  disabled: currentlySwiping,
-                }}
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => selectedPublication(el)}
+                disabled={currentlySwiping}
+                key={index}
               >
                 <PublicationOption
                   publication={el}
                   isCurrent={false}
                   key={index}
                 />
-              </InteractiveHomeComponent>
+              </TouchableOpacity>
             )
           })}
         </View>
