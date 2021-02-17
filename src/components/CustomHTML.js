@@ -102,8 +102,9 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
           onPressOut={onPressOut}
           style={{
             width: '100%',
-            minHeight: 100,
-            marginBottom: 15,
+            marginBottom: 10,
+            justifyContent: 'center',
+            alignSelf: 'center',
           }}
           activeOpacity={1}
         >
@@ -114,13 +115,9 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
                   flex: 1,
                   backgroundColor: '#DDD',
                   resizeMode: 'center',
-                  aspectRatio: () => {
-                    const ratio =
-                      htmlAttribs['data-width'] / htmlAttribs['data-height']
-                    return ratio ? ratio : 1
-                  },
                   borderRadius: 2,
                   backgroundColor: 'black',
+                  width: '100%',
                 }}
               />
             }
@@ -129,11 +126,11 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
               source={{ uri: htmlAttribs.src }}
               style={{
                 flex: 1,
-                resizeMode: 'center',
+                resizeMode: 'cover',
                 borderRadius: 2,
                 transform: [{ scale: zoom }],
                 width: '100%',
-                aspectRatio: ASPECT_RATIO ? ASPECT_RATIO : 1,
+                aspectRatio: ASPECT_RATIO ? ASPECT_RATIO : null,
                 backgroundColor: '#EEE',
               }}
             />
