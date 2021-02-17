@@ -11,7 +11,12 @@ import { connect } from 'react-redux'
 import { FlatGrid } from 'react-native-super-grid'
 
 import { PublicationEnum } from '../utils/constants'
-import { DiscoveryCell, SearchBar, RandomButton } from '../components'
+import {
+  DiscoveryCell,
+  SearchBar,
+  RandomButton,
+  InteractiveHomeComponent,
+} from '../components'
 
 const DP_SECTIONS = require('../json/discover/dp.json')
 const STREET_SECTIONS = require('../json/discover/street.json')
@@ -59,13 +64,15 @@ const DiscoveryView = ({ navigation, publication }) => {
         spacing={13}
         data={SECTIONS}
         renderItem={({ item, i }) => (
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => navigateToSectionScreen(item.name, item.slug)}
+          <InteractiveHomeComponent
+            touchOpacProps={{
+              activeOpacity: 1,
+              onPress: () => navigateToSectionScreen(item.name, item.slug),
+            }}
             key={i}
           >
             <DiscoveryCell category={item.name} imageURL={item.img} />
-          </TouchableOpacity>
+          </InteractiveHomeComponent>
         )}
       />
     )
