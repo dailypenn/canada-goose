@@ -14,17 +14,18 @@ import {
   GET_HOME_FEED_ORDER_KEY,
   IS_ONBOARDED_KEY,
   SAVED_ARTICLES_KEY,
-  Storage
+  LAST_VIEWED_PUBLICATION_KEY,
+  Storage,
 } from './src/utils/storage'
 import { PublicationEnum } from './src/utils/constants'
-import { setInit } from './src/actions'
+import { setInit, switchPublication } from './src/actions'
 import { OnboardingModal } from './src/screens'
 
 // Initialize Apollo Client
 const client = new ApolloClient({
   // uri: 'http://localhost:5000/graphql',
   uri: 'https://graphql-295919.ue.r.appspot.com/graphql',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 })
 const store = createStore(RootReducer, applyMiddleware(thunk))
 
@@ -34,8 +35,14 @@ const getAsyncStorage = () => {
       GET_HOME_FEED_ORDER_KEY(PublicationEnum.dp),
       GET_HOME_FEED_ORDER_KEY(PublicationEnum.street),
       GET_HOME_FEED_ORDER_KEY(PublicationEnum.utb),
-      SAVED_ARTICLES_KEY
+      SAVED_ARTICLES_KEY,
+      LAST_VIEWED_PUBLICATION_KEY,
     ]).then(result => {
+      let lastViewedPublication = JSON.parse(result[4][1])
+      if (lastViewedPublication != null) {
+        console.log('last viewed pub', lastViewedPublication)
+        dispatch(switchPublication(lastViewedPublication))
+      }
       dispatch(setInit(result))
     })
   }
