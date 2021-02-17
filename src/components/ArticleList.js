@@ -20,8 +20,16 @@ export const RenderArticle = ({
     authors,
     abstract,
   } = el
-  if (i == 0) {
-    return (
+  const CHILD_DATA = {
+    title: headline,
+    imageURL: IMAGE_URL(attachment_uuid, extension, publication),
+    abstract: abstract,
+    timeAgo: published_at,
+    authors: AUTHORS(authors),
+  }
+
+  return (
+    <>
       <InteractiveHomeComponent
         key={i}
         touchOpacProps={{
@@ -29,47 +37,13 @@ export const RenderArticle = ({
           onPress: () => navigateToArticleScreen({ article: el }),
         }}
       >
-        <PrimaryHorizontalArticleCell
-          title={headline}
-          imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
-          abstract={abstract}
-          timeAgo={published_at}
-          authors={AUTHORS(authors)}
-        />
+        {i ? (
+          <HorizontalArticleCell {...CHILD_DATA} />
+        ) : (
+          <PrimaryHorizontalArticleCell {...CHILD_DATA} />
+        )}
       </InteractiveHomeComponent>
-    )
-  } else if (i == articlesLength - 1) {
-    return (
-      <InteractiveHomeComponent
-        key={i}
-        touchOpacProps={{
-          activeOpacity: 1,
-          onPress: () => navigateToArticleScreen({ article: el }),
-        }}
-      >
-        <HorizontalArticleCell
-          title={headline}
-          imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
-          timeAgo={published_at}
-          authors={AUTHORS(authors)}
-        />
-      </InteractiveHomeComponent>
-    )
-  } else {
-    return (
-      <InteractiveHomeComponent
-        key={i}
-        touchOpacProps={{
-          activeOpacity: 1,
-          onPress: () => navigateToArticleScreen({ article: el }),
-        }}
-      >
-        <HorizontalArticleCell
-          title={headline}
-          imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
-          timeAgo={published_at}
-          authors={AUTHORS(authors)}
-        />
+      {i == articlesLength - 1 ? null : (
         <View
           style={{
             borderBottomColor: '#CCC',
@@ -77,9 +51,9 @@ export const RenderArticle = ({
             marginHorizontal: 20,
           }}
         />
-      </InteractiveHomeComponent>
-    )
-  }
+      )}
+    </>
+  )
 }
 
 export const ArticleList = ({
@@ -117,24 +91,26 @@ export const SearchArticleList = ({
         authors,
       } = el
       return (
-        <InteractiveHomeComponent
-          touchOpacProps={{
-            activeOpacity: 1,
-            onPress: () => navigateToArticleScreen({ article: el }),
-          }}
-          key={headline}
-        >
-          <HorizontalArticleCell
-            style={{
-              borderWidth: 4,
-              borderColor: '#0F0',
-              marginVertical: 10,
+        <>
+          <InteractiveHomeComponent
+            touchOpacProps={{
+              activeOpacity: 1,
+              onPress: () => navigateToArticleScreen({ article: el }),
             }}
-            title={headline}
-            imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
-            timeAgo={published_at}
-            authors={AUTHORS(authors)}
-          />
+            key={headline}
+          >
+            <HorizontalArticleCell
+              style={{
+                borderWidth: 4,
+                borderColor: '#0F0',
+                marginVertical: 10,
+              }}
+              title={headline}
+              imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
+              timeAgo={published_at}
+              authors={AUTHORS(authors)}
+            />
+          </InteractiveHomeComponent>
           <View
             style={{
               borderBottomColor: '#CCC',
@@ -142,7 +118,7 @@ export const SearchArticleList = ({
               marginHorizontal: 20,
             }}
           />
-        </InteractiveHomeComponent>
+        </>
       )
     })}
   </View>
