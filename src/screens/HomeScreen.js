@@ -22,7 +22,6 @@ import {
   HeaderLine,
   EmptyState,
   LogoActivityIndicator,
-  PublicationModal,
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
@@ -141,10 +140,12 @@ const HomeView = ({
             zIndex: 3,
             backgroundColor: '#fff',
             alignItems: 'center',
+            //justifyContent: "center",
             borderBottomColor: '#DDD',
             borderBottomWidth: 1,
             paddingVertical: 4,
             opacity: opacity,
+            //paddingTop: getStatusBarHeight(true) + 12,
             ...Platform.select({
               ios: {
                 paddingTop: getStatusBarHeight(true) + 10,

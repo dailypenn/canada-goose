@@ -14,9 +14,6 @@ export const DP_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -33,9 +30,6 @@ export const DP_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -52,9 +46,6 @@ export const DP_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -71,9 +62,6 @@ export const DP_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -90,9 +78,6 @@ export const DP_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -109,9 +94,6 @@ export const DP_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -132,9 +114,6 @@ export const STREET_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -151,9 +130,6 @@ export const STREET_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -170,9 +146,6 @@ export const STREET_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -189,9 +162,6 @@ export const STREET_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -208,9 +178,6 @@ export const STREET_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -227,9 +194,6 @@ export const STREET_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -250,9 +214,6 @@ export const UTB_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -269,9 +230,6 @@ export const UTB_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -288,9 +246,6 @@ export const UTB_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -307,9 +262,6 @@ export const UTB_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -326,9 +278,6 @@ export const UTB_HOME_PAGE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -349,9 +298,6 @@ export const SECTIONS_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -372,9 +318,6 @@ export const ARTICLES_SEARCH = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
@@ -395,9 +338,6 @@ export const ARTICLE_QUERY = gql`
       dominantMedia {
         attachment_uuid
         extension
-        authors {
-          name
-        }
       }
       tag
     }
