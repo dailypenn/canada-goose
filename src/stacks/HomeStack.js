@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { HomeScreen, ArticleScreen, WebViewScreen } from '../screens'
 import { DefaultStatusBar, PublicationModal } from '../components'
 import { BODY_SERIF } from '../utils/fonts'
+import { useScrollToTop } from '@react-navigation/native'
 
 const Stack = createStackNavigator()
 
