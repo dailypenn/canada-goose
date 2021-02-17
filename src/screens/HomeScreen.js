@@ -7,7 +7,7 @@ import {
   AppState,
   Animated,
   Image,
-  Platform
+  Platform,
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -25,7 +25,7 @@ import {
   EmptyState,
   LogoActivityIndicator,
   PublicationModal,
-  InteractiveHomeComponent
+  InteractiveHomeComponent,
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
@@ -33,7 +33,7 @@ import {
   GET_HOME_SECTIONS,
   GET_HOME_SECTION_NAME,
   GET_HOME_QUERIES,
-  getArticlePubSlug
+  getArticlePubSlug,
 } from '../utils/helperFunctions'
 import { PublicationEnum } from '../utils/constants'
 import { toggleScrollToTop } from '../actions'
@@ -49,11 +49,11 @@ const UTB_HEADER_LOGO = require('../static/logos/utb-logo-large-black.png')
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   text1: {
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 })
 
 const HomeView = ({
@@ -64,14 +64,14 @@ const HomeView = ({
   loading,
   refetch,
   scrollToTop,
-  dispatchToggleScrollToTop
+  dispatchToggleScrollToTop,
 }) => {
   const scrollViewRef = useRef(null)
   const { centerpiece: centerArticles, top: topArticles } = data
 
   const sectionData = homeSections.map(section => ({
     name: section,
-    articles: data[section]
+    articles: data[section],
   }))
 
   const onRefresh = useCallback(() => {
@@ -90,14 +90,14 @@ const HomeView = ({
   const clampedScrollY = scrollY.interpolate({
     inputRange: [minScroll, minScroll + 1],
     outputRange: [0, 1],
-    extrapolateLeft: 'clamp'
+    extrapolateLeft: 'clamp',
   })
   const minusScrollY = Animated.multiply(clampedScrollY, -1)
   const translateY = Animated.diffClamp(minusScrollY, negativeHeaderHeight, 0)
   const opacity = translateY.interpolate({
     inputRange: [negativeHeaderHeight, 0],
     outputRange: [0, 1],
-    extrapolate: 'clamp'
+    extrapolate: 'clamp',
   })
 
   const GET_HEADER_LOGO = () => {
@@ -130,10 +130,10 @@ const HomeView = ({
             width: '100%',
             zIndex: 2,
             backgroundColor: '#fff',
-            borderBottomColor: '#AAA',
-            borderBottomWidth: 1
+            borderBottomColor: '#DDD',
+            borderBottomWidth: 1,
           },
-          { transform: [{ translateY: translateY }] }
+          { transform: [{ translateY: translateY }] },
         ]}
       ></Animated.View>
       <Animated.View
@@ -148,17 +148,20 @@ const HomeView = ({
             borderBottomColor: '#DDD',
             borderBottomWidth: 1,
             paddingVertical: 4,
-            opacity: opacity,
+            opacity: opacity.interpolate({
+              inputRange: [0, 0.5, 0.8, 1],
+              outputRange: [0, 0, 1, 1],
+            }),
             ...Platform.select({
               ios: {
-                paddingTop: getStatusBarHeight(true) + 10
+                paddingTop: getStatusBarHeight(true) + 10,
               },
               android: {
-                paddingTop: getStatusBarHeight(true)
-              }
-            })
+                paddingTop: getStatusBarHeight(true),
+              },
+            }),
           },
-          { transform: [{ translateY: translateY }] }
+          { transform: [{ translateY: translateY }] },
         ]}
       >
         <View style={{ height: 28 }}>
@@ -173,19 +176,19 @@ const HomeView = ({
         style={{
           paddingTop: Platform.select({
             android: 0, //AnimatedHeaderHeight,
-            ios: 0
-          })
+            ios: 0,
+          }),
         }}
         contentInset={{ top: AnimatedHeaderHeight }}
         contentOffset={{
           x: 0,
-          y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight })
+          y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight }),
         }}
         contentContainerStyle={{
           paddingTop: Platform.select({
             android: AnimatedHeaderHeight,
-            ios: 0
-          })
+            ios: 0,
+          }),
         }}
         automaticallyAdjustContentInsets={false}
         onScroll={Animated.event(
@@ -207,7 +210,7 @@ const HomeView = ({
           publication={publication}
           afterPress={() =>
             NAVIGATE_TO_ARTICLE_SCREEN(navigation, 'HomeArticle', {
-              article: centerArticles[0]
+              article: centerArticles[0],
             })
           }
           inArticleView={false}
@@ -256,7 +259,7 @@ const HomeScreenComp = ({
   currPublication,
   scrollToTop,
   settings,
-  dispatchToggleScrollToTop
+  dispatchToggleScrollToTop,
 }) => {
   // const [lastActiveTime, setLastActiveTime] = useState(Date.now())
   // const appState = useRef(AppState.currentState)
@@ -297,7 +300,7 @@ const HomeScreenComp = ({
       const { publication, slug } = getArticlePubSlug(url)
       navigation.push('HomeArticle', {
         articleSlug: slug,
-        articlePublication: publication
+        articlePublication: publication,
       })
     }
   }
@@ -340,7 +343,7 @@ const HomeScreenComp = ({
           backgroundColor: 'white',
           flex: 1,
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <EmptyState
@@ -348,7 +351,7 @@ const HomeScreenComp = ({
             publication: currPublication,
             type: EmptyStateEnum.error,
             caption:
-              'Uh oh! We are unable to load your content. Please check your connection and try again.'
+              'Uh oh! We are unable to load your content. Please check your connection and try again.',
           }}
         />
         <TouchableOpacity
@@ -360,7 +363,7 @@ const HomeScreenComp = ({
             backgroundColor: PublicationPrimaryColor(currPublication),
             marginTop: 30,
             borderRadius: 10,
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}
         >
           <Text
@@ -369,7 +372,7 @@ const HomeScreenComp = ({
               alignSelf: 'center',
               fontSize: 18,
               fontFamily: GEOMETRIC_BOLD,
-              color: 'white'
+              color: 'white',
             }}
           >
             Refresh
@@ -401,7 +404,7 @@ const mapStateToProps = ({ publication, settings }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  dispatchToggleScrollToTop: () => dispatch(toggleScrollToTop())
+  dispatchToggleScrollToTop: () => dispatch(toggleScrollToTop()),
 })
 
 export const HomeScreen = connect(
