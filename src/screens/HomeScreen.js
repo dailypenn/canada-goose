@@ -7,12 +7,14 @@ import {
   AppState,
   Animated,
   Image,
+  Platform,
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
+import { Linking } from 'react-native'
 
 import {
   SectionHeader,
@@ -22,6 +24,8 @@ import {
   HeaderLine,
   EmptyState,
   LogoActivityIndicator,
+  PublicationModal,
+  InteractiveHomeComponent,
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
@@ -29,13 +33,14 @@ import {
   GET_HOME_SECTIONS,
   GET_HOME_SECTION_NAME,
   GET_HOME_QUERIES,
+  getArticlePubSlug,
 } from '../utils/helperFunctions'
 import { PublicationEnum } from '../utils/constants'
 import { toggleScrollToTop } from '../actions'
 import { EmptyStateEnum } from '../components/EmptyState'
 import { PublicationPrimaryColor } from '../utils/branding'
 import { GEOMETRIC_BOLD } from '../utils/fonts'
-import { publicationAnalytics } from '../utils/analytics'
+import { publicationAnalytics, deepLinkingAnalytics } from '../utils/analytics'
 
 const DP_HEADER_LOGO = require('../static/logos/dp-logo-large-black.png')
 const ST_HEADER_LOGO = require('../static/logos/34st-header.png')
@@ -125,7 +130,7 @@ const HomeView = ({
             width: '100%',
             zIndex: 2,
             backgroundColor: '#fff',
-            borderBottomColor: '#AAA',
+            borderBottomColor: '#DDD',
             borderBottomWidth: 1,
           },
           { transform: [{ translateY: translateY }] },
@@ -140,12 +145,13 @@ const HomeView = ({
             zIndex: 3,
             backgroundColor: '#fff',
             alignItems: 'center',
-            //justifyContent: "center",
             borderBottomColor: '#DDD',
             borderBottomWidth: 1,
             paddingVertical: 4,
-            opacity: opacity,
-            //paddingTop: getStatusBarHeight(true) + 12,
+            opacity: opacity.interpolate({
+              inputRange: [0, 0.5, 0.8, 1],
+              outputRange: [0, 0, 1, 1],
+            }),
             ...Platform.select({
               ios: {
                 paddingTop: getStatusBarHeight(true) + 10,
@@ -199,16 +205,16 @@ const HomeView = ({
         }
         ref={scrollViewRef}
       >
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() =>
+        <HeadlineArticle
+          data={centerArticles[0]}
+          publication={publication}
+          afterPress={() =>
             NAVIGATE_TO_ARTICLE_SCREEN(navigation, 'HomeArticle', {
               article: centerArticles[0],
             })
           }
-        >
-          <HeadlineArticle data={centerArticles[0]} publication={publication} />
-        </TouchableOpacity>
+          inArticleView={false}
+        />
 
         <HeaderLine publication={publication} />
         <SectionHeader title="Top Stories" publication={publication} />
@@ -288,6 +294,26 @@ const HomeScreenComp = ({
     publicationAnalytics(currPublication)
   }, [currPublication])
 
+  navigate = url => {
+    if (url && url.includes('article')) {
+      deepLinkingAnalytics()
+      const { publication, slug } = getArticlePubSlug(url)
+      navigation.push('HomeArticle', {
+        articleSlug: slug,
+        articlePublication: publication,
+      })
+    }
+  }
+
+  useEffect(() => {
+    Linking.getInitialURL().then(url => navigate(url))
+    Linking.addEventListener('url', e => navigate(e.url))
+
+    return () => {
+      Linking.removeEventListener('url', e => navigate(e.url))
+    }
+  }, [])
+
   // useEffect(() => {
   //   AppState.addEventListener('change', handleAppStateChange)
 
@@ -356,8 +382,6 @@ const HomeScreenComp = ({
     )
   }
   if (!data) return <LogoActivityIndicator />
-
-  let HOME_SECTIONS = GET_HOME_SECTIONS(currPublication)
 
   return (
     <HomeView

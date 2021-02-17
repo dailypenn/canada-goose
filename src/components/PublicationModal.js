@@ -19,6 +19,7 @@ import { switchPublication, toggleScrollToTop } from '../actions'
 import { StatusBar } from 'react-native'
 import { publicationSwitchAnalytics } from '../utils/analytics'
 import { Storage, LAST_VIEWED_PUBLICATION_KEY } from '../utils/storage'
+import { InteractiveHomeComponent } from './InteractiveHomeComponent'
 
 const SCREEN_DIMENSIONS = Dimensions.get('screen')
 const PUBLICATIONS = [
@@ -288,27 +289,32 @@ const PublicationModalComp = ({
         <View style={{ flex: 1 }}></View>
         <View style={styles.view}>
           <View style={styles.bar} />
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => selectedPublication(currPublication)}
+          <InteractiveHomeComponent
+            touchOpacProps={{
+              activeOpacity: 1,
+              onPress: () => selectedPublication(currPublication),
+            }}
           >
             <PublicationOption publication={currPublication} isCurrent={true} />
-          </TouchableOpacity>
+          </InteractiveHomeComponent>
+
           <View style={styles.line} />
           {PUBLICATIONS.map((el, index) => {
             return el == currPublication ? null : (
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => selectedPublication(el)}
-                disabled={currentlySwiping}
-                key={index}
+              <InteractiveHomeComponent
+                touchOpacProps={{
+                  activeOpacity: 1,
+                  onPress: () => selectedPublication(currPublication),
+                  key: index,
+                  disabled: currentlySwiping,
+                }}
               >
                 <PublicationOption
                   publication={el}
                   isCurrent={false}
                   key={index}
                 />
-              </TouchableOpacity>
+              </InteractiveHomeComponent>
             )
           })}
         </View>

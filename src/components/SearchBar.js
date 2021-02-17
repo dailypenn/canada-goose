@@ -31,6 +31,7 @@ import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
 import { SearchArticleList } from './ArticleList'
 import { PublicationEnum } from '../utils/constants'
 import { LogoActivityIndicator } from './LogoActivityIndicator'
+import { InteractiveHomeComponent } from './InteractiveHomeComponent'
 
 const DP_SEARCH_IMG = require('../static/empty-states/search/dp.png')
 const ST_SEARCH_IMG = require('../static/empty-states/search/street.png')
@@ -235,8 +236,7 @@ export const SearchBar = ({ navigation, publication }) => {
             height: 6,
             width: '100%',
             backgroundColor: '#fff',
-            borderBottomWidth: 1,
-            borderBottomColor: '#e4e6eb',
+
             top: 50,
           }}
         />
@@ -245,14 +245,16 @@ export const SearchBar = ({ navigation, publication }) => {
             <Animated.View style={{ opacity: title_opacity }}>
               <Text style={styles.title}>Discover</Text>
             </Animated.View>
-            <TouchableHighlight
-              activeOpacity={1}
-              underlayColor={'#ccd0d5'}
-              onPress={_onFocus}
-              style={styles.search_icon_box}
+            <InteractiveHomeComponent
+              touchOpacProps={{
+                activeOpacity: 1,
+                onPress: _onFocus,
+                style: styles.search_icon_box,
+              }}
             >
               <Ionicons name="search" size={20} color="#000" />
-            </TouchableHighlight>
+            </InteractiveHomeComponent>
+
             <Animated.View
               style={[
                 styles.input_box,

@@ -37,6 +37,14 @@ export const AUTHORS = authorArr => {
   return authorNames.join(', ')
 }
 
+export const PREFIXED_AUTHORS = (prefix, authorArr) => {
+  if (!authorArr.length) {
+    return ''
+  }
+
+  return `${prefix} ${AUTHORS(authorArr)}`
+}
+
 export const PARTIAL_NAVIGATE = (navigation, toScreen, f) => {
   return params => f(navigation, toScreen, params)
 }
@@ -95,9 +103,9 @@ export const parseAbstract = abstract => {
 
 export const getArticlePubSlug = href => {
   const URL_TO_PUB = {
-    'https://www.thedp.com/article/': PublicationEnum.dp,
-    'https://www.34st.com/article/': PublicationEnum.street,
-    'https://www.underthebutton.com/article/': PublicationEnum.utb,
+    'thedp.com/article/': PublicationEnum.dp,
+    '34st.com/article/': PublicationEnum.street,
+    'underthebutton.com/article/': PublicationEnum.utb,
   }
 
   const URLs = Object.keys(URL_TO_PUB)

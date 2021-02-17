@@ -1,8 +1,15 @@
 import React from 'react'
-import { StyleSheet, ScrollView, View, Dimensions, TouchableOpacity} from 'react-native'
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native'
 //import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { IMAGE_URL } from '../utils/helperFunctions'
+import { InteractiveHomeComponent } from './InteractiveHomeComponent'
 import VerticalArticleCard from './VerticalArticleCard'
 
 const { width } = Dimensions.get('window')
@@ -44,9 +51,11 @@ export const HorizontalArticleCarousel = ({
         } = el
         return (
           <View style={styles.cardContainerView} key={i}>
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() => navigateToArticleScreen({ article: el })}
+            <InteractiveHomeComponent
+              touchOpacProps={{
+                activeOpacity: 1,
+                onPress: () => navigateToArticleScreen({ article: el }),
+              }}
             >
               <VerticalArticleCard
                 category={tag}
@@ -55,7 +64,7 @@ export const HorizontalArticleCarousel = ({
                 imageUrl={IMAGE_URL(attachment_uuid, extension, publication)}
                 publication={publication}
               />
-            </TouchableOpacity>
+            </InteractiveHomeComponent>
           </View>
         )
       })}

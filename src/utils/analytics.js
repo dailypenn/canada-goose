@@ -23,3 +23,9 @@ export const publicationAnalytics = async pub => {
     purpose: 'user is reading content from this publication',
   })
 }
+
+export const deepLinkingAnalytics = async () => {
+  await Analytics.logEvent('DeepLinked', {
+    purpose: 'an inbound link to the app is triggered',
+  })
+}
