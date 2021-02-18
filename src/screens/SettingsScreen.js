@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
 
   textView: {
-    marginVertical: 10,
+    paddingVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -126,6 +126,14 @@ const styles = StyleSheet.create({
   pubTextView: {
     paddingHorizontal: 15,
     justifyContent: 'center',
+  },
+
+  section: {
+    backgroundColor: 'white',
+    marginTop: 20,
+    borderTopWidth: 0.6,
+    borderBottomWidth: 0.6,
+    borderColor: '#d4d4d4',
   },
 })
 
@@ -173,8 +181,7 @@ const SettingsCell = ({ item }) => (
 )
 
 const SettingsSection = ({ navigateToScreen, items }) => (
-  <View style={{ backgroundColor: 'white', marginTop: 20 }}>
-    <View style={styles.divider} />
+  <View style={styles.section}>
     {items.map((el, i) => (
       <TouchableOpacity
         key={el.id}
@@ -185,14 +192,13 @@ const SettingsSection = ({ navigateToScreen, items }) => (
           <SettingsCell item={el} />
           <View
             style={{
-              ...(i != items.length - 1 ? styles.divider : {}),
+              ...(i < items.length - 1 ? styles.divider : {}),
               marginLeft: 50,
             }}
           />
         </View>
       </TouchableOpacity>
     ))}
-    <View style={styles.divider} />
   </View>
 )
 
