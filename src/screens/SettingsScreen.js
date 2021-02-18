@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
 
   pubCell: {
-    marginTop: 15,
+    marginTop: 5,
     paddingVertical: 15,
     paddingHorizontal: 15,
     backgroundColor: '#fff',
