@@ -5,7 +5,7 @@ import {
   View,
   StyleSheet,
   SafeAreaView,
-  Image
+  Image,
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
@@ -20,23 +20,23 @@ const UTB_LOGO_GREY = require('../static/logos/utb-logo-small-white.png')
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
 
   title: {
     fontFamily: DISPLAY_SERIF_BLACK,
     fontSize: 28,
-    lineHeight: 40
+    lineHeight: 40,
   },
 
   header_safe_area: {
     zIndex: 1000,
-    flex: 1
+    flex: 1,
   },
 
   header: {
     height: 50,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
 
   header_inner: {
@@ -45,41 +45,41 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
   },
 
   pubCell: {
-    marginTop: 15,
+    marginTop: 5,
     paddingVertical: 15,
     paddingHorizontal: 15,
     backgroundColor: '#fff',
     borderTopWidth: 0.6,
     borderBottomWidth: 0.6,
-    borderColor: '#d4d4d4'
+    borderColor: '#d4d4d4',
   },
 
   cell: {
     paddingHorizontal: 15,
     justifyContent: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
 
   iconView: {
     justifyContent: 'center',
-    paddingRight: 15
+    paddingRight: 15,
   },
 
   icon: {
     backgroundColor: '#68a0af',
     borderRadius: 3,
-    padding: 4
+    padding: 4,
   },
 
   pubImg: {
     flex: 1,
     width: 30,
     height: 30,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
 
   pubView: {
@@ -88,43 +88,53 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     backgroundColor: '#c4c4c4',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   textView: {
     paddingVertical: 10,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   divider: {
     height: 0.6,
-    backgroundColor: '#d4d4d4'
+    backgroundColor: '#d4d4d4',
   },
 
   spacer: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   regText: {
-    fontFamily: GEOMETRIC_REGULAR
+    fontFamily: GEOMETRIC_REGULAR,
   },
 
   pubText: {
     fontSize: 18,
-    fontFamily: GEOMETRIC_REGULAR
+    fontFamily: GEOMETRIC_REGULAR,
   },
 
   switchText: {
     fontSize: 12,
     fontFamily: GEOMETRIC_REGULAR,
-    flexShrink: 1
+    flexShrink: 1,
   },
 
   pubTextView: {
     paddingHorizontal: 15,
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
+
+  section: {
+    backgroundColor: 'white',
+    marginTop: 20,
+    borderTopWidth: 0.6,
+    borderBottomWidth: 0.6,
+    borderColor: '#d4d4d4',
+  },
 })
 
 const GET_LOGO = publication => {
@@ -171,8 +181,7 @@ const SettingsCell = ({ item }) => (
 )
 
 const SettingsSection = ({ navigateToScreen, items }) => (
-  <View>
-    <View style={{ ...styles.divider, marginTop: 20 }} />
+  <View style={styles.section}>
     {items.map((el, i) => (
       <TouchableOpacity
         key={el.id}
@@ -183,14 +192,13 @@ const SettingsSection = ({ navigateToScreen, items }) => (
           <SettingsCell item={el} />
           <View
             style={{
-              ...(i != items.length - 1 ? styles.divider : {}),
-              marginLeft: 45
+              ...(i < items.length - 1 ? styles.divider : {}),
+              marginLeft: 50,
             }}
           />
         </View>
       </TouchableOpacity>
     ))}
-    <View style={styles.divider} />
   </View>
 )
 
