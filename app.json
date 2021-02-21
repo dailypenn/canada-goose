@@ -2,7 +2,7 @@
   "expo": {
     "name": "DP+",
     "slug": "dp-plus",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./src/static/icon.png",
     "splash": {
@@ -19,7 +19,7 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": false,
       "requireFullScreen": true,
-      "buildNumber": "4",
+      "buildNumber": "5",
       "associatedDomains": [
         "applinks:thedp.com",
         "applinks:34st.com",
@@ -33,7 +33,7 @@
         "foregroundImage": "./src/static/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
-      "versionCode": 4,
+      "versionCode": 5,
       "intentFilters": [
         {
           "action": "VIEW",
