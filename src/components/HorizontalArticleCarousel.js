@@ -48,13 +48,14 @@ export const HorizontalArticleCarousel = ({
           published_at,
           dominantMedia: { attachment_uuid, extension },
           tag,
+          slug
         } = el
         return (
           <View style={styles.cardContainerView} key={i}>
             <InteractiveHomeComponent
               touchOpacProps={{
                 activeOpacity: 1,
-                onPress: () => navigateToArticleScreen({ article: el }),
+                onPress: () => navigateToArticleScreen({ articleSlug: slug }),
               }}
             >
               <VerticalArticleCard

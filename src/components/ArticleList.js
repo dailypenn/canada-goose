@@ -19,6 +19,7 @@ export const RenderArticleListItem = ({
     dominantMedia: { attachment_uuid, extension },
     authors,
     abstract,
+    slug
   } = el
   const CHILD_DATA = {
     title: headline,
@@ -34,7 +35,7 @@ export const RenderArticleListItem = ({
         key={i}
         touchOpacProps={{
           activeOpacity: 1,
-          onPress: () => navigateToArticleScreen({ article: el }),
+          onPress: () => navigateToArticleScreen({ articleSlug: slug }),
         }}
       >
         {i ? (
@@ -89,13 +90,14 @@ export const SearchArticleList = ({
         published_at,
         dominantMedia: { attachment_uuid, extension },
         authors,
+        slug
       } = el
       return (
         <>
           <InteractiveHomeComponent
             touchOpacProps={{
               activeOpacity: 1,
-              onPress: () => navigateToArticleScreen({ article: el }),
+              onPress: () => navigateToArticleScreen({ articleSlug: slug }),
             }}
             key={headline}
           >

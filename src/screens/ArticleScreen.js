@@ -10,7 +10,6 @@ import {
   ScrollView,
   Linking,
 } from 'react-native'
-
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 import { useLazyQuery } from '@apollo/client'
@@ -39,6 +38,7 @@ import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { saveNewArticle, unsaveArticle, updateNavigation } from '../actions'
 import { ARTICLE_QUERY } from '../utils/queries'
 import { userViewedArticleAnalytics } from '../utils/analytics'
+
 const ArticleScreenComp = ({
   navigation,
   route,
@@ -46,7 +46,7 @@ const ArticleScreenComp = ({
   settings,
   dispatch,
 }) => {
-  const [article, setArticle] = useState(route.params.article)
+  const [article, setArticle] = useState(null)
   const [utbFetched, setUTBFetched] = useState(false)
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
   const articlePublication = route.params.articlePublication

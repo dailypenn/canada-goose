@@ -23,8 +23,8 @@ import { OnboardingModal } from './src/screens'
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  // uri: 'http://localhost:5000/graphql',
-  uri: 'https://graphql-295919.ue.r.appspot.com/graphql',
+  uri: 'http://localhost:5000/graphql',
+  // uri: 'https://graphql-295919.ue.r.appspot.com/graphql',
   cache: new InMemoryCache(),
 })
 const store = createStore(RootReducer, applyMiddleware(thunk))

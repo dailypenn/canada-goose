@@ -210,7 +210,7 @@ const HomeView = ({
           publication={publication}
           afterPress={() =>
             NAVIGATE_TO_ARTICLE_SCREEN(navigation, 'HomeArticle', {
-              article: centerArticles[0],
+              articleSlug: centerArticles[0].slug,
             })
           }
           inArticleView={false}
