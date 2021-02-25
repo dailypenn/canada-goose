@@ -6,7 +6,6 @@ export const DP_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -25,7 +24,6 @@ export const DP_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -44,7 +42,6 @@ export const DP_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -63,7 +60,6 @@ export const DP_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -82,7 +78,6 @@ export const DP_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -101,7 +96,6 @@ export const DP_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -124,7 +118,6 @@ export const STREET_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -143,7 +136,6 @@ export const STREET_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -162,7 +154,6 @@ export const STREET_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -181,7 +172,6 @@ export const STREET_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -200,7 +190,6 @@ export const STREET_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -219,7 +208,6 @@ export const STREET_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -242,7 +230,6 @@ export const UTB_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -261,7 +248,6 @@ export const UTB_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -280,7 +266,6 @@ export const UTB_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -299,7 +284,6 @@ export const UTB_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -318,7 +302,6 @@ export const UTB_HOME_PAGE_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -341,7 +324,6 @@ export const SECTIONS_QUERY = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
@@ -364,7 +346,6 @@ export const ARTICLES_SEARCH = gql`
       slug
       headline
       abstract
-      content
       published_at
       authors {
         name
