@@ -6,7 +6,7 @@ import { PublicationPrimaryColor } from '../utils/branding'
 const styles = StyleSheet.create({
   view: {
     paddingHorizontal: 20,
-    marginTop: 30,
+    marginTop: 5,
     paddingTop: 0,
     flexDirection: 'row',
   },

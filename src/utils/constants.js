@@ -88,9 +88,9 @@ export const SETTINGS_SECTIONS = [
         id: 'recruiting cell',
         icon: 'happy',
         color: '#c4c4c4',
-        name: 'DP Tech',
+        name: 'DP Developers',
         screenName: 'WebView',
-        props: { link: 'https://tech.thedp.com/' },
+        props: { link: 'https://developers.thedp.com/' },
       },
       {
         id: 'about cell',
