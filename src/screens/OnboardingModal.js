@@ -40,9 +40,6 @@ const PageZero = ({ onNextPage }) => {
   const [utbOpacity] = useState(new Animated.Value(0))
 
   const enterZero = async () => {
-
-    console.log("enterZero")
-
     buttonPosX.setValue(0)
     logoPosX.setValue(0)
     const expandButton = Animated.timing(buttonWidth, {
