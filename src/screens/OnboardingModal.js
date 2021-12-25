@@ -40,6 +40,9 @@ const PageZero = ({ onNextPage }) => {
   const [utbOpacity] = useState(new Animated.Value(0))
 
   const enterZero = async () => {
+
+    console.log("enterZero")
+
     buttonPosX.setValue(0)
     logoPosX.setValue(0)
     const expandButton = Animated.timing(buttonWidth, {
@@ -201,7 +204,7 @@ const PageZero = ({ onNextPage }) => {
           style={{
             width: '100%',
             aspectRatio: 1,
-            borderRadius: Platform.OS == 'ios' ? '30%' : 15, // TODO: Remove later
+            borderRadius: Platform.OS == 'ios' ? 25 : 15, // TODO: Remove later
             alignSelf: 'center',
             flexDirection: 'row',
             transform: [

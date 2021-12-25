@@ -21,6 +21,10 @@ import { PublicationEnum } from './src/utils/constants'
 import { setInit, switchPublication } from './src/actions'
 import { OnboardingModal } from './src/screens'
 
+// // import { initOneSignalClient } from './src/utils/notifications';
+
+// // initOneSignalClient();
+
 // Initialize Apollo Client
 const client = new ApolloClient({
   // uri: 'http://localhost:5000/graphql',
@@ -89,4 +93,4 @@ const App = () => {
   }
 }
 
-export default App
+export default App;
