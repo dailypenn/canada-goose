@@ -23,8 +23,11 @@
       "requireFullScreen": true,
       "buildNumber": "5",
       "associatedDomains": [
+        "applinks:www.thedp.com",
         "applinks:thedp.com",
+        "applinks:www.34st.com",
         "applinks:34st.com",
+        "applinks:www.underthebutton.com",
         "applinks:underthebutton.com"
       ]
     },
@@ -93,6 +96,18 @@
           "measurementId": "G-4TX3M8YQK4"
         }
       }
+    },
+    "plugins": [
+      [
+        "onesignal-expo-plugin",
+        {
+          "mode": "development",
+          "devTeam": "RC676BS29B"
+        }
+      ]
+    ],
+    "extra": {
+      "oneSignalAppId": "8b21f95f-00af-429b-92d0-a07323654999"
     }
   }
 }

@@ -1,19 +1,29 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { AppState, StyleSheet, Text, View } from 'react-native'
+import { connect } from 'react-redux'
 import { Switch } from 'react-native-gesture-handler'
-import { ComingSoonView } from '../components/ComingSoon'
+import OneSignal from "react-native-onesignal";
+import Constants from "expo-constants";
+import { updateNotifPref } from '../actions'
+import { EnableNotificationsView } from '../components';
+import * as Notifications from 'expo-notifications';
 
-import { GEOMETRIC_REGULAR } from '../utils/fonts'
+import {
+  NOTIF_PREFS_KEY,
+  Storage,
+} from '../utils/storage'
+
+import { GEOMETRIC_REGULAR, DISPLAY_SERIF_BLACK } from '../utils/fonts'
 
 const NOTIFICATIONS = require('../json/notifications.json')
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
+    marginTop: 15
   },
 
   cellContainer: {
-    paddingVertical: 15,
+    paddingVertical: 0,
   },
 
   cell: {
@@ -34,46 +44,128 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 
+  textContainer: {
+    flexDirection: 'column',
+    paddingVertical: 7,
+    maxWidth: '80%'
+  },
+
   description: {
     fontFamily: GEOMETRIC_REGULAR,
-    paddingHorizontal: 15,
-    paddingTop: 8,
+    paddingTop: 3,
     fontSize: 12,
     color: '#808080',
   },
 
   regText: {
-    fontFamily: GEOMETRIC_REGULAR,
+    fontFamily: DISPLAY_SERIF_BLACK,
+    fontSize: 16,
   },
+
+  settingContainer: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })
 
-const NotificationCell = ({ info }) => {
-  const [isEnabled, setIsEnabled] = useState(true)
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState)
+const oneSignalTags = ["breaking", "top", "34st", "utb"]
+
+const NotificationCell = ({ info, initialPref, notifIndex, updateHandler }) => {
+
+  const [isEnabled, setIsEnabled] = useState(initialPref)
+
+  OneSignal.setLogLevel(6, 0);
+  OneSignal.setAppId(Constants.manifest?.extra?.oneSignalAppId);
+
+  const toggleSwitch = () => {
+    updateHandler(notifIndex = {notifIndex}, value = !isEnabled)
+    console.log("-!-!-!-")
+    console.log((!isEnabled).toString())
+    console.log(notifIndex.notifIndex)
+    console.log(oneSignalTags[notifIndex.notifIndex])
+    OneSignal.sendTag(oneSignalTags[notifIndex.notifIndex], (!isEnabled).toString());
+    setIsEnabled(previousState => !previousState)
+  }
 
   return (
     <View style={styles.cellContainer}>
       <View style={styles.cell}>
-        <Text style={styles.regText}>{info.title}</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.regText}>{info.title}</Text>
+          <Text style={styles.description}>{info.description}</Text>
+        </View>
         <View style={styles.spacer} />
         <Switch
           onValueChange={toggleSwitch}
           value={isEnabled}
-          style={styles.toggle}
+          // style={styles.toggle}
         />
       </View>
-      <Text style={styles.description}>{info.description}</Text>
     </View>
   )
 }
 
-export const NotificationScreen = () => {
-  return (
-    // <View style={styles.container}>
-    //   {NOTIFICATIONS.map((l, i) => (
-    //     <NotificationCell key={i} info={l} />
-    //   ))}
-    // </View>
-    <ComingSoonView blurb="Notification options coming soon!" />
-  )
+async function allowsNotificationsAsync(setNotificationsEnabled) {
+  const settings = await Notifications.getPermissionsAsync();
+  // console.log(settings)
+  if(settings.granted || settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL) {
+    setNotificationsEnabled(true)
+  } else {
+    setNotificationsEnabled(false)
+  }
 }
+
+const NotificationScreenComp = ({
+  settings,
+  dispatch,
+}) => {
+
+  const notifPreferences = settings.notifPreferences ? settings.notifPreferences : [true, true, false, false]
+
+  const updateHandler = async ({ notifIndex }, value) => {
+    const newPreferences = notifPreferences
+    newPreferences[notifIndex] = value
+
+    console.log(newPreferences)
+
+    let updated_successfully = await Storage.setItem(
+      NOTIF_PREFS_KEY,
+      newPreferences
+    )
+
+    if (updated_successfully) dispatch(updateNotifPref(notifIndex, value))
+  }
+
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true)
+
+  allowsNotificationsAsync(setNotificationsEnabled)
+  useEffect(() => {
+    AppState.addEventListener('change', state =>
+      allowsNotificationsAsync(setNotificationsEnabled)
+    )
+  })
+
+  if (notificationsEnabled) {
+    return (
+      <View style={styles.container}>
+        {NOTIFICATIONS.map((l, i) => (
+          <NotificationCell key={i} info={l} initialPref={notifPreferences[i]} notifIndex={i} updateHandler={updateHandler}/>
+        ))}
+      </View>
+    )
+  } else {
+    return (
+      <EnableNotificationsView/>
+    )
+  }
+
+}
+
+const mapStateToProps = ({ publication, settings }) => ({
+  publication,
+  settings,
+})
+
+export const NotificationScreen = connect(mapStateToProps)(NotificationScreenComp)

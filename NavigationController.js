@@ -11,6 +11,8 @@ import { HomeStack, DiscoveryStack, SettingsStack } from './src/stacks'
 import { PublicationPrimaryColor } from './src/utils/branding'
 import { PublicationEnum } from './src/utils/constants'
 
+import { navigationRef } from './src/components'
+
 const DP_LOGO_RED = require('./src/static/logos/dp-logo-small-red.png')
 const DP_LOGO_GREY = require('./src/static/logos/dp-logo-small-grey.png')
 const STREET_LOGO_TEAL = require('./src/static/logos/street-logo-small-teal.png')
@@ -22,7 +24,7 @@ const Tab = createBottomTabNavigator()
 
 const TabNavigationController = ({ currPublication }) => {
   const routeNameRef = React.useRef()
-  const navigationRef = React.useRef()
+  // const navigationRef = React.useRef()
 
   const GET_PUB_LOGO = focused => {
     switch (currPublication) {
@@ -38,6 +40,7 @@ const TabNavigationController = ({ currPublication }) => {
   return (
     <NavigationContainer
       ref={navigationRef}
+      // linking={linking}
       onReady={() =>
         (routeNameRef.current = navigationRef.current.getCurrentRoute().name)
       }
@@ -71,7 +74,7 @@ const TabNavigationController = ({ currPublication }) => {
                 />
               )
             } else if (route.name == 'DiscoveryStack') iconName = 'search'
-            else if (route.name === 'SettingsStack') iconName = 'cog'
+            else if (route.name === 'SettingsStack') iconName = 'person-outline'
 
             return <Ionicons name={iconName} size={26} color={color} />
           },

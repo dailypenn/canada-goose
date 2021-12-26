@@ -67,7 +67,7 @@ export const SETTINGS_SECTIONS = [
         icon: 'notifications',
         color: '#f9423b',
         name: 'Notifications',
-        screenName: 'Notification',
+        screenName: 'Notifications',
         props: {},
       },
       {

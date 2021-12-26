@@ -40,6 +40,7 @@ export const setInit = result => {
         },
       ],
       savedArticles: JSON.parse(result[3][1]),
+      notifPreferences: JSON.parse(result[5][1]),
     },
   }
 }
@@ -75,6 +76,17 @@ export const unsaveArticle = item => {
     type: UNSAVE_NEW_ARTICLE,
     updates: {
       actionArticle: item,
+    },
+  }
+}
+
+export const UPDATE_NOTIF_PREF = 'UPDATE_NOTIF_PREF'
+export const updateNotifPref = (notifIndex, value) => {
+  return {
+    type: UPDATE_NOTIF_PREF,
+    updates: {
+      notifIndex: notifIndex,
+      value: value,
     },
   }
 }

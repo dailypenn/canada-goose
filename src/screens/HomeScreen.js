@@ -261,9 +261,7 @@ const HomeScreenComp = ({
   settings,
   dispatchToggleScrollToTop,
 }) => {
-  // const [lastActiveTime, setLastActiveTime] = useState(Date.now())
-  // const appState = useRef(AppState.currentState)
-  // const [appStateState, setAppStateState] = useState(appState.current)
+
   const { homeSectionPreferences, _ } = settings
 
   let homeSections =
@@ -271,23 +269,6 @@ const HomeScreenComp = ({
     homeSectionPreferences[currPublication] == null
       ? GET_HOME_SECTIONS(currPublication)
       : homeSectionPreferences[currPublication]
-
-  // const handleAppStateChange = nextAppState => {
-  //   if (
-  //     appState.current.match(/inactive|background/) &&
-  //     nextAppState === 'active'
-  //   ) {
-  //     console.log('App has come to the foreground!')
-  //   }
-
-  //   if (appState.current.match(/active/)) {
-  //     console.log('App has come to the background!')
-  //   }
-
-  //   appState.current = nextAppState
-  //   setAppStateState(appState.current)
-  //   console.log('AppState', appState.current)
-  // }
 
   useEffect(() => {
     console.log('LOGGING EVENT: PUBLICATION READ', currPublication)
@@ -298,15 +279,25 @@ const HomeScreenComp = ({
     if (url && url.includes('article')) {
       deepLinkingAnalytics()
       const { publication, slug } = getArticlePubSlug(url)
-      navigation.push('HomeArticle', {
-        articleSlug: slug,
-        articlePublication: publication,
-      })
+      if (!navigation.isFocused()) {
+        navigation.jumpTo('HomeStack')
+        setTimeout(() => {
+          navigation.push('HomeArticle', {
+            articleSlug: slug,
+            articlePublication: publication,
+          })
+        }, 300);
+      } else {
+        navigation.push('HomeArticle', {
+          articleSlug: slug,
+          articlePublication: publication,
+        })
+      }
     }
   }
 
   useEffect(() => {
-    Linking.getInitialURL().then(url => navigate(url))
+    // Linking.getInitialURL().then(url => navigate(url))
     Linking.addEventListener('url', e => navigate(e.url))
 
     return () => {
@@ -314,26 +305,9 @@ const HomeScreenComp = ({
     }
   }, [])
 
-  // useEffect(() => {
-  //   AppState.addEventListener('change', handleAppStateChange)
-
-  //   return () => {
-  //     AppState.removeEventListener('change', handleAppStateChange)
-  //   }
-  // }, [])
-
   const { loading, error, data, refetch } = useQuery(
     GET_HOME_QUERIES(currPublication)
   )
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     if (data) {
-  //       console.log('---refetching home screen articles---')
-  //       refetch()
-  //     }
-  //   }, [data])
-  // )
 
   if (error) {
     console.log(error)

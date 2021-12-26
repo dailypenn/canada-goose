@@ -1,10 +1,18 @@
 [
   {
-    "title": "Breaking news notifications",
-    "description": "Receive push notifications when breaking news articles are published. Includes the headline and first couple sentences of the article."
+    "title": "Breaking News",
+    "description": "Urgent stories about the latest major events."
   },
   {
-    "title": "Newsletter notifications",
-    "description": "Receive a push notification every day upon the release of the newsletter"
+    "title": "Top Stories",
+    "description": "Important stories chosen by editors."
+  },
+  {
+    "title": "34th Street",
+    "description": "Arts, entertainment, and culture."
+  },
+  {
+    "title": "Under the Button",
+    "description": "Signature humor, snark, and memes."
   }
 ]

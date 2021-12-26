@@ -3,11 +3,16 @@ import {
   SET_INIT,
   SAVE_NEW_ARTICLE,
   UNSAVE_NEW_ARTICLE,
+  UPDATE_NOTIF_PREF
 } from '../actions'
+
+import Constants from "expo-constants";
+import OneSignal from "react-native-onesignal";
 
 const defaultSettingsState = {
   savedArticles: null,
   homeSectionPreferences: null,
+  notifPreferences: null,
 }
 
 const SettingsReducer = (state = defaultSettingsState, action) => {
@@ -26,13 +31,23 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
     return savedArticles ? savedArticles : []
   }
 
+  const getNewNotifPreferencesData = savedNotifPreferences => {
+    return savedNotifPreferences ? savedNotifPreferences : [true, true, false, false]
+  }
+
   switch (type) {
     case SET_INIT:
+      OneSignal.setAppId(Constants.manifest?.extra?.oneSignalAppId);
+      OneSignal.sendTag("breaking", "true");
+      OneSignal.sendTag("top", "true");
+      OneSignal.sendTag("34st", "false");
+      OneSignal.sendTag("utb", "false");
       return {
         homeSectionPreferences: getNewHomeSectionData(
           updates.homeSectionPreferences
         ),
         savedArticles: getNewSavedArticleData(updates.savedArticles),
+        notifPreferences: getNewNotifPreferencesData(updates.notifPreferences)
       }
     case UPDATE_HOME_SECTIONS:
       const { publication, newSections } = updates.homeSectionPreferences[0]
@@ -58,6 +73,13 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
       return {
         ...state,
         savedArticles: remainingArticles,
+      }
+    case UPDATE_NOTIF_PREF:
+      const newNotifPreferences = state.notifPreferences
+      newNotifPreferences[updates.notifIndex] = updates.value
+      return {
+        ...state,
+        notifPreferences: newNotifPreferences,
       }
     default:
       return state

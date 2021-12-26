@@ -60,9 +60,9 @@ export const SettingsStack = ({ navigation }) => {
           options={{ title: 'Operation Canada Goose' }}
         />
         <Stack.Screen
-          name="Notification"
+          name="Notifications"
           component={NotificationScreen}
-          options={{ title: 'Notification' }}
+          options={{ title: 'Notifications' }}
         />
         <Stack.Screen
           name="Privacy"
