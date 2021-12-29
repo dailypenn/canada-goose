@@ -45,6 +45,20 @@
           "data": [
             {
               "scheme": "https",
+              "host": "www.thedp.com",
+              "pathPrefix": "/article"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        },
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "https",
               "host": "thedp.com",
               "pathPrefix": "/article"
             }
@@ -59,7 +73,35 @@
           "data": [
             {
               "scheme": "https",
+              "host": "www.34st.com",
+              "pathPrefix": "/article"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        },
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "https",
               "host": "34st.com",
+              "pathPrefix": "/article"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        },
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "https",
+              "host": "www.underthebutton.com",
               "pathPrefix": "/article"
             }
           ],
@@ -104,7 +146,9 @@
           "mode": "development",
           "devTeam": "RC676BS29B"
         }
-      ]
+      ],
+      "./patches/android-project-build-gradle.plugin",
+      "./patches/android-app-build-gradle.plugin"
     ],
     "extra": {
       "oneSignalAppId": "8b21f95f-00af-429b-92d0-a07323654999"

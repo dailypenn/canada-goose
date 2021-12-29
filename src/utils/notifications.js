@@ -1,8 +1,6 @@
 import Constants from "expo-constants";
 import OneSignal from "react-native-onesignal";
 
-import { NOTIF_PREFS_KEY, Storage } from "./storage";
-
 import * as RootNavigation from '../components'
 
 import { getArticlePubSlug } from "./helperFunctions";

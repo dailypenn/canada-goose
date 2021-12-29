@@ -81,10 +81,6 @@ const NotificationCell = ({ info, initialPref, notifIndex, updateHandler }) => {
 
   const toggleSwitch = () => {
     updateHandler(notifIndex = {notifIndex}, value = !isEnabled)
-    console.log("-!-!-!-")
-    console.log((!isEnabled).toString())
-    console.log(notifIndex.notifIndex)
-    console.log(oneSignalTags[notifIndex.notifIndex])
     OneSignal.sendTag(oneSignalTags[notifIndex.notifIndex], (!isEnabled).toString());
     setIsEnabled(previousState => !previousState)
   }
@@ -100,7 +96,6 @@ const NotificationCell = ({ info, initialPref, notifIndex, updateHandler }) => {
         <Switch
           onValueChange={toggleSwitch}
           value={isEnabled}
-          // style={styles.toggle}
         />
       </View>
     </View>
