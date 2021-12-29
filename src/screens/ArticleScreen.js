@@ -117,7 +117,7 @@ const ArticleScreenComp = ({
   }
 
   const saveHandler = async article => {
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+    //Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
     const date = new Date()
 
     const newData = {

@@ -25,10 +25,10 @@ export const SettingsStack = ({ navigation }) => {
   console.log(navigation.isFocused())
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', e => {
-      if (!navigation.isFocused())
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+      if (!navigation.isFocused()) {
+        // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+      }
     })
-
     return unsubscribe
   }, [navigation])
 

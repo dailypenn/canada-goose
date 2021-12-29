@@ -15,10 +15,9 @@ export const HomeStack = ({ navigation }) => {
   // Haptic feedback when tab bar is pressed
   useEffect(() => {
     // Haptic feedback on tab presses
-
     const unsubscribe = navigation.addListener('tabPress', e => {
       if (!navigation.isFocused()) {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+        // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
       }
     })
     return unsubscribe

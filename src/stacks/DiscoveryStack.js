@@ -19,10 +19,13 @@ const Stack = createStackNavigator()
 export const DiscoveryStack = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', e => {
-      if (!navigation.isFocused())
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+      if (!navigation.isFocused()) {
+        // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+      }
     })
-  })
+    return unsubscribe
+  }, [navigation])
+  
   return (
     <>
       <DefaultStatusBar />

@@ -89,7 +89,7 @@ const TabNavigationController = ({ currPublication }) => {
             shadowRadius: 3,
           },
           onPress: () => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
           },
         }}
       >
