@@ -35,7 +35,7 @@
       "package": "com.thedailypennsylvanian.mobileapp",
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./src/static/adaptive-icon.png",
+        "foregroundImage": "./src/static/adaptive-icon2.png",
         "backgroundColor": "#000000"
       },
       "versionCode": 5,
