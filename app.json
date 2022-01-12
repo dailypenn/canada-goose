@@ -2,7 +2,7 @@
   "expo": {
     "name": "DP+",
     "slug": "dp-plus",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./src/static/icon.png",
     "splash": {
@@ -143,8 +143,9 @@
       [
         "onesignal-expo-plugin",
         {
-          "mode": "development",
-          "devTeam": "RC676BS29B"
+          "mode": "production",
+          "devTeam": "RC676BS29B",
+          "iPhoneDeploymentTarget": "12.0"
         }
       ],
       "./patches/android-project-build-gradle.plugin",

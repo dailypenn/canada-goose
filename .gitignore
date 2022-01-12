@@ -369,5 +369,6 @@ Temporary Items
 
 yarn.lock
 
-# bare workflow
-ios
+# credentials
+ios/certs/dev/*
+ios/certs/prod/*

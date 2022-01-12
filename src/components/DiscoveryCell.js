@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     marginVertical: 0,
     borderRadius: 8,
     padding: 10,
-    backgroundColor: '#f00',
+    backgroundColor: 'transparent',
     overflow: 'hidden',
   },
   category: {

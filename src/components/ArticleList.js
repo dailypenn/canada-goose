@@ -65,13 +65,15 @@ export const ArticleList = ({
   return (
     <View style={{ marginBottom: 5 }}>
       {articles.map((el, i) =>
-        RenderArticleListItem({
-          el,
-          i,
-          articlesLength,
-          publication,
-          navigateToArticleScreen,
-        })
+        <React.Fragment key={i}>
+          {RenderArticleListItem({
+            el,
+            i,
+            articlesLength,
+            publication,
+            navigateToArticleScreen,
+          })}
+        </React.Fragment>
       )}
     </View>
   )
@@ -91,7 +93,7 @@ export const SearchArticleList = ({
         authors,
       } = el
       return (
-        <>
+        <React.Fragment key={headline}>
           <InteractiveHomeComponent
             touchOpacProps={{
               activeOpacity: 1,
@@ -118,7 +120,7 @@ export const SearchArticleList = ({
               marginHorizontal: 20,
             }}
           />
-        </>
+        </React.Fragment>
       )
     })}
   </View>

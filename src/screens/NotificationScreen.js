@@ -104,7 +104,7 @@ const NotificationCell = ({ info, initialPref, notifIndex, updateHandler }) => {
 
 async function allowsNotificationsAsync(setNotificationsEnabled) {
   const settings = await Notifications.getPermissionsAsync();
-  // console.log(settings)
+
   if(settings.granted || settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL) {
     setNotificationsEnabled(true)
   } else {
@@ -122,9 +122,7 @@ const NotificationScreenComp = ({
   const updateHandler = async ({ notifIndex }, value) => {
     const newPreferences = notifPreferences
     newPreferences[notifIndex] = value
-
-    console.log(newPreferences)
-
+    
     let updated_successfully = await Storage.setItem(
       NOTIF_PREFS_KEY,
       newPreferences

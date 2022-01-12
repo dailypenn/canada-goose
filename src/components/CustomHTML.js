@@ -72,7 +72,13 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
 
   const InLineImage = ({ htmlAttribs }) => {
     const [zoom] = useState(new Animated.Value(1.05))
-    const ASPECT_RATIO = htmlAttribs['data-width'] / htmlAttribs['data-height']
+    const [ASPECT_RATIO, SET_ASPECT_RATIO] = useState(htmlAttribs['data-width'] / htmlAttribs['data-height']) 
+
+    if (htmlAttribs['data-width'] == 0 | htmlAttribs['data-height'] == 0) {
+      Image.getSize(htmlAttribs['src'], (width, height) => {
+        SET_ASPECT_RATIO(width / height)
+      });
+    }
 
     const onPressIn = () => {
       Animated.timing(zoom, {
