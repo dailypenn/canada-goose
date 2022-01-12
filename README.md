@@ -1,4 +1,26 @@
-# Content Guide
+# DP+
+
+<img src="src/static/icon.png" width="164px">
+
+The official mobile app for The Daily Pennsylvanian, 34th Street, and Under The Button!
+
+## Features
+
+- **Top Stories**: View what’s trending in The Daily Pennsylvanian, 34th Street Magazine, and Under The Button.
+- **Discover**: Search the articles of each publication and view the most recent articles in certain categories.
+- **Bookmarked Articles**: Save articles to read at a later time.
+- **Manage Feed**: Change the order in which categories on your home feed change.
+- **Notifications**: Keep up to date on breaking news and stories chosen by editors.
+
+## Installation 🚀
+
+## Article Placement
+
+
+
+
+
+
 
 ### Daily Pennsylvanian
 
