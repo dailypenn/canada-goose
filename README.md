@@ -1,8 +1,20 @@
 # DP+
 
-<img src="src/static/icon.png" width="164px">
+<img src="src/static/misc/roundlogo.png" width="164px">
 
 The official mobile app for The Daily Pennsylvanian, 34th Street, and Under The Button!
+
+[<img src="src/static/misc/iosappstore.png" width="164px">](https://apps.apple.com/us/app/dp/id1550818171)
+[<img src="src/static/misc/googleplay.png" width="170px">](https://play.google.com/store/apps/details?id=com.thedailypennsylvanian.mobileapp&hl=en&gl=US)
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#installation-">Installation</a></li>
+  </ol>
+</details>
 
 ## Features
 
@@ -12,9 +24,49 @@ The official mobile app for The Daily Pennsylvanian, 34th Street, and Under The 
 - **Manage Feed**: Change the order in which categories on your home feed change.
 - **Notifications**: Keep up to date on breaking news and stories chosen by editors.
 
+<img src="src/static/misc/screenshot4.png" width="230px"> <img src="src/static/misc/screenshot3.png" width="230px"> <img src="src/static/misc/screenshot1.png" width="230px"> <img src="src/static/misc/screenshot2.png" width="230px">
+
 ## Installation 🚀
 
-## Article Placement
+1. Clone the repo.
+   ```sh
+   git clone https://github.com/dailypenn/canada-goose.git
+   ```
+2. Install NPM packages.
+   ```sh
+   npm install
+   ```
+For most purposes, you should use the `development` branch. If you are using the `master` branch, you must set up the iOS app credentials locally:
+
+3. Update `credentials.json` with local iOS credentials (**`master`** branch only!)
+   1. Get distribution certificate from Apple Developer Portal and update path and password.
+   ```json
+   "distributionCertificate": {
+    "path": "ios/certs/<DISTRIBUTION_CERTIFICATE>.p12",
+    "password": "<DISTRIBUTION_CERTIFICATE_PASSWORD>"
+   }
+   ```
+   2. Download provisioning profiles from Apple Developer Portal and update paths. The main app target and the OneSignalNotificationServiceExtension require separate provisioning profiles. For `local` and `development` EAS builds, the provisioning profiles should be of type **Ad hoc**. For `production` EAS builds, the provisioning profiles should be of type **App Store**. 
+   ```json
+   "provisioningProfilePath": "ios/certs/.../<PROVISIONING_PROFILE>.mobileprovision"
+   ```
+4. If you want to run the app directly on your device, you must first register the device with Expo. Otherwise, feel free to skip this step.
+   ```sh
+   eas device:create
+   ```
+5. Build the app. This may take a while, but you don't have to repeat this process unless you change the underlying native code powering the app!
+   ```sh
+   eas build --profile <profile-name> --platform <platform>
+   ```
+   1. `<platform>` should be `ios`, `android`, or `all`
+   2. `<profile-name>` should be either `development` (to run the app on your device), `local` (to run the app on an iOS simulator), or `production` (to create a production build for submission).
+6. Start the app.
+   ```sh
+   expo start --dev-client
+   ```
+   If you are developing against a physical device, scan the resulting QR code. Otherwise, press the "a" or "i" key to open the app in an Android emulator or iPhone simulator respectively.
+
+## Dynamic Content
 
 
 
@@ -70,24 +122,3 @@ _NOTE_: To avoid the same story showing up in both the carousel and the sections
 ### Under the Button
 
 ---
-
-# Installation Guide
-
-Install [Expo App](https://docs.expo.io/get-started/installation/#2-expo-client-app-for-ios-and) on your mobile.
-
-```
-npm install
-expo start
-```
-
-Once the QR code is generated, open the camera on your phone to scan the code. You should be prompted to open Expo.
-
-If you are prompted to install _Expo CLI_ globally, enter Y.
-
-If there is globalDeprecated errors, run `expo r -c` to start the app instead of `expo start`. This clears the expo cache.
-
----
-
-# Wireframe
-
-[Link](https://www.figma.com/file/sExr6OlPwSMzWTCVhUXCt3/The-Daily-Pennsylvanian-App?node-id=0%3A1)
