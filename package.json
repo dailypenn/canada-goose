@@ -1,6 +1,6 @@
 {
   "name": "dp-plus",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -38,7 +38,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
-    "react-native-draggable-flatlist": "^2.5.1",
+    "react-native-draggable-flatlist": "^3.0.4",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "~2.1.0",
     "react-native-grid-component": "^2.0.1",
@@ -47,6 +47,7 @@
     "react-native-modal": "^11.6.1",
     "react-native-onesignal": "^4.3.3",
     "react-native-push-notification": "^8.1.1",
+    "react-native-reanimated": "~2.3.1",
     "react-native-render-html": "^5.1.0",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
@@ -59,8 +60,7 @@
     "react-redux": "^7.2.2",
     "react-scripts": "^5.0.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "react-native-reanimated": "~2.3.1"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
