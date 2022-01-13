@@ -60,6 +60,12 @@ For most purposes, you should use the `development` branch. If you are using the
    ```
    1. `<platform>` should be `ios`, `android`, or `all`
    2. `<profile-name>` should be either `development` (to run the app on your device), `local` (to run the app on an iOS simulator), or `production` (to create a production build for submission).
+      1. For a `local` build:
+         * Download the build once it is completed from the link provided. This will be a .tar.gz file.
+         * Extract the file by opening it. You will now have a file like DP.app.
+         * Open up your simulator.
+         * Drag the file into the simulator.
+         * The app will be installed in a few seconds.
 6. Start the app.
    ```sh
    expo start --dev-client
@@ -67,12 +73,6 @@ For most purposes, you should use the `development` branch. If you are using the
    If you are developing against a physical device, scan the resulting QR code. Otherwise, press the "a" or "i" key to open the app in an Android emulator or iPhone simulator respectively.
 
 ## Dynamic Content
-
-
-
-
-
-
 
 ### Daily Pennsylvanian
 
