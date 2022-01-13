@@ -12,21 +12,20 @@ import { SectionGrid } from 'react-native-super-grid'
 
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 
-const GOOSE_LOGO = require('../static/logos/dp-tech.png')
+const GOOSE_LOGO = require('../static/logos/dpdevelopers-logo.png')
 
 const { width } = Dimensions.get('window')
 const PROFILE_PIC_SIZE = width / 5
 const PROFILE_PIC_CELL_SIZE = width / 4
 
 const TEAM_INTRO =
-  "Hi, we're the tech department at the DP: a team of student developers and designers!"
+  "Hi, we're the engineering department at the DP, a team of student developers and designers!"
 
 const MISSION =
-  "Tasked with migrating content from the harsh winter envrionment of print publication to the temperate oasis of mobile communication, DP Tech faced a challenge like no other: what do we name our objective? It wasn't until we passed the hundreth person with a overpriced winter jacket that we found an animal which so accurately captured the migratory nature of our mission and Penn culture as a whole. And so, equipped with a fitting name, we hatched our plan.\n\nOperation Canada Goose is here to bring you the best of the Daily Pennyslvanian straight to your down-lined pockets."
+  "Tasked with migrating content from the harsh winter envrionment of print publication to the temperate oasis of mobile communication, DP Tech faced a challenge like no other: what do we name our objective? It wasn't until we passed the hundreth person with an overpriced winter jacket that we found an animal which so accurately captured the migratory nature of our mission and Penn culture as a whole. And so, equipped with a fitting name, we hatched our plan.\n\nOperation Canada Goose is here to bring you the best of The Daily Pennyslvanian, straight to your down jacket pockets."
 
-const DESIGNERS = require('../json/designers.json')
-
-const DEVELOPERS = require('../json/developers.json')
+import DEVELOPERS from "../json/developers"
+import DESIGNERS from "../json/designers"
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 200,
+    width: 250,
     height: 60,
     resizeMode: 'contain',
   },
@@ -83,14 +82,16 @@ const styles = StyleSheet.create({
   },
 })
 
-const ProfileCell = ({ name, pic }) => (
-  <View style={styles.profilePicCell}>
-    <Image style={styles.profilePicImage} source={{ uri: pic }} />
-    <View style={{ paddingVertical: 4 }}>
-      <Text style={styles.profileName}>{name}</Text>
+const ProfileCell = ({ name, pic }) => {
+  return (
+    <View style={styles.profilePicCell}>
+      <Image style={styles.profilePicImage} source={pic} />
+      <View style={{ paddingVertical: 4 }}>
+        <Text style={styles.profileName}>{name}</Text>
+      </View>
     </View>
-  </View>
-)
+  )
+}
 
 const people_sections = [
   { title: 'Developers', data: DEVELOPERS },
@@ -102,7 +103,7 @@ export const AboutScreen = () => (
     backgroundColor="white"
     ListHeaderComponent={
       <>
-        <View style={{ paddingVertical: 50 }}>
+        <View style={{ paddingVertical: 40 }}>
           <Image style={styles.logo} source={GOOSE_LOGO} />
         </View>
         <Text style={styles.intro}>{TEAM_INTRO}</Text>

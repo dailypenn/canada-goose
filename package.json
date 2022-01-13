@@ -1,6 +1,6 @@
 {
   "name": "dp-plus",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -60,7 +60,8 @@
     "react-redux": "^7.2.2",
     "react-scripts": "^5.0.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "webpack-dev-server": "^4.7.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

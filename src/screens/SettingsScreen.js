@@ -148,7 +148,7 @@ const PublicationCell = ({ currPublication }) => (
         <Text style={styles.pubText}>{currPublication}</Text>
         <View style={{ height: 2 }} />
         <Text style={styles.switchText}>
-          {`Long press on bottom tab logo to switch`}
+          {`Long press bottom-left tab logo to switch!`}
         </Text>
       </View>
     </View>
