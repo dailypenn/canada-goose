@@ -161,6 +161,16 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
     )
   }
 
+  const parseProjectPage = articleContent => {
+    if (article.content.includes('document.location=')) {
+      const urls = article.content.match(/\bhttps?:\/\/\S+/gi)
+      if (urls.length > 0) {
+        return "<p>Check out this special project <a href=\"" + urls[0].replace(/'$/, '').replace(/"$/, '').trim() + "\" target=\"_blank\">here</a>!</p>"
+      }
+    }
+    return articleContent
+  }
+
   return (
     <>
       <ImageView
@@ -174,7 +184,7 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
         <HTML
           onLinkPress={onLinkPress}
           source={{
-            html: article.content,
+            html: parseProjectPage(article.content),
           }}
           tagsStyles={tagStyles}
           allowWhitespaceNodes={false}
