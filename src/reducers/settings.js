@@ -35,13 +35,15 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
     return savedNotifPreferences ? savedNotifPreferences : [true, true, false, false]
   }
 
+  const oneSignalTags = ["breaking", "top", "34st", "utb"]
+
   switch (type) {
     case SET_INIT:
       OneSignal.setAppId(Constants.manifest?.extra?.oneSignalAppId);
-      OneSignal.sendTag("breaking", "true");
-      OneSignal.sendTag("top", "true");
-      OneSignal.sendTag("34st", "false");
-      OneSignal.sendTag("utb", "false");
+      getNewNotifPreferencesData(updates.notifPreferences).forEach(function(pref, index) {
+        OneSignal.sendTag(oneSignalTags[index], pref.toString())
+      });
+
       return {
         homeSectionPreferences: getNewHomeSectionData(
           updates.homeSectionPreferences

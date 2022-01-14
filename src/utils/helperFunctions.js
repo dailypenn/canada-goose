@@ -114,8 +114,7 @@ export const getArticlePubSlug = href => {
     const URL = URLs[i]
     if (href.includes(URL)) {
       const publication = URL_TO_PUB[URL]
-      const slug = href.split(URL)[1]
-
+      const slug = href.split(URL)[1].split("?")[0]
       return { publication, slug }
     }
   }
