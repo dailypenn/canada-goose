@@ -26,7 +26,7 @@ The official mobile app for The Daily Pennsylvanian, 34th Street, and Under The 
 - **Manage Feed**: Change the order in which categories on your home feed change.
 - **Notifications**: Keep up to date on breaking news and stories chosen by editors.
 
-<img src="src/static/misc/screenshot4.png" width="230px"> <img src="src/static/misc/screenshot3.png" width="230px"> <img src="src/static/misc/screenshot1.png" width="230px"> <img src="src/static/misc/screenshot2.png" width="230px">
+<img src="src/static/misc/screenshot4.png" width="24%"> <img src="src/static/misc/screenshot3.png" width="24%"> <img src="src/static/misc/screenshot1.png" width="24%"> <img src="src/static/misc/screenshot2.png" width="24%">
 
 ## Installation 🚀
 
