@@ -77,9 +77,9 @@ The official mobile app for The Daily Pennsylvanian, 34th Street, and Under The 
    
 ## Contributing ⭐
 
-[<img src="src/static/logos/dpdevelopers-logo2.png" width="100%">](https://developers.thedp.com)
+[<img src="src/static/logos/dp-developerslogo2.png" width="100%">](https://developers.thedp.com)
 
-In order to contribute, please apply to join our team! Applications open at the beginning of fall and spring semesters [here](https://developers.thedp.com/apply)!
+**In order to contribute, please apply to join our team! Applications open at the beginning of fall and spring semesters [here](https://developers.thedp.com/apply)!**
 
 ## Operation Canada Goose ❓
 
