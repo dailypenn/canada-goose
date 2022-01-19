@@ -9,14 +9,16 @@ The official mobile app for The Daily Pennsylvanian, 34th Street, and Under The 
 
 <!-- TABLE OF CONTENTS -->
 <details>
-  <summary>Table of Contents</summary>
+  <summary><b>Table of Contents</b></summary>
   <ol>
-    <li><a href="#features">Features</a></li>
+    <li><a href="#features-">Features</a></li>
     <li><a href="#installation-">Installation</a></li>
+    <li><a href="#contributing-">Contributing</a></li>
+    <li><a href="#operation-canada-goose-">Operation... Canada Goose?</a></li>
   </ol>
 </details>
 
-## Features
+## Features 📱
 
 - **Top Stories**: View what’s trending in The Daily Pennsylvanian, 34th Street Magazine, and Under The Button.
 - **Discover**: Search the articles of each publication and view the most recent articles in certain categories.
@@ -36,9 +38,10 @@ The official mobile app for The Daily Pennsylvanian, 34th Street, and Under The 
    ```sh
    npm install
    ```
-For most purposes, you should use the `development` branch. If you are using the `master` branch, you must set up the iOS app credentials locally:
 
-3. Update `credentials.json` with local iOS credentials (**`master`** branch only!)
+> 🔔 **Note: For most purposes, you should use the `development` branch. If you are using the `master` branch, you must set up the iOS app credentials locally:**
+
+3. (**`master` branch only!**) Update `credentials.json` with local iOS credentials
    1. Get distribution certificate from Apple Developer Portal and update path and password.
    ```json
    "distributionCertificate": {
@@ -71,8 +74,22 @@ For most purposes, you should use the `development` branch. If you are using the
    expo start --dev-client
    ```
    If you are developing against a physical device, scan the resulting QR code. Otherwise, press the "a" or "i" key to open the app in an Android emulator or iPhone simulator respectively.
+   
+## Contributing ⭐
 
-## Dynamic Content
+[<img src="src/static/logos/dpdevelopers-logo2.png" width="100%">](https://developers.thedp.com)
+
+In order to contribute, please apply to join our team! Applications open at the beginning of fall and spring semesters [here](https://developers.thedp.com/apply)!
+
+## Operation Canada Goose ❓
+
+Tasked with migrating content from the harsh winter envrionment of print publication to the temperate oasis of mobile communication, DP Developers faced a challenge like no other: what do we name our objective? It wasn't until we passed the hundredth person with an overpriced winter jacket that we found an animal which so accurately captured the migratory nature of our mission and Penn culture as a whole. And so, equipped with a fitting name, we hatched our plan.
+
+**Operation Canada Goose is here to bring you the best of The Daily Pennyslvanian, straight to your down jacket pockets.**
+
+<!---
+
+## Dynamic Content)
 
 ### Daily Pennsylvanian
 
@@ -120,5 +137,6 @@ _NOTE_: To avoid the same story showing up in both the carousel and the sections
 #### Discover
 
 ### Under the Button
+-->
 
 ---
