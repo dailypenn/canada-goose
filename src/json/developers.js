@@ -4,7 +4,7 @@ const developers = [
         "pic": require("../static/team/developers/lieb.jpeg")
     },
     {
-        "name": "Raunaq Singh",
+        "name": "Raunaq Singh!!!",
         "pic": require("../static/team/developers/raunaq.jpeg")
     },
     {
