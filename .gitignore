@@ -372,3 +372,5 @@ yarn.lock
 # credentials
 ios/certs/dev/*
 ios/certs/prod/*
+
+credentials.json
