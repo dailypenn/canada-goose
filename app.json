@@ -140,19 +140,8 @@
       }
     },
     "plugins": [
-      [
-        "onesignal-expo-plugin",
-        {
-          "mode": "production",
-          "devTeam": "RC676BS29B",
-          "iPhoneDeploymentTarget": "12.0"
-        }
-      ],
       "./patches/android-project-build-gradle.plugin",
       "./patches/android-app-build-gradle.plugin"
-    ],
-    "extra": {
-      "oneSignalAppId": "8b21f95f-00af-429b-92d0-a07323654999"
-    }
+    ]
   }
 }
