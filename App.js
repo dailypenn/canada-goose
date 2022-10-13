@@ -22,6 +22,8 @@ import { PublicationEnum } from './src/utils/constants'
 import { setInit, switchPublication } from './src/actions'
 import { OnboardingModal } from './src/screens'
 
+import { initOneSignalClient } from './src/utils/notifications';
+
 // Initialize Apollo Client
 const client = new ApolloClient({
   // uri: 'http://localhost:5000/graphql',
@@ -38,6 +40,7 @@ const getAsyncStorage = () => {
       GET_HOME_FEED_ORDER_KEY(PublicationEnum.utb),
       SAVED_ARTICLES_KEY,
       LAST_VIEWED_PUBLICATION_KEY,
+      NOTIF_PREFS_KEY,
     ]).then(result => {
       let lastViewedPublication = JSON.parse(result[4][1])
       if (lastViewedPublication != null) {
@@ -73,6 +76,12 @@ const App = () => {
   }, [])
 
   console.log('isONboarded' + isOnboarded)
+
+  if (!attachOnboardingModalToDom) {
+    setTimeout(() => {
+      initOneSignalClient()
+    }, 5000);
+  }
 
   if (assetsLoaded) {
     return (

@@ -5,13 +5,22 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "ios": {
+        "credentialsSource": "local"
+      }
     },
     "local": {
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
+        "credentialsSource": "local",
         "simulator": true
+      }
+    },
+    "production": {
+      "ios": {
+        "credentialsSource": "local"
       }
     }
   },
