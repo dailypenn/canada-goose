@@ -18,7 +18,11 @@ const developers = [
     {
         "name": "Daniel Tao",
         "pic": require("../static/team/developers/dtao.jpeg")
-    }
+    },
+    {
+        "name": "Bach Tran",
+        "pic": require("../static/team/developers/bachtran.jpeg")
+    },
 ]
 
 export default developers
