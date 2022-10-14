@@ -23,6 +23,10 @@ const developers = [
         "name": "Bach Tran",
         "pic": require("../static/team/developers/bachtran.jpeg")
     },
+    {
+        "name": "Ethan Weisberg",
+        "pic": require("../static/team/developers/ethan.jpeg")
+    }
 ]
 
 export default developers
