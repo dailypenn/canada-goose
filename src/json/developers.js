@@ -20,6 +20,10 @@ const developers = [
         "pic": require("../static/team/developers/dtao.jpeg")
     },
     {
+        "name": "Bach Tran",
+        "pic": require("../static/team/developers/bachtran.jpeg")
+    },
+    {
         "name": "Ethan Weisberg",
         "pic": require("../static/team/developers/ethan.jpeg")
     }
