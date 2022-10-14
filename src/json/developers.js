@@ -18,6 +18,10 @@ const developers = [
     {
         "name": "Daniel Tao",
         "pic": require("../static/team/developers/dtao.jpeg")
+    },
+    {
+        "name": "Ethan Weisberg",
+        "pic": require("../static/team/developers/ethan.jpeg")
     }
 ]
 
