@@ -22,6 +22,14 @@ const developers = [
     {
         "name": "Annabella Tian",
         "pic": require("../static/team/developers/annabella.jpg")
+    },
+    {
+        "name": "Bach Tran",
+        "pic": require("../static/team/developers/bachtran.jpeg")
+    },
+    {
+        "name": "Ethan Weisberg",
+        "pic": require("../static/team/developers/ethan.jpeg")
     }
 ]
 
