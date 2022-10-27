@@ -6,9 +6,6 @@ import {
   UPDATE_NOTIF_PREF
 } from '../actions'
 
-import Constants from "expo-constants";
-import OneSignal from "react-native-onesignal";
-
 const defaultSettingsState = {
   savedArticles: null,
   homeSectionPreferences: null,
@@ -35,15 +32,8 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
     return savedNotifPreferences ? savedNotifPreferences : [true, true, false, false]
   }
 
-  const oneSignalTags = ["breaking", "top", "34st", "utb"]
-
   switch (type) {
     case SET_INIT:
-      OneSignal.setAppId(Constants.manifest?.extra?.oneSignalAppId);
-      getNewNotifPreferencesData(updates.notifPreferences).forEach(function(pref, index) {
-        OneSignal.sendTag(oneSignalTags[index], pref.toString())
-      });
-
       return {
         homeSectionPreferences: getNewHomeSectionData(
           updates.homeSectionPreferences
