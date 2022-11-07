@@ -142,6 +142,11 @@
     "plugins": [
       "./patches/android-project-build-gradle.plugin",
       "./patches/android-app-build-gradle.plugin"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "63f1fb87-151c-41bf-b013-3b2bc96d41c8"
+      }
+    }
   }
 }

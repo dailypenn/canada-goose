@@ -8,6 +8,7 @@ import {
   Animated,
   Image,
   Platform,
+  ScrollView
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -26,6 +27,8 @@ import {
   LogoActivityIndicator,
   PublicationModal,
   InteractiveHomeComponent,
+  GradientButton,
+  MenuToggle
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
@@ -41,6 +44,7 @@ import { EmptyStateEnum } from '../components/EmptyState'
 import { PublicationPrimaryColor } from '../utils/branding'
 import { GEOMETRIC_BOLD } from '../utils/fonts'
 import { publicationAnalytics, deepLinkingAnalytics } from '../utils/analytics'
+import { Button } from 'react-native-elements/dist/buttons/Button'
 
 const DP_HEADER_LOGO = require('../static/logos/dp-logo-large-black.png')
 const ST_HEADER_LOGO = require('../static/logos/34st-header.png')
@@ -173,6 +177,7 @@ const HomeView = ({
       </Animated.View>
 
       <Animated.ScrollView
+      stickyHeaderIndices={[0]}
         style={{
           paddingTop: Platform.select({
             android: 0, //AnimatedHeaderHeight,
@@ -204,7 +209,12 @@ const HomeView = ({
           />
         }
         ref={scrollViewRef}
-      >
+      >   
+
+        <View height={30}>
+          <MenuToggle style={[{position: 'absolute', height: 30}]}/>
+        </View>
+      
         <HeadlineArticle
           data={centerArticles[0]}
           publication={publication}
@@ -249,7 +259,7 @@ const HomeView = ({
             </View>
           )
         })}
-      </Animated.ScrollView>
+      </Animated.ScrollView> 
     </View>
   )
 }

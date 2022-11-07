@@ -30,10 +30,6 @@ const developers = [
     {
         "name": "Ethan Weisberg",
         "pic": require("../static/team/developers/ethan.jpeg")
-    },
-    {
-        "name": "Brian Lu",
-        "pic": require("../static/team/developers/brian.jpeg")
     }
 ]
 
