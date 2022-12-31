@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import * as Haptics from 'expo-haptics'
 
-import { HomeStack, DiscoveryStack, SettingsStack } from './src/stacks'
+import { HomeStack, DiscoveryStack, SettingsStack, PrintIssueStack } from './src/stacks'
 import { PublicationPrimaryColor } from './src/utils/branding'
 import { PublicationEnum } from './src/utils/constants'
 
@@ -75,6 +75,7 @@ const TabNavigationController = ({ currPublication }) => {
               )
             } else if (route.name == 'DiscoveryStack') iconName = 'search'
             else if (route.name === 'SettingsStack') iconName = 'person-outline'
+            else if (route.name == 'PrintIssueStack') iconName = 'newspaper-outline' //currently archive
 
             return <Ionicons name={iconName} size={26} color={color} />
           },
@@ -95,6 +96,7 @@ const TabNavigationController = ({ currPublication }) => {
       >
         <Tab.Screen name="HomeStack" component={HomeStack} />
         <Tab.Screen name="DiscoveryStack" component={DiscoveryStack} />
+        <Tab.Screen name="PrintIssueStack" component={PrintIssueStack} />
         <Tab.Screen name="SettingsStack" component={SettingsStack} />
       </Tab.Navigator>
     </NavigationContainer>
