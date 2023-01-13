@@ -4,11 +4,9 @@ import * as Haptics from 'expo-haptics'
 
 import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
 import {
-  DiscoveryScreen,
-  PrintIssueArchiveScreen,
   PrintIssueScreen,
 } from '../screens'
-import { DefaultStatusBar, DiscoveryGrid } from '../components'
+import { DefaultStatusBar } from '../components'
 const Stack = createStackNavigator()
 
 export const PrintIssueStack = ({ navigation }) => {
@@ -29,7 +27,7 @@ export const PrintIssueStack = ({ navigation }) => {
         screenOptions={{
           headerStyle: { backgroundColor: '#fff' },
           headerTintColor: '#000',
-          headerTitleStyle: { fontFamily: DISPLAY_SERIF_BLACK, fontSize: 25 },
+          headerTitleStyle: { fontFamily: DISPLAY_SERIF_BLACK, fontSize: 20 },
           headerBackTitleVisible: false,
         }}
       >
@@ -37,7 +35,7 @@ export const PrintIssueStack = ({ navigation }) => {
         <Stack.Screen
           name="PrintIssue"
           component={PrintIssueScreen}
-          options={{title: 'PRINT ISSUE'}}
+          options={{title: 'Print Issue', headerShown: false,}}
         />
       </Stack.Navigator>
     </>
