@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Modal, Pressable, FlatList, SafeAreaView } from
 import { Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 
+import { PublicationEnum } from '../utils/constants'
 import { GEOMETRIC_BOLD } from '../utils/fonts'
 import { WebView } from 'react-native-webview';
 import { BlurView } from 'expo-blur'
@@ -10,7 +11,7 @@ import { BlurView } from 'expo-blur'
 
 import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
 
-//temporary data
+//temporary data, switch for real json
 const DATA = [
     {
       day: "Thursday",
@@ -42,12 +43,6 @@ const styles = StyleSheet.create({
     headerSafeArea: {
         zIndex: 1000,
         flex: 1,
-    },
-    header: {
-        borderBottomWidth: 1,
-        borderBottomColor: 'gray',
-        height: 50,
-        paddingHorizontal: 16
     },
     headerInner: {
         flex: 1,
@@ -95,25 +90,55 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         fontSize: 25,
-        backgroundColor: "blue",
-        borderColor: "cyan",
+        backgroundColor: "red",
+        borderColor: "white",
         color: "white"
+    },
+    //button color not working :/
+    button: {
+        backgroundColor: '#ff0000'
     }
 
 })
 
-
-//Last thing to do is to fix up how it looks in the styles, also fix publication when available
+//Add calender
+//Finish up styling
 //Maybe add a day section to the JSON file?
-export const PrintIssueScreenComp = ({ navigation, publication, settings }) => {
+export const PrintIssueScreenComp = ({currPublication, settings }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [url, updateUrl] = useState(DATA[DATA.length-1].url);
     const [date, updateDate] = useState(DATA[DATA.length-1].date);
 
+    const updateHeader = (pub) => {
+        switch (pub) {
+            case PublicationEnum.dp:
+                return {
+                    borderBottomWidth: 1, 
+                    borderBottomColor: 'red',
+                    height: 50,
+                    paddingHorizontal: 16,
+                }
+            case PublicationEnum.street:
+                return {
+                    borderBottomWidth: 1, 
+                    borderBottomColor: 'cyan',
+                    height: 50,
+                    paddingHorizontal: 16,
+                }
+            case PublicationEnum.utb:
+                return {
+                    borderBottomWidth: 1, 
+                    borderBottomColor: 'blue',
+                    height: 50,
+                    paddingHorizontal: 16,
+                }
+        }
+    }
+
     return (
         <View style= {styles.container}>
             <SafeAreaView style={styles.header_safe_area}>
-                <View style={styles.header}>
+                <View style= {updateHeader(currPublication)}>
                     <View style={styles.header_inner}>
                         <Text style={styles.title}>Print Issue</Text>
                     </View>
@@ -153,6 +178,7 @@ export const PrintIssueScreenComp = ({ navigation, publication, settings }) => {
                 </Text>
                 <Button
                     title="ARCHIVES"
+                    style = {styles.button}
                     onPress={() => setModalVisible(true)}
                     >
                 </Button>
