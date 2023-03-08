@@ -11,6 +11,7 @@ import { BlurView } from 'expo-blur'
 
 import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
 import { getCalendarDateString } from 'react-native-calendars/src/services';
+import { ScrollView } from 'react-native-gesture-handler';
 
 //temporary data, switch for real json
 //'YYYY-MM-DD': {}
@@ -473,6 +474,9 @@ export const PrintIssueScreenComp = ({currPublication, settings }) => {
                 </View>
             </Modal>
             
+            {
+                //SECOND MODAL IN PROGRESS WITH THE LIST, NEED DB for now
+            }
             {/* <Modal
             animationType="fade"
             visible={searchModalVisible}
@@ -493,6 +497,24 @@ export const PrintIssueScreenComp = ({currPublication, settings }) => {
                 </View>
             </Modal> */}
 
+            {
+            //IF IMAGES, HORIZONTAL SCROLL VIEW BELOW INSTEAD OF PDF
+            }
+
+            {/* <ScrollView
+                horizontal = {true}
+                style ={{width: "100%", height: "0%"}}
+                snapToAlignment = {"left"}>
+                    <Image source={{uri: DATA[0].preview}} 
+                        style={{ width: 200, height: 200 }}
+                        />
+                    <Image source={{uri: DATA[1].preview}} 
+                        style={{ width: 200, height: 200 }}
+                        />
+                    <Image source={{uri: DATA[2].preview}} 
+                        style={{ width: 200, height: 200 }}
+                        />
+            </ScrollView> */}
             <View style={styles.dates}>
                 <Text style={updateDateText(currPublication)}>
                     {date}
@@ -515,7 +537,8 @@ export const PrintIssueScreenComp = ({currPublication, settings }) => {
             <WebView 
                 originWhitelist={['*']}
                 javaScriptEnabled={true}
-                source={{ uri: url}} />
+                source={{ uri: url}}
+                style = {styles.pdf}/>
         </View>
     )
 }
