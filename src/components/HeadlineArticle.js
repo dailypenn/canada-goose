@@ -27,7 +27,7 @@ export const HeadlineArticle = ({
   const parsedAbstract = parseAbstract(abstract)
 
   return (
-    <View>
+    <View >
       <PictureHeadline
         headline={headline}
         time={published_at}

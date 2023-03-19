@@ -11,7 +11,7 @@ import {
   ScrollView
 } from 'react-native'
 import { useQuery } from '@apollo/client'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
@@ -45,6 +45,7 @@ import { PublicationPrimaryColor } from '../utils/branding'
 import { GEOMETRIC_BOLD } from '../utils/fonts'
 import { publicationAnalytics, deepLinkingAnalytics } from '../utils/analytics'
 import { Button } from 'react-native-elements/dist/buttons/Button'
+import { HeaderMenu } from '../components/HeaderMenu'
 
 const DP_HEADER_LOGO = require('../static/logos/dp-logo-large-black.png')
 const ST_HEADER_LOGO = require('../static/logos/34st-header.png')
@@ -115,6 +116,30 @@ const HomeView = ({
     }
   }
 
+  const GET_HEADER_TOP_LOGO = () => {
+    switch (publication) {
+      case PublicationEnum.utb:
+        return ST_HEADER_LOGO
+      default:
+        return UTB_HEADER_LOGO
+    }
+  }
+
+  const GET_HEADER_MID_LOGO = () => {
+    switch (publication) {
+      case PublicationEnum.dp:
+        return ST_HEADER_LOGO
+      default:
+        return DP_HEADER_LOGO
+    }
+  }
+
+  const [showMenu, setShowMenu] = useState(false);
+  const switch_menu = () => {
+    console.log("switch menu");
+    setShowMenu(!showMenu);
+  }
+
   useFocusEffect(
     useCallback(() => {
       if (scrollToTop && scrollViewRef) {
@@ -126,7 +151,16 @@ const HomeView = ({
 
   return (
     <View style={styles.container}>
-      <Animated.View
+      <View //status bar
+        style={[{
+          height: 40, 
+          zIndex: 9999,
+          position: 'absolute',
+          width: '100%',
+          backgroundColor: '#fff'
+        }]}>
+      </View>
+      {/* <Animated.View //heading publication animation
         style={[
           {
             height: AnimatedHeaderHeight,
@@ -139,8 +173,8 @@ const HomeView = ({
           },
           { transform: [{ translateY: translateY }] },
         ]}
-      ></Animated.View>
-      <Animated.View
+      ></Animated.View> */}
+      <Animated.View //heading animation
         style={[
           {
             height: AnimatedHeaderHeight,
@@ -158,7 +192,7 @@ const HomeView = ({
             }),
             ...Platform.select({
               ios: {
-                paddingTop: getStatusBarHeight(true) + 10,
+                paddingTop: getStatusBarHeight(true),
               },
               android: {
                 paddingTop: getStatusBarHeight(true),
@@ -168,16 +202,55 @@ const HomeView = ({
           { transform: [{ translateY: translateY }] },
         ]}
       >
-        <View style={{ height: 28 }}>
+        {/* toggle menu publication buttons */}
+        {/* <View style={{ height: 48, borderTopColor: '#DDD', 
+          borderBottomColor: '#fff', alignItems: 'center', 
+          borderWidth: 1}}>
           <Image
-            source={GET_HEADER_LOGO()}
-            style={{ flex: 1, resizeMode: 'contain' }}
+            source={GET_HEADER_TOP_LOGO()}
+            style={{ flex: 1, resizeMode: 'contain', marginVertical: 10}}
           />
         </View>
+        <View style={{ 
+          height: 48, 
+          borderTopColor: '#DDD', 
+          borderBottomColor: '#fff',
+          borderWidth: 1}}>
+          <Image
+            source={GET_HEADER_MID_LOGO()}
+            style={{ flex: 1, resizeMode: 'contain', marginVertical: 10 }}
+          />
+        </View> */}
+        <View style={{ 
+          height: 48, 
+          borderTopColor: '#DDD', 
+          borderBottomColor: '#fff',
+          borderWidth: 1}}>
+          <Image
+            source={GET_HEADER_LOGO()}
+            style={{ flex: 1, resizeMode: 'contain', marginVertical: 10 }}
+          />
+        </View>
+        <TouchableOpacity style={{ //toggle menu button
+          position: 'absolute',
+          top: AnimatedHeaderHeight,
+          alignSelf: 'center',
+          zIndex: 999,
+          }}
+          onPress={switch_menu}
+          >
+          <MenuToggle publication={publication}/>
+        </TouchableOpacity>
       </Animated.View>
 
+      {/* <View>
+        <HeaderMenu publication={publication}></HeaderMenu>
+      </View>
+       */}
+
+      {/* <PublicationModal></PublicationModal> */}
+
       <Animated.ScrollView
-      stickyHeaderIndices={[0]}
         style={{
           paddingTop: Platform.select({
             android: 0, //AnimatedHeaderHeight,
@@ -209,12 +282,7 @@ const HomeView = ({
           />
         }
         ref={scrollViewRef}
-      >   
-
-        <View height={30}>
-          <MenuToggle style={[{position: 'absolute', height: 30}]}/>
-        </View>
-      
+      >
         <HeadlineArticle
           data={centerArticles[0]}
           publication={publication}
@@ -259,7 +327,7 @@ const HomeView = ({
             </View>
           )
         })}
-      </Animated.ScrollView> 
+      </Animated.ScrollView>
     </View>
   )
 }
