@@ -38,7 +38,7 @@
     "patch-package": "^8.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-native": "0.73.4",
+    "react-native": "0.64.3",
     "react-native-draggable-flatlist": "^3.0.4",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "~2.1.0",
