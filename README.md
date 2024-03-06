@@ -69,9 +69,9 @@ The official mobile app for The Daily Pennsylvanian, 34th Street, and Under The 
          * Open up your simulator.
          * Drag the file into the simulator.
          * The app will be installed in a few seconds.
-      2. In React Native versions 0.69 and prior, there is a known bug in node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp which prevents Fastlane from building correctly on Expo. See the official issue here [React Native Issue #36758](https://github.com/facebook/react-native/issues/36758). Follow the steps below to apply a development patch **only if needed**.
+      2. In React Native versions 0.69 and prior, there is a known bug in node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp which prevents Fastlane from building correctly on Expo. See the official issue here: [React Native Issue #36758](https://github.com/facebook/react-native/issues/36758). Follow the steps below to apply a development patch **only if needed**.
          * Install [patch-package](https://github.com/ds300/patch-package)
-         * Modify the source code similar to this [commit](https://github.com/facebook/react-native/commit/52d8a797e7a6be3fa472f323ceca4814a28ef596)
+         * Modify the source code similar to this [commit](https://github.com/facebook/react-native/commit/52d8a797e7a6be3fa472f323ceca4814a28ef596). Exact line numbers may vary.
          * Run ```npx patch-package react-native```
          * Reminder: these steps should only be run if expo cannot build due to the exact bug described in the issue.
 6. Start the app.
