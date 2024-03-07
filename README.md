@@ -78,7 +78,7 @@ The official mobile app for The Daily Pennsylvanian, 34th Street, and Under The 
    ```sh
    expo start --dev-client
    ```
-   If you are developing against a physical device, scan the resulting QR code. Otherwise, press the "a" or "i" key to open the app in an Android emulator or iPhone simulator respectively.
+   If you are developing against a physical device, scan the resulting QR code. Otherwise, press the "a" or "i" key to open the app in an Android emulator or iPhone simulator respectively. **Note:** To avoid runtime issues when starting the development server, please ensure that your machine is running Node.js v16.20.2 (LTS). See this [link](https://help.dreamhost.com/hc/en-us/articles/360029083351-Installing-a-custom-version-of-NVM-and-Node-js) to see how to change between versions.
    
 ## Contributing ⭐
 
