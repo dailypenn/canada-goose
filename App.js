@@ -72,7 +72,7 @@ const App = () => {
     loadAssets()
   }, [])
 
-  console.log('isONboarded' + isOnboarded)
+  console.log('isOnboarded' + isOnboarded)
 
   if (assetsLoaded) {
     return (

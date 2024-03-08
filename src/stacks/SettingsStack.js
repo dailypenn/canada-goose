@@ -79,7 +79,7 @@ export const SettingsStack = ({ navigation }) => {
         <Stack.Screen
           name="WebView"
           component={WebViewScreen}
-          options={{ title: '' }}
+          options={{ title: 'DP Developers' }}
         />
 
         <Stack.Screen

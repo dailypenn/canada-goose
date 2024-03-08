@@ -73,7 +73,7 @@ const TabNavigationController = ({ currPublication }) => {
                   }}
                 />
               )
-            } else if (route.name == 'DiscoveryStack') iconName = 'search'
+            } else if (route.name === 'DiscoveryStack') iconName = 'search'
             else if (route.name === 'SettingsStack') iconName = 'person-outline'
 
             return <Ionicons name={iconName} size={26} color={color} />

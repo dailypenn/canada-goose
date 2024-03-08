@@ -183,7 +183,7 @@ const SettingsSection = ({ navigateToScreen, items }) => (
           <SettingsCell item={el} />
           <View
             style={{
-              ...(i != items.length - 1 ? styles.divider : {}),
+              ...(i !== items.length - 1 ? styles.divider : {}),
               marginLeft: 45
             }}
           />
