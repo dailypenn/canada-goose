@@ -9,7 +9,7 @@ import * as ScreenOrientation from 'expo-screen-orientation'
 import TabNavigationController from './NavigationController'
 import { loadFonts } from './src/utils/fonts'
 import { LogoActivityIndicator } from './src/components'
-import RootReducer from './src/reducers'
+import store from './src/reducers'
 import {
   GET_HOME_FEED_ORDER_KEY,
   IS_ONBOARDED_KEY,
@@ -28,7 +28,6 @@ const client = new ApolloClient({
   uri: 'https://graphql-295919.ue.r.appspot.com/graphql',
   cache: new InMemoryCache(),
 })
-const store = createStore(RootReducer, applyMiddleware(thunk))
 
 const getAsyncStorage = () => {
   return dispatch => {

@@ -21,6 +21,7 @@ export const TOGGLE_SCROLL_TO_TOP = 'TOGGLE_SCROLL_TO_TOP'
 export const toggleScrollToTop = () => ({ type: TOGGLE_SCROLL_TO_TOP })
 
 export const SET_INIT = 'SET_INIT'
+
 export const setInit = result => {
   return {
     type: SET_INIT,
@@ -41,6 +42,7 @@ export const setInit = result => {
       ],
       savedArticles: JSON.parse(result[3][1]),
       notifPreferences: JSON.parse(result[5][1]),
+      displayPreference: DEFAULT_DISPLAY_PREF,
     },
   }
 }
@@ -88,5 +90,16 @@ export const updateNotifPref = (notifIndex, value) => {
       notifIndex: notifIndex,
       value: value,
     },
+  }
+}
+
+export const DEFAULT_DISPLAY_PREF = "light"
+export const UPDATE_DISPLAY_PREF = 'UPDATE_DISPLAY_PREF'
+export const updateDisplayPref = (theme) => {
+  return {
+    type: UPDATE_DISPLAY_PREF,
+    updates: {
+      displayPreference: theme
+    }
   }
 }

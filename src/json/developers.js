@@ -16,10 +16,6 @@ const developers = [
         "pic": require("../static/team/developers/peter.jpeg")
     },
     {
-        "name": "Daniel Tao",
-        "pic": require("../static/team/developers/dtao.jpeg")
-    },
-    {
         "name": "Erik Wei",
         "pic": require("../static/team/developers/erik.jpg")
     },
@@ -30,10 +26,6 @@ const developers = [
     {
         "name": "Bach Tran",
         "pic": require("../static/team/developers/bachtran.jpeg")
-    },
-    {
-        "name": "Ethan Weisberg",
-        "pic": require("../static/team/developers/ethan.jpeg")
     },
     {
         "name": "Brian Lu",

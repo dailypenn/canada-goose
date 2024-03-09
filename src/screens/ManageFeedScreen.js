@@ -123,7 +123,7 @@ const ManageFeedScreenComp = ({
   settings,
   dispatch,
 }) => {
-  console.log('MANAGE FEED SCREEN COMP', currPublication)
+  console.log('MANAGE FEED SCREEN COMP:', currPublication)
   const instructions =
     'Press down and drag the sections to the order you would like to see them appear on the home page'
   const itemHeight = 80
