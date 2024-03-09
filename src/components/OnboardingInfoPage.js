@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { View, SafeAreaView, Animated } from 'react-native'
 import * as Haptics from 'expo-haptics'
 
-import { GradientButton, InverseGradientButton } from '.'
+import { GradientButton } from './GradientButton'
+import { InverseGradientButton } from './InverseGradientButton'
+
 import {
   Platform,
   StyleSheet,
@@ -38,7 +40,6 @@ const InfoPageContents = ({
           paddingBottom: 40,
           marginVertical: 30,
           paddingHorizontal: 30,
-          paddingBottom: 0
         },
         style
       ]}

@@ -21,7 +21,6 @@ export const TOGGLE_SCROLL_TO_TOP = 'TOGGLE_SCROLL_TO_TOP'
 export const toggleScrollToTop = () => ({ type: TOGGLE_SCROLL_TO_TOP })
 
 export const SET_INIT = 'SET_INIT'
-
 export const setInit = result => {
   return {
     type: SET_INIT,

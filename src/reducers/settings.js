@@ -9,7 +9,7 @@ import {
 } from '../actions'
 
 const defaultSettingsState = {
-  savedArticles: null,
+  savedArticles: [],
   homeSectionPreferences: null,
   notifPreferences: null,
   displayPreference: DEFAULT_DISPLAY_PREF,

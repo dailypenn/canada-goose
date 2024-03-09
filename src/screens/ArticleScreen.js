@@ -58,6 +58,7 @@ const ArticleScreenComp = ({
   })
 
   useEffect(() => {
+    console.log("settings.savedArticles", settings.savedArticles)
     if (route.params.articlePublication == null && article != null)
       userViewedArticleAnalytics(article.headline, article.slug)
 
@@ -106,7 +107,6 @@ const ArticleScreenComp = ({
   }, [settings.savedArticles, article])
 
   const deleteHandler = async article => {
-    // console.log('UNSAVEEEE')
     const slug = article.slug
     const remainingArticles = savedArticles.filter(item => item.slug !== slug)
     let saved_successfully = await Storage.setItem(
@@ -175,13 +175,14 @@ const ArticleScreenComp = ({
         // TODO: Analytics on shares
         console.log('Shared!')
       } else {
-        // TODO: Analysics
+        // TODO: Analytics
         console.log('Dismissed Share!')
       }
     } catch (error) {
       alert(error)
     }
   }
+
   const onLinkPress = (_, href) => {
     console.log(href)
 

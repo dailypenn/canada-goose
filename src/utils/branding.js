@@ -50,7 +50,7 @@ export const PublicationLargeLogo = pub => {
   switch (pub) {
     case PublicationEnum.dp:
       return DP_LOGO_LARGE
-    case Publication.street:
+    case PublicationEnum.street:
       return STREET_LOGO_LARGE
     default:
       return UTB_LOGO_LARGE
