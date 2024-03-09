@@ -140,8 +140,14 @@ const ArticleScreenComp = ({
   }
 
   const handlePress = (alreadySaved, routeArticle) => {
-    if (!alreadySaved) saveHandler(routeArticle)
-    else deleteHandler(routeArticle)
+    if (!alreadySaved) {
+      console.log("saved")
+      saveHandler(routeArticle)
+    }
+    else {
+      console.log("unsaved")
+      deleteHandler(routeArticle)
+    }
   }
 
   const handleShare = async () => {

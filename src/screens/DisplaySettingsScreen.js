@@ -60,7 +60,7 @@ const DisplayCell = ({currPref, dispatch, item}) => (
   </TouchableOpacity>
 )
 
-const DisplaySettingsScreenComp = ({displayPreference, dispatchUpdateDispPref}) => {
+const DisplaySettingsScreenComp = ({displayPreference, updatePreference}) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <FlatList
@@ -68,7 +68,7 @@ const DisplaySettingsScreenComp = ({displayPreference, dispatchUpdateDispPref}) 
         ListHeaderComponent={renderHeader}
         renderItem={({item}) =>
           (<DisplayCell currPref={displayPreference}
-                        dispatch={dispatchUpdateDispPref}
+                        dispatch={updatePreference}
                         item={item}/>)}
         ItemSeparatorComponent={
           (_) =>
@@ -84,14 +84,14 @@ const DisplaySettingsScreenComp = ({displayPreference, dispatchUpdateDispPref}) 
   )
 }
 
-const mapStateToProps = ({settings}) => {
-  return {displayPreference: settings.displayPreference}
-}
+const mapStateToProps = (state) => ({
+  displayPreference: state.settings.displayPreference,
+});
 
-const mapDispatchToProps = dispatch => ({
-  dispatchUpdateDispPref: (displayPref) => {
-    dispatch(updateDisplayPref(displayPref))
-  },
-})
+
+const mapDispatchToProps = (dispatch) => ({
+  updatePreference: (newPref) => dispatch(updateDisplayPref(newPref)),
+});
+
 
 export const DisplaySettingsScreen = connect(mapStateToProps, mapDispatchToProps)(DisplaySettingsScreenComp)

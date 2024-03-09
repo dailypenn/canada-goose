@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import { applyMiddleware, createStore } from 'redux'
-import thunk from 'redux-thunk'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Provider } from 'react-redux'
 import * as ScreenOrientation from 'expo-screen-orientation'
