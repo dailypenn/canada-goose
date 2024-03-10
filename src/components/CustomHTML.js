@@ -70,7 +70,7 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
     )
   }
 
-  const InLineImage = ({ htmlAttribs }) => {
+  const InLineImage = ({ htmlAttribs, key }) => {
     const [zoom] = useState(new Animated.Value(1.05))
     const [ASPECT_RATIO, SET_ASPECT_RATIO] = useState(htmlAttribs['data-width'] / htmlAttribs['data-height']) 
 

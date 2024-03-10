@@ -1,13 +1,11 @@
 // Navigation stack within the Home tab
 // Includes routes to the home and article screens
 import React, { useEffect } from 'react'
-import * as Haptics from 'expo-haptics'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import { HomeScreen, ArticleScreen, WebViewScreen } from '../screens'
+import { ArticleScreen, HomeScreen, WebViewScreen } from '../screens'
 import { DefaultStatusBar, PublicationModal } from '../components'
 import { BODY_SERIF } from '../utils/fonts'
-import { useScrollToTop } from '@react-navigation/native'
 
 const Stack = createStackNavigator()
 
@@ -15,12 +13,11 @@ export const HomeStack = ({ navigation }) => {
   // Haptic feedback when tab bar is pressed
   useEffect(() => {
     // Haptic feedback on tab presses
-    const unsubscribe = navigation.addListener('tabPress', e => {
+    return navigation.addListener('tabPress', e => {
       if (!navigation.isFocused()) {
         // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
       }
     })
-    return unsubscribe
   }, [navigation])
 
   return (

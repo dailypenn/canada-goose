@@ -47,11 +47,11 @@ const renderHeader = () => (
   <Text style={styles.headerLabel}>Display Theme</Text>
 );
 
-const DisplayCell = ({currPref, dispatch, item}) => {
+const DisplayCell = ({currPref, updatePreference, item}) => {
   const handlePress = async () => {
     let saved_successfully = await Storage.setItem(DISPLAY_PREFS_KEY, item.id)
 
-    if (saved_successfully) dispatch(item.id)
+    if (saved_successfully) updatePreference(item.id)
     else Alert.alert('Oops', 'There was an error saving your display preference :(')
   };
 
@@ -79,7 +79,7 @@ const DisplaySettingsScreenComp = ({displayPreference, updatePreference}) => {
         ListHeaderComponent={renderHeader}
         renderItem={({item}) =>
           (<DisplayCell currPref={displayPreference}
-                        dispatch={updatePreference}
+                        updatePreference={updatePreference}
                         item={item}/>)}
         ItemSeparatorComponent={
           (_) =>

@@ -3,27 +3,20 @@
 
 import React, { useEffect } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import * as Haptics from 'expo-haptics'
 
 import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
-import {
-  ArticleScreen,
-  DiscoveryScreen,
-  SectionScreen,
-  WebViewScreen,
-} from '../screens'
+import { ArticleScreen, DiscoveryScreen, SectionScreen, WebViewScreen } from '../screens'
 import { DefaultStatusBar } from '../components'
 
 const Stack = createStackNavigator()
 
 export const DiscoveryStack = ({ navigation }) => {
   useEffect(() => {
-    const unsubscribe = navigation.addListener('tabPress', e => {
+    return navigation.addListener('tabPress', e => {
       if (!navigation.isFocused()) {
         // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
       }
     })
-    return unsubscribe
   }, [navigation])
   
   return (

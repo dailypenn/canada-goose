@@ -1,13 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import {
-  View,
-  Text,
-  Dimensions,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from 'react-native'
+import { Dimensions, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 import * as Haptics from 'expo-haptics'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -16,10 +9,8 @@ import { PublicationPrimaryColor } from '../utils/branding'
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { PublicationEnum } from '../utils/constants'
 import { switchPublication, toggleScrollToTop } from '../actions'
-import { StatusBar } from 'react-native'
 import { publicationSwitchAnalytics } from '../utils/analytics'
-import { Storage, LAST_VIEWED_PUBLICATION_KEY } from '../utils/storage'
-import { InteractiveHomeComponent } from './InteractiveHomeComponent'
+import { LAST_VIEWED_PUBLICATION_KEY, Storage } from '../utils/storage'
 
 const SCREEN_DIMENSIONS = Dimensions.get('screen')
 const PUBLICATIONS = [
@@ -173,13 +164,11 @@ const PublicationModalComp = ({
   const [switchPublicationColor, updateSwitchColor] = useState('#000')
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('tabLongPress', e => {
+    return navigation.addListener('tabLongPress', e => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
       updateVisibility(true)
       updateLoadingStatus(false)
     })
-
-    return unsubscribe
   }, [navigation])
 
   // Function called when user selects a new publication
