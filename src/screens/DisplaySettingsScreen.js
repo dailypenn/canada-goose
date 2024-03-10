@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 0.6,
-    backgroundColor: '#d4d4d4'
+    backgroundColor: '#c4c4c4'
   },
   spacer: {
     flex: 1,

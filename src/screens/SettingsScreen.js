@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopWidth: 0.6,
     borderBottomWidth: 0.6,
-    borderColor: '#d4d4d4'
+    borderColor: '#c4c4c4'
   },
 
   cell: {
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 
   divider: {
     height: 0.6,
-    backgroundColor: '#d4d4d4'
+    backgroundColor: '#c4c4c4'
   },
 
   spacer: {

@@ -119,7 +119,6 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
               <View
                 style={{
                   flex: 1,
-                  backgroundColor: '#DDD',
                   resizeMode: 'center',
                   borderRadius: 2,
                   backgroundColor: 'black',
@@ -161,6 +160,8 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
     )
   }
 
+  const failedToFetchArticleContentErrorMsg = "Error: Unable to fetch article content."
+
   const parseProjectPage = articleContent => {
     if (article.content.includes('document.location=')) {
       const urls = article.content.match(/\bhttps?:\/\/\S+/gi)
@@ -168,7 +169,7 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
         return "<p>Check out this special project <a href=\"" + urls[0].replace(/'$/, '').replace(/"$/, '').trim() + "\" target=\"_blank\">here</a>!</p>"
       }
     }
-    return articleContent
+    return articleContent || failedToFetchArticleContentErrorMsg
   }
 
   return (

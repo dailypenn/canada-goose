@@ -118,8 +118,6 @@ const SavedArticlesScreenComp = ({
     if (saved_successfully) dispatch(unsaveArticle(item))
   }
 
-  console.log(publication)
-
   if (savedArticles.length == 0)
     return (
       <View
@@ -138,10 +136,10 @@ const SavedArticlesScreenComp = ({
 
   return (
     <FlatList
-      data={savedArticles}
+      data={[...savedArticles].reverse()}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
-      keyExtractor={(_, index) => index}
+      keyExtractor={(_, index) => String(index)}
       renderItem={({ item }) => {
         return (
           <SwipeableRow

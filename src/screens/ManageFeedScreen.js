@@ -84,7 +84,7 @@ const HomeSectionsView = ({
           : 'white',
         alignItems: 'center',
         borderBottomWidth: 0.6,
-        borderBottomColor: '#d4d4d4',
+        borderBottomColor: '#c4c4c4',
       }}
       onLongPress={drag}
     >

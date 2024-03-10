@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
 
   cell: {
-    borderTopColor: '#d4d4d4',
+    borderTopColor: '#c4c4c4',
     borderTopWidth: 0.6,
     paddingHorizontal: 15,
     justifyContent: 'center',
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flexDirection: 'row',
     paddingVertical: 10,
-    borderBottomColor: '#d4d4d4',
+    borderBottomColor: '#c4c4c4',
     borderBottomWidth: 0.6,
   },
 
