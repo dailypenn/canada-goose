@@ -6,8 +6,9 @@ import * as ScreenOrientation from 'expo-screen-orientation'
 
 import TabNavigationController from './NavigationController'
 import { loadFonts } from './src/utils/fonts'
-import { LogoActivityIndicator } from './src/components'
+import { LogoActivityIndicator, ThemeProvider } from './src/components'
 import store from './src/reducers'
+
 import {
   GET_HOME_FEED_ORDER_KEY,
   IS_ONBOARDED_KEY,
@@ -23,7 +24,6 @@ import { OnboardingModal } from './src/screens'
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  // uri: 'http://localhost:5000/graphql',
   uri: 'https://graphql-295919.ue.r.appspot.com/graphql',
   cache: new InMemoryCache(),
 })
@@ -72,8 +72,6 @@ const App = () => {
     loadAssets()
   }, [])
 
-  console.log('isOnboarded' + isOnboarded)
-
   if (assetsLoaded) {
     return (
       <ApolloProvider client={client}>
@@ -81,7 +79,9 @@ const App = () => {
           {attachOnboardingModalToDom ? (
             <OnboardingModal {...{ isOnboarded, hasCompletedOnboarding }} />
           ) : null}
-          <TabNavigationController />
+          <ThemeProvider>
+            <TabNavigationController />
+          </ThemeProvider>
         </Provider>
       </ApolloProvider>
     )

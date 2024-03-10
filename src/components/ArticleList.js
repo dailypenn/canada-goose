@@ -43,7 +43,7 @@ export const RenderArticleListItem = ({
           <PrimaryHorizontalArticleCell {...CHILD_DATA} />
         )}
       </InteractiveHomeComponent>
-      {i == articlesLength - 1 ? null : (
+      {i === articlesLength - 1 ? null : (
         <View
           style={{
             borderBottomColor: '#CCC',

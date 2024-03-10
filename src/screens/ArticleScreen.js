@@ -224,7 +224,6 @@ const ArticleScreenComp = ({
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-
               paddingBottom: article.dominantMedia.authors.length ? 10 : 0,
             }}
           >
