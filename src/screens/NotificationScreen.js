@@ -73,7 +73,7 @@ const NotificationCell = ({ info, initialPref, notifIndex, updateHandler }) => {
   const [isEnabled, setIsEnabled] = useState(initialPref)
 
   const toggleSwitch = () => {
-    updateHandler(notifIndex = {notifIndex}, value = !isEnabled)
+    updateHandler({notifIndex}, !isEnabled)
     setIsEnabled(previousState => !previousState)
   }
 

@@ -14,6 +14,7 @@ import {
   SAVED_ARTICLES_KEY,
   LAST_VIEWED_PUBLICATION_KEY,
   NOTIF_PREFS_KEY,
+  DISPLAY_PREFS_KEY,
   Storage,
 } from './src/utils/storage'
 import { PublicationEnum } from './src/utils/constants'
@@ -35,6 +36,8 @@ const getAsyncStorage = () => {
       GET_HOME_FEED_ORDER_KEY(PublicationEnum.utb),
       SAVED_ARTICLES_KEY,
       LAST_VIEWED_PUBLICATION_KEY,
+      NOTIF_PREFS_KEY,
+      DISPLAY_PREFS_KEY
     ]).then(result => {
       let lastViewedPublication = JSON.parse(result[4][1])
       if (lastViewedPublication != null) {

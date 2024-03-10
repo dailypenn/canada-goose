@@ -41,7 +41,7 @@ export const setInit = result => {
       ],
       savedArticles: JSON.parse(result[3][1]),
       notifPreferences: JSON.parse(result[5][1]),
-      displayPreference: DEFAULT_DISPLAY_PREF,
+      displayPreference: JSON.parse(result[6][1]),
     },
   }
 }

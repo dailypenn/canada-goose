@@ -58,7 +58,6 @@ const ArticleScreenComp = ({
   })
 
   useEffect(() => {
-    console.log("settings.savedArticles", settings.savedArticles)
     if (route.params.articlePublication == null && article != null)
       userViewedArticleAnalytics(article.headline, article.slug)
 
@@ -141,11 +140,9 @@ const ArticleScreenComp = ({
 
   const handlePress = (alreadySaved, routeArticle) => {
     if (!alreadySaved) {
-      console.log("saved")
       saveHandler(routeArticle)
     }
     else {
-      console.log("unsaved")
       deleteHandler(routeArticle)
     }
   }

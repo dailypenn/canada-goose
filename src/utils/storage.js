@@ -12,6 +12,8 @@ export const IS_ONBOARDED_KEY = 'onboarded'
 
 export const NOTIF_PREFS_KEY = 'notif prefs'
 
+export const DISPLAY_PREFS_KEY = 'display prefs'
+
 export const Storage = {
   getItem: async function (key) {
     try {
