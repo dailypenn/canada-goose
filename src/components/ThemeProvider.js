@@ -3,9 +3,7 @@ import { Appearance } from 'react-native';
 import { useSelector } from 'react-redux';
 import { lightTheme, darkTheme } from '../utils/themes';
 
-const ThemeContext = createContext(null);
-
-export const useTheme = () => useContext(ThemeContext);
+export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const displayPreference = useSelector(state => state.settings.displayPreference);
@@ -38,7 +36,11 @@ export const ThemeProvider = ({ children }) => {
     });
 
     // Cleanup subscriptions
-    return () => subscription.remove();
+    return () => {
+      if (subscription && typeof subscription.remove === 'function') {
+        subscription.remove();
+      }
+    };
   }, [displayPreference]);
 
   return (

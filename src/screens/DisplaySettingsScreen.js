@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   Text,
   View,
@@ -13,12 +13,13 @@ import { updateDisplayPref } from "../actions"
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { DISPLAY_OPTIONS } from '../utils/constants'
 import { DISPLAY_PREFS_KEY, Storage } from '../utils/storage'
+import { ThemeContext } from '../components/ThemeProvider'
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
   cell: {
     paddingHorizontal: 15,
     justifyContent: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: theme.backgroundColor,
   },
   textView: {
     paddingVertical: 10,
@@ -34,20 +35,26 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 0.6,
-    backgroundColor: '#c4c4c4'
+    backgroundColor: theme.borderColor,
   },
   spacer: {
     flex: 1,
     flexDirection: 'row'
   },
-})
+});
 
 
-const renderHeader = () => (
-  <Text style={styles.headerLabel}>Display Theme</Text>
-);
+const renderHeader = () => {
+  const theme = useContext(ThemeContext);
+  return (
+    <Text style={createStyles(theme).headerLabel}>Display Theme</Text>
+  )
+}
 
 const DisplayCell = ({currPref, updatePreference, item}) => {
+  const theme = useContext(ThemeContext);
+  const styles = createStyles(theme);
+
   const handlePress = async () => {
     let saved_successfully = await Storage.setItem(DISPLAY_PREFS_KEY, item.id)
 
@@ -72,6 +79,9 @@ const DisplayCell = ({currPref, updatePreference, item}) => {
 }
 
 const DisplaySettingsScreenComp = ({displayPreference, updatePreference}) => {
+  const theme = useContext(ThemeContext);
+  const styles = createStyles(theme);
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <FlatList
