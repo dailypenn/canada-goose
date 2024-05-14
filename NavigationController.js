@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import * as Analytics from 'expo-firebase-analytics'
 import { connect } from 'react-redux'
 import { Image } from 'react-native'
@@ -12,7 +12,7 @@ import { CrosswordsScreen } from './src/screens'
 import { PublicationPrimaryColor } from './src/utils/branding'
 import { PublicationEnum } from './src/utils/constants'
 
-import { navigationRef } from './src/components'
+import { navigationRef, ThemeContext } from './src/components'
 
 const DP_LOGO_RED = require('./src/static/logos/dp-logo-small-red.png')
 const DP_LOGO_GREY = require('./src/static/logos/dp-logo-small-grey.png')
@@ -24,8 +24,8 @@ const UTB_LOGO_GREY = require('./src/static/logos/utb-logo-small-grey.png')
 const Tab = createBottomTabNavigator()
 
 const TabNavigationController = ({ currPublication }) => {
+  const theme = useContext(ThemeContext)
   const routeNameRef = React.useRef()
-  // const navigationRef = React.useRef()
 
   const GET_PUB_LOGO = focused => {
     switch (currPublication) {
@@ -85,9 +85,10 @@ const TabNavigationController = ({ currPublication }) => {
           inactiveTintColor: 'gray',
           showLabel: false,
           style: {
-            shadowColor: 'black',
+            backgroundColor: theme.backgroundColor,
+            shadowColor: theme.primaryTextColor,
             shadowOpacity: 0.1,
-            shadowRadius: 3,
+            shadowRadius: 4,
           },
           onPress: () => {
             // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)

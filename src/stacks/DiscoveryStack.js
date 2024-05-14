@@ -1,16 +1,18 @@
 // Navigation stack within the Discovery tab
 // Includes routes to the discovery and section screens
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
 import { ArticleScreen, DiscoveryScreen, SectionScreen, WebViewScreen } from '../screens'
-import { DefaultStatusBar } from '../components'
+import { DefaultStatusBar, ThemeContext } from '../components'
 
 const Stack = createStackNavigator()
 
 export const DiscoveryStack = ({ navigation }) => {
+  const theme = useContext(ThemeContext)
+
   useEffect(() => {
     return navigation.addListener('tabPress', e => {
       if (!navigation.isFocused()) {
@@ -25,9 +27,16 @@ export const DiscoveryStack = ({ navigation }) => {
       <Stack.Navigator
         initialRouteName="Discovery"
         screenOptions={{
-          headerStyle: { backgroundColor: '#fff' },
-          headerTintColor: '#000',
-          headerTitleStyle: { fontFamily: DISPLAY_SERIF_BLACK, fontSize: 20 },
+          headerStyle: {
+            backgroundColor: theme.backgroundColor,
+            shadowColor: theme.borderColor,
+            elevation: 0,
+          },
+          headerTitleStyle: {
+            fontFamily: DISPLAY_SERIF_BLACK,
+            fontSize: 20,
+          },
+          headerTintColor: theme.primaryTextColor,
           headerBackTitleVisible: false,
         }}
       >

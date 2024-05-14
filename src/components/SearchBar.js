@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import {
   SafeAreaView,
   Dimensions,
@@ -21,7 +21,6 @@ import {
   isIphoneX,
 } from 'react-native-iphone-x-helper'
 import { useQuery } from '@apollo/client'
-
 import { ARTICLES_SEARCH } from '../utils/queries'
 import {
   PARTIAL_NAVIGATE,
@@ -36,6 +35,7 @@ import {
 import { SearchArticleList } from './ArticleList'
 import { PublicationEnum } from '../utils/constants'
 import { LogoActivityIndicator } from './LogoActivityIndicator'
+import { ThemeContext } from './ThemeProvider'
 
 const DP_SEARCH_IMG = require('../static/empty-states/search/dp.png')
 const ST_SEARCH_IMG = require('../static/empty-states/search/street.png')
@@ -87,6 +87,9 @@ if (isIphoneX()) {
 }
 
 const SearchView = ({ filter, navigation, publication }) => {
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
+
   const { loading, error, data } = useQuery(ARTICLES_SEARCH, {
     variables: { filter, publication },
     fetchPolicy: 'cache-and-network',
@@ -126,9 +129,11 @@ const SearchView = ({ filter, navigation, publication }) => {
 }
 
 export const SearchBar = ({ navigation, publication }) => {
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
+
   const [focused, setFocused] = useState(false)
   const [keyword, setKeyword] = useState('')
-
   const [input_x_pos] = useState(new Value(width))
   const [cancel_opacity] = useState(new Value(0))
   const [content_y_pos] = useState(new Value(height + 500))
@@ -239,9 +244,9 @@ export const SearchBar = ({ navigation, publication }) => {
             position: 'absolute',
             height: 6,
             width: '100%',
-            backgroundColor: '#fff',
+            backgroundColor: theme.backgroundColor,
             borderBottomWidth: 1,
-            borderBottomColor: '#e4e6eb',
+            borderBottomColor: theme.borderColor,
             top: 50,
           }}
         />
@@ -256,7 +261,7 @@ export const SearchBar = ({ navigation, publication }) => {
               onPress={_onFocus}
               style={styles.search_icon_box}
             >
-              <Ionicons name="search" size={20} color="#000" />
+              <Ionicons name="search" size={20} color={theme.primaryTextColor} />
             </TouchableHighlight>
             <Animated.View
               style={[
@@ -269,7 +274,7 @@ export const SearchBar = ({ navigation, publication }) => {
                   <Animated.View style={{ opacity: cancel_opacity }}>
                     <TouchableHighlight
                       activeOpacity={1}
-                      underlayColor={'#ccd0d5'}
+                      underlayColor={theme.wallColor}
                       onPress={_onBlur}
                       style={styles.back_icon_box}
                     >
@@ -283,6 +288,7 @@ export const SearchBar = ({ navigation, publication }) => {
                   <TextInput
                     ref={input}
                     placeholder="Search"
+                    placeholderTextColor={theme.secondaryTextColor}
                     clearButtonMode="always"
                     value={keyword}
                     onChangeText={value => setKeyword(value)}
@@ -297,6 +303,7 @@ export const SearchBar = ({ navigation, publication }) => {
                   <TextInput
                     ref={input}
                     placeholder="Search"
+                    placeholderTextColor={theme.secondaryTextColor}
                     clearButtonMode="always"
                     value={keyword}
                     onChangeText={value => setKeyword(value)}
@@ -309,8 +316,8 @@ export const SearchBar = ({ navigation, publication }) => {
                     <Button
                       title="Cancel"
                       onPress={_onBlur}
-                      color="#333"
-                      style={{ fontFamily: GEOMETRIC_BOLD }}
+                      color={theme.primaryTextColor}
+                      titleStyle={{ fontFamily: GEOMETRIC_REGULAR }}
                     />
                   </Animated.View>
                 </>
@@ -319,7 +326,6 @@ export const SearchBar = ({ navigation, publication }) => {
           </View>
         </View>
       </SafeAreaView>
-      {/* <View style = {styles.test}></View> */}
       <Animated.View
         style={[
           styles.content,
@@ -331,7 +337,6 @@ export const SearchBar = ({ navigation, publication }) => {
       >
         <SafeAreaView style={styles.content_safe_area}>
           <View style={styles.content_inner}>
-            <View style={styles.separator} />
             {keyword === '' ? (
               <View style={styles.image_placeholder_container}>
                 <Image source={searchImg} style={styles.image_placeholder} />
@@ -353,20 +358,10 @@ export const SearchBar = ({ navigation, publication }) => {
   )
 }
 
-const styles = StyleSheet.create({
-  // test: {
-  //   backgroundColor: '#692',
-  //   position: 'absolute',
-  //   height: 100,
-  //   width: 100,
-  //   borderWidth: 5,
-  //   borderColor: '#000',
-  //   top: 24,
-  //   left: 0,
-  //   zIndex: 1200,
-  // },
+const createStyles = (theme) => StyleSheet.create({
   title: {
-    fontFamily: DISPLAY_SERIF_BLACK, //GEOMETRIC_BOLD,
+    color: theme.primaryTextColor,
+    fontFamily: DISPLAY_SERIF_BLACK,
     fontSize: 28,
     lineHeight: 40,
   },
@@ -389,7 +384,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 40,
-    backgroundColor: '#EEE',
+    backgroundColor: theme.borderColor,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -400,7 +395,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     top: 0,
-    backgroundColor: 'white',
+    backgroundColor: theme.backgroundColor,
     width: width - 32,
     ...Platform.select({
       ios: {
@@ -422,47 +417,28 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   input: {
-    fontFamily: BODY_SERIF,
+    color: theme.primaryTextColor,
+    fontFamily: GEOMETRIC_REGULAR,
     flex: 1,
     height: 40,
-    backgroundColor: '#e4e6eb',
+    backgroundColor: theme.borderColor,
     borderRadius: 16,
     paddingHorizontal: 16,
     fontSize: 20,
   },
   content: {
     width: width,
-    height: contentHeight, //height - (49 + 50 + topInset + bottomInset + bottomBar),
+    height: contentHeight,
     position: 'absolute',
     zIndex: 999,
-    //backgroundColor: '#ff0',
-    // ...Platform.select({
-    //   ios: {
-    //     ...ifIphoneX({
-    //       height: height - (49 + 50 + topInset + bottomInset) + 4,
-    //     }, {
-    //       height: height - (49 + 50 + topInset + bottomInset),
-    //     }),
-    //   },
-    //   android: {
-    //     height: height - (49 + 50 + bottomInset), // + bottomBar
-    //   },
-    // }),
   },
   content_safe_area: {
     flex: 1,
-    backgroundColor: 'white',
-    //backgroundColor: '#ff0',
+    backgroundColor: theme.backgroundColor,
   },
   content_inner: {
     flex: 1,
     paddingTop: 0,
-  },
-  separator: {
-    marginTop: 5,
-    marginBottom: 0,
-    height: 1,
-    backgroundColor: '#e6e4eb',
   },
   image_placeholder_container: {
     flex: 1,
@@ -477,7 +453,7 @@ const styles = StyleSheet.create({
   },
   image_placeholder_text: {
     textAlign: 'center',
-    color: 'gray',
+    color: theme.secondaryTextColor,
     marginTop: 10,
     fontSize: 18,
   },
@@ -486,7 +462,7 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#e6e4eb',
+    borderBottomColor: theme.borderColor,
     marginLeft: 16,
   },
   item_icon: {
