@@ -20,6 +20,8 @@ const createStyles = (theme) => StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 35,
+    borderTopWidth: 0.6,
+    borderTopColor: theme.borderColor,
     backgroundColor: theme.wallColor,
   },
   description: {

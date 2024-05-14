@@ -4,7 +4,7 @@ import { StatusBar } from 'react-native'
 
 export const DefaultStatusBar = () => {
   const isFocused = useIsFocused()
-  return isFocused ? (
+  return true ? (
     <StatusBar barStyle={'dark-content'} backgroundColor={'#EEE'} />
   ) : null
 }

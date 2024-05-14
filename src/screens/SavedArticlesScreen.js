@@ -127,7 +127,7 @@ const SavedArticlesScreenComp = ({
   if (savedArticles.length == 0)
     return (
       <View
-        style={{ flex: 1, justifyContent: 'center', backgroundColor: theme.backgroundColor }}
+        style={{...styles.container, justifyContent: 'center'}}
       >
         <EmptyState
           {...{
