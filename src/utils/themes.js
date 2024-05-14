@@ -1,4 +1,5 @@
 export const lightTheme = {
+  mode: 'light',
   backgroundColor: '#fff',
   wallColor:'#f2f2f2',
   borderColor: '#c4c4c4',
@@ -7,6 +8,7 @@ export const lightTheme = {
 }
 
 export const darkTheme = {
+  mode: 'dark',
   backgroundColor: '#2c2c2c',
   wallColor: '#232323',
   borderColor: '#000',
