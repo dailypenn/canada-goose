@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, Button, View, TouchableOpacity, Text } from 'react-native'
 import DraggableFlatList from 'react-native-draggable-flatlist'
@@ -9,28 +9,30 @@ import { DISPLAY_SERIF_BLACK, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { updateHomeSections } from '../actions'
 import { GET_HOME_SECTIONS } from '../utils/helperFunctions'
 import { PublicationPrimaryColor } from '../utils/branding'
+import { ThemeContext } from '../components'
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
   container: {
+    backgroundColor: theme.wallColor,
+    borderTopWidth: 0.6,
+    borderTopColor: theme.borderColor,
     flex: 1,
   },
-
   icon: {
     paddingEnd: 16,
   },
-
   regText: {
+    color: theme.primaryTextColor,
     textTransform: 'capitalize',
     fontSize: 24,
     fontFamily: DISPLAY_SERIF_BLACK,
   },
-
   description: {
     fontFamily: GEOMETRIC_REGULAR,
     paddingTop: 8,
     paddingHorizontal: 15,
     fontSize: 12,
-    color: '#808080',
+    color: theme.secondaryTextColor,
   },
 })
 
@@ -41,6 +43,9 @@ const HomeSectionsView = ({
   dispatch,
   itemHeight,
 }) => {
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
+
   const homeSectionPreference = settings.homeSectionPreferences
     ? settings.homeSectionPreferences[currPublication]
     : null
@@ -81,10 +86,10 @@ const HomeSectionsView = ({
         flexDirection: 'row',
         backgroundColor: isActive
           ? PublicationPrimaryColor(currPublication)
-          : 'white',
+          : theme.backgroundColor,
         alignItems: 'center',
         borderBottomWidth: 0.6,
-        borderBottomColor: '#c4c4c4',
+        borderBottomColor: theme.borderColor,
       }}
       onLongPress={drag}
     >
@@ -97,7 +102,7 @@ const HomeSectionsView = ({
       <Text
         style={{
           ...styles.regText,
-          color: isActive ? 'white' : 'black',
+          color: isActive ? 'white' : theme.primaryTextColor,
         }}
       >
         {item}
@@ -123,6 +128,9 @@ const ManageFeedScreenComp = ({
   settings,
   dispatch,
 }) => {
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
+
   console.log('MANAGE FEED SCREEN COMP:', currPublication)
   const instructions =
     'Press down and drag the sections to the order you would like to see them appear on the home page'

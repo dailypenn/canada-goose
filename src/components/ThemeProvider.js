@@ -10,7 +10,7 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(lightTheme);
 
   useEffect(() => {
-    const updateTheme = (preferences) => {
+    const updateTheme = () => {
       switch (displayPreference) {
         case 'light':
           setTheme(lightTheme);
@@ -19,7 +19,7 @@ export const ThemeProvider = ({ children }) => {
           setTheme(darkTheme);
           break;
         case 'device':
-          const systemPreference = preferences.colorScheme || Appearance.getColorScheme();
+          const systemPreference = Appearance.getColorScheme() || 'light';
           setTheme(systemPreference === 'dark' ? darkTheme : lightTheme);
           break;
         default:
@@ -27,20 +27,8 @@ export const ThemeProvider = ({ children }) => {
       }
     };
 
-    updateTheme({ colorScheme: Appearance.getColorScheme() });
+    updateTheme();
 
-    const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-      if (displayPreference === 'device') {
-        setTheme(colorScheme === 'dark' ? darkTheme : lightTheme);
-      }
-    });
-
-    // Cleanup subscriptions
-    return () => {
-      if (subscription && typeof subscription.remove === 'function') {
-        subscription.remove();
-      }
-    };
   }, [displayPreference]);
 
   return (

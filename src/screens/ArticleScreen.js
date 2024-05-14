@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   Text,
   View,
@@ -21,6 +21,7 @@ import {
   LogoActivityIndicator,
   HeadlineArticle,
   CustomHTML,
+  ThemeContext
 } from '../components'
 import {
   IMAGE_URL,
@@ -39,6 +40,7 @@ import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { saveNewArticle, unsaveArticle, updateNavigation } from '../actions'
 import { ARTICLE_QUERY } from '../utils/queries'
 import { userViewedArticleAnalytics } from '../utils/analytics'
+
 const ArticleScreenComp = ({
   navigation,
   route,
@@ -46,13 +48,13 @@ const ArticleScreenComp = ({
   settings,
   dispatch,
 }) => {
+  const theme = useContext(ThemeContext);
   const [article, setArticle] = useState(route.params.article)
   const [utbFetched, setUTBFetched] = useState(false)
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
   const articlePublication = route.params.articlePublication
     ? route.params.articlePublication
     : currPublication
-
   const [fetchArticle, { loading, data }] = useLazyQuery(ARTICLE_QUERY, {
     fetchPolicy: 'cache-and-network',
   })

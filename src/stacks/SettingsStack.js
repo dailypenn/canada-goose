@@ -1,7 +1,7 @@
 // Navigation stack within the settings tab
 // Includes routes to the settings, about, notifications, privacy, manage feed and web view screens
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import {
@@ -15,7 +15,7 @@ import {
   SettingsScreen,
   WebViewScreen
 } from '../screens'
-import { DefaultStatusBar } from '../components'
+import { DefaultStatusBar, ThemeContext } from '../components'
 
 import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
 
@@ -23,6 +23,9 @@ const Stack = createStackNavigator()
 
 export const SettingsStack = ({ navigation }) => {
   console.log(navigation.isFocused())
+
+  const theme = useContext(ThemeContext)
+
   useEffect(() => {
     return navigation.addListener('tabPress', e => {
       if (!navigation.isFocused()) {
@@ -37,11 +40,16 @@ export const SettingsStack = ({ navigation }) => {
       <Stack.Navigator
         initialRouteName="Settings"
         screenOptions={{
+          headerStyle: {
+            backgroundColor: theme.backgroundColor,
+            shadowColor: theme.borderColor,
+            elevation: 0,
+          },
           headerTitleStyle: {
             fontFamily: DISPLAY_SERIF_BLACK,
             fontSize: 20,
           },
-          headerTintColor: '#000',
+          headerTintColor: theme.primaryTextColor,
           headerBackTitleVisible: false,
         }}
       >

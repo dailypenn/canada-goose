@@ -1,7 +1,31 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, Text, Image, Dimensions, StyleSheet } from 'react-native'
 import { PublicationEnum } from '../utils/constants'
 import { BODY_SERIF } from '../utils/fonts'
+import { ThemeContext } from './ThemeProvider'
+
+const createStyles = (theme) => StyleSheet.create({
+  container: {
+    width: Dimensions.get('screen').width * 0.45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  image: {
+    width: '100%',
+    height: 150,
+    resizeMode: 'contain',
+    flexDirection: 'column-reverse',
+  },
+  caption: {
+    color: theme.secondaryTextColor,
+    width: '180%',
+    marginTop: 20,
+    fontSize: 16,
+    fontFamily: BODY_SERIF,
+    textAlign: 'center',
+  },
+})
 
 export const EmptyStateEnum = Object.freeze({
   error: 'error',
@@ -10,7 +34,9 @@ export const EmptyStateEnum = Object.freeze({
 })
 
 export const EmptyState = ({ publication, type, caption }) => {
-  let image
+  const theme = useContext(ThemeContext);
+  const styles = createStyles(theme);
+  let image;
 
   switch (type) {
     case EmptyStateEnum.error:
@@ -70,26 +96,3 @@ export const EmptyState = ({ publication, type, caption }) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: Dimensions.get('screen').width * 0.45,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
-  },
-  image: {
-    width: '100%',
-    height: 150,
-    resizeMode: 'contain',
-    flexDirection: 'column-reverse',
-  },
-  caption: {
-    width: '180%',
-    marginTop: 20,
-    fontSize: 16,
-    fontFamily: BODY_SERIF,
-    color: 'grey',
-    textAlign: 'center',
-  },
-})

@@ -13,7 +13,7 @@ import { updateDisplayPref } from "../actions"
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { DISPLAY_OPTIONS } from '../utils/constants'
 import { DISPLAY_PREFS_KEY, Storage } from '../utils/storage'
-import { ThemeContext } from '../components/ThemeProvider'
+import { ThemeContext } from '../components'
 
 const createStyles = (theme) => StyleSheet.create({
   cell: {
@@ -26,23 +26,36 @@ const createStyles = (theme) => StyleSheet.create({
     flexDirection: 'row'
   },
   regText: {
+    color: theme.primaryTextColor,
     fontFamily: GEOMETRIC_REGULAR
   },
   headerLabel: {
-    paddingVertical: 10,
+    color: theme.primaryTextColor,
+    backgroundColor: theme.backgroundColor,
+    paddingTop: 10,
+    paddingBottom: 5,
     paddingHorizontal: 15,
     fontFamily: GEOMETRIC_BOLD,
   },
   divider: {
-    height: 0.6,
+    height: 0.7,
     backgroundColor: theme.borderColor,
+    marginLeft: 15,
   },
   spacer: {
     flex: 1,
     flexDirection: 'row'
   },
+  safeAreaView: {
+    backgroundColor: theme.wallColor,
+    flex: 1,
+  },
+  view: {
+    borderTopWidth: 0.6,
+    borderBottomWidth: 0.6,
+    borderColor: theme.borderColor
+  }
 });
-
 
 const renderHeader = () => {
   const theme = useContext(ThemeContext);
@@ -83,24 +96,25 @@ const DisplaySettingsScreenComp = ({displayPreference, updatePreference}) => {
   const styles = createStyles(theme);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <FlatList
-        data = {DISPLAY_OPTIONS}
-        ListHeaderComponent={renderHeader}
-        renderItem={({item}) =>
-          (<DisplayCell currPref={displayPreference}
-                        updatePreference={updatePreference}
-                        item={item}/>)}
-        ItemSeparatorComponent={
-          (_) =>
-            <View
-              style={{
-                ...styles.divider,
-                marginLeft: 45
-              }}
-            />
-        }
-      />
+    <SafeAreaView style={styles.safeAreaView}>
+      <View style={styles.view}>
+        <FlatList
+          data = {DISPLAY_OPTIONS}
+          ListHeaderComponent={renderHeader}
+          renderItem={({item}) =>
+            (<DisplayCell currPref={displayPreference}
+                          updatePreference={updatePreference}
+                          item={item}/>)}
+          ItemSeparatorComponent={
+            (_) =>
+              <View
+                style={{
+                  ...styles.divider,
+                }}
+              />
+          }
+        />
+      </View>
     </SafeAreaView>
   )
 }
