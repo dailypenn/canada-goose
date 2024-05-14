@@ -22,8 +22,6 @@ import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
 const Stack = createStackNavigator()
 
 export const SettingsStack = ({ navigation }) => {
-  console.log(navigation.isFocused())
-
   const theme = useContext(ThemeContext)
 
   useEffect(() => {

@@ -8,6 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import * as Haptics from 'expo-haptics'
 
 import { HomeStack, DiscoveryStack, SettingsStack } from './src/stacks'
+import { CrosswordsScreen } from './src/screens'
 import { PublicationPrimaryColor } from './src/utils/branding'
 import { PublicationEnum } from './src/utils/constants'
 
@@ -45,7 +46,6 @@ const TabNavigationController = ({ currPublication }) => {
         (routeNameRef.current = navigationRef.current.getCurrentRoute().name)
       }
       onStateChange={() => {
-        console.log('on state change')
         const previousRouteName = routeNameRef.current
         const currentRouteName = navigationRef.current.getCurrentRoute().name
         
@@ -75,6 +75,7 @@ const TabNavigationController = ({ currPublication }) => {
               )
             } else if (route.name === 'DiscoveryStack') iconName = 'search'
             else if (route.name === 'SettingsStack') iconName = 'person-outline'
+            else if (route.name === 'CrosswordsScreen') iconName = 'grid-outline'
 
             return <Ionicons name={iconName} size={26} color={color} />
           },
@@ -95,6 +96,7 @@ const TabNavigationController = ({ currPublication }) => {
       >
         <Tab.Screen name="HomeStack" component={HomeStack} />
         <Tab.Screen name="DiscoveryStack" component={DiscoveryStack} />
+        <Tab.Screen name="CrosswordsScreen" component={CrosswordsScreen} />
         <Tab.Screen name="SettingsStack" component={SettingsStack} />
       </Tab.Navigator>
     </NavigationContainer>
