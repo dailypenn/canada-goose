@@ -38,7 +38,7 @@ const createStyles = (theme) => StyleSheet.create({
     fontFamily: GEOMETRIC_BOLD,
   },
   divider: {
-    height: 0.7,
+    height: 0.6,
     backgroundColor: theme.borderColor,
     marginLeft: 15,
   },
