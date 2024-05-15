@@ -326,7 +326,7 @@ export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
       hasCompletedOnboarding(true)
       await Storage.setItem(IS_ONBOARDED_KEY, true)
       let x = await Storage.getItem(IS_ONBOARDED_KEY)
-      console.log(x)
+
     } else updatePageNumber(pageNumber + 1)
   }
 

@@ -67,7 +67,7 @@ const HomeSectionsView = ({
 
   const handleSave = async newSections => {
     if (newSections == ogData) return
-    console.log('saving-', newSections)
+    console.log('Saving Feed Preferences: ', newSections)
     let savedSuccessfully = await Storage.setItem(
       GET_HOME_FEED_ORDER_KEY(currPublication),
       newSections

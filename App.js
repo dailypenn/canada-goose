@@ -41,7 +41,7 @@ const getAsyncStorage = () => {
     ]).then(result => {
       let lastViewedPublication = JSON.parse(result[4][1])
       if (lastViewedPublication != null) {
-        console.log('last viewed pub', lastViewedPublication)
+
         dispatch(switchPublication(lastViewedPublication))
       }
       dispatch(setInit(result))

@@ -74,7 +74,7 @@ const HomeView = ({
   }))
 
   const onRefresh = useCallback(() => {
-    console.log('---manually refreshing home articles---')
+
     refetch()
   })
 
@@ -270,7 +270,7 @@ const HomeScreenComp = ({
       : homeSectionPreferences[currPublication]
 
   useEffect(() => {
-    console.log('LOGGING EVENT: PUBLICATION READ', currPublication)
+
     publicationAnalytics(currPublication)
   }, [currPublication])
 
