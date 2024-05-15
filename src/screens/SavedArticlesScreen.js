@@ -14,7 +14,7 @@ import { EmptyStateEnum } from '../components/EmptyState'
 const createStyles = (theme) => StyleSheet.create({
   container: {
     backgroundColor: theme.wallColor,
-    borderTopWidth: 0.6,
+    borderTopWidth: 0.8,
     borderTopColor: theme.borderColor,
     flex: 1,
   },
@@ -23,7 +23,7 @@ const createStyles = (theme) => StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: theme.backgroundColor,
     borderBottomColor: theme.borderColor,
-    borderBottomWidth: 0.6,
+    borderBottomWidth: 0.8,
   },
   textContainer: {
     width: '95%',
@@ -53,8 +53,8 @@ const createStyles = (theme) => StyleSheet.create({
 })
 
 const SavedArticleCell = ({ title, savedAt, category, publication }) => {
-  const theme = useContext(ThemeContext);
-  const styles = createStyles(theme);
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
 
   return (
     <View style={styles.cell}>
@@ -104,8 +104,8 @@ const SavedArticlesScreenComp = ({
   publication,
 }) => {
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
-  const theme = useContext(ThemeContext);
-  const styles = createStyles(theme);
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
 
   const navigationHandler = async item => {
     NAVIGATE_TO_ARTICLE_SCREEN(navigation, 'SettingsArticle', {

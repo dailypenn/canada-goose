@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { connect } from 'react-redux'
 import { Dimensions, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
@@ -11,6 +11,7 @@ import { PublicationEnum } from '../utils/constants'
 import { switchPublication, toggleScrollToTop } from '../actions'
 import { publicationSwitchAnalytics } from '../utils/analytics'
 import { LAST_VIEWED_PUBLICATION_KEY, Storage } from '../utils/storage'
+import { ThemeContext } from './ThemeProvider'
 
 const SCREEN_DIMENSIONS = Dimensions.get('screen')
 const PUBLICATIONS = [
@@ -40,12 +41,13 @@ const GET_SMALL_LOGO = publication => {
 }
 
 const PublicationOption = ({ publication, isCurrent }) => {
+  const theme = useContext(ThemeContext)
   const PUB_CONTENTS = pub => {
     let rtrn = {
       icon: isCurrent ? 'newspaper' : 'push',
       title: pub == PublicationEnum.dp ? 'The DP' : pub,
       color: isCurrent ? 'white' : PublicationPrimaryColor(pub),
-      borderColor: isCurrent ? PublicationPrimaryColor(pub) : 'white',
+      borderColor: isCurrent ? PublicationPrimaryColor(pub) : theme.backgroundColor,
     }
     switch (pub) {
       case PublicationEnum.dp:
@@ -155,6 +157,7 @@ const PublicationModalComp = ({
   dispatchSwitchPublication,
   dispatchToggleScrollToTop,
 }) => {
+  const theme = useContext(ThemeContext)
   const { currPublication, currNavigation } = publication
   const [isVisible, updateVisibility] = useState(false) // Whether or not the modal is visible
   const [currentlySwiping, updateSwipeStatus] = useState(false) // Flags when swipes have started, but this is not blocking out touchable opacity presses :(
@@ -201,7 +204,7 @@ const PublicationModalComp = ({
 
   const styles = StyleSheet.create({
     bar: {
-      backgroundColor: '#CCC',
+      backgroundColor: theme.borderColor,
       width: 60,
       height: 5,
       alignSelf: 'center',
@@ -222,11 +225,11 @@ const PublicationModalComp = ({
       marginVertical: 5,
       marginHorizontal: 0,
       borderRadius: 2,
-      backgroundColor: '#DDD',
+      backgroundColor: theme.borderColor,
       height: 2,
     },
     view: {
-      backgroundColor: 'white',
+      backgroundColor: theme.backgroundColor,
       width: SCREEN_DIMENSIONS.width,
       height: 300,
       alignSelf: 'center',

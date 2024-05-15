@@ -27,7 +27,7 @@ const createStyles = (theme) => StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: theme.backgroundColor,
-    borderTopWidth: 0.6,
+    borderTopWidth: 0.8,
     borderTopColor: theme.borderColor,
   },
   logo: {
@@ -80,8 +80,8 @@ const createStyles = (theme) => StyleSheet.create({
 });
 
 const ProfileCell = ({ name, pic }) => {
-  const theme = useContext(ThemeContext);
-  const styles = createStyles(theme);
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
   return (
     <View style={styles.profilePicCell}>
       <Image style={styles.profilePicImage} source={pic} />
@@ -98,8 +98,8 @@ const people_sections = [
 ]
 
 export const AboutScreen = () => {
-  const theme = useContext(ThemeContext);
-  const styles = createStyles(theme);
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
 
   return (
     <SectionGrid

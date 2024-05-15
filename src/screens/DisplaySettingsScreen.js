@@ -38,7 +38,7 @@ const createStyles = (theme) => StyleSheet.create({
     fontFamily: GEOMETRIC_BOLD,
   },
   divider: {
-    height: 0.6,
+    height: 0.8,
     backgroundColor: theme.borderColor,
     marginLeft: 15,
   },
@@ -51,22 +51,22 @@ const createStyles = (theme) => StyleSheet.create({
     flex: 1,
   },
   view: {
-    borderTopWidth: 0.6,
-    borderBottomWidth: 0.6,
+    borderTopWidth: 0.8,
+    borderBottomWidth: 0.8,
     borderColor: theme.borderColor
   }
 });
 
 const renderHeader = () => {
-  const theme = useContext(ThemeContext);
+  const theme = useContext(ThemeContext)
   return (
     <Text style={createStyles(theme).headerLabel}>Display Theme</Text>
   )
 }
 
 const DisplayCell = ({currPref, updatePreference, item}) => {
-  const theme = useContext(ThemeContext);
-  const styles = createStyles(theme);
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
 
   const handlePress = async () => {
     let saved_successfully = await Storage.setItem(DISPLAY_PREFS_KEY, item.id)
@@ -92,8 +92,8 @@ const DisplayCell = ({currPref, updatePreference, item}) => {
 }
 
 const DisplaySettingsScreenComp = ({displayPreference, updatePreference}) => {
-  const theme = useContext(ThemeContext);
-  const styles = createStyles(theme);
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
 
   return (
     <SafeAreaView style={styles.safeAreaView}>

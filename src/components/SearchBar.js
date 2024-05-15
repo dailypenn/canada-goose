@@ -245,7 +245,7 @@ export const SearchBar = ({ navigation, publication }) => {
             height: 6,
             width: '100%',
             backgroundColor: theme.backgroundColor,
-            borderBottomWidth: 0.6,
+            borderBottomWidth: 0.8,
             borderBottomColor: theme.borderColor,
             top: 50,
           }}

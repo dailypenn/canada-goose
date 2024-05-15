@@ -34,8 +34,8 @@ export const EmptyStateEnum = Object.freeze({
 })
 
 export const EmptyState = ({ publication, type, caption }) => {
-  const theme = useContext(ThemeContext);
-  const styles = createStyles(theme);
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
   let image;
 
   switch (type) {
