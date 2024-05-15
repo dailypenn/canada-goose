@@ -33,7 +33,7 @@ const createStyles = (theme) => StyleSheet.create({
   },
   header: {
     height: 50,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   header_inner: {
     flex: 1,
@@ -44,7 +44,7 @@ const createStyles = (theme) => StyleSheet.create({
     position: 'relative'
   },
   pubCell: {
-    marginTop: 15,
+    marginTop: 6,
     paddingVertical: 15,
     paddingHorizontal: 15,
     backgroundColor: theme.backgroundColor,

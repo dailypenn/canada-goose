@@ -68,8 +68,9 @@ const DiscoveryView = ({ navigation, publication }) => {
   if (publication != PublicationEnum.utb) {
     return (
       <FlatGrid
+        style={{ marginTop: 6 }}
         contentContainerStyle={{
-          top: 5,
+          top: 6,
         }}
         itemDimension={width / 2 - 40}
         spacing={13}

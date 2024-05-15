@@ -86,7 +86,13 @@ const App = () => {
       </ApolloProvider>
     )
   } else {
-    return <LogoActivityIndicator />
+    return (
+      <Provider store={store}>
+        <ThemeProvider>
+          <LogoActivityIndicator />
+        </ThemeProvider>
+      </Provider>
+    )
   }
 }
 

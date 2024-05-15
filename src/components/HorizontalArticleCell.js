@@ -1,18 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, StyleSheet, Image, Text } from 'react-native'
-
 import { DISPLAY_SERIF_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
+import { ThemeContext } from "./ThemeProvider";
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
   title: {
-    color: '#000',
+    color: theme.primaryTextColor,
     fontFamily: DISPLAY_SERIF_BOLD,
     flex: 1,
     fontSize: 18,
     lineHeight: 22,
   },
   byline: {
-    color: '#888',
+    color: theme.secondaryTextColor,
     fontFamily: GEOMETRIC_REGULAR,
     flex: 100,
     fontSize: 12,
@@ -23,17 +23,18 @@ const styles = StyleSheet.create({
     height: 75,
     padding: 15,
     borderRadius: 2,
-    backgroundColor: '#000',
+    backgroundColor: theme.primaryTextColor,
     alignSelf: 'flex-end',
   },
   imageView: {
-    shadowColor: '#000',
+    // Do not edit - is for positioning not shadow
+    shadowColor: theme.primaryTextColor,
     shadowOffset: {
       width: 2,
       height: 4,
     },
     shadowOpacity: 0,
-    shadowRadius: 5.46,
+    shadowRadius: 5.49,
     //elevation: 9,
   },
   category: {
@@ -61,10 +62,13 @@ export const HorizontalArticleCell = ({
   timeAgo,
   authors,
 }) => {
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
+
   if (
-    imageURL ==
+    imageURL ===
       'https://snworksceo.imgix.net/dpn/null.sized-1000x1000.null?w=1000' ||
-    imageURL == 'https://snworksceo.imgix.net/dpn/.sized-1000x1000.?w=1000'
+    imageURL === 'https://snworksceo.imgix.net/dpn/.sized-1000x1000.?w=1000'
   ) {
     return (
       <View>

@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
   },
-
   headline: {
     color: '#fff',
     fontFamily: DISPLAY_SERIF_BOLD,
@@ -34,7 +33,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     lineHeight: 30,
   },
-
   blackHeadline: {
     color: '#000',
     fontFamily: DISPLAY_SERIF_BOLD,
@@ -44,7 +42,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     lineHeight: 30,
   },
-
   category: {
     color: '#fff',
     fontFamily: GEOMETRIC_REGULAR,
@@ -52,7 +49,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     opacity: 0.75,
   },
-
   time: {
     color: '#fff',
     fontFamily: GEOMETRIC_BOLD,
@@ -60,7 +56,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     opacity: 0.75,
   },
-
   blackTime: {
     color: '#000',
     fontFamily: GEOMETRIC_REGULAR,
@@ -68,7 +63,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     opacity: 0.75,
   },
-
   gradient: {
     position: 'absolute',
     left: 0,
@@ -76,11 +70,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: '100%',
   },
-
   spacer: {
     flex: 1,
   },
-
   view: {
     width: '100%',
     backgroundColor: '#fff',

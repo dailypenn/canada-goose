@@ -245,7 +245,7 @@ export const SearchBar = ({ navigation, publication }) => {
             height: 6,
             width: '100%',
             backgroundColor: theme.backgroundColor,
-            borderBottomWidth: 1,
+            borderBottomWidth: 0.6,
             borderBottomColor: theme.borderColor,
             top: 50,
           }}
@@ -366,6 +366,7 @@ const createStyles = (theme) => StyleSheet.create({
     lineHeight: 40,
   },
   header_safe_area: {
+    backgroundColor: theme.backgroundColor,
     zIndex: 1000,
   },
   header: {

@@ -5,14 +5,9 @@
     "img": "https://storage.googleapis.com/mobile-discover/dp-academics.png"
   },
   {
-    "name": "Administration",
-    "slug": "administration",
-    "img": "https://storage.googleapis.com/mobile-discover/dp-administration.png"
-  },
-  {
-    "name": "Identities",
-    "slug": "identities",
-    "img": "https://storage.googleapis.com/mobile-discover/dp-identities.png"
+    "name": "Student Life",
+    "slug": "student-life",
+    "img": "https://storage.googleapis.com/mobile-discover/dp-student-life.png"
   },
   {
     "name": "Politics",
@@ -20,14 +15,19 @@
     "img": "https://storage.googleapis.com/mobile-discover/dp-politics.png"
   },
   {
-    "name": "Student Life",
-    "slug": "student-life",
-    "img": "https://storage.googleapis.com/mobile-discover/dp-student-life.png"
+    "name": "Administration",
+    "slug": "administration",
+    "img": "https://storage.googleapis.com/mobile-discover/dp-administration.png"
   },
   {
     "name": "Sports",
     "slug": "sports",
     "img": "https://storage.googleapis.com/mobile-discover/dp-sports.png"
+  },
+  {
+    "name": "Identities",
+    "slug": "identities",
+    "img": "https://storage.googleapis.com/mobile-discover/dp-identities.png"
   },
   {
     "name": "Staff Editorials",

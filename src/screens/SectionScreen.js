@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import {
   StyleSheet,
   Text,
-  ScrollView,
   RefreshControl,
   FlatList,
 } from 'react-native'
@@ -10,7 +9,6 @@ import { connect } from 'react-redux'
 import { useQuery } from '@apollo/client'
 
 import {
-  ArticleList,
   RenderArticleListItem,
   LogoActivityIndicator,
 } from '../components'
@@ -20,23 +18,24 @@ import {
   NAVIGATE_TO_ARTICLE_SCREEN,
 } from '../utils/helperFunctions'
 import { updateNavigation } from '../actions'
-import { PublicationEnum } from '../utils/constants'
+import { ThemeContext } from "../components";
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: theme.backgroundColor,
   },
 })
-
 const SectionScreenComp = ({
   route,
   navigation,
   currPublication,
   dispatchUpdateNavigation,
 }) => {
-  const { slug } = route.params
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
 
+  const { slug } = route.params
   const { loading, error, data, refetch } = useQuery(SECTIONS_QUERY, {
     variables: { section: slug, publication: currPublication },
     notifyOnNetworkStatusChange: true,
@@ -49,23 +48,6 @@ const SectionScreenComp = ({
       dispatchUpdateNavigation(null)
     }
   }, [])
-
-  // useEffect(() => {
-  //   if (data) {
-  //     console.log(`refetching ${slug} screen article`)
-  //     refetch()
-  //   }
-  // }, [])
-
-  // useFocusEffect(
-  //   useCallback(() => {
-
-  //   }, [])
-  // )
-
-  // const onRefresh = useCallback(() => {
-  //   refetch()
-  // })
 
   if (!data) return <LogoActivityIndicator />
 
