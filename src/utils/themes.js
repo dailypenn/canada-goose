@@ -4,14 +4,16 @@ export const lightTheme = {
   wallColor:'#f2f2f2',
   borderColor: '#c4c4c4',
   primaryTextColor: '#000',
-  secondaryTextColor: '#808080'
+  secondaryTextColor: '#7b7b7b',
+  a: '#284DB0'
 }
 
 export const darkTheme = {
   mode: 'dark',
   backgroundColor: '#2c2c2c',
-  wallColor: '#232323',
+  wallColor: '#212121',
   borderColor: '#000',
   primaryTextColor: '#fff',
-  secondaryTextColor: '#c4c4c4'
+  secondaryTextColor: '#c4c4c4',
+  a: '#759dff'
 }

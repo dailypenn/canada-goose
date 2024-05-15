@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, TouchableOpacity, Image, Animated, Easing } from 'react-native'
 import ImageView from 'react-native-image-viewing'
 import HTML from 'react-native-render-html'
@@ -19,9 +19,10 @@ import {
 } from '../utils/helperFunctions'
 import { PublicationPrimaryColor } from '../utils/branding'
 import MaskedView from '@react-native-community/masked-view'
-import WebView from 'react-native-webview'
+import { ThemeContext } from "./ThemeProvider";
 
 export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
+  const theme = useContext(ThemeContext)
   const [modalVisible, isModalVisible] = useState(false)
   const [imgURI, updateimgURI] = useState(null)
 
@@ -31,19 +32,23 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
       lineHeight: 28,
       marginBottom: 20,
       fontFamily: BODY_SERIF,
+      color: theme.primaryTextColor
     },
     a: {
       fontSize: 18,
+      color: theme.a
     },
     i: {
       fontSize: 18,
       lineHeight: 28,
       fontFamily: BODY_SERIF_ITALIC,
+      color: theme.primaryTextColor
     },
     b: {
       fontSize: 18,
       lineHeight: 28,
       fontFamily: BODY_SERIF_BOLD,
+      color: theme.primaryTextColor
     },
     strong: {
       fontSize: 18,
@@ -61,6 +66,7 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
       fontSize: 12,
       lineHeight: 20,
       fontFamily: BODY_SERIF,
+      color: theme.primaryTextColor
     },
   }
 
