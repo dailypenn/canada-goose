@@ -14,7 +14,7 @@ import { ThemeContext } from '../components'
 const createStyles = (theme) => StyleSheet.create({
   container: {
     backgroundColor: theme.wallColor,
-    borderTopWidth: 0.6,
+    borderTopWidth: 0.8,
     borderTopColor: theme.borderColor,
     flex: 1,
   },
@@ -88,7 +88,7 @@ const HomeSectionsView = ({
           ? PublicationPrimaryColor(currPublication)
           : theme.backgroundColor,
         alignItems: 'center',
-        borderBottomWidth: 0.6,
+        borderBottomWidth: 0.8,
         borderBottomColor: theme.borderColor,
       }}
       onLongPress={drag}

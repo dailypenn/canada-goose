@@ -48,7 +48,7 @@ const ArticleScreenComp = ({
                              settings,
                              dispatch,
                            }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useContext(ThemeContext)
   const [article, setArticle] = useState(route.params.article);
   const [utbFetched, setUTBFetched] = useState(false);
   const savedArticles = settings.savedArticles ? settings.savedArticles : [];

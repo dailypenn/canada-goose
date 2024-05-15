@@ -25,7 +25,7 @@ const createStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.backgroundColor,
-    borderTopWidth: 0.6,
+    borderTopWidth: 0.8,
     borderTopColor: theme.borderColor,
     paddingTop: Platform.OS == 'android' ? 10 : 0,
   },
@@ -40,8 +40,8 @@ const createStyles = (theme) => StyleSheet.create({
 const width = Dimensions.get('window').width
 
 const DiscoveryView = ({ navigation, publication }) => {
-  const theme = useContext(ThemeContext);
-  const styles = createStyles(theme);
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
 
   const navigateToSectionScreen = (section, slug) => {
     navigation.navigate('Section', {
@@ -100,8 +100,8 @@ const DiscoveryView = ({ navigation, publication }) => {
 }
 
 const DiscoveryScreenComp = ({ navigation, currPublication }) => {
-  const theme = useContext(ThemeContext);
-  const styles = createStyles(theme);
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
 
   return (
     <SafeAreaView style={styles.container}>

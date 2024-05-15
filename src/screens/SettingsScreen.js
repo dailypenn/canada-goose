@@ -48,8 +48,8 @@ const createStyles = (theme) => StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 15,
     backgroundColor: theme.backgroundColor,
-    borderTopWidth: 0.6,
-    borderBottomWidth: 0.6,
+    borderTopWidth: 0.8,
+    borderBottomWidth: 0.8,
     borderColor: theme.borderColor
   },
   cell: {
@@ -85,7 +85,7 @@ const createStyles = (theme) => StyleSheet.create({
     flexDirection: 'row'
   },
   divider: {
-    height: 0.6,
+    height: 0.8,
     backgroundColor: theme.borderColor
   },
   spacer: {
@@ -125,8 +125,8 @@ const GET_LOGO = publication => {
 }
 
 const PublicationCell = ({ currPublication }) => {
-  const theme = useContext(ThemeContext);
-  const styles = createStyles(theme);
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
 
   return (
     <View style={styles.pubCell}>
@@ -147,8 +147,8 @@ const PublicationCell = ({ currPublication }) => {
 }
 
 const SettingsCell = ({ item }) => {
-  const theme = useContext(ThemeContext);
-  const styles = createStyles(theme);
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
 
   return (
     <View style={styles.cell}>
@@ -167,8 +167,8 @@ const SettingsCell = ({ item }) => {
 }
 
 const SettingsSection = ({ navigateToScreen, items }) => {
-  const theme = useContext(ThemeContext);
-  const styles = createStyles(theme);
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
 
   return (
     <View>
@@ -196,8 +196,8 @@ const SettingsSection = ({ navigateToScreen, items }) => {
 }
 
 const SettingsScreenComp = ({ navigation, currPublication }) => {
-  const theme = useContext(ThemeContext);
-  const styles = createStyles(theme);
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
 
   return (
     <SafeAreaView style={styles.header_safe_area}>
