@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react'
+import React, { useEffect, useState, useCallback, useRef, useContext } from 'react'
 import {
   StyleSheet,
   View,
@@ -24,8 +24,8 @@ import {
   HeaderLine,
   EmptyState,
   LogoActivityIndicator,
-  PublicationModal,
   InteractiveHomeComponent,
+  ThemeContext
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
@@ -46,14 +46,11 @@ const DP_HEADER_LOGO = require('../static/logos/dp-logo-large-black.png')
 const ST_HEADER_LOGO = require('../static/logos/34st-header.png')
 const UTB_HEADER_LOGO = require('../static/logos/utb-logo-large-black.png')
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  text1: {
-    color: '#fff',
-  },
+    backgroundColor: theme.backgroundColor,
+  }
 })
 
 const HomeView = ({
@@ -66,6 +63,8 @@ const HomeView = ({
   scrollToTop,
   dispatchToggleScrollToTop,
 }) => {
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
   const scrollViewRef = useRef(null)
   const { centerpiece: centerArticles, top: topArticles } = data
 
@@ -129,8 +128,8 @@ const HomeView = ({
             position: 'absolute',
             width: '100%',
             zIndex: 2,
-            backgroundColor: '#fff',
-            borderBottomColor: '#DDD',
+            backgroundColor: theme.backgroundColor,
+            borderBottomColor: theme.borderColor,
             borderBottomWidth: 1,
           },
           { transform: [{ translateY: translateY }] },
@@ -143,9 +142,9 @@ const HomeView = ({
             position: 'absolute',
             width: '100%',
             zIndex: 3,
-            backgroundColor: '#fff',
+            backgroundColor: theme.backgroundColor,
             alignItems: 'center',
-            borderBottomColor: '#DDD',
+            borderBottomColor: theme.borderColor,
             borderBottomWidth: 1,
             paddingVertical: 4,
             opacity: opacity.interpolate({
@@ -261,7 +260,7 @@ const HomeScreenComp = ({
   settings,
   dispatchToggleScrollToTop,
 }) => {
-
+  const theme = useContext(ThemeContext)
   const { homeSectionPreferences, _ } = settings
 
   let homeSections =
@@ -314,7 +313,7 @@ const HomeScreenComp = ({
     return (
       <View
         style={{
-          backgroundColor: 'white',
+          backgroundColor: theme.wallColor,
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
@@ -335,7 +334,7 @@ const HomeScreenComp = ({
             width: 100,
             height: 50,
             backgroundColor: PublicationPrimaryColor(currPublication),
-            marginTop: 30,
+            marginTop: 20,
             borderRadius: 10,
             justifyContent: 'center',
           }}
@@ -355,6 +354,7 @@ const HomeScreenComp = ({
       </View>
     )
   }
+
   if (!data) return <LogoActivityIndicator />
 
   return (
