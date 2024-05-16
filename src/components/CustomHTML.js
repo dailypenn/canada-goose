@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { View, TouchableOpacity, Image, Animated, Easing } from 'react-native'
 import ImageView from 'react-native-image-viewing'
 import HTML from 'react-native-render-html'
@@ -78,13 +78,23 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
 
   const InLineImage = ({ htmlAttribs, key }) => {
     const [zoom] = useState(new Animated.Value(1.05))
-    const [ASPECT_RATIO, SET_ASPECT_RATIO] = useState(htmlAttribs['data-width'] / htmlAttribs['data-height']) 
+    const [ASPECT_RATIO, SET_ASPECT_RATIO] = useState(htmlAttribs['data-width'] / htmlAttribs['data-height'])
 
-    if (htmlAttribs['data-width'] == 0 | htmlAttribs['data-height'] == 0) {
-      Image.getSize(htmlAttribs['src'], (width, height) => {
-        SET_ASPECT_RATIO(width / height)
-      });
-    }
+    useEffect(() => {
+      let isMounted = true;
+
+      if (htmlAttribs["data-width"] === 0 || htmlAttribs["data-height"] === 0) {
+        Image.getSize(htmlAttribs["src"], (width, height) => {
+          if (isMounted) {
+            setAspectRatio(width / height);
+          }
+        });
+      }
+
+      return () => {
+        isMounted = false;
+      };
+    }, [htmlAttribs]);
 
     const onPressIn = () => {
       Animated.timing(zoom, {
