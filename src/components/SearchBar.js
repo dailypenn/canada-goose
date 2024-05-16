@@ -27,9 +27,7 @@ import {
   NAVIGATE_TO_ARTICLE_SCREEN,
 } from '../utils/helperFunctions'
 import {
-  BODY_SERIF,
   DISPLAY_SERIF_BLACK,
-  GEOMETRIC_BOLD,
   GEOMETRIC_REGULAR,
 } from '../utils/fonts'
 import { SearchArticleList } from './ArticleList'
@@ -238,18 +236,6 @@ export const SearchBar = ({ navigation, publication }) => {
   return (
     <>
       <SafeAreaView style={styles.header_safe_area}>
-        <View
-          style={{
-            //permanent bottomBorder
-            position: 'absolute',
-            height: 6,
-            width: '100%',
-            backgroundColor: theme.backgroundColor,
-            borderBottomWidth: 0.8,
-            borderBottomColor: theme.borderColor,
-            top: 50,
-          }}
-        />
         <View style={styles.header}>
           <View style={styles.header_inner}>
             <Animated.View style={{ opacity: title_opacity }}>
@@ -370,8 +356,11 @@ const createStyles = (theme) => StyleSheet.create({
     zIndex: 1000,
   },
   header: {
-    height: 50,
+    height: 56,
     paddingHorizontal: 16,
+    paddingBottom: 6,
+    borderBottomWidth: 0.8,
+    borderBottomColor: theme.borderColor
   },
   header_inner: {
     flex: 1,
