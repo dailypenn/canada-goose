@@ -37,6 +37,7 @@ const createStyles = (theme) => StyleSheet.create({
     width: '100%',
     borderRadius: 2,
     aspectRatio: 1.6,
+    backgroundColor: theme.wallColor
   },
   container: {
     padding: 20,
@@ -76,7 +77,7 @@ export const PrimaryHorizontalArticleCell = ({
         <View style={styles.container}>
           <Image style={styles.image} source={{ uri: imageURL }} />
 
-          <Text style={styles.title} numberOfLines={5}>
+          <Text style={{...styles.title, marginTop: 15}} numberOfLines={5}>
             {title}
           </Text>
           <Text style={styles.abstract}>{parsedAbstract}</Text>
