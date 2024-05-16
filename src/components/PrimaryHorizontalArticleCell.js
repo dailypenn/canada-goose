@@ -15,7 +15,6 @@ const createStyles = (theme) => StyleSheet.create({
     flex: 1,
     fontSize: 24,
     lineHeight: 28,
-    marginTop: 15,
   },
   abstract: {
     color: theme.secondaryTextColor,

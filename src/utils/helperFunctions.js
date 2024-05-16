@@ -38,7 +38,7 @@ export const AUTHORS = authorArr => {
 }
 
 export const PREFIXED_AUTHORS = (prefix, authorArr) => {
-  if (!authorArr.length) {
+  if (!authorArr?.length) {
     return ''
   }
 

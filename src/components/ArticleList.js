@@ -107,7 +107,7 @@ export const SearchArticleList = ({
                 >
                   <HorizontalArticleCell
                       style={{
-                        borderWidth: 4,
+                        borderWidth: 40,
                         borderColor: '#0F0',
                         marginVertical: 10,
                       }}

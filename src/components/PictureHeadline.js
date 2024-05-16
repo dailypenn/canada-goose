@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   View,
   StyleSheet,
@@ -11,7 +11,6 @@ import {
 import MaskedView from '@react-native-community/masked-view'
 import { LinearGradient } from 'expo-linear-gradient'
 import ImageView from 'react-native-image-viewing'
-
 import { CategoryTag } from './CategoryTag'
 import {
   DISPLAY_SERIF_BOLD,
@@ -19,12 +18,14 @@ import {
   GEOMETRIC_REGULAR,
 } from '../utils/fonts'
 import { ImageBackground } from 'react-native'
-const styles = StyleSheet.create({
+import { ThemeContext } from "./ThemeProvider";
+
+const createStyles = (theme) => StyleSheet.create({
   background: {
     flex: 1,
     paddingHorizontal: 15,
   },
-  headline: {
+  picHeadline: {
     color: '#fff',
     fontFamily: DISPLAY_SERIF_BOLD,
     fontSize: 26,
@@ -33,8 +34,8 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     lineHeight: 30,
   },
-  blackHeadline: {
-    color: '#000',
+  noPicHeadline: {
+    color: theme.primaryTextColor,
     fontFamily: DISPLAY_SERIF_BOLD,
     fontSize: 26,
     marginBottom: 20,
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     opacity: 0.75,
   },
   blackTime: {
-    color: '#000',
+    color: theme.primaryTextColor,
     fontFamily: GEOMETRIC_REGULAR,
     textTransform: 'uppercase',
     fontSize: 14,
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
   },
   view: {
     width: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: theme.backgroundColor,
   },
   imageMask: {
     position: 'absolute',
@@ -97,6 +98,8 @@ export const PictureHeadline = ({
   afterPress,
   inArticleView,
 }) => {
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
   const [visible, setIsVisible] = useState(false)
   const [zoom] = useState(new Animated.Value(1.05))
 
@@ -124,7 +127,7 @@ export const PictureHeadline = ({
   ) {
     return (
       <View style={{ width: '100%' }}>
-        <View style={{ padding: 15 }}>
+        <View style={{ paddingHorizontal: 15, paddingTop: 20 }}>
           <View style={styles.spacer} />
           <View style={{ flexDirection: 'row', alignContent: 'center' }}>
             <CategoryTag name={category} publication={publication} />
@@ -132,14 +135,14 @@ export const PictureHeadline = ({
             <Text style={styles.blackTime}>{time}</Text>
           </View>
           <Text
-            style={styles.blackHeadline}
+            style={styles.noPicHeadline}
             numberOfLines={inArticleView ? 10 : 4}
           >
             {headline}
           </Text>
           <View
             style={{
-              borderBottomColor: '#CCC',
+              borderBottomColor: theme.borderColor,
               borderBottomWidth: 1,
             }}
           />
@@ -159,7 +162,7 @@ export const PictureHeadline = ({
           <View style={styles.spacer} />
           <Text style={styles.time}>{time}</Text>
         </View>
-        <Text style={styles.headline} numberOfLines={inArticleView ? 10 : 4}>
+        <Text style={styles.picHeadline} numberOfLines={inArticleView ? 10 : 4}>
           {headline}
         </Text>
       </>
