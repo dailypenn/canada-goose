@@ -25,8 +25,6 @@ const createStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.backgroundColor,
-    borderTopWidth: 0.8,
-    borderTopColor: theme.borderColor,
     paddingTop: Platform.OS == 'android' ? 10 : 0,
   },
   rngButtonView: {
