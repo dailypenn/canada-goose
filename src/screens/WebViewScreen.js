@@ -10,7 +10,7 @@ const WebViewContainer = ({ link }) => {
   return (
     <View style={{ flex: 1 }}>
       <WebView
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: theme.backgroundColor }}
         source={{ uri: link }}
         renderLoading={() => (
             <LogoActivityIndicator />
