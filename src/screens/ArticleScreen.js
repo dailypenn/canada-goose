@@ -261,6 +261,7 @@ const ArticleScreenComp = ({
                     style={{
                       fontFamily: GEOMETRIC_BOLD,
                       fontSize: 12,
+                      paddingRight: 8,
                       color: theme.primaryTextColor,
                       opacity: 0.8
                     }}
@@ -279,14 +280,14 @@ const ArticleScreenComp = ({
                 <Ionicons
                     name={'camera'}
                     size={18}
-                    style={{ alignSelf: 'center', opacity: 0.8 }}
+                    style={{ alignSelf: 'center', paddingRight: 8, opacity: 0.8 }}
                     color={theme.primaryTextColor}
                 />
                 <Text
                     style={{
                       fontFamily: GEOMETRIC_BOLD,
                       fontSize: 12,
-                      paddingLeft: 8,
+                      paddingRight: 8,
                       color: theme.primaryTextColor,
                       opacity: 0.8
                     }}
