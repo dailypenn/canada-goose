@@ -63,7 +63,7 @@ export const ArticleList = ({
   navigateToArticleScreen,
   publication,
 }) => {
-  const articlesLength = articles.length
+  const articlesLength = articles.length - 1
   return (
     <View style={{ marginBottom: 5 }}>
       {articles.map((el, i) =>

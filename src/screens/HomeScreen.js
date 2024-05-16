@@ -81,7 +81,7 @@ const HomeView = ({
   // Header consts
   const [scrollY, setScrollY] = useState(new Animated.Value(0))
   const minScroll = 10
-  const AnimatedHeaderHeight = getStatusBarHeight(true) + 50
+  const AnimatedHeaderHeight = getStatusBarHeight(true) + 60
   const negativeHeaderHeight =
     Platform.OS === 'android'
       ? -AnimatedHeaderHeight
@@ -144,9 +144,10 @@ const HomeView = ({
             zIndex: 3,
             backgroundColor: theme.backgroundColor,
             alignItems: 'center',
+            justifyContent: 'center',
             borderBottomColor: theme.borderColor,
-            borderBottomWidth: 1,
-            paddingVertical: 4,
+            borderBottomWidth: 0.8,
+            paddingBottom: 6,
             opacity: opacity.interpolate({
               inputRange: [0, 0.5, 0.8, 1],
               outputRange: [0, 0, 1, 1],
@@ -166,7 +167,7 @@ const HomeView = ({
         <View style={{ height: 28 }}>
           <Image
             source={GET_HEADER_LOGO()}
-            style={{ flex: 1, resizeMode: 'contain' }}
+            style={{ flex: 1, resizeMode: 'contain', tintColor: theme.primaryTextColor }}
           />
         </View>
       </Animated.View>

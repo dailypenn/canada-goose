@@ -51,7 +51,6 @@ const createStyles = (theme) => StyleSheet.create({
     flex: 1,
   },
   view: {
-    borderTopWidth: 0.8,
     borderBottomWidth: 0.8,
     borderColor: theme.borderColor
   }
