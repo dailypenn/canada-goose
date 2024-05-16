@@ -41,6 +41,7 @@ export const setInit = result => {
       ],
       savedArticles: JSON.parse(result[3][1]),
       notifPreferences: JSON.parse(result[5][1]),
+      displayPreference: JSON.parse(result[6][1]),
     },
   }
 }
@@ -88,5 +89,16 @@ export const updateNotifPref = (notifIndex, value) => {
       notifIndex: notifIndex,
       value: value,
     },
+  }
+}
+
+export const DEFAULT_DISPLAY_PREF = "light"
+export const UPDATE_DISPLAY_PREF = 'UPDATE_DISPLAY_PREF'
+export const updateDisplayPref = (theme) => {
+  return {
+    type: UPDATE_DISPLAY_PREF,
+    updates: {
+      displayPreference: theme
+    }
   }
 }

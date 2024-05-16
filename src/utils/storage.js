@@ -12,6 +12,8 @@ export const IS_ONBOARDED_KEY = 'onboarded'
 
 export const NOTIF_PREFS_KEY = 'notif prefs'
 
+export const DISPLAY_PREFS_KEY = 'display prefs'
+
 export const Storage = {
   getItem: async function (key) {
     try {
@@ -42,7 +44,7 @@ export const Storage = {
 
   clearAll: async function () {
     await AsyncStorage.clear(error => {
-      console.log('clearing error:', error ? error : 'none')
+      console.log('Clearing error:', error ? error : 'none')
     })
   },
 }

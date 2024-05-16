@@ -1,95 +1,97 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
-
 import { Ionicons } from '@expo/vector-icons'
 import { DISPLAY_SERIF_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'
 import { NAVIGATE_TO_ARTICLE_SCREEN } from '../utils/helperFunctions'
 import { RightSwipeDeleteRow } from '../components/RightSwipeDeleteRow'
 import { unsaveArticle } from '../actions'
-import { EmptyState } from '../components'
+import { EmptyState, ThemeContext } from '../components'
 import { EmptyStateEnum } from '../components/EmptyState'
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
+  container: {
+    backgroundColor: theme.wallColor,
+    flex: 1,
+  },
   cell: {
     padding: 20,
     flexDirection: 'row',
-    backgroundColor: '#fff',
-    borderBottomColor: '#c4c4c4',
-    borderBottomWidth: 0.6,
+    backgroundColor: theme.backgroundColor,
+    borderBottomColor: theme.borderColor,
+    borderBottomWidth: 0.8,
   },
-
   textContainer: {
-    // backgroundColor: 'red',
     width: '95%',
   },
-
   chevron: {
     justifyContent: 'center',
   },
-
   spacer: {
     flex: 1,
   },
-
   title: {
+    color: theme.primaryTextColor,
     fontFamily: DISPLAY_SERIF_BOLD,
     fontSize: 18,
     lineHeight: 22,
   },
-
   subText: {
-    color: '#888',
+    color: theme.secondaryTextColor,
     fontFamily: GEOMETRIC_REGULAR,
     fontSize: 12,
-    paddingBottom: 10,
+    paddingBottom: 8,
   },
-
   rightSwipeItem: {
     justifyContent: 'center',
     backgroundColor: 'red',
   },
 })
 
-const SavedArticleCell = ({ title, savedAt, category, publication }) => (
-  <View style={styles.cell}>
-    <View style={{ flexDirection: 'column' }}>
-      <View style={{ flexDirection: 'row' }}>
-        <Text style={styles.subText}>{publication} • </Text>
-        <Text style={{ ...styles.subText, textTransform: 'uppercase' }}>
-          {category}
-        </Text>
-        <View style={styles.spacer} />
+const SavedArticleCell = ({ title, savedAt, category, publication }) => {
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
+
+  return (
+    <View style={styles.cell}>
+      <View style={{ flexDirection: 'column' }}>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={styles.subText}>{publication} • </Text>
+          <Text style={{ ...styles.subText, textTransform: 'uppercase' }}>
+            {category}
+          </Text>
+          <View style={styles.spacer} />
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{title}</Text>
+        </View>
       </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
+      <View style={styles.spacer} />
+      <View style={styles.chevron}>
+        <Ionicons name="chevron-forward" size={20} color={theme.borderColor} />
       </View>
     </View>
-    <View style={styles.spacer} />
-    <View style={styles.chevron}>
-      <Ionicons name="chevron-forward" size={20} color="#c4c4c4" />
-    </View>
-  </View>
-)
+  )
+}
 
 const SwipeableRow = ({ item, navigationHandler, deleteHandler }) => {
   const { _, article, saved_at } = item
   return (
-    <RightSwipeDeleteRow deleteHandler={() => deleteHandler(item)}>
-      <TouchableOpacity
-        onPress={() => navigationHandler(item)}
-        activeOpacity={1}
-      >
-        <SavedArticleCell
-          title={article.headline}
-          savedAt={saved_at}
-          category={article.tag}
-          publication={item.publication}
-        />
-      </TouchableOpacity>
-    </RightSwipeDeleteRow>
+      <RightSwipeDeleteRow deleteHandler={() => deleteHandler(item)}>
+        <TouchableOpacity
+          onPress={() => navigationHandler(item)}
+          activeOpacity={1}
+        >
+          <SavedArticleCell
+            title={article.headline}
+            savedAt={saved_at}
+            category={article.tag}
+            publication={item.publication}
+          />
+        </TouchableOpacity>
+      </RightSwipeDeleteRow>
   )
 }
 
@@ -100,6 +102,8 @@ const SavedArticlesScreenComp = ({
   publication,
 }) => {
   const savedArticles = settings.savedArticles ? settings.savedArticles : []
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
 
   const navigationHandler = async item => {
     NAVIGATE_TO_ARTICLE_SCREEN(navigation, 'SettingsArticle', {
@@ -118,12 +122,10 @@ const SavedArticlesScreenComp = ({
     if (saved_successfully) dispatch(unsaveArticle(item))
   }
 
-  console.log(publication)
-
   if (savedArticles.length == 0)
     return (
       <View
-        style={{ flex: 1, justifyContent: 'center', backgroundColor: 'white' }}
+        style={{...styles.container, justifyContent: 'center'}}
       >
         <EmptyState
           {...{
@@ -137,21 +139,23 @@ const SavedArticlesScreenComp = ({
     )
 
   return (
-    <FlatList
-      data={savedArticles}
-      showsVerticalScrollIndicator={false}
-      showsHorizontalScrollIndicator={false}
-      keyExtractor={(_, index) => index}
-      renderItem={({ item }) => {
-        return (
-          <SwipeableRow
-            item={item}
-            navigationHandler={navigationHandler}
-            deleteHandler={deleteHandler}
-          />
-        )
-      }}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={[...savedArticles].reverse()}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(_, index) => String(index)}
+        renderItem={({ item }) => {
+          return (
+            <SwipeableRow
+              item={item}
+              navigationHandler={navigationHandler}
+              deleteHandler={deleteHandler}
+            />
+          )
+        }}
+      />
+    </View>
   )
 }
 

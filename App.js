@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import { applyMiddleware, createStore } from 'redux'
-import thunk from 'redux-thunk'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Provider } from 'react-redux'
 import * as ScreenOrientation from 'expo-screen-orientation'
 
 import TabNavigationController from './NavigationController'
 import { loadFonts } from './src/utils/fonts'
-import { LogoActivityIndicator } from './src/components'
-import RootReducer from './src/reducers'
+import { LogoActivityIndicator, ThemeProvider } from './src/components'
+import store from './src/reducers'
+
 import {
   GET_HOME_FEED_ORDER_KEY,
   IS_ONBOARDED_KEY,
   SAVED_ARTICLES_KEY,
   LAST_VIEWED_PUBLICATION_KEY,
   NOTIF_PREFS_KEY,
+  DISPLAY_PREFS_KEY,
   Storage,
 } from './src/utils/storage'
 import { PublicationEnum } from './src/utils/constants'
@@ -24,11 +24,9 @@ import { OnboardingModal } from './src/screens'
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  // uri: 'http://localhost:5000/graphql',
   uri: 'https://graphql-295919.ue.r.appspot.com/graphql',
   cache: new InMemoryCache(),
 })
-const store = createStore(RootReducer, applyMiddleware(thunk))
 
 const getAsyncStorage = () => {
   return dispatch => {
@@ -38,10 +36,12 @@ const getAsyncStorage = () => {
       GET_HOME_FEED_ORDER_KEY(PublicationEnum.utb),
       SAVED_ARTICLES_KEY,
       LAST_VIEWED_PUBLICATION_KEY,
+      NOTIF_PREFS_KEY,
+      DISPLAY_PREFS_KEY
     ]).then(result => {
       let lastViewedPublication = JSON.parse(result[4][1])
       if (lastViewedPublication != null) {
-        console.log('last viewed pub', lastViewedPublication)
+
         dispatch(switchPublication(lastViewedPublication))
       }
       dispatch(setInit(result))
@@ -72,8 +72,6 @@ const App = () => {
     loadAssets()
   }, [])
 
-  console.log('isOnboarded' + isOnboarded)
-
   if (assetsLoaded) {
     return (
       <ApolloProvider client={client}>
@@ -81,12 +79,20 @@ const App = () => {
           {attachOnboardingModalToDom ? (
             <OnboardingModal {...{ isOnboarded, hasCompletedOnboarding }} />
           ) : null}
-          <TabNavigationController />
+          <ThemeProvider>
+            <TabNavigationController />
+          </ThemeProvider>
         </Provider>
       </ApolloProvider>
     )
   } else {
-    return <LogoActivityIndicator />
+    return (
+      <Provider store={store}>
+        <ThemeProvider>
+          <LogoActivityIndicator />
+        </ThemeProvider>
+      </Provider>
+    )
   }
 }
 

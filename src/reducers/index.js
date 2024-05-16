@@ -1,9 +1,14 @@
-import { combineReducers } from 'redux'
+import { applyMiddleware, combineReducers, createStore } from 'redux'
 
 import PublicationReducer from './publication'
 import SettingsReducer from './settings'
+import thunk from 'redux-thunk'
 
-export default combineReducers({
+const RootReducer = combineReducers({
   publication: PublicationReducer,
   settings: SettingsReducer,
 })
+
+const store = createStore(RootReducer, applyMiddleware(thunk))
+
+export default store;
