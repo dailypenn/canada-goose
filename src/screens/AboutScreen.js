@@ -27,8 +27,6 @@ const createStyles = (theme) => StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: theme.backgroundColor,
-    borderTopWidth: 0.8,
-    borderTopColor: theme.borderColor,
   },
   logo: {
     width: 250,

@@ -40,7 +40,9 @@ export const SettingsStack = ({ navigation }) => {
         screenOptions={{
           headerStyle: {
             backgroundColor: theme.backgroundColor,
-            shadowColor: theme.borderColor,
+            borderBottomWidth: 0.8,
+            borderBottomColor: theme.borderColor,
+            shadowOpacity: 0,
             elevation: 0,
           },
           headerTitleStyle: {

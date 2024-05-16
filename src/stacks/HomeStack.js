@@ -1,15 +1,17 @@
 // Navigation stack within the Home tab
 // Includes routes to the home and article screens
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import { ArticleScreen, HomeScreen, WebViewScreen } from '../screens'
-import { DefaultStatusBar, PublicationModal } from '../components'
-import { BODY_SERIF } from '../utils/fonts'
+import { DefaultStatusBar, PublicationModal, ThemeContext } from '../components'
+import {BODY_SERIF, DISPLAY_SERIF_BLACK} from '../utils/fonts'
 
 const Stack = createStackNavigator()
 
 export const HomeStack = ({ navigation }) => {
+  const theme = useContext(ThemeContext)
+
   // Haptic feedback when tab bar is pressed
   useEffect(() => {
     // Haptic feedback on tab presses
@@ -27,9 +29,16 @@ export const HomeStack = ({ navigation }) => {
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
-          headerStyle: { backgroundColor: '#fff' },
-          headerTintColor: '#000',
-          headerTitleStyle: { fontFamily: BODY_SERIF, fontSize: 20 },
+          headerStyle: {
+            backgroundColor: theme.backgroundColor,
+            shadowColor: theme.borderColor,
+            elevation: 0,
+          },
+          headerTitleStyle: {
+            fontFamily: BODY_SERIF,
+            fontSize: 20,
+          },
+          headerTintColor: theme.primaryTextColor,
           headerBackTitleVisible: false,
         }}
       >

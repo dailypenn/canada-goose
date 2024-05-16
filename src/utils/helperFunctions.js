@@ -69,13 +69,13 @@ export const GET_HOME_QUERIES = publication => {
 }
 
 export const GET_HOME_SECTIONS = publication => {
-  console.log(publication, 'vs', PublicationEnum.street)
+
 
   switch (publication) {
     case PublicationEnum.dp:
       return DP_HOME_SECTIONS
     case PublicationEnum.street:
-      console.log('street')
+
       return STREET_HOME_SECTIONS
     case PublicationEnum.utb:
       return UTB_HOME_SECTIONS

@@ -69,13 +69,6 @@ export const PrimaryHorizontalArticleCell = ({
           </Text>
           <Text style={styles.abstract}>{parsedAbstract}</Text>
         </View>
-        <View
-          style={{
-            borderBottomColor: '#CCC',
-            borderBottomWidth: 1,
-            marginHorizontal: 20,
-          }}
-        />
       </View>
     )
   } else {

@@ -19,7 +19,7 @@ const InfoPageContents = ({
   content: { mediaUrl, text, title, boldText },
   style
 }) => {
-  console.log(mediaUrl)
+
 
   const [opacity] = useState(new Animated.Value(0))
   useEffect(() => {

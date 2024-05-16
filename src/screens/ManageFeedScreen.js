@@ -14,8 +14,6 @@ import { ThemeContext } from '../components'
 const createStyles = (theme) => StyleSheet.create({
   container: {
     backgroundColor: theme.wallColor,
-    borderTopWidth: 0.8,
-    borderTopColor: theme.borderColor,
     flex: 1,
   },
   icon: {
@@ -67,7 +65,7 @@ const HomeSectionsView = ({
 
   const handleSave = async newSections => {
     if (newSections == ogData) return
-    console.log('saving-', newSections)
+    console.log('Saving Feed Preferences: ', newSections)
     let savedSuccessfully = await Storage.setItem(
       GET_HOME_FEED_ORDER_KEY(currPublication),
       newSections

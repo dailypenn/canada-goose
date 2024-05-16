@@ -14,8 +14,6 @@ import { EmptyStateEnum } from '../components/EmptyState'
 const createStyles = (theme) => StyleSheet.create({
   container: {
     backgroundColor: theme.wallColor,
-    borderTopWidth: 0.8,
-    borderTopColor: theme.borderColor,
     flex: 1,
   },
   cell: {

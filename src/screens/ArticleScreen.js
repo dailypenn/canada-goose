@@ -68,8 +68,8 @@ const ArticleScreenComp = ({
     const { isUTBRandom } = route.params;
 
     if (!article && route.params.articleSlug) {
-      console.log('---this being called---');
-      console.log(route.params.articleSlug);
+
+
       fetchArticle({
         variables: {
           publication: articlePublication,
@@ -77,7 +77,7 @@ const ArticleScreenComp = ({
         },
       });
     } else if (isUTBRandom && !utbFetched) {
-      console.log('---fetching utb random article---');
+      console.log('---Fetching UTB Random Article---');
       fetchArticle({
         variables: { publication: PublicationEnum.utb, isRandom: true },
       });
@@ -205,7 +205,7 @@ const ArticleScreenComp = ({
   };
 
   const onLinkPress = (_, href) => {
-    console.log(href);
+
 
     const { publication, slug } = getArticlePubSlug(href);
     const { name } = route;

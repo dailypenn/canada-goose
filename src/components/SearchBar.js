@@ -257,7 +257,7 @@ export const SearchBar = ({ navigation, publication }) => {
             </Animated.View>
             <TouchableHighlight
               activeOpacity={1}
-              underlayColor={'#ccd0d5'}
+              underlayColor={'gray'}
               onPress={_onFocus}
               style={styles.search_icon_box}
             >

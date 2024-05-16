@@ -1,7 +1,7 @@
 import * as Analytics from 'expo-firebase-analytics'
 
 export const publicationSwitchAnalytics = async (from, to) => {
-  console.log('LOGGING EVENT: PUBLICATION SWITCHED')
+
   await Analytics.logEvent('PublicationSwitched', {
     from: from,
     to: to,
