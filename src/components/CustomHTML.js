@@ -142,7 +142,7 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
                 transform: [{ scale: zoom }],
                 width: '100%',
                 aspectRatio: ASPECT_RATIO ? ASPECT_RATIO : null,
-                backgroundColor: '#EEE',
+                backgroundColor: theme.wallColor,
               }}
             />
           </MaskedView>

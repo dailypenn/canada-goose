@@ -134,7 +134,7 @@ const HomeView = ({
           },
           { transform: [{ translateY: translateY }] },
         ]}
-      ></Animated.View>
+      />
       <Animated.View
         style={[
           {

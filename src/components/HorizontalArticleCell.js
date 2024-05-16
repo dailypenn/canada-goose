@@ -23,7 +23,7 @@ const createStyles = (theme) => StyleSheet.create({
     height: 75,
     padding: 15,
     borderRadius: 2,
-    backgroundColor: theme.primaryTextColor,
+    backgroundColor: theme.wallColor,
     alignSelf: 'flex-end',
   },
   imageView: {

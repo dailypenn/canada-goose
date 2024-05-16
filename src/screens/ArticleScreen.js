@@ -206,7 +206,6 @@ const ArticleScreenComp = ({
 
   const onLinkPress = (_, href) => {
 
-
     const { publication, slug } = getArticlePubSlug(href);
     const { name } = route;
 
@@ -248,7 +247,7 @@ const ArticleScreenComp = ({
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    paddingBottom: article.dominantMedia.authors.length ? 10 : 0,
+                    paddingBottom: article.dominantMedia?.authors?.length ? 10 : 0,
                   }}
               >
                 <Ionicons
@@ -270,7 +269,7 @@ const ArticleScreenComp = ({
                 </Text>
               </View>
           )}
-          {Boolean(article.dominantMedia.authors.length) && (
+          {Boolean(article.dominantMedia?.authors?.length) && (
               <View
                   style={{
                     flexDirection: 'row',
