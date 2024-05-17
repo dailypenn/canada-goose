@@ -359,7 +359,7 @@ const createStyles = (theme) => StyleSheet.create({
     height: 56,
     paddingHorizontal: 16,
     paddingBottom: 6,
-    borderBottomWidth: 0.8,
+    borderBottomWidth: 1,
     borderBottomColor: theme.borderColor
   },
   header_inner: {

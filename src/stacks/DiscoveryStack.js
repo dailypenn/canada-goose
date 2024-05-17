@@ -31,7 +31,7 @@ export const DiscoveryStack = ({ navigation }) => {
         screenOptions={{
           headerStyle: {
             backgroundColor: theme.backgroundColor,
-            borderBottomWidth: 0.8,
+            borderBottomWidth: 1,
             borderBottomColor: theme.borderColor,
             shadowOpacity: 0,
           },

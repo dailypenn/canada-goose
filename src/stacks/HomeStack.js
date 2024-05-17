@@ -33,8 +33,9 @@ export const HomeStack = ({ navigation }) => {
         screenOptions={{
           headerStyle: {
             backgroundColor: theme.backgroundColor,
-            shadowColor: theme.borderColor,
-            elevation: 0,
+            borderBottomWidth: 1,
+            borderBottomColor: theme.borderColor,
+            shadowOpacity: 0,
           },
           headerTitleStyle: {
             fontFamily: BODY_SERIF,

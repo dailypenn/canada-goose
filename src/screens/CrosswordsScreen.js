@@ -16,12 +16,13 @@ const createStyles = (theme) => StyleSheet.create({
   webView: {
     flex: 1,
     backgroundColor: theme.backgroundColor,
+    marginTop: 0.5
   },
   header: {
     height: 56,
     paddingHorizontal: 16,
     paddingBottom: 6,
-    borderBottomWidth: 0.8,
+    borderBottomWidth: 1,
     borderBottomColor: theme.borderColor,
   },
   header_inner: {
