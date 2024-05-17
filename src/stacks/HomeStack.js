@@ -6,6 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { ArticleScreen, HomeScreen, WebViewScreen } from '../screens'
 import { DefaultStatusBar, PublicationModal, ThemeContext } from '../components'
 import {BODY_SERIF, DISPLAY_SERIF_BLACK} from '../utils/fonts'
+import {TouchableOpacity} from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Stack = createStackNavigator()
 
@@ -31,8 +33,9 @@ export const HomeStack = ({ navigation }) => {
         screenOptions={{
           headerStyle: {
             backgroundColor: theme.backgroundColor,
-            shadowColor: theme.borderColor,
-            elevation: 0,
+            borderBottomWidth: 1,
+            borderBottomColor: theme.borderColor,
+            shadowOpacity: 0,
           },
           headerTitleStyle: {
             fontFamily: BODY_SERIF,
@@ -40,6 +43,18 @@ export const HomeStack = ({ navigation }) => {
           },
           headerTintColor: theme.primaryTextColor,
           headerBackTitleVisible: false,
+          headerLeft: (props) => (
+            <TouchableOpacity
+              onPress={props.onPress}
+              style={{ marginLeft: 8, marginTop: 5 }}
+            >
+              <Ionicons
+                name="chevron-back-outline"
+                size={32}
+                color={theme.primaryTextColor}
+              />
+            </TouchableOpacity>
+          )
         }}
       >
         <Stack.Screen

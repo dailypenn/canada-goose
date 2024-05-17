@@ -2,7 +2,7 @@
 // Includes routes to the settings, about, notifications, privacy, manage feed and web view screens
 
 import React, { useEffect, useContext } from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack'
 
 import {
   AboutScreen,
@@ -18,12 +18,12 @@ import {
 import { DefaultStatusBar, ThemeContext } from '../components'
 
 import { DISPLAY_SERIF_BLACK } from '../utils/fonts'
+import {TouchableOpacity} from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Stack = createStackNavigator()
 
 export const SettingsStack = ({ navigation }) => {
-
-
   const theme = useContext(ThemeContext)
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export const SettingsStack = ({ navigation }) => {
         screenOptions={{
           headerStyle: {
             backgroundColor: theme.backgroundColor,
-            borderBottomWidth: 0.8,
+            borderBottomWidth: 1,
             borderBottomColor: theme.borderColor,
             shadowOpacity: 0,
             elevation: 0,
@@ -53,6 +53,18 @@ export const SettingsStack = ({ navigation }) => {
           },
           headerTintColor: theme.primaryTextColor,
           headerBackTitleVisible: false,
+          headerLeft: (props) => (
+            <TouchableOpacity
+              onPress={props.onPress}
+              style={{ marginLeft: 8, marginTop: 5 }}
+            >
+              <Ionicons
+                name="chevron-back-outline"
+                size={32}
+                color={theme.primaryTextColor}
+              />
+            </TouchableOpacity>
+          )
         }}
       >
         <Stack.Screen

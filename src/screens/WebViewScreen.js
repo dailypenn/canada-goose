@@ -8,9 +8,9 @@ const WebViewContainer = ({ link }) => {
   const theme = useContext(ThemeContext)
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, marginTop: 0.5 }}>
       <WebView
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: theme.backgroundColor }}
         source={{ uri: link }}
         renderLoading={() => (
             <LogoActivityIndicator />

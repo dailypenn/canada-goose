@@ -44,12 +44,12 @@ const createStyles = (theme) => StyleSheet.create({
     position: 'relative'
   },
   pubCell: {
-    marginTop: 6,
+    marginTop: 5.5,
     paddingVertical: 15,
     paddingHorizontal: 15,
     backgroundColor: theme.backgroundColor,
-    borderTopWidth: 0.8,
-    borderBottomWidth: 0.8,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
     borderColor: theme.borderColor
   },
   cell: {

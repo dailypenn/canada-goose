@@ -4,17 +4,17 @@ import {
   View,
   Text,
   RefreshControl,
-  AppState,
   Animated,
   Image,
   Platform,
+  StatusBar, SafeAreaView
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
-import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 import { Linking } from 'react-native'
+import Constants from 'expo-constants';
 
 import {
   SectionHeader,
@@ -24,7 +24,6 @@ import {
   HeaderLine,
   EmptyState,
   LogoActivityIndicator,
-  InteractiveHomeComponent,
   ThemeContext
 } from '../components'
 import {
@@ -50,8 +49,18 @@ const createStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.backgroundColor,
-  }
+  },
 })
+
+const getStatusBarHeight = () => {
+  if (Platform.OS === 'ios') {
+    return Constants.statusBarHeight;
+  } else if (Platform.OS === 'android') {
+    return StatusBar.currentHeight;
+  } else {
+    return 0;
+  }
+};
 
 const HomeView = ({
   navigation,
@@ -74,18 +83,17 @@ const HomeView = ({
   }))
 
   const onRefresh = useCallback(() => {
-
     refetch()
   })
 
-  // Header consts
+  // Header constants
   const [scrollY, setScrollY] = useState(new Animated.Value(0))
   const minScroll = 10
-  const AnimatedHeaderHeight = getStatusBarHeight(true) + 60
+  const AnimatedHeaderHeight = getStatusBarHeight() + 61
   const negativeHeaderHeight =
     Platform.OS === 'android'
       ? -AnimatedHeaderHeight
-      : -(AnimatedHeaderHeight - getStatusBarHeight(true))
+      : -(AnimatedHeaderHeight - getStatusBarHeight())
   const clampedScrollY = scrollY.interpolate({
     inputRange: [minScroll, minScroll + 1],
     outputRange: [0, 1],
@@ -120,7 +128,7 @@ const HomeView = ({
   )
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Animated.View
         style={[
           {
@@ -128,9 +136,7 @@ const HomeView = ({
             position: 'absolute',
             width: '100%',
             zIndex: 2,
-            backgroundColor: theme.backgroundColor,
-            borderBottomColor: theme.borderColor,
-            borderBottomWidth: 1,
+            backgroundColor: theme.backgroundColor
           },
           { transform: [{ translateY: translateY }] },
         ]}
@@ -145,19 +151,19 @@ const HomeView = ({
             backgroundColor: theme.backgroundColor,
             alignItems: 'center',
             justifyContent: 'center',
-            borderBottomColor: theme.borderColor,
-            borderBottomWidth: 0.8,
             paddingBottom: 6,
+            borderBottomWidth: 1,
+            borderBottomColor: theme.borderColor,
             opacity: opacity.interpolate({
               inputRange: [0, 0.5, 0.8, 1],
               outputRange: [0, 0, 1, 1],
             }),
             ...Platform.select({
               ios: {
-                paddingTop: getStatusBarHeight(true) + 10,
+                paddingTop: getStatusBarHeight() + 8,
               },
               android: {
-                paddingTop: getStatusBarHeight(true),
+                paddingTop: getStatusBarHeight(),
               },
             }),
           },
@@ -175,20 +181,21 @@ const HomeView = ({
       <Animated.ScrollView
         style={{
           paddingTop: Platform.select({
-            android: 0, //AnimatedHeaderHeight,
+            android: 0,
             ios: 0,
           }),
+          marginTop: 0.5
         }}
-        contentInset={{ top: AnimatedHeaderHeight }}
+        contentInset={{ top: getStatusBarHeight() }}
         contentOffset={{
           x: 0,
           y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight }),
         }}
         contentContainerStyle={{
           paddingTop: Platform.select({
-            android: AnimatedHeaderHeight,
-            ios: 0,
-          }),
+            android: AnimatedHeaderHeight - 1,
+            ios: 0
+          })
         }}
         automaticallyAdjustContentInsets={false}
         onScroll={Animated.event(
@@ -250,7 +257,7 @@ const HomeView = ({
           )
         })}
       </Animated.ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 
