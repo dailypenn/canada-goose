@@ -5,7 +5,7 @@ import {
   SafeAreaView,
   FlatList,
   TouchableOpacity,
-  StyleSheet, Alert
+  StyleSheet, Alert, ScrollView
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux'
@@ -50,10 +50,6 @@ const createStyles = (theme) => StyleSheet.create({
     backgroundColor: theme.wallColor,
     flex: 1,
   },
-  view: {
-    borderBottomWidth: 0.8,
-    borderColor: theme.borderColor
-  }
 });
 
 const renderHeader = () => {
@@ -63,15 +59,15 @@ const renderHeader = () => {
   )
 }
 
-const DisplayCell = ({currPref, updatePreference, item}) => {
-  const theme = useContext(ThemeContext)
-  const styles = createStyles(theme)
+const DisplayCell = ({ currPref, updatePreference, item }) => {
+  const theme = useContext(ThemeContext);
+  const styles = createStyles(theme);
 
   const handlePress = async () => {
-    let saved_successfully = await Storage.setItem(DISPLAY_PREFS_KEY, item.id)
+    let saved_successfully = await Storage.setItem(DISPLAY_PREFS_KEY, item.id);
 
-    if (saved_successfully) updatePreference(item.id)
-    else Alert.alert('Oops', 'There was an error saving your display preference :(')
+    if (saved_successfully) updatePreference(item.id);
+    else Alert.alert('Oops', 'There was an error saving your display preference :(');
   };
 
   return (
@@ -80,43 +76,58 @@ const DisplayCell = ({currPref, updatePreference, item}) => {
         <View style={styles.textView}>
           <Text style={styles.regText}>{item.name}</Text>
           <View style={styles.spacer} />
-          {
-            currPref === item.id &&
+          {currPref === item.id && (
             <Ionicons name="checkmark" size={16} color="#0a82fa" />
-          }
+          )}
         </View>
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-const DisplaySettingsScreenComp = ({displayPreference, updatePreference}) => {
-  const theme = useContext(ThemeContext)
-  const styles = createStyles(theme)
+const DisplaySection = ({ displayPreference, updatePreference, items }) => {
+  const theme = useContext(ThemeContext);
+  const styles = createStyles(theme);
+
+  return (
+    <View>
+      {items.map((item, index) => (
+        <View key={item.id}>
+          <DisplayCell
+            currPref={displayPreference}
+            updatePreference={updatePreference}
+            item={item}
+          />
+          <View
+            style={[
+              styles.divider,
+              index === items.length - 1 && { marginLeft: 0 },
+            ]}
+          />
+        </View>
+      ))}
+    </View>
+  );
+};
+
+
+const DisplaySettingsScreenComp = ({ displayPreference, updatePreference }) => {
+  const theme = useContext(ThemeContext);
+  const styles = createStyles(theme);
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <View style={styles.view}>
-        <FlatList
-          data = {DISPLAY_OPTIONS}
-          ListHeaderComponent={renderHeader}
-          renderItem={({item}) =>
-            (<DisplayCell currPref={displayPreference}
-                          updatePreference={updatePreference}
-                          item={item}/>)}
-          ItemSeparatorComponent={
-            (_) =>
-              <View
-                style={{
-                  ...styles.divider,
-                }}
-              />
-          }
+      <ScrollView>
+        <Text style={styles.headerLabel}>Display Theme</Text>
+        <DisplaySection
+          displayPreference={displayPreference}
+          updatePreference={updatePreference}
+          items={DISPLAY_OPTIONS}
         />
-      </View>
+      </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => ({
   displayPreference: state.settings.displayPreference,
