@@ -179,7 +179,7 @@ export const PictureHeadline = ({
         onPressOut={onPressOut}
         activeOpacity={1}
       >
-        {Platform.OS == 'ios' ? (
+        {Platform.OS === 'ios' ? (
           <>
             <MaskedView
               style={{

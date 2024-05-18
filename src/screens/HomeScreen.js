@@ -6,15 +6,13 @@ import {
   RefreshControl,
   Animated,
   Image,
-  Platform,
-  StatusBar, SafeAreaView
+  Platform, SafeAreaView
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
 import { Linking } from 'react-native'
-import Constants from 'expo-constants';
 
 import {
   SectionHeader,
@@ -33,6 +31,7 @@ import {
   GET_HOME_SECTION_NAME,
   GET_HOME_QUERIES,
   getArticlePubSlug,
+  getStatusBarHeight
 } from '../utils/helperFunctions'
 import { PublicationEnum } from '../utils/constants'
 import { toggleScrollToTop } from '../actions'
@@ -49,18 +48,9 @@ const createStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.backgroundColor,
-  },
-})
-
-const getStatusBarHeight = () => {
-  if (Platform.OS === 'ios') {
-    return Constants.statusBarHeight;
-  } else if (Platform.OS === 'android') {
-    return StatusBar.currentHeight;
-  } else {
-    return 0;
+    zIndex: 1000,
   }
-};
+})
 
 const HomeView = ({
   navigation,
@@ -74,7 +64,7 @@ const HomeView = ({
 }) => {
   const theme = useContext(ThemeContext)
   const styles = createStyles(theme)
-  const scrollViewRef = useRef(null)
+  const scrollViewRef = useRef(new Animated.Value(0))
   const { centerpiece: centerArticles, top: topArticles } = data
 
   const sectionData = homeSections.map(section => ({
@@ -89,7 +79,7 @@ const HomeView = ({
   // Header constants
   const [scrollY, setScrollY] = useState(new Animated.Value(0))
   const minScroll = 10
-  const AnimatedHeaderHeight = getStatusBarHeight() + 56
+  const AnimatedHeaderHeight = getStatusBarHeight() + 60
   const negativeHeaderHeight =
     Platform.OS === 'android'
       ? -AnimatedHeaderHeight
@@ -128,7 +118,7 @@ const HomeView = ({
   )
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Animated.View
         style={[
           {
@@ -136,7 +126,9 @@ const HomeView = ({
             position: 'absolute',
             width: '100%',
             zIndex: 2,
-            backgroundColor: theme.backgroundColor
+            backgroundColor: theme.backgroundColor,
+            borderBottomWidth: 1,
+            borderBottomColor: theme.borderColor,
           },
           { transform: [{ translateY: translateY }] },
         ]}
@@ -151,7 +143,7 @@ const HomeView = ({
             backgroundColor: theme.backgroundColor,
             alignItems: 'center',
             justifyContent: 'center',
-            paddingBottom: 6,
+            paddingBottom: 10,
             borderBottomWidth: 1,
             borderBottomColor: theme.borderColor,
             opacity: opacity.interpolate({
@@ -160,7 +152,7 @@ const HomeView = ({
             }),
             ...Platform.select({
               ios: {
-                paddingTop: getStatusBarHeight() + 8,
+                paddingTop: getStatusBarHeight() + 10,
               },
               android: {
                 paddingTop: getStatusBarHeight(),
@@ -170,7 +162,7 @@ const HomeView = ({
           { transform: [{ translateY: translateY }] },
         ]}
       >
-        <View style={{ height: 28 }}>
+        <View style={{ height: 32 }}>
           <Image
             source={GET_HEADER_LOGO()}
             style={{ flex: 1, resizeMode: 'contain', tintColor: theme.primaryTextColor }}
@@ -185,21 +177,21 @@ const HomeView = ({
             ios: 0,
           }),
         }}
-        contentInset={{ top: 56 }}
+        contentInset={{ top: AnimatedHeaderHeight }}
         contentOffset={{
           x: 0,
           y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight }),
         }}
         contentContainerStyle={{
           paddingTop: Platform.select({
-            android: AnimatedHeaderHeight - 1,
+            android: AnimatedHeaderHeight,
             ios: 0
           })
         }}
         automaticallyAdjustContentInsets={false}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: false }
+          { useNativeDriver: true }
         )}
         scrollEventThrottle={16}
         refreshControl={
@@ -256,7 +248,7 @@ const HomeView = ({
           )
         })}
       </Animated.ScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 

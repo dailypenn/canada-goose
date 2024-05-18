@@ -16,7 +16,6 @@ import {
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
-  getStatusBarHeight,
   getBottomSpace,
   isIphoneX,
 } from 'react-native-iphone-x-helper'
@@ -25,6 +24,7 @@ import { ARTICLES_SEARCH } from '../utils/queries'
 import {
   PARTIAL_NAVIGATE,
   NAVIGATE_TO_ARTICLE_SCREEN,
+  getStatusBarHeight
 } from '../utils/helperFunctions'
 import {
   DISPLAY_SERIF_BLACK,
@@ -71,10 +71,10 @@ const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 const screenHeight = Dimensions.get('screen').height
 
-const topInset = getStatusBarHeight(true)
+const topInset = getStatusBarHeight()
 const bottomInset = getBottomSpace()
 const bottomBar =
-  Platform.OS === 'android' ? screenHeight - height - topInset : 0 //black bar on android
+  Platform.OS === 'android' ? screenHeight - height - topInset : 0 // black bar on android
 
 var contentHeight =
   Platform.OS === 'android'
@@ -428,7 +428,6 @@ const createStyles = (theme) => StyleSheet.create({
   },
   content_inner: {
     flex: 1,
-    paddingTop: 0,
   },
   image_placeholder_container: {
     flex: 1,

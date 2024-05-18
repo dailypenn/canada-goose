@@ -23,7 +23,6 @@ export const HeadlineArticle = ({
     tag,
   } = data
 
-  // TODO: CLEAN UP -- A LOT
   const parsedAbstract = parseAbstract(abstract)
 
   return (

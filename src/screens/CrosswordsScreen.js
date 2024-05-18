@@ -16,7 +16,6 @@ const createStyles = (theme) => StyleSheet.create({
   webView: {
     flex: 1,
     backgroundColor: theme.backgroundColor,
-    marginTop: 0.5
   },
   header: {
     height: 56,
