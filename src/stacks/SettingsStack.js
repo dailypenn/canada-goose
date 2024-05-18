@@ -2,7 +2,7 @@
 // Includes routes to the settings, about, notifications, privacy, manage feed and web view screens
 
 import React, { useEffect, useContext } from 'react'
-import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack'
+import { createStackNavigator } from '@react-navigation/stack'
 
 import {
   AboutScreen,

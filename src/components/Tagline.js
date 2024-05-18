@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 
-import { PublicationPrimaryColor } from '../utils/branding'
 import { BODY_SERIF } from '../utils/fonts'
 import { ThemeContext } from "./ThemeProvider";
 

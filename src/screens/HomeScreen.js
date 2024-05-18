@@ -89,7 +89,7 @@ const HomeView = ({
   // Header constants
   const [scrollY, setScrollY] = useState(new Animated.Value(0))
   const minScroll = 10
-  const AnimatedHeaderHeight = getStatusBarHeight() + 61
+  const AnimatedHeaderHeight = getStatusBarHeight() + 56
   const negativeHeaderHeight =
     Platform.OS === 'android'
       ? -AnimatedHeaderHeight
@@ -186,7 +186,7 @@ const HomeView = ({
           }),
           marginTop: 0.5
         }}
-        contentInset={{ top: getStatusBarHeight() }}
+        contentInset={{ top: 56 }}
         contentOffset={{
           x: 0,
           y: Platform.select({ android: 0, ios: -AnimatedHeaderHeight }),
@@ -282,7 +282,7 @@ const HomeScreenComp = ({
     publicationAnalytics(currPublication)
   }, [currPublication])
 
-  navigate = url => {
+  const navigate = url => {
     if (url && url.includes('article')) {
       deepLinkingAnalytics()
       const { publication, slug } = getArticlePubSlug(url)
@@ -304,7 +304,6 @@ const HomeScreenComp = ({
   }
 
   useEffect(() => {
-    // Linking.getInitialURL().then(url => navigate(url))
     Linking.addEventListener('url', e => navigate(e.url))
 
     return () => {

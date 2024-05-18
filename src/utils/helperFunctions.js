@@ -14,7 +14,7 @@ import {
 } from './queries'
 
 export const IMAGE_URL = (attachment_uuid, extension, publication) => {
-  let ceo_prefix = ''
+  let ceo_prefix
   switch (publication) {
     case PublicationEnum.dp:
       ceo_prefix = 'dpn'

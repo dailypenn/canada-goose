@@ -65,7 +65,7 @@ const GET_NORESULTS_IMG = publication => {
   }
 }
 
-const { Value, timing, Clock } = Animated
+const { Value, timing } = Animated
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
