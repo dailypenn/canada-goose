@@ -184,7 +184,6 @@ const HomeView = ({
             android: 0,
             ios: 0,
           }),
-          marginTop: 0.5
         }}
         contentInset={{ top: 56 }}
         contentOffset={{
