@@ -194,14 +194,14 @@ const PageZero = ({ onNextPage }) => {
           position: 'absolute',
           top:
             Dimensions.get('screen').height *
-            (Platform.OS == 'ios' ? 0.15 : 0.05),
+            (Platform.OS === 'ios' ? 0.15 : 0.05),
         }}
       >
         <Animated.View
           style={{
             width: '100%',
             aspectRatio: 1,
-            borderRadius: Platform.OS == 'ios' ? 25 : 15, // TODO: Remove later
+            borderRadius: Platform.OS === 'ios' ? 25 : 15, // TODO: Remove later
             alignSelf: 'center',
             flexDirection: 'row',
             transform: [
@@ -256,7 +256,7 @@ const PageZero = ({ onNextPage }) => {
           width: buttonWidth,
           height: 60,
           position: 'absolute',
-          bottom: Platform.OS == 'ios' ? 50 : 30,
+          bottom: Platform.OS === 'ios' ? 50 : 30,
           alignSelf: 'center',
           justifySelf: 'center',
           transform: [{ translateY: buttonPosY }, { translateX: buttonPosX }],

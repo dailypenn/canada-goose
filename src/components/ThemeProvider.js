@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import { Appearance } from 'react-native';
 import { useSelector } from 'react-redux';
 import { lightTheme, darkTheme } from '../utils/themes';

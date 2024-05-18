@@ -11,12 +11,11 @@ const createStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.backgroundColor,
-    paddingTop: Platform.OS == 'android' ? 10 : 0,
+    paddingTop: Platform.OS === 'android' ? 10 : 0,
   },
   webView: {
     flex: 1,
     backgroundColor: theme.backgroundColor,
-    marginTop: 0.5
   },
   header: {
     height: 56,

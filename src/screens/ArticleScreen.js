@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState, useLayoutEffect } from 'react'
 import {
   Text,
   View,
-  Image,
   TouchableOpacity,
   Alert,
   Share,
@@ -17,23 +16,18 @@ import { useLazyQuery } from '@apollo/client'
 import * as Haptics from 'expo-haptics'
 
 import {
-  PictureHeadline,
   LogoActivityIndicator,
   HeadlineArticle,
   CustomHTML,
   ThemeContext
 } from '../components'
 import {
-  IMAGE_URL,
   getArticlePubSlug,
   isValidURL,
   PREFIXED_AUTHORS,
 } from '../utils/helperFunctions'
 import { PublicationEnum } from '../utils/constants'
 import {
-  BODY_SERIF,
-  BODY_SERIF_BOLD,
-  BODY_SERIF_ITALIC,
   GEOMETRIC_BOLD,
 } from '../utils/fonts'
 import { SAVED_ARTICLES_KEY, Storage } from '../utils/storage'

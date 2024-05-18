@@ -4,9 +4,7 @@ import {
   ScrollView,
   View,
   Dimensions,
-  TouchableOpacity,
 } from 'react-native'
-//import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { IMAGE_URL } from '../utils/helperFunctions'
 import { InteractiveHomeComponent } from './InteractiveHomeComponent'

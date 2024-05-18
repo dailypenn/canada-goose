@@ -1,7 +1,6 @@
 export * from './ArticleList'
 export * from './CategoryTag'
 export * from './CustomHeader'
-export * from './DiscoveryGrid'
 export * from './DiscoveryCell'
 export * from './HeadlineArticle'
 export * from './HorizontalArticleCarousel'

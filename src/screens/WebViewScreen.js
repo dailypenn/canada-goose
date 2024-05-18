@@ -8,7 +8,7 @@ const WebViewContainer = ({ link }) => {
   const theme = useContext(ThemeContext)
 
   return (
-    <View style={{ flex: 1, marginTop: 0.5 }}>
+    <View style={{ flex: 1 }}>
       <WebView
         style={{ flex: 1, backgroundColor: theme.backgroundColor }}
         source={{ uri: link }}

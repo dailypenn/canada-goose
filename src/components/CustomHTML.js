@@ -8,15 +8,8 @@ import {
   BODY_SERIF,
   BODY_SERIF_BOLD,
   BODY_SERIF_ITALIC,
-  GEOMETRIC_BOLD,
-  GEOMETRIC_REGULAR,
+  GEOMETRIC_BOLD, GEOMETRIC_REGULAR
 } from '../utils/fonts'
-import {
-  IMAGE_URL,
-  getArticlePubSlug,
-  isValidURL,
-  PREFIXED_AUTHORS,
-} from '../utils/helperFunctions'
 import { PublicationPrimaryColor } from '../utils/branding'
 import MaskedView from '@react-native-community/masked-view'
 import { ThemeContext } from "./ThemeProvider";
@@ -52,13 +45,19 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
     },
     strong: {
       fontSize: 18,
-      lineHeight: 28,
+      lineHeight: 32,
       fontFamily: GEOMETRIC_BOLD,
       color: PublicationPrimaryColor(currPublication),
     },
     em: {
       fontSize: 18,
-      lineHeight: 28,
+      lineHeight: 32,
+      fontFamily: GEOMETRIC_BOLD,
+      color: PublicationPrimaryColor(currPublication),
+    },
+    h3: {
+      fontSize: 18,
+      lineHeight: 32,
       fontFamily: GEOMETRIC_BOLD,
       color: PublicationPrimaryColor(currPublication),
     },
@@ -68,6 +67,12 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
       fontFamily: BODY_SERIF,
       color: theme.primaryTextColor
     },
+    error: {
+      fontSize: 16,
+      lineHeight: 28,
+      fontFamily: GEOMETRIC_REGULAR,
+      color: theme.primaryTextColor
+    }
   }
 
   const IMGRenderer = (htmlAttribs, passProps, props) => {
@@ -80,7 +85,7 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
     const [zoom] = useState(new Animated.Value(1.05))
     const [ASPECT_RATIO, SET_ASPECT_RATIO] = useState(htmlAttribs['data-width'] / htmlAttribs['data-height']) 
 
-    if (htmlAttribs['data-width'] == 0 | htmlAttribs['data-height'] == 0) {
+    if (htmlAttribs['data-width'] == 0 || htmlAttribs['data-height'] == 0) {
       Image.getSize(htmlAttribs['src'], (width, height) => {
         SET_ASPECT_RATIO(width / height)
       });
@@ -166,7 +171,7 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
     )
   }
 
-  const failedToFetchArticleContentErrorMsg = "Error: Unable to fetch article content."
+  const failedToFetchArticleContentErrorMsg = "<error>Oops! We had trouble loading this article. Please try again later.</error>"
 
   const parseProjectPage = articleContent => {
     if (article.content.includes('document.location=')) {

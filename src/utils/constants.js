@@ -75,14 +75,6 @@ export const SETTINGS_SECTIONS = [
         props: {},
       },
       {
-        id: 'privacy cell',
-        icon: 'shield-checkmark',
-        color: '#66d464',
-        name: 'Privacy',
-        screenName: 'WebView',
-        props: { link: 'https://www.thedp.com/page/app-privacy' },
-      },
-      {
         id: 'display cell',
         icon: 'color-palette',
         color: '#885edc',
@@ -90,6 +82,14 @@ export const SETTINGS_SECTIONS = [
         screenName: 'DisplaySettings',
         props: {},
       },
+      {
+        id: 'privacy cell',
+        icon: 'shield-checkmark',
+        color: '#66d464',
+        name: 'Privacy',
+        screenName: 'WebView',
+        props: { link: 'https://www.thedp.com/page/app-privacy' },
+      }
     ],
   },
   {
@@ -99,7 +99,7 @@ export const SETTINGS_SECTIONS = [
       {
         id: 'recruiting cell',
         icon: 'happy',
-        color: '#c4c4c4',
+        color: '#AAA',
         name: 'DP Developers',
         screenName: 'WebView',
         props: { link: 'https://developers.thedp.com/' },
@@ -107,7 +107,7 @@ export const SETTINGS_SECTIONS = [
       {
         id: 'about cell',
         icon: 'people',
-        color: '#c4c4c4',
+        color: '#AAA',
         name: 'Operation Canada Goose',
         screenName: 'About',
         props: {},

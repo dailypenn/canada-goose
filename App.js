@@ -64,8 +64,8 @@ const App = () => {
       )
 
       let onboarded = await Storage.getItem(IS_ONBOARDED_KEY)
-      hasCompletedOnboarding(onboarded == true)
-      updateAttachment(onboarded != true)
+      hasCompletedOnboarding(onboarded === true)
+      updateAttachment(onboarded !== true)
 
       setAssetsLoaded(true)
     }

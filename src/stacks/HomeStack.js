@@ -5,8 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import { ArticleScreen, HomeScreen, WebViewScreen } from '../screens'
 import { DefaultStatusBar, PublicationModal, ThemeContext } from '../components'
-import {BODY_SERIF, DISPLAY_SERIF_BLACK} from '../utils/fonts'
-import {TouchableOpacity} from "react-native";
+import { BODY_SERIF } from '../utils/fonts'
+import { TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Stack = createStackNavigator()

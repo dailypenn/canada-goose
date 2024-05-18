@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { connect } from 'react-redux'
-import { Dimensions, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Image, Platform, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 import * as Haptics from 'expo-haptics'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -133,7 +133,7 @@ const PublicationOption = ({ publication, isCurrent }) => {
     <View style={styles.container}>
       <View styles={styles.border} />
       <Image source={CONTENT.image} style={styles.image} />
-      {/* Eventually will be repleaced with logos. TODO */}
+      {/* TODO Eventually will be replaced with logos. */}
       <View style={styles.subContainer}>
         <Text style={styles.publicationTitle}>{CONTENT.title}</Text>
         <Text style={styles.subtitle} numberOfLines={2}>
@@ -159,10 +159,10 @@ const PublicationModalComp = ({
 }) => {
   const theme = useContext(ThemeContext)
   const { currPublication, currNavigation } = publication
-  const [isVisible, updateVisibility] = useState(false) // Whether or not the modal is visible
+  const [isVisible, updateVisibility] = useState(false) // Whether the modal is visible
   const [currentlySwiping, updateSwipeStatus] = useState(false) // Flags when swipes have started, but this is not blocking out touchable opacity presses :(
 
-  const [loadingPublication, updateLoadingStatus] = useState(false) // whether or not currently loading publication.
+  const [loadingPublication, updateLoadingStatus] = useState(false) // Whether currently loading publication.
   const [switchPublicationLogo, updateSwitchLogo] = useState(DP_LOGO_WHITE)
   const [switchPublicationColor, updateSwitchColor] = useState('#000')
 
@@ -274,7 +274,7 @@ const PublicationModalComp = ({
 
   return (
     <>
-      {isVisible && Platform.OS == 'android' ? (
+      {isVisible && Platform.OS === 'android' ? (
         <StatusBar backgroundColor={'rgba(0, 0, 0, 1)'} animated={true} />
       ) : null}
       <Modal {...modalOptions} backdropTransitionOutTiming={0}>

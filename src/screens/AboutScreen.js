@@ -3,7 +3,6 @@ import React, { useContext } from 'react'
 import {
   Dimensions,
   Image,
-  PickerIOSItem,
   StyleSheet,
   Text,
   View,

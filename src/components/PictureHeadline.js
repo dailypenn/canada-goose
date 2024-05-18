@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Easing,
   Animated,
-  SafeAreaView,
+  SafeAreaView, Platform
 } from 'react-native'
 import MaskedView from '@react-native-community/masked-view'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -121,9 +121,9 @@ export const PictureHeadline = ({
     }).start()
 
   if (
-    imageUrl ==
+    imageUrl ===
       'https://snworksceo.imgix.net/dpn/null.sized-1000x1000.null?w=1000' ||
-    imageUrl == 'https://snworksceo.imgix.net/dpn/.sized-1000x1000.?w=1000'
+    imageUrl === 'https://snworksceo.imgix.net/dpn/.sized-1000x1000.?w=1000'
   ) {
     return (
       <View style={{ width: '100%' }}>
@@ -179,7 +179,7 @@ export const PictureHeadline = ({
         onPressOut={onPressOut}
         activeOpacity={1}
       >
-        {Platform.OS == 'ios' ? (
+        {Platform.OS === 'ios' ? (
           <>
             <MaskedView
               style={{

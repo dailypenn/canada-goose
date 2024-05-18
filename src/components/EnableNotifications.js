@@ -2,7 +2,6 @@ import React, {useContext} from 'react'
 import { StyleSheet, View, Text, Linking, Pressable } from 'react-native'
 import { GEOMETRIC_BOLD, GEOMETRIC_REGULAR } from '../utils/fonts'
 import { ThemeContext } from './ThemeProvider'
-import themeContext from '@react-navigation/native/src/theming/ThemeContext'
 // import AndroidOpenSettings from 'react-native-android-open-settings'
 
 const openNotificationsSettings = () => {

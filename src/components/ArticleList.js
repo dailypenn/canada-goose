@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import { View } from 'react-native'
 
 import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
 import { HorizontalArticleCell } from './HorizontalArticleCell'
@@ -13,8 +13,8 @@ export const RenderArticleListItem = ({
   articlesLength,
   publication,
   navigateToArticleScreen,
+  theme
 }) => {
-  const theme = useContext(ThemeContext)
   const {
     headline,
     published_at,
@@ -63,6 +63,7 @@ export const ArticleList = ({
   navigateToArticleScreen,
   publication,
 }) => {
+  const theme = useContext(ThemeContext)
   const articlesLength = articles.length - 1
   return (
     <View style={{ marginBottom: 5 }}>
@@ -74,6 +75,7 @@ export const ArticleList = ({
             articlesLength,
             publication,
             navigateToArticleScreen,
+            theme
           })}
         </React.Fragment>
       )}
