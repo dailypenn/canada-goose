@@ -12,9 +12,9 @@ export const RenderArticleListItem = ({
   i,
   articlesLength,
   publication,
-  navigateToArticleScreen,
-  theme
+  navigateToArticleScreen
 }) => {
+  const theme = useContext(ThemeContext)
   const {
     headline,
     published_at,
@@ -29,7 +29,6 @@ export const RenderArticleListItem = ({
     timeAgo: published_at,
     authors: AUTHORS(authors),
   }
-
   return (
     <>
       <InteractiveHomeComponent
@@ -63,20 +62,18 @@ export const ArticleList = ({
   navigateToArticleScreen,
   publication,
 }) => {
-  const theme = useContext(ThemeContext)
   const articlesLength = articles.length - 1
   return (
     <View style={{ marginBottom: 5 }}>
       {articles.map((el, i) =>
         <React.Fragment key={i}>
-          {RenderArticleListItem({
-            el,
-            i,
-            articlesLength,
-            publication,
-            navigateToArticleScreen,
-            theme
-          })}
+          <RenderArticleListItem
+            el={el}
+            i={i}
+            articlesLength={articlesLength}
+            publication={publication}
+            navigateToArticleScreen={navigateToArticleScreen}
+          />
         </React.Fragment>
       )}
     </View>
@@ -90,7 +87,7 @@ export const SearchArticleList = ({
 }) => {
   const theme = useContext(ThemeContext)
   return (
-      <View style={{ paddingLeft: 0 }}>
+      <View style={{ paddingVertical: 10 }}>
         {articles.map(el => {
           const {
             headline,
