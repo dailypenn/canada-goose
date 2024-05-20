@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import * as Analytics from 'expo-firebase-analytics'
 import { connect } from 'react-redux'
 import { Image } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
@@ -26,7 +25,6 @@ const Tab = createBottomTabNavigator()
 const TabNavigationController = ({ currPublication }) => {
   const theme = useContext(ThemeContext)
   const routeNameRef = React.useRef()
-
   const GET_PUB_LOGO = focused => {
     switch (currPublication) {
       case PublicationEnum.dp:
@@ -46,14 +44,7 @@ const TabNavigationController = ({ currPublication }) => {
         (routeNameRef.current = navigationRef.current.getCurrentRoute().name)
       }
       onStateChange={() => {
-        const previousRouteName = routeNameRef.current
-        const currentRouteName = navigationRef.current.getCurrentRoute().name
-        
-        if (previousRouteName !== currentRouteName) {
-          Analytics.setCurrentScreen(currentRouteName)
-        }
-
-        routeNameRef.current = currentRouteName
+        routeNameRef.current = navigationRef.current.getCurrentRoute().name
       }}
     >
       <Tab.Navigator
