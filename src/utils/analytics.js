@@ -1,17 +1,4 @@
-import { initializeApp } from 'firebase/app'
 import analytics from "@react-native-firebase/analytics";
-
-const firebaseConfig = {
-  "appId": "1:240168290884:web:0a00114842ca4c79748a11",
-  "apiKey": "AIzaSyBGPG00pugCHhpCKpMefQA9YgOMtkXXs1M",
-  "authDomain": "the-daily-pennsylvanian.firebaseapp.com",
-  "projectId": "the-daily-pennsylvanian",
-  "storageBucket": "the-daily-pennsylvanian.appspot.com",
-  "messagingSenderId": "240168290884",
-  "measurementId": "G-4TX3M8YQK4"
-}
-
-const app = initializeApp(firebaseConfig);
 
 export const publicationSwitchAnalytics = async (from, to) => {
 
