@@ -1,5 +1,7 @@
 import React, { useContext } from 'react'
 import { View } from 'react-native'
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+
 
 import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
 import { HorizontalArticleCell } from './HorizontalArticleCell'
@@ -76,6 +78,7 @@ export const ArticleList = ({
           />
         </React.Fragment>
       )}
+      <BannerAd unitId={TestIds.ADAPTIVE_BANNER} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
     </View>
   )
 }
@@ -88,6 +91,7 @@ export const SearchArticleList = ({
   const theme = useContext(ThemeContext)
   return (
       <View style={{ paddingVertical: 10 }}>
+        <BannerAd unitId={TestIds.ADAPTIVE_BANNER} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
         {articles.map(el => {
           const {
             headline,
