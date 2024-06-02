@@ -78,9 +78,10 @@ export const ArticleList = ({
           />
         </React.Fragment>
       )}
-      <BannerAd unitId={TestIds.ADAPTIVE_BANNER} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
     </View>
   )
+
+  //      <BannerAd unitId={TestIds.ADAPTIVE_BANNER} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
 }
 
 export const SearchArticleList = ({

@@ -159,7 +159,7 @@
       ],
       "@react-native-firebase/app",
       "./patches/android-project-build-gradle.plugin",
-      "./patches/android-app-build-gradle.plugin",
+      "./patches/android-app-build-gradle.plugin"
     ],
     "extra": {
       "eas": {
