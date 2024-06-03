@@ -18,18 +18,6 @@ const developers = [
     {
         "name": "Erik Wei",
         "pic": require("../static/team/developers/erik.jpg")
-    },
-    {
-        "name": "Annabella Tian",
-        "pic": require("../static/team/developers/annabella.jpg")
-    },
-    {
-        "name": "Bach Tran",
-        "pic": require("../static/team/developers/bachtran.jpeg")
-    },
-    {
-        "name": "Brian Lu",
-        "pic": require("../static/team/developers/brian.jpeg")
     }
 ]
 
