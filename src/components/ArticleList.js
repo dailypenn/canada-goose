@@ -9,6 +9,8 @@ import { InteractiveHomeComponent } from './InteractiveHomeComponent'
 import { PrimaryHorizontalArticleCell } from './PrimaryHorizontalArticleCell'
 import { ThemeContext } from "./ThemeProvider";
 
+const adUnitId = __DEV__ ? TestIds.ADAPTIVE_BANNER : 'ca-app-pub-503703374823007/3208304921';
+
 export const RenderArticleListItem = ({
   el,
   i,
@@ -49,7 +51,7 @@ export const RenderArticleListItem = ({
       {
         i === articlesLength ? (
           <BannerAd
-            unitId={TestIds.ADAPTIVE_BANNER}
+            unitId={adUnitId}
             size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
           />
         ) : (
@@ -98,7 +100,7 @@ export const SearchArticleList = ({
   return (
       <View style={{ paddingVertical: 10 }}>
         <BannerAd
-          unitId={TestIds.ADAPTIVE_BANNER}
+          unitId={adUnitId}
           size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
         />
         {articles.map((el, i) => {
