@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import mobileAds from 'react-native-google-mobile-ads';
+import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Provider } from 'react-redux'
 import * as ScreenOrientation from 'expo-screen-orientation'
@@ -62,6 +64,16 @@ const App = () => {
       await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.PORTRAIT_UP
       )
+
+      // Request app tracking transparency authorization for ads - user does not need to accept
+      const result = await check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
+      if (result === RESULTS.DENIED) {
+        // The permission has not been requested, so request it.
+        await request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
+      }
+
+      // Initialize React Native Google Mobile Ads
+      const adapterStatuses = await mobileAds().initialize();
 
       let onboarded = await Storage.getItem(IS_ONBOARDED_KEY)
       hasCompletedOnboarding(onboarded === true)
