@@ -75,7 +75,7 @@ export const ArticleList = ({
 }) => {
   const articlesLength = articles.length - 1
   return (
-    <View style={{ marginBottom: 15 }}>
+    <View style={{ marginBottom: 16 }}>
       {articles.map((el, i) =>
         <React.Fragment key={i}>
           <RenderArticleListItem
@@ -97,12 +97,9 @@ export const SearchArticleList = ({
   publication,
 }) => {
   const theme = useContext(ThemeContext)
+  const articlesLength = articles.length - 1
   return (
-      <View style={{ paddingVertical: 10 }}>
-        <BannerAd
-          unitId={adUnitId}
-          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-        />
+      <View style={{ paddingVertical: 10, marginBottom: 20 }}>
         {articles.map((el, i) => {
           const {
             headline,
@@ -131,13 +128,22 @@ export const SearchArticleList = ({
                       authors={AUTHORS(authors)}
                   />
                 </InteractiveHomeComponent>
-                <View
-                    style={{
-                      borderBottomColor: theme.borderColor,
-                      borderBottomWidth: 1,
-                      marginHorizontal: 20,
-                    }}
-                />
+                {
+                  i === articlesLength ? (
+                    <BannerAd
+                      unitId={adUnitId}
+                      size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                    />
+                  ) : (
+                    <View
+                      style={{
+                        borderBottomColor: theme.borderColor,
+                        borderBottomWidth: 1,
+                        marginHorizontal: 20,
+                      }}
+                    />
+                  )
+                }
               </React.Fragment>
           )
         })}
