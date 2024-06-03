@@ -30,16 +30,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
-// Request app tracking transparency authorization for ads - user does not need to accept
-const result = await check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
-if (result === RESULTS.DENIED) {
-  // The permission has not been requested, so request it.
-  await request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
-}
-
-// Initialize React Native Google Mobile Ads
-const adapterStatuses = await mobileAds().initialize();
-
 const getAsyncStorage = () => {
   return dispatch => {
     AsyncStorage.multiGet([
@@ -74,6 +64,16 @@ const App = () => {
       await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.PORTRAIT_UP
       )
+
+      // Request app tracking transparency authorization for ads - user does not need to accept
+      const result = await check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
+      if (result === RESULTS.DENIED) {
+        // The permission has not been requested, so request it.
+        await request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
+      }
+
+      // Initialize React Native Google Mobile Ads
+      const adapterStatuses = await mobileAds().initialize();
 
       let onboarded = await Storage.getItem(IS_ONBOARDED_KEY)
       hasCompletedOnboarding(onboarded === true)

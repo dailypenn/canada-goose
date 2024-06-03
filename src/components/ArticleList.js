@@ -46,15 +46,22 @@ export const RenderArticleListItem = ({
           <PrimaryHorizontalArticleCell {...CHILD_DATA} />
         )}
       </InteractiveHomeComponent>
-      {i === articlesLength ? null : (
-        <View
-          style={{
-            borderBottomColor: theme.borderColor,
-            borderBottomWidth: 1,
-            marginHorizontal: 20,
-          }}
-        />
-      )}
+      {
+        i === articlesLength ? (
+          <BannerAd
+            unitId={TestIds.ADAPTIVE_BANNER}
+            size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          />
+        ) : (
+          <View
+            style={{
+              borderBottomColor: theme.borderColor,
+              borderBottomWidth: 1,
+              marginHorizontal: 20,
+            }}
+          />
+        )
+      }
     </>
   )
 }
@@ -66,7 +73,7 @@ export const ArticleList = ({
 }) => {
   const articlesLength = articles.length - 1
   return (
-    <View style={{ marginBottom: 5 }}>
+    <View style={{ marginBottom: 15 }}>
       {articles.map((el, i) =>
         <React.Fragment key={i}>
           <RenderArticleListItem
@@ -80,8 +87,6 @@ export const ArticleList = ({
       )}
     </View>
   )
-
-  //      <BannerAd unitId={TestIds.ADAPTIVE_BANNER} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
 }
 
 export const SearchArticleList = ({
@@ -92,8 +97,11 @@ export const SearchArticleList = ({
   const theme = useContext(ThemeContext)
   return (
       <View style={{ paddingVertical: 10 }}>
-        <BannerAd unitId={TestIds.ADAPTIVE_BANNER} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
-        {articles.map(el => {
+        <BannerAd
+          unitId={TestIds.ADAPTIVE_BANNER}
+          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+        />
+        {articles.map((el, i) => {
           const {
             headline,
             published_at,
