@@ -1,5 +1,5 @@
 import Constants from "expo-constants";
-import OneSignal from "react-native-onesignal";
+import { OneSignal } from 'react-native-onesignal';
 
 import {
   UPDATE_HOME_SECTIONS,
@@ -46,9 +46,9 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
 
   switch (type) {
     case SET_INIT:
-      OneSignal.setAppId(Constants.manifest?.extra?.oneSignalAppId);
+      OneSignal.initialize(Constants.manifest?.extra?.oneSignalAppId);
       getNewNotifPreferencesData(updates.notifPreferences).forEach(function(pref, index) {
-        OneSignal.sendTag(oneSignalTags[index], pref.toString())
+        OneSignal.User.addTag(oneSignalTags[index], pref.toString())
       });
 
       return {

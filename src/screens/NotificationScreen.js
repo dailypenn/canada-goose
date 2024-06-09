@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { AppState, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import { Switch } from 'react-native-gesture-handler'
-import OneSignal from "react-native-onesignal";
+import { OneSignal, LogLevel } from 'react-native-onesignal'
 import Constants from "expo-constants";
 import { updateNotifPref } from '../actions'
 import { EnableNotificationsView, ThemeContext } from '../components';
@@ -65,12 +65,12 @@ const NotificationCell = ({ info, initialPref, notifIndex, updateHandler }) => {
   const styles = createStyles(theme)
   const [isEnabled, setIsEnabled] = useState(initialPref)
 
-  OneSignal.setLogLevel(6, 0);
-  OneSignal.setAppId(Constants.manifest?.extra?.oneSignalAppId);
+  OneSignal.Debug.setLogLevel(LogLevel.Debug);
+  OneSignal.initialize(Constants.manifest?.extra?.oneSignalAppId);
 
   const toggleSwitch = () => {
     updateHandler({notifIndex}, !isEnabled)
-    OneSignal.sendTag(oneSignalTags[notifIndex.notifIndex], (!isEnabled).toString());
+    OneSignal.User.addTag(oneSignalTags[notifIndex], (!isEnabled).toString());
     setIsEnabled(previousState => !previousState)
   }
 
@@ -128,9 +128,6 @@ const NotificationScreenComp = ({
       allowsNotificationsAsync(setNotificationsEnabled);
     };
     AppState.addEventListener('change', handleAppStateChange);
-    return () => {
-      AppState.removeEventListener('change', handleAppStateChange);
-    };
   }, []);
 
   if (notificationsEnabled) {
