@@ -143,14 +143,10 @@
       [
         "onesignal-expo-plugin",
         {
-          "mode": "development",
-          "iPhoneDeploymentTarget": "12.0"
-        }
-        /*{
           "mode": "production",
           "devTeam": "RC676BS29B",
           "iPhoneDeploymentTarget": "12.0"
-        }*/
+        }
       ],
       [
         "expo-build-properties",
