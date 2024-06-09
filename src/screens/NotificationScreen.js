@@ -70,7 +70,6 @@ const NotificationCell = ({ info, initialPref, notifIndex, updateHandler }) => {
 
   const toggleSwitch = () => {
     updateHandler({notifIndex}, !isEnabled)
-    updateHandler(notifIndex = {notifIndex}, value = !isEnabled)
     OneSignal.sendTag(oneSignalTags[notifIndex.notifIndex], (!isEnabled).toString());
     setIsEnabled(previousState => !previousState)
   }
