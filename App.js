@@ -24,6 +24,8 @@ import { PublicationEnum } from './src/utils/constants'
 import { setInit, switchPublication } from './src/actions'
 import { OnboardingModal } from './src/screens'
 
+import { initOneSignalClient } from './src/utils/notifications';
+
 // Initialize Apollo Client
 const client = new ApolloClient({
   uri: 'https://graphql-295919.ue.r.appspot.com/graphql',
@@ -43,7 +45,6 @@ const getAsyncStorage = () => {
     ]).then(result => {
       let lastViewedPublication = JSON.parse(result[4][1])
       if (lastViewedPublication != null) {
-
         dispatch(switchPublication(lastViewedPublication))
       }
       dispatch(setInit(result))
@@ -83,6 +84,12 @@ const App = () => {
     }
     loadAssets()
   }, [])
+
+  if (!attachOnboardingModalToDom) {
+    setTimeout(() => {
+      initOneSignalClient()
+    }, 5000);
+  }
 
   if (assetsLoaded) {
     return (

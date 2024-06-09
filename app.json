@@ -157,11 +157,20 @@
           ]
         }
       ],
+      [
+        "onesignal-expo-plugin",
+        {
+          "mode": "production",
+          "devTeam": "RC676BS29B",
+          "iPhoneDeploymentTarget": "12.0"
+        }
+      ],
       "@react-native-firebase/app",
       "./patches/android-project-build-gradle.plugin",
       "./patches/android-app-build-gradle.plugin"
     ],
     "extra": {
+      "oneSignalAppId": "8b21f95f-00af-429b-92d0-a07323654999",
       "eas": {
         "projectId": "63f1fb87-151c-41bf-b013-3b2bc96d41c8"
       }

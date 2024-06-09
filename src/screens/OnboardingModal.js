@@ -14,6 +14,8 @@ import {
 import { GradientButton, OnboardingInfoPage } from '../components'
 import { IS_ONBOARDED_KEY, Storage } from '../utils/storage'
 
+import { initOneSignalClient } from '../utils/notifications'
+
 const MAX_GRADIENT_BUTTON_SIZE = Dimensions.get('screen').width * 0.9
 const MIN_GRAIDENT_BUTTON_SIZE = Dimensions.get('screen').width * 0.2
 const MAX_PUB_OPACITY = 0.6
@@ -326,6 +328,10 @@ export const OnboardingModal = ({ isOnboarded, hasCompletedOnboarding }) => {
       hasCompletedOnboarding(true)
       await Storage.setItem(IS_ONBOARDED_KEY, true)
       let x = await Storage.getItem(IS_ONBOARDED_KEY)
+
+      setTimeout(() => {
+        initOneSignalClient()
+      }, 2000);
 
     } else updatePageNumber(pageNumber + 1)
   }

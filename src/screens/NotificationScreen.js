@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react'
 import { AppState, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import { Switch } from 'react-native-gesture-handler'
+import OneSignal from "react-native-onesignal";
+import Constants from "expo-constants";
 import { updateNotifPref } from '../actions'
 import { EnableNotificationsView, ThemeContext } from '../components';
 import * as Notifications from 'expo-notifications';
@@ -56,13 +58,20 @@ const createStyles = (theme) => StyleSheet.create({
   }
 })
 
+const oneSignalTags = ["breaking", "top", "34st", "utb"]
+
 const NotificationCell = ({ info, initialPref, notifIndex, updateHandler }) => {
   const theme = useContext(ThemeContext)
   const styles = createStyles(theme)
   const [isEnabled, setIsEnabled] = useState(initialPref)
 
+  OneSignal.setLogLevel(6, 0);
+  OneSignal.setAppId(Constants.manifest?.extra?.oneSignalAppId);
+
   const toggleSwitch = () => {
     updateHandler({notifIndex}, !isEnabled)
+    updateHandler(notifIndex = {notifIndex}, value = !isEnabled)
+    OneSignal.sendTag(oneSignalTags[notifIndex.notifIndex], (!isEnabled).toString());
     setIsEnabled(previousState => !previousState)
   }
 
