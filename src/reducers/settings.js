@@ -1,3 +1,6 @@
+import Constants from "expo-constants";
+import OneSignal from "react-native-onesignal";
+
 import {
   UPDATE_HOME_SECTIONS,
   SET_INIT,
@@ -39,8 +42,15 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
     return savedDisplayPreference || DEFAULT_DISPLAY_PREF;
   }
 
+  const oneSignalTags = ["breaking", "top", "34st", "utb"]
+
   switch (type) {
     case SET_INIT:
+      OneSignal.setAppId(Constants.manifest?.extra?.oneSignalAppId);
+      getNewNotifPreferencesData(updates.notifPreferences).forEach(function(pref, index) {
+        OneSignal.sendTag(oneSignalTags[index], pref.toString())
+      });
+
       return {
         homeSectionPreferences: getNewHomeSectionData(
           updates.homeSectionPreferences
