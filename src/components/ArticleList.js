@@ -1,18 +1,24 @@
-import React from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import React, { useContext } from 'react'
+import { View } from 'react-native'
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+
 
 import { IMAGE_URL, AUTHORS } from '../utils/helperFunctions'
 import { HorizontalArticleCell } from './HorizontalArticleCell'
 import { InteractiveHomeComponent } from './InteractiveHomeComponent'
 import { PrimaryHorizontalArticleCell } from './PrimaryHorizontalArticleCell'
+import { ThemeContext } from "./ThemeProvider";
+
+const adUnitId = __DEV__ ? TestIds.ADAPTIVE_BANNER : 'ca-app-pub-503703374823007/3208304921';
 
 export const RenderArticleListItem = ({
   el,
   i,
   articlesLength,
   publication,
-  navigateToArticleScreen,
+  navigateToArticleScreen
 }) => {
+  const theme = useContext(ThemeContext)
   const {
     headline,
     published_at,
@@ -27,7 +33,6 @@ export const RenderArticleListItem = ({
     timeAgo: published_at,
     authors: AUTHORS(authors),
   }
-
   return (
     <>
       <InteractiveHomeComponent
@@ -43,15 +48,22 @@ export const RenderArticleListItem = ({
           <PrimaryHorizontalArticleCell {...CHILD_DATA} />
         )}
       </InteractiveHomeComponent>
-      {i == articlesLength - 1 ? null : (
-        <View
-          style={{
-            borderBottomColor: '#CCC',
-            borderBottomWidth: 1,
-            marginHorizontal: 20,
-          }}
-        />
-      )}
+      {
+        i === articlesLength ? (
+          <BannerAd
+            unitId={adUnitId}
+            size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          />
+        ) : (
+          <View
+            style={{
+              borderBottomColor: theme.borderColor,
+              borderBottomWidth: 1,
+              marginHorizontal: 20,
+            }}
+          />
+        )
+      }
     </>
   )
 }
@@ -61,18 +73,18 @@ export const ArticleList = ({
   navigateToArticleScreen,
   publication,
 }) => {
-  const articlesLength = articles.length
+  const articlesLength = articles.length - 1
   return (
-    <View style={{ marginBottom: 5 }}>
+    <View style={{ marginBottom: 16 }}>
       {articles.map((el, i) =>
         <React.Fragment key={i}>
-          {RenderArticleListItem({
-            el,
-            i,
-            articlesLength,
-            publication,
-            navigateToArticleScreen,
-          })}
+          <RenderArticleListItem
+            el={el}
+            i={i}
+            articlesLength={articlesLength}
+            publication={publication}
+            navigateToArticleScreen={navigateToArticleScreen}
+          />
         </React.Fragment>
       )}
     </View>
@@ -83,45 +95,58 @@ export const SearchArticleList = ({
   articles,
   navigateToArticleScreen,
   publication,
-}) => (
-  <View style={{ paddingLeft: 0 }}>
-    {articles.map(el => {
-      const {
-        headline,
-        published_at,
-        dominantMedia: { attachment_uuid, extension },
-        authors,
-      } = el
-      return (
-        <React.Fragment key={headline}>
-          <InteractiveHomeComponent
-            touchOpacProps={{
-              activeOpacity: 1,
-              onPress: () => navigateToArticleScreen({ article: el }),
-            }}
-            key={headline}
-          >
-            <HorizontalArticleCell
-              style={{
-                borderWidth: 4,
-                borderColor: '#0F0',
-                marginVertical: 10,
-              }}
-              title={headline}
-              imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
-              timeAgo={published_at}
-              authors={AUTHORS(authors)}
-            />
-          </InteractiveHomeComponent>
-          <View
-            style={{
-              borderBottomColor: '#CCC',
-              borderBottomWidth: 1,
-              marginHorizontal: 20,
-            }}
-          />
-        </React.Fragment>
-      )
-    })}
-  </View>
-)
+}) => {
+  const theme = useContext(ThemeContext)
+  const articlesLength = articles.length - 1
+  return (
+      <View style={{ paddingVertical: 10, marginBottom: 20 }}>
+        {articles.map((el, i) => {
+          const {
+            headline,
+            published_at,
+            dominantMedia: { attachment_uuid, extension },
+            authors,
+          } = el
+          return (
+              <React.Fragment key={headline}>
+                <InteractiveHomeComponent
+                    touchOpacProps={{
+                      activeOpacity: 1,
+                      onPress: () => navigateToArticleScreen({ article: el }),
+                    }}
+                    key={headline}
+                >
+                  <HorizontalArticleCell
+                      style={{
+                        borderWidth: 40,
+                        borderColor: '#0F0',
+                        marginVertical: 10,
+                      }}
+                      title={headline}
+                      imageURL={IMAGE_URL(attachment_uuid, extension, publication)}
+                      timeAgo={published_at}
+                      authors={AUTHORS(authors)}
+                  />
+                </InteractiveHomeComponent>
+                {
+                  i === articlesLength ? (
+                    <BannerAd
+                      unitId={adUnitId}
+                      size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                    />
+                  ) : (
+                    <View
+                      style={{
+                        borderBottomColor: theme.borderColor,
+                        borderBottomWidth: 1,
+                        marginHorizontal: 20,
+                      }}
+                    />
+                  )
+                }
+              </React.Fragment>
+          )
+        })}
+      </View>
+  )
+}

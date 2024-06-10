@@ -1,18 +1,21 @@
+import Constants from "expo-constants";
+import { OneSignal } from 'react-native-onesignal';
+
 import {
   UPDATE_HOME_SECTIONS,
   SET_INIT,
   SAVE_NEW_ARTICLE,
   UNSAVE_NEW_ARTICLE,
-  UPDATE_NOTIF_PREF
+  UPDATE_NOTIF_PREF,
+  DEFAULT_DISPLAY_PREF,
+  UPDATE_DISPLAY_PREF,
 } from '../actions'
 
-import Constants from "expo-constants";
-import OneSignal from "react-native-onesignal";
-
 const defaultSettingsState = {
-  savedArticles: null,
+  savedArticles: [],
   homeSectionPreferences: null,
   notifPreferences: null,
+  displayPreference: DEFAULT_DISPLAY_PREF,
 }
 
 const SettingsReducer = (state = defaultSettingsState, action) => {
@@ -20,7 +23,7 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
 
   const getNewHomeSectionData = homeSectionPreferences => {
     if (homeSectionPreferences == null) return {}
-    data = {}
+    const data = {}
     homeSectionPreferences.map(el => {
       data[el.publication] = el.newSections
     })
@@ -28,20 +31,24 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
   }
 
   const getNewSavedArticleData = savedArticles => {
-    return savedArticles ? savedArticles : []
+    return savedArticles || []
   }
 
   const getNewNotifPreferencesData = savedNotifPreferences => {
-    return savedNotifPreferences ? savedNotifPreferences : [true, true, false, false]
+    return savedNotifPreferences || [true, true, false, false]
+  }
+
+  const getNewDisplayPreferenceData = savedDisplayPreference => {
+    return savedDisplayPreference || DEFAULT_DISPLAY_PREF;
   }
 
   const oneSignalTags = ["breaking", "top", "34st", "utb"]
 
   switch (type) {
     case SET_INIT:
-      OneSignal.setAppId(Constants.manifest?.extra?.oneSignalAppId);
+      OneSignal.initialize(Constants.manifest?.extra?.oneSignalAppId);
       getNewNotifPreferencesData(updates.notifPreferences).forEach(function(pref, index) {
-        OneSignal.sendTag(oneSignalTags[index], pref.toString())
+        OneSignal.User.addTag(oneSignalTags[index], pref.toString())
       });
 
       return {
@@ -49,7 +56,8 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
           updates.homeSectionPreferences
         ),
         savedArticles: getNewSavedArticleData(updates.savedArticles),
-        notifPreferences: getNewNotifPreferencesData(updates.notifPreferences)
+        notifPreferences: getNewNotifPreferencesData(updates.notifPreferences),
+        displayPreference: getNewDisplayPreferenceData(updates.displayPreference),
       }
     case UPDATE_HOME_SECTIONS:
       const { publication, newSections } = updates.homeSectionPreferences[0]
@@ -67,7 +75,6 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
       }
     case UNSAVE_NEW_ARTICLE:
       const removeSlug = updates.actionArticle.slug
-      console.log('removeslug', removeSlug)
       const remainingArticles = state.savedArticles.filter(
         item => item.slug !== removeSlug
       )
@@ -82,6 +89,12 @@ const SettingsReducer = (state = defaultSettingsState, action) => {
       return {
         ...state,
         notifPreferences: newNotifPreferences,
+      }
+    case UPDATE_DISPLAY_PREF:
+      const newDisplayPreference = updates.displayPreference
+      return {
+        ...state,
+        displayPreference: newDisplayPreference
       }
     default:
       return state

@@ -79,7 +79,7 @@ export const CustomHeader = ({ publication, contentOffset }) => {
    */
   const calculateTopPadding = () => {
     // If Android, then make room for the status bar
-    if (Platform.OS == 'android') return StatusBar.height
+    if (Platform.OS === 'android') return StatusBar.currentHeight
 
     const { width, height } = Dimensions.get('window')
     // If the iPhone has a notch,

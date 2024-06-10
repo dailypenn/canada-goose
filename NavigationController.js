@@ -1,5 +1,4 @@
-import React from 'react'
-import * as Analytics from 'expo-firebase-analytics'
+import React, { useContext } from 'react'
 import { connect } from 'react-redux'
 import { Image } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
@@ -8,10 +7,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import * as Haptics from 'expo-haptics'
 
 import { HomeStack, DiscoveryStack, SettingsStack } from './src/stacks'
+import { CrosswordsScreen } from './src/screens'
 import { PublicationPrimaryColor } from './src/utils/branding'
 import { PublicationEnum } from './src/utils/constants'
 
-import { navigationRef } from './src/components'
+import { navigationRef, ThemeContext } from './src/components'
 
 const DP_LOGO_RED = require('./src/static/logos/dp-logo-small-red.png')
 const DP_LOGO_GREY = require('./src/static/logos/dp-logo-small-grey.png')
@@ -23,9 +23,8 @@ const UTB_LOGO_GREY = require('./src/static/logos/utb-logo-small-grey.png')
 const Tab = createBottomTabNavigator()
 
 const TabNavigationController = ({ currPublication }) => {
+  const theme = useContext(ThemeContext)
   const routeNameRef = React.useRef()
-  // const navigationRef = React.useRef()
-
   const GET_PUB_LOGO = focused => {
     switch (currPublication) {
       case PublicationEnum.dp:
@@ -45,15 +44,7 @@ const TabNavigationController = ({ currPublication }) => {
         (routeNameRef.current = navigationRef.current.getCurrentRoute().name)
       }
       onStateChange={() => {
-        console.log('on state change')
-        const previousRouteName = routeNameRef.current
-        const currentRouteName = navigationRef.current.getCurrentRoute().name
-        
-        if (previousRouteName !== currentRouteName) {
-          Analytics.setCurrentScreen(currentRouteName)
-        }
-
-        routeNameRef.current = currentRouteName
+        routeNameRef.current = navigationRef.current.getCurrentRoute().name
       }}
     >
       <Tab.Navigator
@@ -73,8 +64,9 @@ const TabNavigationController = ({ currPublication }) => {
                   }}
                 />
               )
-            } else if (route.name == 'DiscoveryStack') iconName = 'search'
+            } else if (route.name === 'DiscoveryStack') iconName = 'search'
             else if (route.name === 'SettingsStack') iconName = 'person-outline'
+            else if (route.name === 'CrosswordsScreen') iconName = 'grid-outline'
 
             return <Ionicons name={iconName} size={26} color={color} />
           },
@@ -84,9 +76,10 @@ const TabNavigationController = ({ currPublication }) => {
           inactiveTintColor: 'gray',
           showLabel: false,
           style: {
-            shadowColor: 'black',
+            backgroundColor: theme.backgroundColor,
+            shadowColor: theme.primaryTextColor,
             shadowOpacity: 0.1,
-            shadowRadius: 3,
+            shadowRadius: 4,
           },
           onPress: () => {
             // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
@@ -95,6 +88,7 @@ const TabNavigationController = ({ currPublication }) => {
       >
         <Tab.Screen name="HomeStack" component={HomeStack} />
         <Tab.Screen name="DiscoveryStack" component={DiscoveryStack} />
+        <Tab.Screen name="CrosswordsScreen" component={CrosswordsScreen} />
         <Tab.Screen name="SettingsStack" component={SettingsStack} />
       </Tab.Navigator>
     </NavigationContainer>

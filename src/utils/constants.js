@@ -33,7 +33,11 @@ export const UTB_HOME_SECTIONS = ['interactive', 'news', 'opinion']
 
 export const STREET_HOME_SECTIONS = ['focus', 'features', 'ego', 'style']
 
-export const FIVE_MUNITES = 5 * 60 * 1000
+export const DISPLAY_OPTIONS = [
+  {id: "light", name: "Light Mode"},
+  {id: "dark", name: "Dark Mode"},
+  {id: "device", name: "Same as Device"},
+]
 
 export const SETTINGS_SECTIONS = [
   {
@@ -71,13 +75,21 @@ export const SETTINGS_SECTIONS = [
         props: {},
       },
       {
+        id: 'display cell',
+        icon: 'color-palette',
+        color: '#885edc',
+        name: 'Display',
+        screenName: 'DisplaySettings',
+        props: {},
+      },
+      {
         id: 'privacy cell',
         icon: 'shield-checkmark',
         color: '#66d464',
         name: 'Privacy',
         screenName: 'WebView',
         props: { link: 'https://www.thedp.com/page/app-privacy' },
-      },
+      }
     ],
   },
   {
@@ -87,7 +99,7 @@ export const SETTINGS_SECTIONS = [
       {
         id: 'recruiting cell',
         icon: 'happy',
-        color: '#c4c4c4',
+        color: '#AAA',
         name: 'DP Developers',
         screenName: 'WebView',
         props: { link: 'https://developers.thedp.com/' },
@@ -95,7 +107,7 @@ export const SETTINGS_SECTIONS = [
       {
         id: 'about cell',
         icon: 'people',
-        color: '#c4c4c4',
+        color: '#AAA',
         name: 'Operation Canada Goose',
         screenName: 'About',
         props: {},

@@ -12,9 +12,11 @@ import {
   STREET_HOME_PAGE_QUERY,
   UTB_HOME_PAGE_QUERY,
 } from './queries'
+import { Platform, StatusBar } from 'react-native'
+import Constants from 'expo-constants'
 
 export const IMAGE_URL = (attachment_uuid, extension, publication) => {
-  let ceo_prefix = ''
+  let ceo_prefix
   switch (publication) {
     case PublicationEnum.dp:
       ceo_prefix = 'dpn'
@@ -38,7 +40,7 @@ export const AUTHORS = authorArr => {
 }
 
 export const PREFIXED_AUTHORS = (prefix, authorArr) => {
-  if (!authorArr.length) {
+  if (!authorArr?.length) {
     return ''
   }
 
@@ -69,13 +71,13 @@ export const GET_HOME_QUERIES = publication => {
 }
 
 export const GET_HOME_SECTIONS = publication => {
-  console.log(publication, 'vs', PublicationEnum.street)
+
 
   switch (publication) {
     case PublicationEnum.dp:
       return DP_HOME_SECTIONS
     case PublicationEnum.street:
-      console.log('street')
+
       return STREET_HOME_SECTIONS
     case PublicationEnum.utb:
       return UTB_HOME_SECTIONS
@@ -92,6 +94,16 @@ export const GET_HOME_SECTION_NAME = (publication, section) => {
       return STREET_HOME_SECTIONS_TITLES[section]
   }
 }
+
+export const getStatusBarHeight = () => {
+  if (Platform.OS === 'ios') {
+    return Constants.statusBarHeight;
+  } else if (Platform.OS === 'android') {
+    return StatusBar.currentHeight;
+  } else {
+    return 0;
+  }
+};
 
 export const parseAbstract = abstract => {
   if (!abstract) {

@@ -1,37 +1,45 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   StyleSheet,
   SafeAreaView,
   Dimensions,
-  TouchableOpacity,
   Platform,
   View,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { FlatGrid } from 'react-native-super-grid'
-
 import { PublicationEnum } from '../utils/constants'
 import {
   DiscoveryCell,
   SearchBar,
   RandomButton,
   InteractiveHomeComponent,
+  ThemeContext
 } from '../components'
 
 const DP_SECTIONS = require('../json/discover/dp.json')
 const STREET_SECTIONS = require('../json/discover/street.json')
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: Platform.OS == 'android' ? 10 : 0,
+    backgroundColor: theme.backgroundColor,
+    paddingTop: Platform.OS === 'android' ? 10 : 0,
   },
-})
+  rngButtonView: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignContent: 'center',
+  }
+});
 
 const width = Dimensions.get('window').width
 
 const DiscoveryView = ({ navigation, publication }) => {
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
+
   const navigateToSectionScreen = (section, slug) => {
     navigation.navigate('Section', {
       sectionName: section,
@@ -58,7 +66,7 @@ const DiscoveryView = ({ navigation, publication }) => {
     return (
       <FlatGrid
         contentContainerStyle={{
-          top: 5,
+          top: 2,
         }}
         itemDimension={width / 2 - 40}
         spacing={13}
@@ -80,24 +88,24 @@ const DiscoveryView = ({ navigation, publication }) => {
 
   return (
     <View
-      style={{
-        width: '100%',
-        height: '100%',
-        justifyContent: 'center',
-        alignContent: 'center',
-      }}
+      style={styles.rngButtonView}
     >
       <RandomButton onButtonPress={onButtonPress} />
     </View>
   )
 }
 
-const DiscoveryScreenComp = ({ navigation, currPublication }) => (
-  <SafeAreaView style={styles.container}>
-    <SearchBar navigation={navigation} publication={currPublication} />
-    <DiscoveryView navigation={navigation} publication={currPublication} />
-  </SafeAreaView>
-)
+const DiscoveryScreenComp = ({ navigation, currPublication }) => {
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <SearchBar navigation={navigation} publication={currPublication} />
+      <DiscoveryView navigation={navigation} publication={currPublication} />
+    </SafeAreaView>
+  )
+}
 
 const mapStateToProps = ({ publication }) => {
   const { currPublication } = publication

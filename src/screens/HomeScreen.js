@@ -1,19 +1,17 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react'
+import React, { useEffect, useState, useCallback, useRef, useContext } from 'react'
 import {
   StyleSheet,
   View,
   Text,
   RefreshControl,
-  AppState,
   Animated,
   Image,
-  Platform,
+  Platform, SafeAreaView
 } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
-import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 import { Linking } from 'react-native'
 
 import {
@@ -24,8 +22,7 @@ import {
   HeaderLine,
   EmptyState,
   LogoActivityIndicator,
-  PublicationModal,
-  InteractiveHomeComponent,
+  ThemeContext
 } from '../components'
 import {
   PARTIAL_NAVIGATE,
@@ -34,6 +31,7 @@ import {
   GET_HOME_SECTION_NAME,
   GET_HOME_QUERIES,
   getArticlePubSlug,
+  getStatusBarHeight
 } from '../utils/helperFunctions'
 import { PublicationEnum } from '../utils/constants'
 import { toggleScrollToTop } from '../actions'
@@ -46,14 +44,12 @@ const DP_HEADER_LOGO = require('../static/logos/dp-logo-large-black.png')
 const ST_HEADER_LOGO = require('../static/logos/34st-header.png')
 const UTB_HEADER_LOGO = require('../static/logos/utb-logo-large-black.png')
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  text1: {
-    color: '#fff',
-  },
+    backgroundColor: theme.backgroundColor,
+    zIndex: 1000,
+  }
 })
 
 const HomeView = ({
@@ -66,7 +62,9 @@ const HomeView = ({
   scrollToTop,
   dispatchToggleScrollToTop,
 }) => {
-  const scrollViewRef = useRef(null)
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
+  const scrollViewRef = useRef(new Animated.Value(0))
   const { centerpiece: centerArticles, top: topArticles } = data
 
   const sectionData = homeSections.map(section => ({
@@ -75,18 +73,17 @@ const HomeView = ({
   }))
 
   const onRefresh = useCallback(() => {
-    console.log('---manually refreshing home articles---')
     refetch()
   })
 
-  // Header consts
+  // Header constants
   const [scrollY, setScrollY] = useState(new Animated.Value(0))
   const minScroll = 10
-  const AnimatedHeaderHeight = getStatusBarHeight(true) + 50
+  const AnimatedHeaderHeight = getStatusBarHeight() + 60
   const negativeHeaderHeight =
     Platform.OS === 'android'
       ? -AnimatedHeaderHeight
-      : -(AnimatedHeaderHeight - getStatusBarHeight(true))
+      : -(AnimatedHeaderHeight - getStatusBarHeight())
   const clampedScrollY = scrollY.interpolate({
     inputRange: [minScroll, minScroll + 1],
     outputRange: [0, 1],
@@ -129,13 +126,13 @@ const HomeView = ({
             position: 'absolute',
             width: '100%',
             zIndex: 2,
-            backgroundColor: '#fff',
-            borderBottomColor: '#DDD',
+            backgroundColor: theme.backgroundColor,
             borderBottomWidth: 1,
+            borderBottomColor: theme.borderColor,
           },
           { transform: [{ translateY: translateY }] },
         ]}
-      ></Animated.View>
+      />
       <Animated.View
         style={[
           {
@@ -143,31 +140,32 @@ const HomeView = ({
             position: 'absolute',
             width: '100%',
             zIndex: 3,
-            backgroundColor: '#fff',
+            backgroundColor: theme.backgroundColor,
             alignItems: 'center',
-            borderBottomColor: '#DDD',
+            justifyContent: 'center',
+            paddingBottom: 10,
             borderBottomWidth: 1,
-            paddingVertical: 4,
+            borderBottomColor: theme.borderColor,
             opacity: opacity.interpolate({
               inputRange: [0, 0.5, 0.8, 1],
               outputRange: [0, 0, 1, 1],
             }),
             ...Platform.select({
               ios: {
-                paddingTop: getStatusBarHeight(true) + 10,
+                paddingTop: getStatusBarHeight() + 10,
               },
               android: {
-                paddingTop: getStatusBarHeight(true),
+                paddingTop: getStatusBarHeight(),
               },
             }),
           },
           { transform: [{ translateY: translateY }] },
         ]}
       >
-        <View style={{ height: 28 }}>
+        <View style={{ height: 32 }}>
           <Image
             source={GET_HEADER_LOGO()}
-            style={{ flex: 1, resizeMode: 'contain' }}
+            style={{ flex: 1, resizeMode: 'contain', tintColor: theme.primaryTextColor }}
           />
         </View>
       </Animated.View>
@@ -175,7 +173,7 @@ const HomeView = ({
       <Animated.ScrollView
         style={{
           paddingTop: Platform.select({
-            android: 0, //AnimatedHeaderHeight,
+            android: 0,
             ios: 0,
           }),
         }}
@@ -187,13 +185,13 @@ const HomeView = ({
         contentContainerStyle={{
           paddingTop: Platform.select({
             android: AnimatedHeaderHeight,
-            ios: 0,
-          }),
+            ios: 0
+          })
         }}
         automaticallyAdjustContentInsets={false}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: false }
+          { useNativeDriver: true }
         )}
         scrollEventThrottle={16}
         refreshControl={
@@ -261,7 +259,7 @@ const HomeScreenComp = ({
   settings,
   dispatchToggleScrollToTop,
 }) => {
-
+  const theme = useContext(ThemeContext)
   const { homeSectionPreferences, _ } = settings
 
   let homeSections =
@@ -271,11 +269,11 @@ const HomeScreenComp = ({
       : homeSectionPreferences[currPublication]
 
   useEffect(() => {
-    console.log('LOGGING EVENT: PUBLICATION READ', currPublication)
+
     publicationAnalytics(currPublication)
   }, [currPublication])
 
-  navigate = url => {
+  const navigate = url => {
     if (url && url.includes('article')) {
       deepLinkingAnalytics()
       const { publication, slug } = getArticlePubSlug(url)
@@ -297,7 +295,6 @@ const HomeScreenComp = ({
   }
 
   useEffect(() => {
-    // Linking.getInitialURL().then(url => navigate(url))
     Linking.addEventListener('url', e => navigate(e.url))
 
     return () => {
@@ -314,7 +311,7 @@ const HomeScreenComp = ({
     return (
       <View
         style={{
-          backgroundColor: 'white',
+          backgroundColor: theme.wallColor,
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
@@ -335,7 +332,7 @@ const HomeScreenComp = ({
             width: 100,
             height: 50,
             backgroundColor: PublicationPrimaryColor(currPublication),
-            marginTop: 30,
+            marginTop: 20,
             borderRadius: 10,
             justifyContent: 'center',
           }}
@@ -355,6 +352,7 @@ const HomeScreenComp = ({
       </View>
     )
   }
+
   if (!data) return <LogoActivityIndicator />
 
   return (

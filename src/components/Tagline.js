@@ -1,24 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 
-import { PublicationPrimaryColor } from '../utils/branding'
 import { BODY_SERIF } from '../utils/fonts'
+import { ThemeContext } from "./ThemeProvider";
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
   tagline: {
-    color: '#000',
+    color: theme.primaryTextColor,
     fontSize: 14,
     fontFamily: BODY_SERIF,
     flexShrink: 1,
-    opacity: 0.5,
-  },
-  circle: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginTop: 4,
-    marginRight: 10,
-    color: 'white',
+    opacity: 0.6,
   },
   view: {
     flexDirection: 'row',
@@ -26,15 +18,12 @@ const styles = StyleSheet.create({
   },
 })
 
-const circleStyle = publication => {
-  return {
-    ...{ backgroundColor: PublicationPrimaryColor(publication) },
-    ...styles.circle,
-  }
+export const Tagline = ({ tagline, publication }) => {
+  const theme = useContext(ThemeContext)
+  const styles = createStyles(theme)
+  return (
+      <View style={styles.view}>
+        <Text style={styles.tagline}>{tagline}</Text>
+      </View>
+  )
 }
-
-export const Tagline = ({ tagline, publication }) => (
-  <View style={styles.view}>
-    <Text style={styles.tagline}>{tagline}</Text>
-  </View>
-)

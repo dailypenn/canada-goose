@@ -22,6 +22,7 @@ The official mobile app for The Daily Pennsylvanian, 34th Street, and Under The 
 
 - **Top Stories**: View what’s trending in The Daily Pennsylvanian, 34th Street Magazine, and Under The Button.
 - **Discover**: Search the articles of each publication and view the most recent articles in certain categories.
+- **Crosswords**: Challenge yourself by playing our DP+ crosswords!
 - **Bookmarked Articles**: Save articles to read at a later time.
 - **Manage Feed**: Change the order in which categories on your home feed change.
 - **Notifications**: Keep up to date on breaking news and stories chosen by editors.
@@ -36,9 +37,9 @@ The official mobile app for The Daily Pennsylvanian, 34th Street, and Under The 
    ```
 2. Install NPM packages.
    ```sh
-   npm install
+   npx expo install
    ```
-
+   The command above runs npm install using packages that are compatible with the current expo version - if it gives you errors, feel free to try ```npm install``` instead.
 > 🔔 **Note: For most purposes, you should use the `development` branch. If you are using the `master` branch, you must set up the iOS app credentials locally:**
 
 3. (**`master` branch only!**) Update `credentials.json` with local iOS credentials
@@ -69,11 +70,17 @@ The official mobile app for The Daily Pennsylvanian, 34th Street, and Under The 
          * Open up your simulator.
          * Drag the file into the simulator.
          * The app will be installed in a few seconds.
+      2. We are currently using React Native version 0.71.14. However, in previous iterations, we used React Native versions 0.69 and prior where there is a known bug in node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp preventing Fastlane from building correctly on Expo. See the official issue here: [React Native Issue #36758](https://github.com/facebook/react-native/issues/36758). Follow the steps below to apply a development patch **for this issue only**.
+         * Verify that the expo build fails due to the issue described above. If the build works or fails due to another error, **do not run the patch steps listed below**.
+         * Install [patch-package](https://github.com/ds300/patch-package)
+         * Modify the source code similar to this [commit](https://github.com/facebook/react-native/commit/52d8a797e7a6be3fa472f323ceca4814a28ef596). Exact line numbers may vary.
+         * Run ```npx patch-package react-native```
 6. Start the app.
    ```sh
-   expo start --dev-client
+   npx expo start --dev-client
    ```
    If you are developing against a physical device, scan the resulting QR code. Otherwise, press the "a" or "i" key to open the app in an Android emulator or iPhone simulator respectively.
+   **Important Note:** To avoid runtime issues when starting the development server, please ensure that your machine is running Node.js v16.20.2 (LTS). See this [link](https://help.dreamhost.com/hc/en-us/articles/360029083351-Installing-a-custom-version-of-NVM-and-Node-js) to see how to change between versions.
    
 ## Contributing ⭐
 

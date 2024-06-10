@@ -15,7 +15,8 @@
       "distribution": "internal",
       "ios": {
         "credentialsSource": "local",
-        "simulator": true
+        "simulator": true,
+        "image": "latest"
       }
     },
     "production": {

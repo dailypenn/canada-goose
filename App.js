@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import { applyMiddleware, createStore } from 'redux'
-import thunk from 'redux-thunk'
+import mobileAds from 'react-native-google-mobile-ads';
+import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Provider } from 'react-redux'
 import * as ScreenOrientation from 'expo-screen-orientation'
 
 import TabNavigationController from './NavigationController'
 import { loadFonts } from './src/utils/fonts'
-import { LogoActivityIndicator } from './src/components'
-import RootReducer from './src/reducers'
+import { LogoActivityIndicator, ThemeProvider } from './src/components'
+import store from './src/reducers'
+
 import {
   GET_HOME_FEED_ORDER_KEY,
   IS_ONBOARDED_KEY,
   SAVED_ARTICLES_KEY,
   LAST_VIEWED_PUBLICATION_KEY,
   NOTIF_PREFS_KEY,
+  DISPLAY_PREFS_KEY,
   Storage,
 } from './src/utils/storage'
 import { PublicationEnum } from './src/utils/constants'
@@ -26,11 +28,9 @@ import { initOneSignalClient } from './src/utils/notifications';
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  // uri: 'http://localhost:5000/graphql',
   uri: 'https://graphql-295919.ue.r.appspot.com/graphql',
   cache: new InMemoryCache(),
 })
-const store = createStore(RootReducer, applyMiddleware(thunk))
 
 const getAsyncStorage = () => {
   return dispatch => {
@@ -41,10 +41,10 @@ const getAsyncStorage = () => {
       SAVED_ARTICLES_KEY,
       LAST_VIEWED_PUBLICATION_KEY,
       NOTIF_PREFS_KEY,
+      DISPLAY_PREFS_KEY
     ]).then(result => {
       let lastViewedPublication = JSON.parse(result[4][1])
       if (lastViewedPublication != null) {
-        console.log('last viewed pub', lastViewedPublication)
         dispatch(switchPublication(lastViewedPublication))
       }
       dispatch(setInit(result))
@@ -66,16 +66,24 @@ const App = () => {
         ScreenOrientation.OrientationLock.PORTRAIT_UP
       )
 
+      // Request app tracking transparency authorization for ads - user does not need to accept
+      const result = await check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
+      if (result === RESULTS.DENIED) {
+        // The permission has not been requested, so request it.
+        await request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
+      }
+
+      // Initialize React Native Google Mobile Ads
+      const adapterStatuses = await mobileAds().initialize();
+
       let onboarded = await Storage.getItem(IS_ONBOARDED_KEY)
-      hasCompletedOnboarding(onboarded == true)
-      updateAttachment(onboarded != true)
+      hasCompletedOnboarding(onboarded === true)
+      updateAttachment(onboarded !== true)
 
       setAssetsLoaded(true)
     }
     loadAssets()
   }, [])
-
-  console.log('isONboarded' + isOnboarded)
 
   if (!attachOnboardingModalToDom) {
     setTimeout(() => {
@@ -90,12 +98,20 @@ const App = () => {
           {attachOnboardingModalToDom ? (
             <OnboardingModal {...{ isOnboarded, hasCompletedOnboarding }} />
           ) : null}
-          <TabNavigationController />
+          <ThemeProvider>
+            <TabNavigationController />
+          </ThemeProvider>
         </Provider>
       </ApolloProvider>
     )
   } else {
-    return <LogoActivityIndicator />
+    return (
+      <Provider store={store}>
+        <ThemeProvider>
+          <LogoActivityIndicator />
+        </ThemeProvider>
+      </Provider>
+    )
   }
 }
 

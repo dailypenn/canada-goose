@@ -1,20 +1,22 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { View } from 'react-native'
 import WebView from 'react-native-webview'
 
-import { LogoActivityIndicator } from '../components'
+import { LogoActivityIndicator, ThemeContext } from '../components'
 
 const WebViewContainer = ({ link }) => {
-  const [visible, setIsVisible] = useState(true)
+  const theme = useContext(ThemeContext)
 
   return (
     <View style={{ flex: 1 }}>
       <WebView
-        onLoad={() => setIsVisible(false)}
-        style={{ flex: 1, backgroundColor: '#333333' }}
+        style={{ flex: 1, backgroundColor: theme.backgroundColor }}
         source={{ uri: link }}
+        renderLoading={() => (
+            <LogoActivityIndicator />
+        )}
+        startInLoadingState={true}
       />
-      {visible && <LogoActivityIndicator />}
     </View>
   )
 }

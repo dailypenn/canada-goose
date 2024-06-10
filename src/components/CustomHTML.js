@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, TouchableOpacity, Image, Animated, Easing } from 'react-native'
 import ImageView from 'react-native-image-viewing'
 import HTML from 'react-native-render-html'
@@ -8,20 +8,14 @@ import {
   BODY_SERIF,
   BODY_SERIF_BOLD,
   BODY_SERIF_ITALIC,
-  GEOMETRIC_BOLD,
-  GEOMETRIC_REGULAR,
+  GEOMETRIC_BOLD, GEOMETRIC_REGULAR
 } from '../utils/fonts'
-import {
-  IMAGE_URL,
-  getArticlePubSlug,
-  isValidURL,
-  PREFIXED_AUTHORS,
-} from '../utils/helperFunctions'
 import { PublicationPrimaryColor } from '../utils/branding'
 import MaskedView from '@react-native-community/masked-view'
-import WebView from 'react-native-webview'
+import { ThemeContext } from "./ThemeProvider";
 
 export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
+  const theme = useContext(ThemeContext)
   const [modalVisible, isModalVisible] = useState(false)
   const [imgURI, updateimgURI] = useState(null)
 
@@ -31,29 +25,39 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
       lineHeight: 28,
       marginBottom: 20,
       fontFamily: BODY_SERIF,
+      color: theme.primaryTextColor
     },
     a: {
       fontSize: 18,
+      color: theme.a
     },
     i: {
       fontSize: 18,
       lineHeight: 28,
       fontFamily: BODY_SERIF_ITALIC,
+      color: theme.primaryTextColor
     },
     b: {
       fontSize: 18,
       lineHeight: 28,
       fontFamily: BODY_SERIF_BOLD,
+      color: theme.primaryTextColor
     },
     strong: {
       fontSize: 18,
-      lineHeight: 28,
+      lineHeight: 32,
       fontFamily: GEOMETRIC_BOLD,
       color: PublicationPrimaryColor(currPublication),
     },
     em: {
       fontSize: 18,
-      lineHeight: 28,
+      lineHeight: 32,
+      fontFamily: GEOMETRIC_BOLD,
+      color: PublicationPrimaryColor(currPublication),
+    },
+    h3: {
+      fontSize: 18,
+      lineHeight: 32,
       fontFamily: GEOMETRIC_BOLD,
       color: PublicationPrimaryColor(currPublication),
     },
@@ -61,7 +65,14 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
       fontSize: 12,
       lineHeight: 20,
       fontFamily: BODY_SERIF,
+      color: theme.primaryTextColor
     },
+    error: {
+      fontSize: 16,
+      lineHeight: 28,
+      fontFamily: GEOMETRIC_REGULAR,
+      color: theme.primaryTextColor
+    }
   }
 
   const IMGRenderer = (htmlAttribs, passProps, props) => {
@@ -70,11 +81,11 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
     )
   }
 
-  const InLineImage = ({ htmlAttribs }) => {
+  const InLineImage = ({ htmlAttribs, key }) => {
     const [zoom] = useState(new Animated.Value(1.05))
     const [ASPECT_RATIO, SET_ASPECT_RATIO] = useState(htmlAttribs['data-width'] / htmlAttribs['data-height']) 
 
-    if (htmlAttribs['data-width'] == 0 | htmlAttribs['data-height'] == 0) {
+    if (htmlAttribs['data-width'] == 0 || htmlAttribs['data-height'] == 0) {
       Image.getSize(htmlAttribs['src'], (width, height) => {
         SET_ASPECT_RATIO(width / height)
       });
@@ -119,7 +130,6 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
               <View
                 style={{
                   flex: 1,
-                  backgroundColor: '#DDD',
                   resizeMode: 'center',
                   borderRadius: 2,
                   backgroundColor: 'black',
@@ -137,7 +147,7 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
                 transform: [{ scale: zoom }],
                 width: '100%',
                 aspectRatio: ASPECT_RATIO ? ASPECT_RATIO : null,
-                backgroundColor: '#EEE',
+                backgroundColor: theme.wallColor,
               }}
             />
           </MaskedView>
@@ -161,6 +171,8 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
     )
   }
 
+  const failedToFetchArticleContentErrorMsg = "<error>Oops! We had trouble loading this article. Please try again later.</error>"
+
   const parseProjectPage = articleContent => {
     if (article.content.includes('document.location=')) {
       const urls = article.content.match(/\bhttps?:\/\/\S+/gi)
@@ -168,7 +180,7 @@ export const CustomHTML = ({ article, currPublication, onLinkPress }) => {
         return "<p>Check out this special project <a href=\"" + urls[0].replace(/'$/, '').replace(/"$/, '').trim() + "\" target=\"_blank\">here</a>!</p>"
       }
     }
-    return articleContent
+    return articleContent || failedToFetchArticleContentErrorMsg
   }
 
   return (
